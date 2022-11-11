@@ -31,7 +31,7 @@ setup(
     description="Python package to query cancer variant databases",
     entry_points={
         'console_scripts': [
-            'querynator=querynator.cli:main',
+            'querynator=querynator.__main__:run_querynator',
         ],
     },
     install_requires=requirements,

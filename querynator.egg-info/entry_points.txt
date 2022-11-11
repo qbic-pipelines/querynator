@@ -1,0 +1,2 @@
+[console_scripts]
+querynator = querynator.__main__:run_querynator
