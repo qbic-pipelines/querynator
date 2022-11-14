@@ -17,33 +17,44 @@ from zipfile import ZipFile
 
 import httplib2 as http
 import requests
-from biothings_client import get_client
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-def prepare_cgi_query_file(infile):
+
+def hg_assembly(genome):
+    """
+    Use correct assembly name
+
+    :param genome
+    """
+
+    if genome == "GRCh37":
+        genome = "hg19"
+    if genome == "GRCh38":
+        genome = "hg38"
+    return genome
+
+def prepare_cgi_query_file(input, output):
     """
     Prepare a minimal file for upload
-    Either hgvs or CHROM POS ID REF ALT
+    VCF/TSV like structure with: CHROM POS ID REF ALT ...
     Attach sample name to get an output with a sample name
     """
 
-    file_name = os.path.basename(infile).split(".")[0]
-    cgi_file = pd.read_csv(infile, sep="\t")
+    cgi_file = pd.read_csv(input, sep="\t")
     cgi_file = cgi_file.iloc[:,:5].drop_duplicates()
-    cgi_file['SAMPLE'] = [file_name] * len(cgi_file.iloc[:,0])
-    cgi_file.head()
-    cgi_file.to_csv(file_name + '.cgi_input.tsv', sep="\t", index=False)
-    cgi_path = file_name + '.cgi_input.tsv'
+    cgi_file['SAMPLE'] = [output] * len(cgi_file.iloc[:,0])
+    cgi_file.to_csv(output + '.cgi_input.tsv', sep="\t", index=False)
+    cgi_path = output + '.cgi_input.tsv'
     return cgi_path
 
 
 
-def submit_query_cgi(infile, genome, cancer, headers, logger):
+def submit_query_cgi(input, genome, cancer, headers, logger):
     """
     Function that submits the query to the REST API of CGI
 
-    :param infile
+    :param input: Input cgi file
     :param genome: CGI takes hg19 or hg38 str
     :param email:  To query cgi a user account is needed str
     :param cancer_type: str
@@ -51,30 +62,39 @@ def submit_query_cgi(infile, genome, cancer, headers, logger):
     :param logger: prints info to console
     """
 
-    logger.info('Querying CGI directly')
+    logger.info('Querying REST API')
 
     genome = hg_assembly(genome)
 
-    #'susanne.jodoin@qbic.uni-tuebingen.de 4b1f20ee84976f38f1b6', 'LVB' (liver)
-
-    payload = {'cancer_type': cancer, 'title': 'CGI_query', 'reference': genome}
+    payload = {'cancer_type': cancer.name, 'title': 'CGI_query', 'reference': genome}
 
     try:
+        #TODO: ADD CNAS + TRANSLOCATIONS
         # submit query
         r = requests.post('https://www.cancergenomeinterpreter.org/api/v1',
                     headers=headers,
-                    files={ 'mutations': open(infile, 'rb') },
+                    files={ 'mutations': open(input, 'rb') },
                     data=payload)
+        r.raise_for_status()
 
         job_id = r.json()
         url = 'https://www.cancergenomeinterpreter.org/api/v1/' + job_id
         return url
 
-    except Exception:
-        print("An exception occurred")
+    except requests.exceptions.HTTPError as err:
+        raise SystemExit(err)
 
 
 def status_done(url, headers):
+    """
+    Check query status
+
+    :param url:
+    :param headers:
+    :raises Exception
+    :return
+    """
+
     counter = 0
     payload={'action':'logs'}
 
@@ -101,7 +121,6 @@ def status_done(url, headers):
             r.raise_for_status()
             counter +=1
             log = r.json()
-            # print('status: ', log['logs'])
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
 
@@ -127,11 +146,27 @@ def download_cgi(url, headers, output):
         print("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
 
-def query_cgi(infile, genome, cancer, headers, logger, output):
+def add_cgi_metadata(url, output):
+    """
+    Attach metadata to cgi query
+    :param url:
+    :param output:
+    """
+
+    ZipFile(output + '.cgi_results.zip').extractall(output + '.cgi_results')
+
+    # create additional file with metadata
+    with open(output + '.cgi_results' + '/metadata.txt', 'w') as f:
+        f.write('CGI query date: ' +  str(date.today()))
+        f.write('\nAPI version: ' + url[:-20])
+        f.close()
+
+
+def query_cgi(input, genome, cancer, headers, logger, output):
     """
     Actual query to cgi
 
-    :param infile: file
+    :param cgi_file: file
     :param genome: str
     :param cancer: str
     :param headers: str
@@ -141,21 +176,11 @@ def query_cgi(infile, genome, cancer, headers, logger, output):
     :return
     :raises Exception
     """
-    prepare_cgi_query_file(infile)
-    url = submit_query_cgi(infile, genome, cancer, headers, logger)
+    cgi_file = prepare_cgi_query_file(input, output)
+    url = submit_query_cgi(cgi_file, genome, cancer, headers, logger)
     done = status_done(url, headers)
     logger.info("CGI Query finished")
     if done:
         logger.info("Downloading CGI results")
         download_cgi(url, headers, output)
         add_cgi_metadata(url, output)
-
-def add_cgi_metadata(url, output):
-
-    ZipFile(output + '.cgi_results.zip').extractall('cgi_results')
-
-    # create additional file with metadata
-    with open('cgi_results' + '/metadata.txt', 'w') as f:
-        f.write('CGI query date: ' +  str(date.today()))
-        f.write('\nAPI version: ' + url[:-20])
-        f.close()

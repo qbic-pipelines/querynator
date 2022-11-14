@@ -18,7 +18,6 @@ docs/readme.rst
 docs/usage.rst
 querynator/__init__.py
 querynator/__main__.py
-querynator/cgi_api.py
 querynator.egg-info/PKG-INFO
 querynator.egg-info/SOURCES.txt
 querynator.egg-info/dependency_links.txt
