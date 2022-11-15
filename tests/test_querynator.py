@@ -2,36 +2,37 @@
 
 """Tests for `querynator` package."""
 
-import pytest
+from unittest import mock
 
 from click.testing import CliRunner
 
-from querynator import querynator
-from querynator import cli
+import querynator.__main__
 
-
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
-
+@mock.patch("querynator.__main__.querynator_cli")
+def test_header(mock_cli):
+    """Just try to execute the header function"""
+    querynator.__main__.run_querynator()
 
 def test_command_line_interface():
     """Test the CLI."""
     runner = CliRunner()
-    result = runner.invoke(cli.main)
+    result = runner.invoke(querynator.__main__.querynator_cli)
     assert result.exit_code == 0
-    assert 'querynator.cli.main' in result.output
-    help_result = runner.invoke(cli.main, ['--help'])
+    #assert 'querynator.__main__.querynator_cli' in result.output
+
+    """Test help message"""
+    help_result = runner.invoke(querynator.__main__.querynator_cli, ['--help'])
     assert help_result.exit_code == 0
-    assert '--help  Show this message and exit.' in help_result.output
+    assert '--help     Show this message and exit.' in help_result.output
+
+    """Test non existing subcommand"""
+    result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-clinvar"])
+    assert result.exit_code == 2
+    assert "No such command" in result.output
+
+    """Test non existing option"""
+    result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-cgi", "--baz"])
+    assert result.exit_code == 2
+    assert "No such option" in result.output
+
+
