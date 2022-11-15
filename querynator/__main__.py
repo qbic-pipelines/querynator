@@ -86,7 +86,7 @@ def querynator_cli():
 @click.option('-c', '--cancer', help='Please enter the cancer type to be searched',
                 type=EnumType(Cancer()), show_default=False)
 @click.option('-g', '--genome', type=click.Choice(['hg19', 'GRCh37', 'hg38', 'GRCh38'], case_sensitive=True),
-                help='Please enter the genome version', required=True)
+                help='Please enter the genome version', required=True, default = 'hg38')
 @click.option('-t', '--token', help='Please provide your token for CGI database', required=True,
                 type=click.STRING, default=None)
 @click.option('-e', '--email', help='Please provide your user email address for CGI', required=False, type=click.STRING, default=None)

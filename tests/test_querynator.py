@@ -18,19 +18,18 @@ def test_command_line_interface():
     runner = CliRunner()
     result = runner.invoke(querynator.__main__.querynator_cli)
     assert result.exit_code == 0
-    #assert 'querynator.__main__.querynator_cli' in result.output
 
     """Test help message"""
     help_result = runner.invoke(querynator.__main__.querynator_cli, ['--help'])
     assert help_result.exit_code == 0
     assert '--help     Show this message and exit.' in help_result.output
 
-    """Test non existing subcommand"""
+    """Test non-existing subcommand"""
     result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-clinvar"])
     assert result.exit_code == 2
     assert "No such command" in result.output
 
-    """Test non existing option"""
+    """Test non-existing option"""
     result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-cgi", "--baz"])
     assert result.exit_code == 2
     assert "No such option" in result.output

@@ -25,7 +25,10 @@ def hg_assembly(genome):
     """
     Use correct assembly name
 
-    :param genome
+    :param genome: Genome build version, defaults to hg38
+    :type genome: str
+    :return: genome
+    :rtype: str
     """
 
     if genome == "GRCh37":
@@ -37,8 +40,15 @@ def hg_assembly(genome):
 def prepare_cgi_query_file(input, output):
     """
     Prepare a minimal file for upload
-    VCF/TSV like structure with: CHROM POS ID REF ALT ...
+    TSV like structure with: CHROM POS ID REF ALT ...
     Attach sample name to get an output with a sample name
+
+    :param input: Variant file
+    :type input: tsv file
+    :param output: sample name
+    :type output: str
+    :return: output path
+    :rtype: str
     """
 
     cgi_file = pd.read_csv(input, sep="\t")
@@ -55,11 +65,18 @@ def submit_query_cgi(input, genome, cancer, headers, logger):
     Function that submits the query to the REST API of CGI
 
     :param input: Input cgi file
-    :param genome: CGI takes hg19 or hg38 str
-    :param email:  To query cgi a user account is needed str
-    :param cancer_type: str
-    :param token: user token for CGI str
+    :type input: str
+    :param genome: CGI takes hg19 or hg38
+    :type genome: str
+    :param email:  To query cgi a user account is needed
+    :type email: str
+    :param cancer: Cancer type from cancertypes.js
+    :type cancer: str
+    :param token: user token for CGI
+    :type token: str
     :param logger: prints info to console
+    :return: API url with job_id
+    :rtype: str
     """
 
     logger.info('Querying REST API')
@@ -89,10 +106,13 @@ def status_done(url, headers):
     """
     Check query status
 
-    :param url:
-    :param headers:
+    :param url: API url with job_id
+    :type url: str
+    :param headers: Valid headers for API query
+    :type headers: dict
     :raises Exception
-    :return
+    :return: True if query performed successfully
+    :rtype: bool
     """
 
     counter = 0
@@ -130,9 +150,13 @@ def status_done(url, headers):
 def download_cgi(url, headers, output):
     """
     Download query results from cgi
-    :param url: str with job_id
-    :param headers: str email + token
-    :param output: str
+
+    :param url: API url with job_id
+    :type url: str
+    :param headers: Valid headers for API query
+    :type headers: dict
+    :param output: sample name
+    :type output: str
     :raises Exception
     """
 
@@ -149,8 +173,10 @@ def download_cgi(url, headers, output):
 def add_cgi_metadata(url, output):
     """
     Attach metadata to cgi query
-    :param url:
-    :param output:
+    :param url: API url with job_id
+    :type url: str
+    :param output: sample name
+    :type output: str
     """
 
     ZipFile(output + '.cgi_results.zip').extractall(output + '.cgi_results')
@@ -166,15 +192,17 @@ def query_cgi(input, genome, cancer, headers, logger, output):
     """
     Actual query to cgi
 
-    :param cgi_file: file
-    :param genome: str
-    :param cancer: str
-    :param headers: str
-    :param logger:
-    :param output: str
-
-    :return
-    :raises Exception
+    :param input: Variant file
+    :type input: str
+    :param genome: Genome build version
+    :type genome: str
+    :param email:  To query cgi a user account is needed
+    :type email: str
+    :param cancer: Cancer type from cancertypes.js
+    :type cancer: str
+    :param logger: prints info to console
+    :param output: sample name
+    :type output: str
     """
     cgi_file = prepare_cgi_query_file(input, output)
     url = submit_query_cgi(cgi_file, genome, cancer, headers, logger)
