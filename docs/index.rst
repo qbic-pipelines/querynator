@@ -11,7 +11,7 @@ Welcome to querynator's documentation!
    modules
    contributing
    authors
-   history
+   changelog
 
 Indices and tables
 ==================

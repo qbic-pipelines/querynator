@@ -29,6 +29,7 @@ def hg_assembly(genome):
     :type genome: str
     :return: genome
     :rtype: str
+
     """
 
     if genome == "GRCh37":
@@ -49,6 +50,7 @@ def prepare_cgi_query_file(input, output):
     :type output: str
     :return: output path
     :rtype: str
+
     """
 
     cgi_file = pd.read_csv(input, sep="\t")
@@ -77,6 +79,7 @@ def submit_query_cgi(input, genome, cancer, headers, logger):
     :param logger: prints info to console
     :return: API url with job_id
     :rtype: str
+
     """
 
     logger.info('Querying REST API')
@@ -110,9 +113,10 @@ def status_done(url, headers):
     :type url: str
     :param headers: Valid headers for API query
     :type headers: dict
-    :raises Exception
+    :raises: HTTPError
     :return: True if query performed successfully
     :rtype: bool
+
     """
 
     counter = 0
@@ -157,7 +161,8 @@ def download_cgi(url, headers, output):
     :type headers: dict
     :param output: sample name
     :type output: str
-    :raises Exception
+    :raises: Exception
+
     """
 
     # download results cgi
@@ -173,10 +178,13 @@ def download_cgi(url, headers, output):
 def add_cgi_metadata(url, output):
     """
     Attach metadata to cgi query
+
     :param url: API url with job_id
     :type url: str
     :param output: sample name
     :type output: str
+    :return: None
+
     """
 
     ZipFile(output + '.cgi_results.zip').extractall(output + '.cgi_results')
@@ -203,7 +211,9 @@ def query_cgi(input, genome, cancer, headers, logger, output):
     :param logger: prints info to console
     :param output: sample name
     :type output: str
+
     """
+
     cgi_file = prepare_cgi_query_file(input, output)
     url = submit_query_cgi(cgi_file, genome, cancer, headers, logger)
     done = status_done(url, headers)

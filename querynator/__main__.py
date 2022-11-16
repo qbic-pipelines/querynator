@@ -23,6 +23,12 @@ logger.setLevel(logging.INFO)
 
 
 class EnumType(click.Choice):
+    """
+    This is a class for a click.Choice of type EnumType
+
+    """
+
+
     def __init__(self, enum, case_sensitive=False):
         self.__enum = enum
         super().__init__(choices=[item.value for item in enum], case_sensitive=case_sensitive)
@@ -33,6 +39,16 @@ class EnumType(click.Choice):
 
 
 def make_enum(values):
+    """
+    Function to create an EnumType from a dict
+
+    :param values: json/dict like object with {key: value} pairs
+    :type values: dict
+    :return: enumeration
+    :rtype: Enum
+
+    """
+
     _k = _v = None
     class CancerType(Enum):
         nonlocal _k, _v
@@ -42,10 +58,17 @@ def make_enum(values):
 
 def Cancer():
     """
-    Function to create instance of Cancer Enum
-    source of file: https://www.cancergenomeinterpreter.org/js/cancertypes.js
+    Function to create instance of click.Choice EnumType with cancer types\n
+    source: https://www.cancergenomeinterpreter.org/js/cancertypes.js
+
+    :return: Enumeration of cancer types
+    :rtype: click.Choice EnumType
+
     """
-    with open('./querynator/query_api/cgi/cancertypes.js') as dataFile:
+    directory_path = os.path.dirname(os.path.abspath(__file__))
+    new_path = os.path.join(directory_path, "query_api/cgi/cancertypes.js")
+    #with open('./querynator/query_api/cgi/cancertypes.js') as dataFile:
+    with open(new_path) as dataFile:
         data = dataFile.read()
         obj = data[data.find(' {') : data.rfind('};')+1]
         jsonObj = json.loads(obj)
@@ -93,6 +116,19 @@ def querynator_cli():
 def query_api_cgi(input, cancer, genome, token, email, output):
     """
     Command to query the cancergenomeinterpreter API
+
+    :param input: Variant file
+    :type input: str
+    :param genome: Genome build version
+    :type genome: str
+    :param email:  To query cgi a user account is needed
+    :type email: str
+    :param cancer: Cancer type from cancertypes.js
+    :type cancer: str
+    :param logger: prints info to console
+    :param output: sample name
+    :type output: str
+
     """
 
     try:
