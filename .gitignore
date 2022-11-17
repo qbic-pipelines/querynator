@@ -24,6 +24,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+**/testing/**
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -104,3 +105,11 @@ ENV/
 # IDE settings
 .vscode/
 .idea/
+
+# Test results
+**/*.tsv
+*.csv
+*.vcf
+*.zip
+metadata.txt
+cgi_results/*

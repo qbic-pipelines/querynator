@@ -1,6 +1,6 @@
-* querynator version:
-* Python version:
-* Operating System:
+- querynator version:
+- Python version:
+- Operating System:
 
 ### Description
 

@@ -26,10 +26,15 @@ Python package to query cancer variant databases
 Features
 --------
 
-* TODO
+* Command-line tool to query the cancergenomeinterpreter via its REST API
 
 Credits
 -------
+
+This package uses the cancergenomeinterpreter.org REST API for data retrieval.
+
+* Muiños, F., Martínez-Jiménez, F., Pich, O. et al. In silico saturation mutagenesis of cancer genes. Nature 596, 428–432 (2021). https://doi.org/10.1038/s41586-021-03771-1
+* Tamborero, D. Rubio-Perez, C., Deu-Pons, J. et al., Cancer Genome Interpreter annotates the biological and clinical relevance of tumor alterations. Genome Medicine 10, (2018). doi: https://doi.org/10.1101/140475
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
