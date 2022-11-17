@@ -11,7 +11,7 @@ with open("CHANGELOG.rst") as changelog_file:
     changelog = changelog_file.read()
 
 requirements = [
-    "Click>=7.0",
+    "click>=8.0",
 ]
 
 test_requirements = [
@@ -21,15 +21,13 @@ test_requirements = [
 setup(
     author="Susanne Jodoin",
     author_email="susanne.jodoin@qbic.uni-tuebingen.de",
-    python_requires=">=3.6",
+    python_requires=">=3.8",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
     description="Python package to query cancer variant databases",
