@@ -10,6 +10,7 @@ import sys
 import time
 from datetime import date
 from zipfile import ZipFile
+from zipfile import BadZipfile
 
 import click
 import httplib2 as http
@@ -37,35 +38,16 @@ def hg_assembly(genome):
     return genome
 
 
-def prepare_cgi_query_file(input, output):
-    """
-    Prepare a minimal file for upload
-    TSV like structure with: CHROM POS ID REF ALT ...
-    Attach sample name to get an output with a sample name
-
-    :param input: Variant file
-    :type input: tsv file
-    :param output: sample name
-    :type output: str
-    :return: output path
-    :rtype: str
-
-    """
-
-    cgi_file = pd.read_csv(input, sep="\t")
-    cgi_file = cgi_file.iloc[:, :5].drop_duplicates()
-    cgi_file["SAMPLE"] = [output] * len(cgi_file.iloc[:, 0])
-    cgi_file.to_csv(output + ".cgi_input.tsv", sep="\t", index=False)
-    cgi_path = output + ".cgi_input.tsv"
-    return cgi_path
-
-
-def submit_query_cgi(input, genome, cancer, headers, logger):
+def submit_query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger):
     """
     Function that submits the query to the REST API of CGI
 
-    :param input: Input cgi file
-    :type input: str
+    :param mutations: Variant file (vcf,tsv,gtf,hgvs)
+    :type mutations: str
+    :param cnas: File with copy number alterations
+    :type cnas: str
+    :param translocations: File with translocations
+    :type translocations: str
     :param genome: CGI takes hg19 or hg38
     :type genome: str
     :param email:  To query cgi a user account is needed
@@ -86,13 +68,18 @@ def submit_query_cgi(input, genome, cancer, headers, logger):
 
     payload = {"cancer_type": cancer.name, "title": "CGI_query", "reference": genome}
 
+    files = {"mutations": mutations,
+            "cnas": cnas,
+            "translocations": translocations }
+
+    input_files = {k: open(v, "rb") for k, v in files.items() if v is not None}
+
     try:
-        # TODO: ADD CNAS + TRANSLOCATIONS
         # submit query
         r = requests.post(
             "https://www.cancergenomeinterpreter.org/api/v1",
             headers=headers,
-            files={"mutations": open(input, "rb")},
+            files=input_files,
             data=payload,
         )
         r.raise_for_status()
@@ -105,7 +92,7 @@ def submit_query_cgi(input, genome, cancer, headers, logger):
         raise SystemExit(err)
 
 
-def status_done(url, headers):
+def status_done(url, headers, logger):
     """
     Check query status
 
@@ -134,6 +121,9 @@ def status_done(url, headers):
 
     log = r.json()
     while "Analysis done" not in "".join(log["logs"]):
+        if log["status"] == "Error":
+            logger.exception("An Error has occurred with your request. Please check your input format")
+            raise SystemExit()
         if counter == 5:
             print("Query took too looong :-(")
             break
@@ -143,13 +133,22 @@ def status_done(url, headers):
             r.raise_for_status()
             counter += 1
             log = r.json()
+        except requests.exceptions.RequestException as err:
+            logger.exception("An Error has occurred with your request. Please check your input format")
+            raise SystemExit(err)
         except requests.exceptions.HTTPError as err:
+            raise SystemExit(err)
+        except requests.exceptions.ConnectionError as err:
+            logger.exception("Please check your internet connection.")
+            raise SystemExit(err)
+        except Exception as err:
+            logger.exception("An unexpected error has occured " + type(err))
             raise SystemExit(err)
 
     return True
 
 
-def download_cgi(url, headers, output):
+def download_cgi(url, headers, output, logger):
     """
     Download query results from cgi
 
@@ -167,10 +166,13 @@ def download_cgi(url, headers, output):
     try:
         payload = {"action": "download"}
         r = requests.get(url, headers=headers, params=payload)
+        r.raise_for_status()
         with open(output + ".cgi_results.zip", "wb") as fd:
             fd.write(r._content)
+    except requests.exceptions.HTTPError as err:
+            raise SystemExit(err)
     except Exception:
-        print("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
+        logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
 
 def add_cgi_metadata(url, output):
@@ -182,24 +184,31 @@ def add_cgi_metadata(url, output):
     :param output: sample name
     :type output: str
     :return: None
+    :raises: BadZipfile
 
     """
 
-    ZipFile(output + ".cgi_results.zip").extractall(output + ".cgi_results")
+    try:
+        ZipFile(output + ".cgi_results.zip").extractall(output + ".cgi_results")
+        # create additional file with metadata
+        with open(output + ".cgi_results" + "/metadata.txt", "w") as f:
+            f.write("CGI query date: " + str(date.today()))
+            f.write("\nAPI version: " + url[:-20])
+            f.close()
+    except BadZipfile:
+        logger.exception("Oops, sth went wrong with the zip archive. Please check your input format.")
 
-    # create additional file with metadata
-    with open(output + ".cgi_results" + "/metadata.txt", "w") as f:
-        f.write("CGI query date: " + str(date.today()))
-        f.write("\nAPI version: " + url[:-20])
-        f.close()
 
-
-def query_cgi(input, genome, cancer, headers, logger, output):
+def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output):
     """
     Actual query to cgi
 
-    :param input: Variant file
-    :type input: str
+    :param mutations: Variant file (vcf,tsv,gtf,hgvs)
+    :type mutations: str
+    :param cnas: File with copy number alterations
+    :type cnas: str
+    :param translocations: File with translocations
+    :type translocations: str
     :param genome: Genome build version
     :type genome: str
     :param email:  To query cgi a user account is needed
@@ -212,11 +221,10 @@ def query_cgi(input, genome, cancer, headers, logger, output):
 
     """
 
-    cgi_file = prepare_cgi_query_file(input, output)
-    url = submit_query_cgi(cgi_file, genome, cancer, headers, logger)
-    done = status_done(url, headers)
+    url = submit_query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger)
+    done = status_done(url, headers, logger)
     logger.info("CGI Query finished")
     if done:
         logger.info("Downloading CGI results")
-        download_cgi(url, headers, output)
+        download_cgi(url, headers, output, logger)
         add_cgi_metadata(url, output)

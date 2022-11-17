@@ -106,10 +106,21 @@ def querynator_cli():
 # querynator cgi_api
 @querynator_cli.command()
 @click.option(
-    "-i",
-    "--input",
-    help="Please provide the path to the PASS filtered vcf/tsv:\n",
-    required=True,
+    "-m",
+    "--mutations",
+    help="Please provide the path to the PASS filtered variant file (vcf,tsv,gtf,hgvs):\nSee more info here: https://www.cancergenomeinterpreter.org/faq#q22",
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-a",
+    "--cnas",
+    help="Please provide the path to the copy number alterations file:\n",
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-l",
+    "--translocations",
+    help="Please provide the path to the file containing translocations:\n",
     type=click.Path(exists=True),
 )
 @click.option(
@@ -141,12 +152,16 @@ def querynator_cli():
     type=click.STRING,
     default=None,
 )
-def query_api_cgi(input, cancer, genome, token, email, output):
+def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output):
     """
     Command to query the cancergenomeinterpreter API
 
-    :param input: Variant file
-    :type input: str
+    :param mutations: Variant file (vcf,tsv,gtf,hgvs)
+    :type mutations: str
+    :param cnas: File with copy number alterations
+    :type cnas: str
+    :param translocations: File with translocations
+    :type translocations: str
     :param genome: Genome build version
     :type genome: str
     :param email:  To query cgi a user account is needed
@@ -159,10 +174,13 @@ def query_api_cgi(input, cancer, genome, token, email, output):
 
     """
 
+    if mutations is None and cnas is None and translocations is None:
+        raise click.UsageError('No input file provided. Please provide at least one of [mutations/cnas/translocations] as input.')
+
     try:
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}
-        c.query_cgi(input, genome, cancer, headers, logger, output)
+        c.query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output)
 
     except FileNotFoundError:
         print("Cannot find file on disk. Please try another path.")
