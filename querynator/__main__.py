@@ -1,21 +1,22 @@
 """Command line interface querynator."""
-import click
-import sys
-import logging
-import requests
-from enum import Enum
 import json
+import logging
 import os
+import sys
+from enum import Enum
+
+import click
+import requests
 
 import querynator
 import querynator.query_api.cgi.cgi_api as c
 
 # Create logger
-logger = logging.getLogger('Querynator')
+logger = logging.getLogger("Querynator")
 # Create console handler
 ch = logging.StreamHandler()
 # Create formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 # add ch to logger
 logger.addHandler(ch)
@@ -27,7 +28,6 @@ class EnumType(click.Choice):
     This is a class for a click.Choice of type EnumType
 
     """
-
 
     def __init__(self, enum, case_sensitive=False):
         self.__enum = enum
@@ -50,11 +50,14 @@ def make_enum(values):
     """
 
     _k = _v = None
+
     class CancerType(Enum):
         nonlocal _k, _v
         for _k, _v in values.items():
             locals()[_k] = _v
+
     return CancerType
+
 
 def Cancer():
     """
@@ -67,10 +70,10 @@ def Cancer():
     """
     directory_path = os.path.dirname(os.path.abspath(__file__))
     new_path = os.path.join(directory_path, "query_api/cgi/cancertypes.js")
-    #with open('./querynator/query_api/cgi/cancertypes.js') as dataFile:
+    # with open('./querynator/query_api/cgi/cancertypes.js') as dataFile:
     with open(new_path) as dataFile:
         data = dataFile.read()
-        obj = data[data.find(' {') : data.rfind('};')+1]
+        obj = data[data.find(" {") : data.rfind("};") + 1]
         jsonObj = json.loads(obj)
         Cancer_enum = make_enum(jsonObj)
 
@@ -97,22 +100,47 @@ def querynator_cli():
     It can query the web APIs or local instances of the databases
     """
 
-    logger.info('Start')
+    logger.info("Start")
 
 
 # querynator cgi_api
 @querynator_cli.command()
-@click.option('-i', '--input', help='Please provide the path to the PASS filtered vcf/tsv:\n',
-                required=True, type=click.Path(exists=True))
-@click.option('-o', '--output', required=True, type=click.STRING,
-                help='Output name for output files - i.e. sample name. Extension filled automatically')
-@click.option('-c', '--cancer', help='Please enter the cancer type to be searched',
-                type=EnumType(Cancer()), show_default=False)
-@click.option('-g', '--genome', type=click.Choice(['hg19', 'GRCh37', 'hg38', 'GRCh38'], case_sensitive=True),
-                help='Please enter the genome version', required=True, default = 'hg38')
-@click.option('-t', '--token', help='Please provide your token for CGI database', required=True,
-                type=click.STRING, default=None)
-@click.option('-e', '--email', help='Please provide your user email address for CGI', required=False, type=click.STRING, default=None)
+@click.option(
+    "-i",
+    "--input",
+    help="Please provide the path to the PASS filtered vcf/tsv:\n",
+    required=True,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-o",
+    "--output",
+    required=True,
+    type=click.STRING,
+    help="Output name for output files - i.e. sample name. Extension filled automatically",
+)
+@click.option(
+    "-c", "--cancer", help="Please enter the cancer type to be searched", type=EnumType(Cancer()), show_default=False
+)
+@click.option(
+    "-g",
+    "--genome",
+    type=click.Choice(["hg19", "GRCh37", "hg38", "GRCh38"], case_sensitive=True),
+    help="Please enter the genome version",
+    required=True,
+    default="hg38",
+)
+@click.option(
+    "-t", "--token", help="Please provide your token for CGI database", required=True, type=click.STRING, default=None
+)
+@click.option(
+    "-e",
+    "--email",
+    help="Please provide your user email address for CGI",
+    required=False,
+    type=click.STRING,
+    default=None,
+)
 def query_api_cgi(input, cancer, genome, token, email, output):
     """
     Command to query the cancergenomeinterpreter API
@@ -133,11 +161,11 @@ def query_api_cgi(input, cancer, genome, token, email, output):
 
     try:
         logger.info("Query the cancergenomeinterpreter (CGI)")
-        headers = {'Authorization': email + ' ' + token }
+        headers = {"Authorization": email + " " + token}
         c.query_cgi(input, genome, cancer, headers, logger, output)
 
     except FileNotFoundError:
-        print('Cannot find file on disk. Please try another path.')
+        print("Cannot find file on disk. Please try another path.")
 
 
 if __name__ == "__main__":

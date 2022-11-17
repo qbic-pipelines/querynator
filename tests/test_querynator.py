@@ -8,10 +8,12 @@ from click.testing import CliRunner
 
 import querynator.__main__
 
+
 @mock.patch("querynator.__main__.querynator_cli")
 def test_header(mock_cli):
     """Just try to execute the header function"""
     querynator.__main__.run_querynator()
+
 
 def test_command_line_interface():
     """Test the CLI."""
@@ -20,9 +22,9 @@ def test_command_line_interface():
     assert result.exit_code == 0
 
     """Test help message"""
-    help_result = runner.invoke(querynator.__main__.querynator_cli, ['--help'])
+    help_result = runner.invoke(querynator.__main__.querynator_cli, ["--help"])
     assert help_result.exit_code == 0
-    assert '--help     Show this message and exit.' in help_result.output
+    assert "--help     Show this message and exit." in help_result.output
 
     """Test non-existing subcommand"""
     result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-clinvar"])
@@ -33,5 +35,3 @@ def test_command_line_interface():
     result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-cgi", "--baz"])
     assert result.exit_code == 2
     assert "No such option" in result.output
-
-
