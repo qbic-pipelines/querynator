@@ -175,7 +175,9 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     """
 
     if mutations is None and cnas is None and translocations is None:
-        raise click.UsageError('No input file provided. Please provide at least one of [mutations/cnas/translocations] as input.')
+        raise click.UsageError(
+            "No input file provided. Please provide at least one of [mutations/cnas/translocations] as input."
+        )
 
     try:
         logger.info("Query the cancergenomeinterpreter (CGI)")

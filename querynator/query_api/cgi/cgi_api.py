@@ -9,8 +9,7 @@ import os.path
 import sys
 import time
 from datetime import date
-from zipfile import ZipFile
-from zipfile import BadZipfile
+from zipfile import BadZipfile, ZipFile
 
 import click
 import httplib2 as http
@@ -68,9 +67,7 @@ def submit_query_cgi(mutations, cnas, translocations, genome, cancer, headers, l
 
     payload = {"cancer_type": cancer.name, "title": "CGI_query", "reference": genome}
 
-    files = {"mutations": mutations,
-            "cnas": cnas,
-            "translocations": translocations }
+    files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
 
     input_files = {k: open(v, "rb") for k, v in files.items() if v is not None}
 
@@ -170,7 +167,7 @@ def download_cgi(url, headers, output, logger):
         with open(output + ".cgi_results.zip", "wb") as fd:
             fd.write(r._content)
     except requests.exceptions.HTTPError as err:
-            raise SystemExit(err)
+        raise SystemExit(err)
     except Exception:
         logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
