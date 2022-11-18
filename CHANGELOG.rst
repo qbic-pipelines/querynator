@@ -1,6 +1,21 @@
 Changelog
 ============
 
+0.1.1 -  Methane Titan (2022-11-18)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Github Actions publishing to PyPI
+* Fix docs
+
+**Dependencies**
+
+**Deprecated**
+
+
 0.1.0 - initial release (2022-11-18)
 ---------------------------------------------
 
