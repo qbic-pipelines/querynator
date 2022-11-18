@@ -45,7 +45,7 @@ setup(
     packages=find_packages(include=["querynator", "querynator.*"]),
     test_suite="tests",
     tests_require=test_requirements,
-    url="https://github.com/SusiJo/querynator",
+    url="https://github.com/qbic-pipelines/querynator",
     version="0.1.0",
     zip_safe=False,
 )
