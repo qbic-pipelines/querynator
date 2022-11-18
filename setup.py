@@ -10,9 +10,8 @@ with open("README.rst") as readme_file:
 with open("CHANGELOG.rst") as changelog_file:
     changelog = changelog_file.read()
 
-requirements = [
-    "click>=8.0",
-]
+with open("requirements.txt") as f:
+    requirements = f.read().splitlines()
 
 test_requirements = [
     "pytest>=3",
@@ -46,6 +45,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/qbic-pipelines/querynator",
-    version="0.1.1",
+    version="0.1.2",
     zip_safe=False,
 )

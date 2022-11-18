@@ -1,6 +1,19 @@
 Changelog
 ============
 
+0.1.2 - Diamond Neptune  (2022-11-18)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Fix installing requirements
+
+**Dependencies**
+
+**Deprecated**
+
 0.1.1 -  Methane Titan (2022-11-18)
 ---------------------------------------------
 

@@ -1,7 +1,6 @@
 """Query the cancergenomeinterpreter (CGI) via it's Web API"""
 
 
-import glob
 import json
 import logging
 import os
@@ -13,7 +12,6 @@ from zipfile import BadZipfile, ZipFile
 
 import click
 import httplib2 as http
-import pandas as pd
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
