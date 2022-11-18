@@ -35,7 +35,7 @@ Python package to query cancer variant databases
 Features
 --------
 
-* Command-line tool to query the cancergenomeinterpreter via its REST API
+* Command-line tool to query the `cancergenomeinterpreter <https://www.cancergenomeinterpreter.org/home>`_ via its REST API
 
 Credits
 -------
