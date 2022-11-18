@@ -1,0 +1,38 @@
+name: Bug report
+description: Report something that is broken or incorrect
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hi there!
+
+        Thanks for telling us about a problem with the qbic-pipelines/querynator package.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: command_used
+    attributes:
+      label: Command used and terminal output
+      description: Steps to reproduce the behaviour. Please paste the command and output from your terminal.
+      render: console
+      placeholder: |
+        $ querynator query-api-cgi ...
+
+        Some output where something broke
+
+  - type: textarea
+    id: system
+    attributes:
+      label: System information
+      description: |
+        * Python version _(eg. 3.9, 3.10)_
+        * Hardware _(eg. HPC, Desktop, Cloud)_
+        * OS _(eg. CentOS Linux, macOS, Linux Mint)_

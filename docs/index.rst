@@ -10,7 +10,6 @@ Welcome to querynator's documentation!
   usage
   modules
   contributing
-  authors
   changelog
 
 Indices and tables
