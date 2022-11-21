@@ -41,10 +41,10 @@ setup(
     include_package_data=True,
     keywords="querynator",
     name="querynator",
-    packages=find_packages(include=["querynator", "querynator.*"]),
+    packages=find_packages(exclude=("docs")),
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/qbic-pipelines/querynator",
-    version="0.1.2",
+    version="0.1.3",
     zip_safe=False,
 )
