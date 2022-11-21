@@ -9,7 +9,7 @@ import click
 import requests
 
 import querynator
-import querynator.query_api.cgi.cgi_api as c
+from querynator.query_api import query_cgi
 
 # Create logger
 logger = logging.getLogger("Querynator")
@@ -68,10 +68,10 @@ def Cancer():
     :rtype: click.Choice EnumType
 
     """
-    directory_path = os.path.dirname(os.path.abspath(__file__))
-    new_path = os.path.join(directory_path, "query_api/cgi/cancertypes.js")
-    # with open('./querynator/query_api/cgi/cancertypes.js') as dataFile:
-    with open(new_path) as dataFile:
+    #directory_path = os.path.dirname(os.path.abspath(__file__))
+    #new_path = os.path.join(directory_path, "query_api/cancertypes.js")
+    with open('./querynator/query_api/cancertypes.js') as dataFile:
+    #with open(new_path) as dataFile:
         data = dataFile.read()
         obj = data[data.find(" {") : data.rfind("};") + 1]
         jsonObj = json.loads(obj)
@@ -182,7 +182,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     try:
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}
-        c.query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output)
+        query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output)
 
     except FileNotFoundError:
         print("Cannot find file on disk. Please try another path.")
