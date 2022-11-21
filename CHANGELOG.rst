@@ -1,6 +1,19 @@
 Changelog
 ============
 
+0.1.3 - Diamond Neptune  (2022-11-21)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Fix including module
+
+**Dependencies**
+
+**Deprecated**
+
 0.1.2 - Diamond Neptune  (2022-11-18)
 ---------------------------------------------
 
