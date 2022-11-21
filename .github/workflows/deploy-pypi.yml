@@ -1,4 +1,4 @@
-name: Publish nf-core to PyPI
+name: Publish 'qbic-pipelines/querynator' to PyPI
 on:
   release:
     types: [published]

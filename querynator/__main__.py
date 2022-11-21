@@ -68,7 +68,7 @@ def Cancer():
     :rtype: click.Choice EnumType
 
     """
-    with open('./querynator/query_api/cancertypes.js') as dataFile:
+    with open("./querynator/query_api/cancertypes.js") as dataFile:
         data = dataFile.read()
         obj = data[data.find(" {") : data.rfind("};") + 1]
         jsonObj = json.loads(obj)

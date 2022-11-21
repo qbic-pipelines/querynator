@@ -6,9 +6,6 @@ querynator
 .. image:: https://img.shields.io/pypi/v/querynator.svg
         :target: https://pypi.python.org/pypi/querynator
 
-.. image:: https://img.shields.io/github/release/qbic-pipelines/querynator.svg?style=flat-square
-        :target: https://github.com/qbic-pipelines/querynator/releases/latest
-
 .. image:: https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fqbic-pipelines%2Fquerynator%2Fbadge%3Fref%3Dmaster&style=flat-square
         :target: https://actions-badge.atrox.dev/qbic-pipelines/querynator/goto?ref=master
 
@@ -21,7 +18,7 @@ querynator
 .. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
         :target: https://pycqa.github.io/isort
 
-.. image:: https://readthedocs.org/projects/querynator/badge/?version=latestx
+.. image:: https://readthedocs.org/projects/querynator/badge/?version=latest
         :target: https://querynator.readthedocs.io/en/latest/?version=latest
         :alt: Documentation Status
 
@@ -38,7 +35,7 @@ Python package to query cancer variant databases
 Features
 --------
 
-* Command-line tool to query the cancergenomeinterpreter via its REST API
+* Command-line tool to query the `cancergenomeinterpreter <https://www.cancergenomeinterpreter.org/home>`_ via its REST API
 
 Credits
 -------

@@ -12,8 +12,8 @@ jobs:
   Prettier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - name: Install prettier
         run: npm install -g prettier
       - name: Run Prettier
@@ -22,14 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v3
         with:
           python-version: "3.10"
 
       - name: Install python dependencies
         run: |
           pip install --upgrade pip
-          pip install -r requirements-dev.txt
+          pip install -r docs/requirements.txt
           pip install .
 
       - name: Build HTML docs
