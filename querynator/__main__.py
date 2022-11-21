@@ -68,7 +68,10 @@ def Cancer():
     :rtype: click.Choice EnumType
 
     """
-    with open("./querynator/query_api/cancertypes.js") as dataFile:
+
+    directory_path = os.path.dirname(os.path.abspath(__file__))
+    new_path = os.path.join(directory_path, "query_api/cancertypes.js")
+    with open(new_path) as dataFile:
         data = dataFile.read()
         obj = data[data.find(" {") : data.rfind("};") + 1]
         jsonObj = json.loads(obj)
