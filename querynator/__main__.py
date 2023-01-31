@@ -10,6 +10,7 @@ import requests
 
 import querynator
 from querynator.query_api import query_cgi
+from querynator.query_api import query_civic
 
 # Create logger
 logger = logging.getLogger("Querynator")
@@ -19,7 +20,7 @@ ch = logging.StreamHandler()
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 # add ch to logger
-logger.addHandler(ch)
+#logger.addHandler(ch)
 logger.setLevel(logging.INFO)
 
 
@@ -97,7 +98,7 @@ def run_querynator():
 def querynator_cli():
     """
     querynator is a command-line tool to query cancer variant databases.
-    It can query the web APIs or local instances of the databases
+    It can query web APIs or local instances of the databases
     """
 
     logger.info("Start")
@@ -152,27 +153,27 @@ def querynator_cli():
     type=click.STRING,
     default=None,
 )
-def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output):
-    """
-    Command to query the cancergenomeinterpreter API
-
-    :param mutations: Variant file (vcf,tsv,gtf,hgvs)
-    :type mutations: str
-    :param cnas: File with copy number alterations
-    :type cnas: str
-    :param translocations: File with translocations
-    :type translocations: str
-    :param genome: Genome build version
-    :type genome: str
-    :param email:  To query cgi a user account is needed
-    :type email: str
-    :param cancer: Cancer type from cancertypes.js
-    :type cancer: str
-    :param logger: prints info to console
-    :param output: sample name
-    :type output: str
-
-    """
+def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output): 
+    
+    
+    # Command to query the cancergenomeinterpreter API
+    
+    # :param mutations: Variant file (vcf,tsv,gtf,hgvs)
+    # :type mutations: strs
+    # :param cnas: File with copy number alterations
+    # :type cnas: str
+    # :param translocations: File with translocations
+    # :type translocations: str
+    # :param genome: Genome build version
+    # :type genome: str
+    # :param email:  To query cgi a user account is needed
+    # :type email: str
+    # :param cancer: Cancer type from cancertypes.js
+    # :type cancer: str
+    # :param logger: prints info to console
+    # :param output: sample name
+    # :type output: str
+    
 
     if mutations is None and cnas is None and translocations is None:
         raise click.UsageError(
@@ -186,6 +187,42 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 
     except FileNotFoundError:
         print("Cannot find file on disk. Please try another path.")
+
+
+# querynator civic_api
+@querynator_cli.command()
+@click.option(
+    "-v",
+    "--vcf",
+    help="Please provide the path to a Variant Call Format (VCF) file (Version 4.2)",
+    required=True,
+    type=click.Path(exists=True)
+)
+@click.option(
+    "-o",
+    "--output",
+    required=True,
+    type=click.STRING,
+    help="Output name for output files - i.e. sample name. Extension filled automatically",
+)
+
+def query_api_civic(vcf, output):
+    
+    # """
+    # Command to query the CIViC API
+
+    # :param vcf: Variant Call Format (VCF) file (Version 4.2)
+    # :type vcf: str
+    # :param output: Name for directory in which result-table will be stored
+    # :type output: str
+
+    # """
+
+    try:
+        logger.info("Querying the Clinical Interpretations of Variants In Cancer (CIViC)")
+        query_civic(vcf, output, logger)
+    except FileNotFoundError:
+        print("The provided file cannot be found. Please try another path.")
 
 
 if __name__ == "__main__":
