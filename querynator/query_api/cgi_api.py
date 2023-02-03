@@ -25,7 +25,7 @@ def gzipped(file_path):
     Helper function to test if given vcf is gzipped.
     If so, the first 2 bytes are "1f 8b"
 
-    :param file_path: Variant Call Format (VCF) file (Version 4.2)
+    :param file_path: Path to gzipped input file
     :type file_path: str
     """
     with open(file_path, 'rb') as test_f:
@@ -36,13 +36,13 @@ def gunzip_compressed_files(file_path, logger):
     """
     gunzips gzipped vcf file
 
-    :param file_path: Variant Call Format (VCF) file (Version 4.2)
+    :param file_path: Path to gzipped input file
     :type file_path: str
     """
     logger.info(f"Unzipping input file ({os.path.basename(os.path.normpath(file_path))})")
 
-    if not file_path.endswith(".vcf.gz"):
-        logger.error("Given File does not end with '.vcf.gz'")
+    if not file_path.endswith(".gz"):
+        logger.error("Given File does not end with '.gz'")
         exit(1)
     else:
         with gzip.open(file_path, 'rb') as f_in:
