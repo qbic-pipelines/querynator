@@ -3,52 +3,18 @@
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
-import httplib2
 import civicpy
 from civicpy import civic
 import io
 import os
 import numpy as np
 import pysam
-import logging
 import gzip
 import shutil
 from datetime import date
 
 # load the civic cache (necessary to run bulk analysis)
 civic.load_cache()
-
-
-def check_if_gzipped(vcf_path):
-    """
-    Helper function to test if given vcf is gzipped.
-    If so, the first 2 bytes are "1f 8b"
-
-    :param filepath: Variant Call Format (VCF) file (Version 4.2)
-    :type filepath: str
-    """
-    with open(vcf_path, 'rb') as test_f:
-        return test_f.read(2) == b'\x1f\x8b'
-
-def gunzip_compressed_files(vcf_path, logger):
-    """
-    gunzips gzipped vcf file
-
-    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
-    :type vcf_path: str
-    """
-    logger.info("Unzipping input file")
-
-    if not vcf_path.endswith(".vcf.gz"):
-        logger.error("Given File does not end with '.vcf.gz'")
-        exit(1)
-    else:
-        with gzip.open(vcf_path, 'rb') as f_in:
-            with open(vcf_path[: -len('.gz')], 'wb') as f_out:
-                shutil.copyfileobj(f_in,f_out)
-        return vcf_path[: -len('.gz')]
-                        
-
 
 
 def check_vcf_input(vcf_path, logger):
@@ -83,14 +49,14 @@ def check_vcf_input(vcf_path, logger):
 
 def get_coordinates_from_vcf(vcf_path,build, logger):
     """
-    Reads in vcf file using "pysam",
+    Read in vcf file using "pysam",
     creates CoordinateQuery objects for each variant .
     This function does find (ref-alt):
     SNPs (A-T)
     DelIns (AA-TT)
     Deletions (TTTCA -  AT)
 
-    :param build: Genome build version, currently only GHcR37 allowed
+    :param build: Genome build version, currently only GRCh37 allowed
     :type build: str
     :return: List of CoordinateQuery objects
     :rtype: list 
@@ -280,7 +246,7 @@ def create_civic_results(variant_list, out_path, logger):
 
 def sort_coord_list(coord_list):
     """
-    Input for bulk search must be sorted
+    Sort the input list to the bulk search
 
     :param coord_list: List of CoordinateQuery objects
     :type coord_list: list

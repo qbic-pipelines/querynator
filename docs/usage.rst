@@ -8,10 +8,11 @@ The ``querynator`` is used from the command line. Use the help function to displ
 
     querynator --help
     querynator query-api-cgi --help
+    querynator query-api-civic --help
 
 
-Quickstart
-**********
+Query the cancergenomeinterpeter - CGI
+**************************************
 
 A typical command to query the `cancergenomeinterpeter - CGI <https://www.cancergenomeinterpreter.org/home>`_:
 
@@ -38,7 +39,7 @@ For further information please refer to their `FAQ <https://www.cancergenomeinte
 
 
 Mutation, CNA & translocation analysis
-**************************************
+======================================
 
 If you run the command with all possible input files, you will obtain:
 
@@ -68,7 +69,7 @@ If you run the command with all possible input files, you will obtain:
 
 
 Input file formats
-******************
+==================
 
 For detailed information please refer to `CGI formats <https://www.cancergenomeinterpreter.org/faq#q22>`_.
 The genomic tabular format ``gtf`` is displayed below and contains partly the same columns as a ``vcf`` file (>v. 4.0) and is tab-separated.
@@ -76,7 +77,7 @@ The `sample column` is not mandatory, but recommended when more than one sample 
 
 A mutations/variant file can have the extensions ``vcf``, ``tsv`` or ``gtf``. The column names can also be uppercase letters as in a ``vcf``.
 
-.. list-table:: mutations.[tsv,gtf]
+.. list-table:: mutations.[vcf,tsv,gtf]
     :widths: 25 25 25 25 25
     :header-rows: 1
 
@@ -128,7 +129,36 @@ A copy number alterations file should be ``tsv`` and column names must be lowerc
 
 
 Genome build versions
-**********************
+=====================
 
 .. note::
     The cancergenomeinterpeter will perform a liftover of the genomic coordinates to `hg38` if the parameter ``--genome hg19`` is used.
+
+
+Query the Clinical Interpretations of Variants in Cancer - CIViC
+****************************************************************
+
+A typical command to query the `Clinical Interpretations of Variants in Cancer - CIViC <https://civicdb.org/welcome>`_:
+
+.. code-block:: bash
+
+    querynator query-api-civic \
+        -v input_file.vcf,tsv,gtf \
+        -o outdir \
+
+The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
+
+.. code-block:: bash
+
+    outdir
+    ├── civic_results.tsv
+    └── metadata.txt
+
+
+Input file format
+==================
+
+The querynator requires a ``vcf`` file in uncompressed or in `gzipped format <https://www.gzip.org/>`_ ``vcf.gz`` to query CIViC.
+
+It is recommended (although not required) to provide an index-file (``vcf.gz.tbi``) with the input ``vcf`` file, e.g. using `tabix <http://www.htslib.org/doc/tabix.html>`_.
+The index file must be stored in the same directory as the ``vcf`` file

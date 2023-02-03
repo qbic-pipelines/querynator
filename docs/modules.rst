@@ -11,3 +11,9 @@ This section contains the API of the modules and functions.
     :undoc-members:
     :show-inheritance:
     :private-members:
+
+.. automodule:: querynator.query_api.civic_api
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :private-members:
