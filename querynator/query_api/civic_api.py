@@ -4,20 +4,84 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
 import httplib2
+import civicpy
 from civicpy import civic
 import io
 import os
 import numpy as np
 import pysam
 import logging
-
+import gzip
+import shutil
+from datetime import date
 
 # load the civic cache (necessary to run bulk analysis)
 civic.load_cache()
 
 
+def check_if_gzipped(vcf_path):
+    """
+    Helper function to test if given vcf is gzipped.
+    If so, the first 2 bytes are "1f 8b"
 
-def get_coordinates_from_vcf(vcf_path,build):
+    :param filepath: Variant Call Format (VCF) file (Version 4.2)
+    :type filepath: str
+    """
+    with open(vcf_path, 'rb') as test_f:
+        return test_f.read(2) == b'\x1f\x8b'
+
+def gunzip_compressed_files(vcf_path, logger):
+    """
+    gunzips gzipped vcf file
+
+    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
+    :type vcf_path: str
+    """
+    logger.info("Unzipping input file")
+
+    if not vcf_path.endswith(".vcf.gz"):
+        logger.error("Given File does not end with '.vcf.gz'")
+        exit(1)
+    else:
+        with gzip.open(vcf_path, 'rb') as f_in:
+            with open(vcf_path[: -len('.gz')], 'wb') as f_out:
+                shutil.copyfileobj(f_in,f_out)
+        return vcf_path[: -len('.gz')]
+                        
+
+
+
+def check_vcf_input(vcf_path, logger):
+    """
+    Checks whether input is vcf-file.
+
+    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
+    :type vcf_path: str
+    :return: None
+    """
+    header = False 
+    needed_cols = ["chrom", "pos", "ref", "alt"]
+
+    if not vcf_path.endswith(".vcf"):
+        logger.error("Given File does not end with '.vcf'")
+        exit(1)
+    else:
+        for line in open(vcf_path, "r"):
+            if line.startswith("#") and not line.startswith("##"):
+                header = True
+                missing_cols = [i for i in needed_cols if i not in line.lower()]
+                if len(missing_cols) != 0:
+                    logger.error(f"vcf file is missing crucial columns: {', '.join(missing_cols).upper()}")
+                    exit(1)
+        if not header:
+            logger.error(f"vcf file requires header column!")
+            exit(1)
+
+        
+
+
+
+def get_coordinates_from_vcf(vcf_path,build, logger):
     """
     Reads in vcf file using "pysam",
     creates CoordinateQuery objects for each variant .
@@ -31,6 +95,13 @@ def get_coordinates_from_vcf(vcf_path,build):
     :return: List of CoordinateQuery objects
     :rtype: list 
     """
+    
+    '''if check_if_gzipped(vcf_path):
+        vcf_path = gunzip_compressed_files(vcf_path, logger)
+    
+    # check whether input is correct
+    check_vcf_input(vcf_path, logger)'''
+
     # still needs some testing with known examples!!
     coord_list = []
     for record in pysam.VariantFile(vcf_path):
@@ -219,18 +290,33 @@ def sort_coord_list(coord_list):
     return sorted(coord_list, key=lambda x : (int(x[0]) if x[0] != "X" else np.inf,x[1],x[2]))
 
 
+def add_civic_metadata(out_path):
+    """
+    Attach metadata to civic query
+
+    :param out_path: Name of directory in which results are stored
+    :type out_path: str
+    :return: None
+    """
+
+    with open(out_path + "/metadata.txt", "w") as f:
+        f.write("CIViC query date: " + str(date.today()))
+        f.write("\nAPI version: " + str(civicpy.version()))
+        f.close()
+
+
 def query_civic(vcf_path, out_path, logger):
     """
     Command to query the CIViC API
 
-    :param vcf: Variant Call Format (VCF) file (Version 4.2)
-    :type vcf: str
-    :param output: Name for directory in which result-table will be stored
-    :type output: str
+    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
+    :type vcf_path: str
+    :param out_path: Name for directory in which result-table will be stored
+    :type out_path: str
 
     """
     
-    coord_list = get_coordinates_from_vcf(vcf_path, "GRCh37")
+    coord_list = get_coordinates_from_vcf(vcf_path, "GRCh37", logger)
 
 
     # list needs to be sorted for bulk search
@@ -238,8 +324,9 @@ def query_civic(vcf_path, out_path, logger):
 
     # create result table
     create_civic_results(access_civic_by_coordinate(coord_list), out_path, logger)
+    add_civic_metadata(out_path)
 
-    logger.info("CIViC Analysis completed")
+    logger.info("CIViC Analysis done")
 
 
 

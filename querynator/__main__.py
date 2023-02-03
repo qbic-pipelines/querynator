@@ -132,7 +132,7 @@ def querynator_cli():
     help="Output name for output files - i.e. sample name. Extension filled automatically",
 )
 @click.option(
-    "-c", "--cancer", help="Please enter the cancer type to be searched", type=EnumType(Cancer()), show_default=False
+    "-c", "--cancer", help="Please enter the cancer type to be searched. You must use quotation marks.", type=EnumType(Cancer()), show_default=False
 )
 @click.option(
     "-g",
