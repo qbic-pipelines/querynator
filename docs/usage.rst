@@ -161,4 +161,4 @@ Input file format
 The querynator requires a ``vcf`` file in uncompressed or in `gzipped format <https://www.gzip.org/>`_ ``vcf.gz`` to query CIViC.
 
 It is recommended (although not required) to provide an index-file (``vcf.gz.tbi``) with the input ``vcf`` file, e.g. using `tabix <http://www.htslib.org/doc/tabix.html>`_.
-The index file must be stored in the same directory as the ``vcf`` file
+The index file must be stored in the same directory as the ``vcf`` file.
