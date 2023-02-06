@@ -9,8 +9,7 @@ import click
 import requests
 
 import querynator
-from querynator.query_api import query_cgi
-from querynator.query_api import query_civic
+from querynator.query_api import query_cgi, query_civic
 
 # Create logger
 logger = logging.getLogger("Querynator")
@@ -133,7 +132,11 @@ def querynator_cli():
     help="Output name for output files - i.e. sample name. Extension filled automatically",
 )
 @click.option(
-    "-c", "--cancer", help="Please enter the cancer type to be searched. You must use quotation marks.", type=EnumType(Cancer()), show_default=False
+    "-c",
+    "--cancer",
+    help="Please enter the cancer type to be searched. You must use quotation marks.",
+    type=EnumType(Cancer()),
+    show_default=False,
 )
 @click.option(
     "-g",
@@ -154,10 +157,10 @@ def querynator_cli():
     type=click.STRING,
     default=None,
 )
-def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output): 
+def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output):
     """
     Command to query the cancergenomeinterpreter API
-    
+
     :param mutations: Variant file (vcf,tsv,gtf,hgvs)
     :type mutations: strs
     :param cnas: File with copy number alterations
@@ -196,16 +199,15 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     "--vcf",
     help="Please provide the path to a Variant Call Format (VCF) file (Version 4.2)",
     required=True,
-    type=click.Path(exists=True)
+    type=click.Path(exists=True),
 )
 @click.option(
     "-o",
     "--output",
     required=True,
     type=click.STRING,
-    help="Output name for output files - i.e. sample name. Extension filled automatically"
+    help="Output name for output files - i.e. sample name. Extension filled automatically",
 )
-
 def query_api_civic(vcf, output):
     """
     Command to query the CIViC API
@@ -221,6 +223,7 @@ def query_api_civic(vcf, output):
         query_civic(vcf, output, logger)
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")
+
 
 if __name__ == "__main__":
     run_querynator()

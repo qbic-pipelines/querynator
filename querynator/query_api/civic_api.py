@@ -1,17 +1,19 @@
 """ Query the Clinical Interpretations of Variants In Cancer (CIViC) API via its python tool CIViCPY"""
 
 import warnings
-warnings.simplefilter(action='ignore', category=FutureWarning)
-import pandas as pd
-import civicpy
-from civicpy import civic
+
+warnings.simplefilter(action="ignore", category=FutureWarning)
+import gzip
 import io
 import os
-import numpy as np
-import pysam
-import gzip
 import shutil
 from datetime import date
+
+import civicpy
+import numpy as np
+import pandas as pd
+import pysam
+from civicpy import civic
 
 # load the civic cache (necessary to run bulk analysis)
 civic.load_cache()
@@ -25,7 +27,7 @@ def check_vcf_input(vcf_path, logger):
     :type vcf_path: str
     :return: None
     """
-    header = False 
+    header = False
     needed_cols = ["chrom", "pos", "ref", "alt"]
 
     if not vcf_path.endswith(".vcf"):
@@ -43,11 +45,8 @@ def check_vcf_input(vcf_path, logger):
             logger.error(f"vcf file requires header column!")
             exit(1)
 
-        
 
-
-
-def get_coordinates_from_vcf(vcf_path,build, logger):
+def get_coordinates_from_vcf(vcf_path, build, logger):
     """
     Read in vcf file using "pysam",
     creates CoordinateQuery objects for each variant .
@@ -59,7 +58,7 @@ def get_coordinates_from_vcf(vcf_path,build, logger):
     :param build: Genome build version, currently only GRCh37 allowed
     :type build: str
     :return: List of CoordinateQuery objects
-    :rtype: list 
+    :rtype: list
     """
 
     # still needs some testing with known examples!!
@@ -67,15 +66,42 @@ def get_coordinates_from_vcf(vcf_path,build, logger):
     for record in pysam.VariantFile(vcf_path):
         for alt_base in record.alts:
             # INSERTION (not sure if alt is assigned 100% correct)
-            if len(record.ref) < len(alt_base): 
-                coord_list.append(civic.CoordinateQuery(chr=str(record.chrom), start=int(record.start)+1, stop=int(record.start)+2, alt=alt_base[1:], ref="", build=build))
+            if len(record.ref) < len(alt_base):
+                coord_list.append(
+                    civic.CoordinateQuery(
+                        chr=str(record.chrom),
+                        start=int(record.start) + 1,
+                        stop=int(record.start) + 2,
+                        alt=alt_base[1:],
+                        ref="",
+                        build=build,
+                    )
+                )
             # DELETION
             elif len(record.ref) > len(alt_base) and len(alt_base) == 1:
-                coord_list.append(civic.CoordinateQuery(chr=str(record.chrom), start=int(record.start)+1, stop=int(record.stop), alt="", ref=record.ref, build=build))
-            #SNPs, DelIns
-            else: 
-                coord_list.append(civic.CoordinateQuery(chr=str(record.chrom), start=int(record.start)+1, stop=int(record.stop), alt=alt_base, ref=record.ref, build=build))
-                    
+                coord_list.append(
+                    civic.CoordinateQuery(
+                        chr=str(record.chrom),
+                        start=int(record.start) + 1,
+                        stop=int(record.stop),
+                        alt="",
+                        ref=record.ref,
+                        build=build,
+                    )
+                )
+            # SNPs, DelIns
+            else:
+                coord_list.append(
+                    civic.CoordinateQuery(
+                        chr=str(record.chrom),
+                        start=int(record.start) + 1,
+                        stop=int(record.stop),
+                        alt=alt_base,
+                        ref=record.ref,
+                        build=build,
+                    )
+                )
+
     return coord_list
 
 
@@ -86,22 +112,23 @@ def access_civic_by_coordinate(coord_list):
     :param coord_list: List of CoordinateQuery objects
     :type coord_list: list
     :return: List of CIViC variant objects of successfully queried variants
-    :rtype: list 
+    :rtype: list
     """
     coord_list.sort()
 
     # bulk search to quickly focus on variants found in the civic-db
     # time-intensive search must then only be done for variants that will be hits
-    bulk =civic.bulk_search_variants_by_coordinates(coord_list, search_mode='exact')
+    bulk = civic.bulk_search_variants_by_coordinates(coord_list, search_mode="exact")
 
     # actual search for each variant
     variant_list = []
     for variant in bulk.keys():
-        x = civic.search_variants_by_coordinates(variant, search_mode='exact')
+        x = civic.search_variants_by_coordinates(variant, search_mode="exact")
         if len(x) > 0:
             variant_list.append(x)
-    
+
     return variant_list
+
 
 def get_variant_information_from_variant(variant_obj):
     """
@@ -112,8 +139,16 @@ def get_variant_information_from_variant(variant_obj):
     :return: Dictionary with variant information for respective CIViC variant object
     :rtype: dict
     """
-    return {"variant_name" : variant_obj.name, "variant_aliases" : variant_obj.aliases, "variant_type" : [i.name for i in variant_obj.types], "variant_clinvar_entries" : variant_obj.clinvar_entries, "variant_entrez_id" : variant_obj.entrez_id, 
-            "variant_entrez_name" : variant_obj.entrez_name, "variant_hgvs_expressions" : variant_obj.hgvs_expressions, "variant_groups" :[i.name for i in variant_obj.variant_groups]}
+    return {
+        "variant_name": variant_obj.name,
+        "variant_aliases": variant_obj.aliases,
+        "variant_type": [i.name for i in variant_obj.types],
+        "variant_clinvar_entries": variant_obj.clinvar_entries,
+        "variant_entrez_id": variant_obj.entrez_id,
+        "variant_entrez_name": variant_obj.entrez_name,
+        "variant_hgvs_expressions": variant_obj.hgvs_expressions,
+        "variant_groups": [i.name for i in variant_obj.variant_groups],
+    }
 
 
 def get_molecular_profile_information_from_variant(variant_obj):
@@ -127,9 +162,13 @@ def get_molecular_profile_information_from_variant(variant_obj):
     """
     try:
         mol_profile = variant_obj.molecular_profiles[0]
-        mol_profile_dict = {"mol_profile_name" : mol_profile.name,"mol_profile_definition": mol_profile.description, "mol_profile_score" : mol_profile.molecular_profile_score} 
+        mol_profile_dict = {
+            "mol_profile_name": mol_profile.name,
+            "mol_profile_definition": mol_profile.description,
+            "mol_profile_score": mol_profile.molecular_profile_score,
+        }
     except IndexError:
-        mol_profile_dict = {"mol_profile_name" : None,"mol_profile_definition": None, "mol_profile_score": None} 
+        mol_profile_dict = {"mol_profile_name": None, "mol_profile_definition": None, "mol_profile_score": None}
     return mol_profile_dict
 
 
@@ -143,8 +182,13 @@ def get_gene_information_from_variant(variant_obj):
     :rtype: dict
     """
     gene = variant_obj.gene
-    return {"gene_name" : gene.name, "gene_aliases": gene.aliases, "gene_description" : gene.description, "gene_entrez_id" : gene.entrez_id, "gene_source": [i.name for i in gene.sources]}
-
+    return {
+        "gene_name": gene.name,
+        "gene_aliases": gene.aliases,
+        "gene_description": gene.description,
+        "gene_entrez_id": gene.entrez_id,
+        "gene_source": [i.name for i in gene.sources],
+    }
 
 
 def get_assertion_information_from_variant(variant_obj):
@@ -158,19 +202,40 @@ def get_assertion_information_from_variant(variant_obj):
     """
     try:
         assertion = variant_obj.molecular_profiles[0].assertions[0]
-        assertion_dict = {"assertion_name" : assertion.name, "assertion_acmg_codes" : assertion.acmg_codes, "assertion_amp_level" : assertion.amp_level, "assertion_direction" : assertion.assertion_direction,
-                            "assertion_type" : assertion.assertion_type, "assertion_description" : assertion.description, "assertion_disease" : assertion.disease, 
-                            "assertion_phenotypes": [i.name for i in assertion.phenotypes], "assertion_significance" : assertion.significance, "assertion_status" : assertion.status, 
-                            "assertion_summary": assertion.summary, "assertion_therapies" : [i.name for i in assertion.therapies], "assertion_therapy_interaction_type" : assertion.therapy_interaction_type,
-                            "assertion_variant_origin" : assertion.variant_origin} 
+        assertion_dict = {
+            "assertion_name": assertion.name,
+            "assertion_acmg_codes": assertion.acmg_codes,
+            "assertion_amp_level": assertion.amp_level,
+            "assertion_direction": assertion.assertion_direction,
+            "assertion_type": assertion.assertion_type,
+            "assertion_description": assertion.description,
+            "assertion_disease": assertion.disease,
+            "assertion_phenotypes": [i.name for i in assertion.phenotypes],
+            "assertion_significance": assertion.significance,
+            "assertion_status": assertion.status,
+            "assertion_summary": assertion.summary,
+            "assertion_therapies": [i.name for i in assertion.therapies],
+            "assertion_therapy_interaction_type": assertion.therapy_interaction_type,
+            "assertion_variant_origin": assertion.variant_origin,
+        }
     except IndexError:
-        assertion_dict = {"assertion_name" : np.nan, "assertion_acmg_codes" : np.nan, "assertion_amp_level" : np.nan, "assertion_direction" : np.nan,
-                            "assertion_type" : np.nan, "assertion_description" : np.nan, "assertion_disease" : np.nan, 
-                            "assertion_phenotypes": np.nan, "assertion_significance" : np.nan, "assertion_status" : np.nan, 
-                            "assertion_summary": np.nan, "assertion_therapies" : np.nan, "assertion_therapy_interaction_type" : np.nan,
-                            "assertion_variant_origin" : np.nan} 
+        assertion_dict = {
+            "assertion_name": np.nan,
+            "assertion_acmg_codes": np.nan,
+            "assertion_amp_level": np.nan,
+            "assertion_direction": np.nan,
+            "assertion_type": np.nan,
+            "assertion_description": np.nan,
+            "assertion_disease": np.nan,
+            "assertion_phenotypes": np.nan,
+            "assertion_significance": np.nan,
+            "assertion_status": np.nan,
+            "assertion_summary": np.nan,
+            "assertion_therapies": np.nan,
+            "assertion_therapy_interaction_type": np.nan,
+            "assertion_variant_origin": np.nan,
+        }
     return assertion_dict
-
 
 
 def get_evidence_information_from_variant(variant_obj):
@@ -184,15 +249,37 @@ def get_evidence_information_from_variant(variant_obj):
     """
     try:
         evidence = variant_obj.molecular_profiles[0].assertions[0].evidence[0]
-        evidence_dict = {"evidence_name" : evidence.name, "evidence_description" : evidence.description, "evidence_disease" : evidence.disease, "evidence_level" : evidence.evidence_level,
-                            "evidence_support" : evidence.evidence_direction, "evidence_type" : evidence.evidence_type, "evidence_phenotypes" : [i.name for i in evidence.phenotypes], "evidence_rating" : evidence.rating,
-                            "evidence_significance" : evidence.significance, "evidence_source" : evidence.source, "evidence_status" : evidence.status, "evidence_therapies" : [i.name for i in evidence.therapies],
-                            "evidence_therapy_interaction_type" : evidence.therapy_interaction_type} 
+        evidence_dict = {
+            "evidence_name": evidence.name,
+            "evidence_description": evidence.description,
+            "evidence_disease": evidence.disease,
+            "evidence_level": evidence.evidence_level,
+            "evidence_support": evidence.evidence_direction,
+            "evidence_type": evidence.evidence_type,
+            "evidence_phenotypes": [i.name for i in evidence.phenotypes],
+            "evidence_rating": evidence.rating,
+            "evidence_significance": evidence.significance,
+            "evidence_source": evidence.source,
+            "evidence_status": evidence.status,
+            "evidence_therapies": [i.name for i in evidence.therapies],
+            "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
+        }
     except IndexError:
-        evidence_dict = {"evidence_name" : np.nan, "evidence_description" : np.nan, "evidence_disease" : np.nan, "evidence_level" : np.nan,
-                            "evidence_support" : np.nan, "evidence_type" : np.nan, "evidence_phenotypes" : np.nan, "evidence_rating" : np.nan,
-                            "evidence_significance" : np.nan, "evidence_source" : np.nan, "evidence_status" : np.nan, "evidence_therapies" : np.nan,
-                            "evidence_therapy_interaction_type" : np.nan} 
+        evidence_dict = {
+            "evidence_name": np.nan,
+            "evidence_description": np.nan,
+            "evidence_disease": np.nan,
+            "evidence_level": np.nan,
+            "evidence_support": np.nan,
+            "evidence_type": np.nan,
+            "evidence_phenotypes": np.nan,
+            "evidence_rating": np.nan,
+            "evidence_significance": np.nan,
+            "evidence_source": np.nan,
+            "evidence_status": np.nan,
+            "evidence_therapies": np.nan,
+            "evidence_therapy_interaction_type": np.nan,
+        }
     return evidence_dict
 
 
@@ -211,7 +298,7 @@ def concat_dicts(variant_obj):
     assertion_info = get_assertion_information_from_variant(variant_obj[0])
     evidence_info = get_evidence_information_from_variant(variant_obj[0])
 
-    return variant_info | gene_info | mol_profile_info |  assertion_info | evidence_info
+    return variant_info | gene_info | mol_profile_info | assertion_info | evidence_info
 
 
 def create_civic_results(variant_list, out_path, logger):
@@ -223,7 +310,7 @@ def create_civic_results(variant_list, out_path, logger):
     :type variant_list: list
     :param out_path: Name for directory in which result-table will be stored
     :type out_path: str
-    
+
     """
     civic_result_df = pd.DataFrame()
     for variant in variant_list:
@@ -247,7 +334,7 @@ def sort_coord_list(coord_list):
     :return: sorted coord_list
     :rtype: list
     """
-    return sorted(coord_list, key=lambda x : (int(x[0]) if x[0] != "X" else np.inf,x[1],x[2]))
+    return sorted(coord_list, key=lambda x: (int(x[0]) if x[0] != "X" else np.inf, x[1], x[2]))
 
 
 def add_civic_metadata(out_path):
@@ -275,9 +362,8 @@ def query_civic(vcf_path, out_path, logger):
     :type out_path: str
 
     """
-    
-    coord_list = get_coordinates_from_vcf(vcf_path, "GRCh37", logger)
 
+    coord_list = get_coordinates_from_vcf(vcf_path, "GRCh37", logger)
 
     # list needs to be sorted for bulk search
     sort_coord_list(coord_list)
@@ -287,9 +373,3 @@ def query_civic(vcf_path, out_path, logger):
     add_civic_metadata(out_path)
 
     logger.info("CIViC Analysis done")
-
-
-
-
-
-

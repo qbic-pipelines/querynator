@@ -1,23 +1,22 @@
 """Query the cancergenomeinterpreter (CGI) via it's Web API"""
 
 
+import gzip
 import json
 import logging
 import os
 import os.path
+import shutil
 import sys
 import time
 from datetime import date
 from zipfile import BadZipfile, ZipFile
-import gzip
-import shutil
 
 import click
 import httplib2 as http
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
 
 
 def gzipped(file_path):
@@ -28,8 +27,8 @@ def gzipped(file_path):
     :param file_path: Path to gzipped input file
     :type file_path: str
     """
-    with open(file_path, 'rb') as test_f:
-        return test_f.read(2) == b'\x1f\x8b'
+    with open(file_path, "rb") as test_f:
+        return test_f.read(2) == b"\x1f\x8b"
 
 
 def gunzip_compressed_files(file_path, logger):
@@ -45,11 +44,11 @@ def gunzip_compressed_files(file_path, logger):
         logger.error("Given File does not end with '.gz'")
         exit(1)
     else:
-        with gzip.open(file_path, 'rb') as f_in:
-            with open(file_path[: -len('.gz')], 'wb') as f_out:
-                shutil.copyfileobj(f_in,f_out)
-        return file_path[: -len('.gz')]
-                        
+        with gzip.open(file_path, "rb") as f_in:
+            with open(file_path[: -len(".gz")], "wb") as f_out:
+                shutil.copyfileobj(f_in, f_out)
+        return file_path[: -len(".gz")]
+
 
 def hg_assembly(genome):
     """
@@ -251,14 +250,15 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
     """
 
     # unzip files if necessary
-    input_files = {"mutations" : mutations, "cnas" : cnas, "translocations" : translocations}
+    input_files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
     for key, file_path in input_files.items():
         if file_path is not None:
             if gzipped(file_path):
                 input_files[key] = gunzip_compressed_files(file_path, logger)
-        
 
-    url = submit_query_cgi(input_files["mutations"], input_files["cnas"], input_files["translocations"], genome, cancer, headers, logger)
+    url = submit_query_cgi(
+        input_files["mutations"], input_files["cnas"], input_files["translocations"], genome, cancer, headers, logger
+    )
     done = status_done(url, headers, logger)
     logger.info("CGI Query finished")
     if done:
