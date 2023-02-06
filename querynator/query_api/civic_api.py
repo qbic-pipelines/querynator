@@ -61,12 +61,6 @@ def get_coordinates_from_vcf(vcf_path,build, logger):
     :return: List of CoordinateQuery objects
     :rtype: list 
     """
-    
-    '''if check_if_gzipped(vcf_path):
-        vcf_path = gunzip_compressed_files(vcf_path, logger)
-    
-    # check whether input is correct
-    check_vcf_input(vcf_path, logger)'''
 
     # still needs some testing with known examples!!
     coord_list = []
