@@ -122,10 +122,10 @@ def access_civic_by_coordinate(coord_list):
 
     # actual search for each variant
     variant_list = []
-    for variant in bulk.keys():
-        x = civic.search_variants_by_coordinates(variant, search_mode="exact")
-        if len(x) > 0:
-            variant_list.append(x)
+    for coord_obj in bulk.keys():
+        variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
+        if len(coord_obj) > 0:
+            variant_list.append([coord_obj, variant])
 
     return variant_list
 
@@ -283,22 +283,37 @@ def get_evidence_information_from_variant(variant_obj):
     return evidence_dict
 
 
-def concat_dicts(variant_obj):
+def get_positional_information_from_coord_obj(coord_obj):
+    """
+    Get information about the position of the variant in the genome
+
+    :param coord_obj: CoordinateQuery Object to respective variant object
+    :type coord_obj: CIViC CoordinateQuery Object
+    :return: Dictionary with positional information for respective CIViC variant object
+    :rtype: dict
+    """
+    return {"chr": coord_obj[0], "start": coord_obj[1], "stop": coord_obj[2], "alt": coord_obj[3], "ref": coord_obj[4]}
+
+
+def concat_dicts(coord_obj, variant_obj):
     """
     Create and combine different dictionaries created for single CIViC variant object
 
+    :param coord_obj: CoordinateQuery Object to respective variant object
+    :type coord_obj: CIViC CoordinateQuery Object
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
     :return: Dictionary with all information for respective CIViC variant object
     :rtype: dict
     """
+    coordinates_info = get_positional_information_from_coord_obj(coord_obj)
     variant_info = get_variant_information_from_variant(variant_obj[0])
     gene_info = get_gene_information_from_variant(variant_obj[0])
     mol_profile_info = get_molecular_profile_information_from_variant(variant_obj[0])
     assertion_info = get_assertion_information_from_variant(variant_obj[0])
     evidence_info = get_evidence_information_from_variant(variant_obj[0])
 
-    return variant_info | gene_info | mol_profile_info | assertion_info | evidence_info
+    return coordinates_info | variant_info | gene_info | mol_profile_info | assertion_info | evidence_info
 
 
 def create_civic_results(variant_list, out_path, logger):
@@ -310,11 +325,10 @@ def create_civic_results(variant_list, out_path, logger):
     :type variant_list: list
     :param out_path: Name for directory in which result-table will be stored
     :type out_path: str
-
     """
     civic_result_df = pd.DataFrame()
-    for variant in variant_list:
-        civic_result_df = civic_result_df.append(concat_dicts(variant), ignore_index=True)
+    for coord_obj, variant in variant_list:
+        civic_result_df = civic_result_df.append(concat_dicts(coord_obj, variant), ignore_index=True)
 
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
