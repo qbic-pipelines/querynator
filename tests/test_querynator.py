@@ -29,12 +29,13 @@ def test_command_line_interface():
     """Test CGI help message"""
     cgi_help_result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-cgi", "--help"])
     assert cgi_help_result.exit_code == 0
-    assert "--help     Show this message and exit." in cgi_help_result.output
+    assert "--help                          Show this message and exit." in civic_help_result.output
 
     """Test CIVIC help message"""
     civic_help_result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-civic", "--help"])
     assert civic_help_result.exit_code == 0
-    assert "--help     Show this message and exit." in civic_help_result.output
+    assert "--help             Show this message and exit." in cgi_help_result.output
+    
 
     """Test non-existing subcommand"""
     result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-clinvar"])
