@@ -1,6 +1,20 @@
 Changelog
 ============
 
+0.1.4 - Diamond Neptune  (2023-02-07)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Added functionality to query the Clinical Interpretation of Variants in Cancer (CIViC) Knowledgebase
+* Added possibility to query bgzipped files
+
+**Dependencies**
+
+**Deprecated**
+
 0.1.3 - Diamond Neptune  (2022-11-21)
 ---------------------------------------------
 
