@@ -27,7 +27,7 @@ def test_command_line_interface():
     assert "--help     Show this message and exit." in help_result.output
 
     """Test CGI help message"""
-    cgi_help_result = runner.invoke(querynator.__main__.querynator_cli ["query-api-cgi", "--help"])
+    cgi_help_result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-cgi", "--help"])
     assert cgi_help_result.exit_code == 0
     assert "--help     Show this message and exit." in cgi_help_result.output
 
