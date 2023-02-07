@@ -6,10 +6,10 @@ Changelog
 
 **Added**
 
-**Fixed**
-
 * Added functionality to query the Clinical Interpretation of Variants in Cancer (CIViC) Knowledgebase
 * Added possibility to query bgzipped files
+
+**Fixed**
 
 **Dependencies**
 
