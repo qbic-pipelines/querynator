@@ -18,8 +18,8 @@ test_requirements = [
 ]
 
 setup(
-    author="Susanne Jodoin",
-    author_email="susanne.jodoin@qbic.uni-tuebingen.de",
+    author="Susanne Jodoin, Mark Polster",
+    author_email="susanne.jodoin@qbic.uni-tuebingen.de, mark.polster@uni-tuebingen.de",
     python_requires=">=3.8",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -45,6 +45,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/qbic-pipelines/querynator",
-    version="0.1.3",
+    version="0.2.0",
     zip_safe=False,
 )
