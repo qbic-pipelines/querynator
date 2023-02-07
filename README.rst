@@ -36,6 +36,7 @@ Features
 --------
 
 * Command-line tool to query the `cancergenomeinterpreter <https://www.cancergenomeinterpreter.org/home>`_ via its REST API
+* Command-line tool to query the `Clinical Interpretation of Variants in Cancer (CIViC) Knowledgebase <https://civicdb.org/>`_ using CIViCpy <https://docs.civicpy.org/en/latest/>`_ 
 
 Credits
 -------
