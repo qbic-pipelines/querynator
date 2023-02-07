@@ -9,7 +9,7 @@ import click
 import requests
 
 import querynator
-from querynator.query_api import query_cgi
+from querynator.query_api import query_cgi, query_civic
 
 # Create logger
 logger = logging.getLogger("Querynator")
@@ -21,6 +21,7 @@ ch.setFormatter(formatter)
 # add ch to logger
 logger.addHandler(ch)
 logger.setLevel(logging.INFO)
+logger.propagate = False
 
 
 class EnumType(click.Choice):
@@ -97,7 +98,7 @@ def run_querynator():
 def querynator_cli():
     """
     querynator is a command-line tool to query cancer variant databases.
-    It can query the web APIs or local instances of the databases
+    It can query web APIs or local instances of the databases
     """
 
     logger.info("Start")
@@ -131,7 +132,11 @@ def querynator_cli():
     help="Output name for output files - i.e. sample name. Extension filled automatically",
 )
 @click.option(
-    "-c", "--cancer", help="Please enter the cancer type to be searched", type=EnumType(Cancer()), show_default=False
+    "-c",
+    "--cancer",
+    help="Please enter the cancer type to be searched. You must use quotation marks.",
+    type=EnumType(Cancer()),
+    show_default=False,
 )
 @click.option(
     "-g",
@@ -157,7 +162,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     Command to query the cancergenomeinterpreter API
 
     :param mutations: Variant file (vcf,tsv,gtf,hgvs)
-    :type mutations: str
+    :type mutations: strs
     :param cnas: File with copy number alterations
     :type cnas: str
     :param translocations: File with translocations
@@ -171,7 +176,6 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     :param logger: prints info to console
     :param output: sample name
     :type output: str
-
     """
 
     if mutations is None and cnas is None and translocations is None:
@@ -186,6 +190,39 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 
     except FileNotFoundError:
         print("Cannot find file on disk. Please try another path.")
+
+
+# querynator civic_api
+@querynator_cli.command()
+@click.option(
+    "-v",
+    "--vcf",
+    help="Please provide the path to a Variant Call Format (VCF) file (Version 4.2)",
+    required=True,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-o",
+    "--output",
+    required=True,
+    type=click.STRING,
+    help="Output name for output files - i.e. sample name. Extension filled automatically",
+)
+def query_api_civic(vcf, output):
+    """
+    Command to query the CIViC API
+
+    :param vcf: Variant Call Format (VCF) file (Version 4.2)
+    :type vcf: str
+    :param output: Name for directory in which result-table will be stored
+    :type output: str
+    """
+
+    try:
+        logger.info("Querying the Clinical Interpretations of Variants In Cancer (CIViC)")
+        query_civic(vcf, output, logger)
+    except FileNotFoundError:
+        print("The provided file cannot be found. Please try another path.")
 
 
 if __name__ == "__main__":
