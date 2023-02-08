@@ -291,7 +291,7 @@ def get_positional_information_from_coord_obj(coord_obj):
     :return: Dictionary with positional information for respective CIViC variant object
     :rtype: dict
     """
-    return {"chr": coord_obj[0], "start": coord_obj[1], "stop": coord_obj[2], "alt": coord_obj[3], "ref": coord_obj[4]}
+    return {"chr": coord_obj[0], "start": coord_obj[1], "stop": coord_obj[2], "ref": coord_obj[4], "alt": coord_obj[3]}
 
 
 def concat_dicts(coord_obj, variant_obj):
