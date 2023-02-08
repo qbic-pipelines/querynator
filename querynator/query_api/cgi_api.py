@@ -41,7 +41,7 @@ def gunzip_compressed_files(file_path, logger):
     logger.info(f"Unzipping input file ({os.path.basename(os.path.normpath(file_path))})")
 
     if not file_path.endswith(".gz"):
-        logger.error("Given File does not end with '.gz'")
+        logger.error("Given file does not end with '.gz'")
         exit(1)
     else:
         with gzip.open(file_path, "rb") as f_in:
