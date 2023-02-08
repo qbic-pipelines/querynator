@@ -61,11 +61,10 @@ def get_coordinates_from_vcf(vcf_path, build, logger):
     :rtype: list
     """
 
-    # still needs some testing with known examples!!
     coord_list = []
     for record in pysam.VariantFile(vcf_path):
         for alt_base in record.alts:
-            # INSERTION (not sure if alt is assigned 100% correct)
+            # INSERTION
             if len(record.ref) < len(alt_base):
                 coord_list.append(
                     civic.CoordinateQuery(
