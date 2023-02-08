@@ -162,7 +162,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     Command to query the cancergenomeinterpreter API
 
     :param mutations: Variant file (vcf,tsv,gtf,hgvs)
-    :type mutations: strs
+    :type mutations: str
     :param cnas: File with copy number alterations
     :type cnas: str
     :param translocations: File with translocations
