@@ -1,6 +1,20 @@
 Changelog
 ============
 
+0.2.0 - Sour Venus  (2023-02-07)
+---------------------------------------------
+
+**Added**
+
+* Added functionality to query the Clinical Interpretation of Variants in Cancer (CIViC) Knowledgebase
+* Added possibility to query bgzipped files
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
 0.1.3 - Diamond Neptune  (2022-11-21)
 ---------------------------------------------
 
