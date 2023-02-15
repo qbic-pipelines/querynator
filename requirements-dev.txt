@@ -9,7 +9,7 @@ requests==2.28.1
 requests-cache==0.9.6
 prettier
 pip==22.3
-python>=3.8, <3.11
+python>=3.8,<3.11
 pandas==1.4.4
 numpy==1.23.3
 civicpy==3.0.0
