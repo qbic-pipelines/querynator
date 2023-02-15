@@ -20,7 +20,7 @@ test_requirements = [
 setup(
     author="Susanne Jodoin, Mark Polster",
     author_email="susanne.jodoin@qbic.uni-tuebingen.de, mark.polster@uni-tuebingen.de",
-    python_requires=">=3.8",
+    python_requires=">=3.8,<3.11",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
