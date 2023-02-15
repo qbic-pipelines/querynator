@@ -29,7 +29,7 @@ jobs:
       - name: Install python dependencies
         run: |
           pip install --upgrade pip
-          pip install -r docs/requirements.txt
+          pip install -r docs/requirements.txt requirements.txt
           pip install .
 
       - name: Build HTML docs
