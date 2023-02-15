@@ -158,7 +158,6 @@ def querynator_cli():
     default=None,
 )
 def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output):
-
     if mutations is None and cnas is None and translocations is None:
         raise click.UsageError(
             "No input file provided. Please provide at least one of [mutations/cnas/translocations] as input."
@@ -190,7 +189,6 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     help="Output name for output files - i.e. sample name. Extension filled automatically",
 )
 def query_api_civic(vcf, output):
-
     try:
         logger.info("Querying the Clinical Interpretations of Variants In Cancer (CIViC)")
         query_civic(vcf, output, logger)
