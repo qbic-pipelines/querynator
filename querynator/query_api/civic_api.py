@@ -21,7 +21,7 @@ civic.load_cache()
 
 def check_vcf_input(vcf_path, logger):
     """
-    Checks whether input is vcf-file.
+    Checks whether input is vcf-file with all necessary columns.
 
     :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
     :type vcf_path: str
@@ -45,8 +45,19 @@ def check_vcf_input(vcf_path, logger):
             logger.error(f"vcf file requires header column!")
             exit(1)
 
+def vcf_file(vcf_path):
+    """
+    Checks whether input is vcf-file.
 
-def get_coordinates_from_vcf(vcf_path, build, logger):
+    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
+    :type vcf_path: str
+    :return: None
+    """
+    if vcf_path.endswith(".vcf") or vcf_path.endswith(".vcf.gz"):
+        return True
+    else: return False
+
+def get_coordinates_from_vcf(vcf, build, logger):
     """
     Read in vcf file using "pysam",
     creates CoordinateQuery objects for each variant .
@@ -61,8 +72,14 @@ def get_coordinates_from_vcf(vcf_path, build, logger):
     :rtype: list
     """
 
+    if type(vcf) == list:
+        variant_file = vcf
+    else:
+        if vcf_file(vcf):
+            variant_file = pysam.VariantFile(vcf)
+
     coord_list = []
-    for record in pysam.VariantFile(vcf_path):
+    for record in variant_file:
         for alt_base in record.alts:
             # INSERTION
             if len(record.ref) < len(alt_base):
@@ -332,10 +349,10 @@ def create_civic_results(variant_list, out_path, logger):
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
     try:
-        civic_result_df.to_csv(f"{out_path}/civic_results.tsv", sep="\t", index=False)
+        civic_result_df.to_csv(f"{out_path}/{out_path}_civic_results.tsv", sep="\t", index=False)
     except OSError:
         os.mkdir(out_path)
-        civic_result_df.to_csv(f"{out_path}/civic_results.tsv", sep="\t", index=False)
+        civic_result_df.to_csv(f"{out_path}/{out_path}_civic_results.tsv", sep="\t", index=False)
 
 
 def sort_coord_list(coord_list):
@@ -365,18 +382,17 @@ def add_civic_metadata(out_path):
         f.close()
 
 
-def query_civic(vcf_path, out_path, logger):
+def query_civic(vcf, out_path, filter_vep, logger):
     """
     Command to query the CIViC API
 
-    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
-    :type vcf_path: str
+    :param vcf: Variant Call Format (VCF) file (Version 4.2) or list of pysam variants
+    :type vcf: str or list
     :param out_path: Name for directory in which result-table will be stored
     :type out_path: str
 
     """
-
-    coord_list = get_coordinates_from_vcf(vcf_path, "GRCh37", logger)
+    coord_list = get_coordinates_from_vcf(vcf, "GRCh37", logger)
 
     # list needs to be sorted for bulk search
     sort_coord_list(coord_list)

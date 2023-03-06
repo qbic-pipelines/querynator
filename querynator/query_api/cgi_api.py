@@ -152,7 +152,7 @@ def status_done(url, headers, logger):
         if log["status"] == "Error":
             logger.exception("An Error has occurred with your request. Please check your input format")
             raise SystemExit()
-        if counter == 5:
+        if counter == 20:
             print("Query took too looong :-(")
             break
         time.sleep(60)
