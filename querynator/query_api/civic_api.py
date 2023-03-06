@@ -349,10 +349,10 @@ def create_civic_results(variant_list, out_path, logger):
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
     try:
-        civic_result_df.to_csv(f"{out_path}/{out_path}_civic_results.tsv", sep="\t", index=False)
+        civic_result_df.to_csv(f"{out_path}/{out_path}.civic_results.tsv", sep="\t", index=False)
     except OSError:
         os.mkdir(out_path)
-        civic_result_df.to_csv(f"{out_path}/{out_path}_civic_results.tsv", sep="\t", index=False)
+        civic_result_df.to_csv(f"{out_path}/{out_path}.civic_results.tsv", sep="\t", index=False)
 
 
 def sort_coord_list(coord_list):
