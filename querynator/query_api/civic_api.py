@@ -12,7 +12,7 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-# load the civic cache (necessary to run bulk analysis)
+# load the civic cache (necessary for bulk run)
 civic.load_cache()
 
 
