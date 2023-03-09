@@ -2,12 +2,12 @@
 import json
 import logging
 import os
-import sys
+import random
 from enum import Enum
 
 import click
-import requests
-import pysam
+import vcf
+from vcf.parser import _Info as VcfInfo, field_counts as vcf_field_counts
 import shutil
 
 import querynator
@@ -107,15 +107,15 @@ def filter_vcf_by_vep(vcf_path):
         logger.error("Can only filter variants in vcf files.")
         exit(1)
     
-    # read vcf file in pysam
-    in_vcf = pysam.VariantFile(vcf_path)
+    # read vcf file in pyVCF
+    in_vcf = vcf.Reader(open(vcf_path))
 
     # creates dictionary with VEP info names as keys and index in list as columns
     # Name must be VEPs default "CSQ"
-    if  "CSQ" in in_vcf.header.info:
+    if  "CSQ" in in_vcf.infos:
         logger.info("Filtering vcf file")
 
-        vep_dict = {name : pos for pos, name in enumerate(in_vcf.header.info["CSQ"].description.split(":")[1].strip().split("|"))}
+        vep_dict = {name : pos for pos, name in enumerate(in_vcf.infos["CSQ"].desc.split(":")[1].strip().split("|"))}
         '''
         Exemplary for nf-core/sarek (https://nf-co.re/sarek) output 
         {'Allele': 0,
@@ -188,29 +188,33 @@ def filter_vcf_by_vep(vcf_path):
         'MOTIF_SCORE_CHANGE': 67,
         'TRANSCRIPTION_FACTORS': 68}
         '''
-        
+
         to_remove = []
         to_keep = []
         for record in in_vcf:
-            if len(record.info["CSQ"]) > 1:
-                if all(info_list[vep_dict['IMPACT']] == 'LOW' and info_list[vep_dict['Consequence']] == "synonymous_variant" for info_list in [i.split("|") for i in record.info["CSQ"]]):
+            if len(record.INFO["CSQ"]) > 1:
+                if all(info_list[vep_dict['IMPACT']] == 'LOW' and info_list[vep_dict['Consequence']] == "synonymous_variant" for info_list in [i.split("|") for i in record.INFO["CSQ"]]):
                     to_remove.append(record)
                 else:
                     to_keep.append(record)
             else:
-                if record.info["CSQ"][0].split("|")[vep_dict['IMPACT']] == 'LOW' and record.info["CSQ"][0].split("|")[vep_dict['Consequence']] == "synonymous_variant":
+                if record.INFO["CSQ"][0].split("|")[vep_dict['IMPACT']] == 'LOW' and record.INFO["CSQ"][0].split("|")[vep_dict['Consequence']] == "synonymous_variant":
                     to_remove.append(record)
                 else:
                     to_keep.append(record)
         
-        return [in_vcf.header, to_keep, to_remove]        
+        return [in_vcf, to_keep, to_remove]        
     
     else:
-        logger.error("vcf file does not include required VEP INFO files (key must be default 'CSQ')")
+        logger.error("vcf file does not include required VEP INFO fields (key must be default 'CSQ')")
         exit(1)
 
 
-def write_vcf(vcf_header, vcf_record_list, out_name):
+def add_querynator_id(vcf_record_list):
+    pass
+
+
+def write_vcf(vcf_template, vcf_record_list, out_name):
     """
     writes a vcf file from list of pysam records to current directory 
 
@@ -224,9 +228,17 @@ def write_vcf(vcf_header, vcf_record_list, out_name):
     if not os.path.isdir("vcf_files"):
         os.mkdir("vcf_files")
 
-    vcf_out = pysam.VariantFile(f"vcf_files/{out_name}", "w", header=vcf_header)
-    [vcf_out.write(record) for record in vcf_record_list]
-    vcf_out.close()
+    #vcf_out = pysam.VariantFile(f"vcf_files/{out_name}", "w", header=vcf_header)
+    #[vcf_out.write(record) for record in vcf_record_list]
+    #vcf_out.close()
+
+    vcf_template.infos['QID'] = VcfInfo('CIQ', ".", str, "Querynator ID", '.','.','.')
+
+    writer = vcf.Writer(open(f"vcf_files/{out_name}", "w"), vcf_template, lineterminator="\n")
+
+    for record in vcf_record_list:
+        record.add_info('QID',random.randint(1000000,9999999))
+        writer.write_record(record)
 
 def run_querynator():
     print("\n                                           __ ")
@@ -326,8 +338,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
             write_vcf(in_vcf_header, removed_variants, f"{output}.removed_variants.vcf")
             # create and set new input file for cgi query
             write_vcf(in_vcf_header, candidate_variants, f"{output}.filtered_variants.vcf")
-            print(mutations)
-            mutations = f"vcf_files/{output}_filtered_variants.vcf"
+            mutations = f"vcf_files/{output}.filtered_variants.vcf"
              
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}
@@ -388,6 +399,7 @@ def query_api_civic(vcf, output, filter_vep):
             
         else:
             query_civic(vcf, output, filter_vep, logger)
+
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")
 

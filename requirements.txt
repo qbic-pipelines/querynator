@@ -7,5 +7,5 @@ requests
 requests-cache
 pandas
 numpy
-pysam>=0.20.0
 civicpy==3.0.0
+pyvcf3~=1.0.3

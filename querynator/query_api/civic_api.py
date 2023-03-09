@@ -3,16 +3,13 @@
 import warnings
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
-import gzip
-import io
 import os
-import shutil
 from datetime import date
 
 import civicpy
 import numpy as np
 import pandas as pd
-import pysam
+import vcf
 from civicpy import civic
 
 # load the civic cache (necessary to run bulk analysis)
@@ -59,7 +56,7 @@ def vcf_file(vcf_path):
 
 def get_coordinates_from_vcf(vcf, build, logger):
     """
-    Read in vcf file using "pysam",
+    Read in vcf file using "pyVCF3",
     creates CoordinateQuery objects for each variant .
     This function does find (ref-alt):
     SNPs (A-T)
@@ -76,52 +73,56 @@ def get_coordinates_from_vcf(vcf, build, logger):
         variant_file = vcf
     else:
         if vcf_file(vcf):
-            variant_file = pysam.VariantFile(vcf)
+            variant_file = vcf.Reader(open(vcf))
 
-    coord_list = []
+    coord_dict = {}
+    id_list = []
     for record in variant_file:
-        for alt_base in record.alts:
+        # save records querynator ID in list
+        # id_list.append(record.INFO["QID"])
+        querynator_id = record.INFO["QID"]
+        for alt_base in record.ALT:
             # INSERTION
-            if len(record.ref) < len(alt_base):
-                coord_list.append(
+            if len(record.REF) < len(alt_base):
+                coord_dict.update({
                     civic.CoordinateQuery(
-                        chr=str(record.chrom),
+                        chr=str(record.CHROM),
                         start=int(record.start) + 1,
                         stop=int(record.start) + 2,
-                        alt=alt_base[1:],
+                        alt=str(alt_base)[1:],
                         ref="",
                         build=build,
-                    )
+                    ) : querynator_id}
                 )
             # DELETION
-            elif len(record.ref) > len(alt_base) and len(alt_base) == 1:
-                coord_list.append(
+            elif len(record.REF) > len(alt_base) and len(alt_base) == 1:
+                coord_dict.update({
                     civic.CoordinateQuery(
-                        chr=str(record.chrom),
+                        chr=str(record.CHROM),
                         start=int(record.start) + 1,
-                        stop=int(record.stop),
+                        stop=int(record.end),
                         alt="",
-                        ref=record.ref,
+                        ref=record.REF,
                         build=build,
-                    )
+                    ) : querynator_id}
                 )
             # SNPs, DelIns
             else:
-                coord_list.append(
+                coord_dict.update({
                     civic.CoordinateQuery(
-                        chr=str(record.chrom),
+                        chr=str(record.CHROM),
                         start=int(record.start) + 1,
-                        stop=int(record.stop),
-                        alt=alt_base,
-                        ref=record.ref,
+                        stop=int(record.end),
+                        alt=str(alt_base),
+                        ref=record.REF,
                         build=build,
-                    )
+                    ) : querynator_id}
                 )
 
-    return coord_list
+    return coord_dict
 
 
-def access_civic_by_coordinate(coord_list):
+def access_civic_by_coordinate(coord_dict):
     """
     Query CIViC API for individual variants
 
@@ -130,18 +131,25 @@ def access_civic_by_coordinate(coord_list):
     :return: List of CIViC variant objects of successfully queried variants
     :rtype: list
     """
-    coord_list.sort()
+
+    # split list into coordinates and ids
+
+    # for i,j in zip(coords, ids):
+    #     print(i,j)
 
     # bulk search to quickly focus on variants found in the civic-db
     # time-intensive search must then only be done for variants that will be hits
-    bulk = civic.bulk_search_variants_by_coordinates(coord_list, search_mode="exact")
+    bulk = civic.bulk_search_variants_by_coordinates(list(coord_dict.keys()), search_mode="exact")
+    # reconnect passed coordinates from bulk search and respective IDs
+    bulk_filtered_dict = {key: coord_dict[key] for key in bulk}
 
     # actual search for each variant
     variant_list = []
-    for coord_obj in bulk.keys():
+    for coord_obj, querynator_id in bulk_filtered_dict.items():
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
-        if len(coord_obj) > 0:
-            variant_list.append([coord_obj, variant])
+        if len(variant) > 0:
+            for variant_obj in variant:
+                variant_list.append([{coord_obj:querynator_id}, [variant_obj]])
 
     return variant_list
 
@@ -157,13 +165,13 @@ def get_variant_information_from_variant(variant_obj):
     """
     return {
         "variant_name": variant_obj.name,
-        "variant_aliases": variant_obj.aliases,
-        "variant_type": [i.name for i in variant_obj.types],
-        "variant_clinvar_entries": variant_obj.clinvar_entries,
+        "variant_aliases": ', '.join(variant_obj.aliases),
+        "variant_type": ', '.join([i.name for i in variant_obj.types]),
+        "variant_clinvar_entries": ', '.join(variant_obj.clinvar_entries),
         "variant_entrez_id": variant_obj.entrez_id,
         "variant_entrez_name": variant_obj.entrez_name,
-        "variant_hgvs_expressions": variant_obj.hgvs_expressions,
-        "variant_groups": [i.name for i in variant_obj.variant_groups],
+        "variant_hgvs_expressions": ', '.join(variant_obj.hgvs_expressions),
+        "variant_groups": ', '.join([i.name for i in variant_obj.variant_groups]),
     }
 
 
@@ -200,10 +208,10 @@ def get_gene_information_from_variant(variant_obj):
     gene = variant_obj.gene
     return {
         "gene_name": gene.name,
-        "gene_aliases": gene.aliases,
+        "gene_aliases": ', '.join(gene.aliases),
         "gene_description": gene.description,
         "gene_entrez_id": gene.entrez_id,
-        "gene_source": [i.name for i in gene.sources],
+        "gene_source": ', '.join([i.name for i in gene.sources]),
     }
 
 
@@ -220,17 +228,23 @@ def get_assertion_information_from_variant(variant_obj):
         assertion = variant_obj.molecular_profiles[0].assertions[0]
         assertion_dict = {
             "assertion_name": assertion.name,
-            "assertion_acmg_codes": assertion.acmg_codes,
+            "assertion_acmg_codes": ', '.join([i.code for i in assertion.acmg_codes]),
+            "assertion_acmg_codes_description": ', '.join([i.description for i in assertion.acmg_codes]),
             "assertion_amp_level": assertion.amp_level,
             "assertion_direction": assertion.assertion_direction,
             "assertion_type": assertion.assertion_type,
             "assertion_description": assertion.description,
-            "assertion_disease": assertion.disease,
-            "assertion_phenotypes": [i.name for i in assertion.phenotypes],
+            "assertion_disease_name": ', '.join([i.name for i in assertion.disease]),
+            "assertion_disease_doid": ', '.join([i.doid for i in assertion.disease]),
+            "assertion_disease_url": ', '.join([i.disease_url for i in assertion.disease]),
+            "assertion_disease_aliases": ', '.join([i.aliases for i in assertion.disease]),
+            "assertion_phenotypes": ', '.join([i.name for i in assertion.phenotypes]),
             "assertion_significance": assertion.significance,
             "assertion_status": assertion.status,
             "assertion_summary": assertion.summary,
-            "assertion_therapies": [i.name for i in assertion.therapies],
+            "assertion_therapies_name": ', '.join([i.name for i in assertion.therapies]),
+            "assertion_therapies_ncit_id": ', '.join([i.ncit_id for i in assertion.therapies]),
+            "assertion_therapies_aliases": ', '.join([', '.join(i.aliases) for i in assertion.therapies]),
             "assertion_therapy_interaction_type": assertion.therapy_interaction_type,
             "assertion_variant_origin": assertion.variant_origin,
         }
@@ -238,16 +252,22 @@ def get_assertion_information_from_variant(variant_obj):
         assertion_dict = {
             "assertion_name": np.nan,
             "assertion_acmg_codes": np.nan,
+            "assertion_acmg_codes_description": np.nan,
             "assertion_amp_level": np.nan,
             "assertion_direction": np.nan,
             "assertion_type": np.nan,
             "assertion_description": np.nan,
-            "assertion_disease": np.nan,
+            "assertion_disease_name":np.nan,
+            "assertion_disease_doid": np.nan,
+            "assertion_disease_url": np.nan,
+            "assertion_disease_aliases": np.nan,
             "assertion_phenotypes": np.nan,
             "assertion_significance": np.nan,
             "assertion_status": np.nan,
             "assertion_summary": np.nan,
             "assertion_therapies": np.nan,
+            "assertion_therapies_ncit_id": np.nan,
+            "assertion_therapies_aliases": np.nan,
             "assertion_therapy_interaction_type": np.nan,
             "assertion_variant_origin": np.nan,
         }
@@ -272,12 +292,12 @@ def get_evidence_information_from_variant(variant_obj):
             "evidence_level": evidence.evidence_level,
             "evidence_support": evidence.evidence_direction,
             "evidence_type": evidence.evidence_type,
-            "evidence_phenotypes": [i.name for i in evidence.phenotypes],
+            "evidence_phenotypes": ', '.join([i.name for i in evidence.phenotypes]),
             "evidence_rating": evidence.rating,
             "evidence_significance": evidence.significance,
             "evidence_source": evidence.source,
             "evidence_status": evidence.status,
-            "evidence_therapies": [i.name for i in evidence.therapies],
+            "evidence_therapies": ', '.join([i.name for i in evidence.therapies]),
             "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
         }
     except IndexError:
@@ -310,8 +330,19 @@ def get_positional_information_from_coord_obj(coord_obj):
     """
     return {"chr": coord_obj[0], "start": coord_obj[1], "stop": coord_obj[2], "ref": coord_obj[4], "alt": coord_obj[3]}
 
+def get_querynator_id(querynator_id):
+    """
+    Get the querynator id in dict format
 
-def concat_dicts(coord_obj, variant_obj):
+    :param querynator_id: Querynator id
+    :type querynator_id: str
+    :return: Dictionary of querynator id for respective CIViC variant object
+    :rtype: dict
+    """
+    return {"querynator_id" : querynator_id}
+
+
+def concat_dicts(coord_id_dict, variant_obj):
     """
     Create and combine different dictionaries created for single CIViC variant object
 
@@ -322,14 +353,15 @@ def concat_dicts(coord_obj, variant_obj):
     :return: Dictionary with all information for respective CIViC variant object
     :rtype: dict
     """
-    coordinates_info = get_positional_information_from_coord_obj(coord_obj)
+    coordinates_info = get_positional_information_from_coord_obj(list(coord_id_dict.keys())[0])
+    querynator_id_info = get_querynator_id(coord_id_dict[list(coord_id_dict.keys())[0]])
     variant_info = get_variant_information_from_variant(variant_obj[0])
     gene_info = get_gene_information_from_variant(variant_obj[0])
     mol_profile_info = get_molecular_profile_information_from_variant(variant_obj[0])
     assertion_info = get_assertion_information_from_variant(variant_obj[0])
     evidence_info = get_evidence_information_from_variant(variant_obj[0])
 
-    return coordinates_info | variant_info | gene_info | mol_profile_info | assertion_info | evidence_info
+    return {**coordinates_info,  **querynator_id_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
 
 
 def create_civic_results(variant_list, out_path, logger):
@@ -343,8 +375,8 @@ def create_civic_results(variant_list, out_path, logger):
     :type out_path: str
     """
     civic_result_df = pd.DataFrame()
-    for coord_obj, variant in variant_list:
-        civic_result_df = civic_result_df.append(concat_dicts(coord_obj, variant), ignore_index=True)
+    for coord_id_dict, variant in variant_list:
+        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant), ignore_index=True)
 
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
@@ -355,7 +387,7 @@ def create_civic_results(variant_list, out_path, logger):
         civic_result_df.to_csv(f"{out_path}/{out_path}.civic_results.tsv", sep="\t", index=False)
 
 
-def sort_coord_list(coord_list):
+def sort_coord_list(coord_dict):
     """
     Sort the input list to the bulk search
 
@@ -364,7 +396,8 @@ def sort_coord_list(coord_list):
     :return: sorted coord_list
     :rtype: list
     """
-    return sorted(coord_list, key=lambda x: (int(x[0]) if x[0] != "X" else np.inf, x[1], x[2]))
+    return {key: value for key, value in sorted(coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))}
+    #return sorted(coord_list, key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))
 
 
 def add_civic_metadata(out_path):
@@ -386,19 +419,19 @@ def query_civic(vcf, out_path, filter_vep, logger):
     """
     Command to query the CIViC API
 
-    :param vcf: Variant Call Format (VCF) file (Version 4.2) or list of pysam variants
+    :param vcf: Variant Call Format (VCF) file (Version 4.2) or list of pyVCF3 variant records
     :type vcf: str or list
     :param out_path: Name for directory in which result-table will be stored
     :type out_path: str
 
     """
-    coord_list = get_coordinates_from_vcf(vcf, "GRCh37", logger)
+    coord_dict = get_coordinates_from_vcf(vcf, "GRCh37", logger)
 
-    # list needs to be sorted for bulk search
-    sort_coord_list(coord_list)
+    # coordinates needs to be sorted for bulk search
+    coord_dict = sort_coord_list(coord_dict)
 
     # create result table
-    create_civic_results(access_civic_by_coordinate(coord_list), out_path, logger)
+    create_civic_results(access_civic_by_coordinate(coord_dict), out_path, logger)
     add_civic_metadata(out_path)
 
     logger.info("CIViC Analysis done")
