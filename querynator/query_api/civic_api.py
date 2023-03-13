@@ -1,8 +1,8 @@
 """ Query the Clinical Interpretations of Variants In Cancer (CIViC) API via its python tool CIViCPY"""
 
 import warnings
-
 warnings.simplefilter(action="ignore", category=FutureWarning)
+
 import os
 from datetime import date
 
@@ -131,11 +131,6 @@ def access_civic_by_coordinate(coord_dict):
     :return: List of CIViC variant objects of successfully queried variants
     :rtype: list
     """
-
-    # split list into coordinates and ids
-
-    # for i,j in zip(coords, ids):
-    #     print(i,j)
 
     # bulk search to quickly focus on variants found in the civic-db
     # time-intensive search must then only be done for variants that will be hits
@@ -381,10 +376,10 @@ def create_civic_results(variant_list, out_path, logger):
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
     try:
-        civic_result_df.to_csv(f"{out_path}/{out_path}.civic_results.tsv", sep="\t", index=False)
+        civic_result_df.to_csv(f"{out_path}/{os.path.basename(out_path)}.civic_results.tsv", sep="\t", index=False)
     except OSError:
         os.mkdir(out_path)
-        civic_result_df.to_csv(f"{out_path}/{out_path}.civic_results.tsv", sep="\t", index=False)
+        civic_result_df.to_csv(f"{out_path}/{os.path.basename(out_path)}.civic_results.tsv", sep="\t", index=False)
 
 
 def sort_coord_list(coord_dict):
