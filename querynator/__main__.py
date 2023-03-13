@@ -195,11 +195,13 @@ def filter_vcf_by_vep(vcf_path, logger):
         to_keep = []
         for record in in_vcf:
             if len(record.INFO["CSQ"]) > 1:
+                # filter out low impact & synonymous variants from variants with multiple vep annotations
                 if all(info_list[vep_dict['IMPACT']] == 'LOW' and info_list[vep_dict['Consequence']] == "synonymous_variant" for info_list in [i.split("|") for i in record.INFO["CSQ"]]):
                     to_remove.append(record)
                 else:
                     to_keep.append(record)
             else:
+                # filter out low impact & synonymous variants from variants with single vep annotations
                 if record.INFO["CSQ"][0].split("|")[vep_dict['IMPACT']] == 'LOW' and record.INFO["CSQ"][0].split("|")[vep_dict['Consequence']] == "synonymous_variant":
                     to_remove.append(record)
                 else:
@@ -214,7 +216,7 @@ def filter_vcf_by_vep(vcf_path, logger):
 
 def write_vcf(vcf_template, vcf_record_list, out_name):
     """
-    Function to write a vcf file from list of pyvcf3 records to current directory 
+    Function to write a vcf file from list of pyvcf3 records to result directory
 
     :param vcf_header: pysam header object from input vcf
     :type vcf_header: pysam header object
@@ -226,17 +228,32 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
     if not os.path.isdir("vcf_files"):
         os.mkdir("vcf_files")
 
-    #vcf_out = pysam.VariantFile(f"vcf_files/{out_name}", "w", header=vcf_header)
-    #[vcf_out.write(record) for record in vcf_record_list]
-    #vcf_out.close()
-
     vcf_template.infos['QID'] = VcfInfo('QID', ".", str, "Querynator ID", '.','.','.')
-    writer = vcf.Writer(open(f"vcf_files/{out_name}", "w"), vcf_template, lineterminator="\n")
+    writer = vcf.Writer(open(f"{out_name}", "w"), vcf_template, lineterminator="\n")
 
     for record in vcf_record_list:
         # add querynator id to record
         record.add_info('QID',random.randint(1000000,9999999))
         writer.write_record(record)
+
+def unique_querynator_dir(querynator_output):
+    """
+    add index if "querynator_results" already exists in user given out dir
+    
+    :param output: path to store querynator results
+    :type output: str
+    """
+    filename, extension = os.path.splitext(querynator_output)
+
+    #filename = os.path.basename(output)
+    count = 1
+    while os.path.exists(querynator_output):
+        querynator_output = filename + f"_{count}"
+        count += 1
+    
+    #os.mkdirs(f"{querynator_output}/querynator_results")
+    return querynator_output
+
 
 def run_querynator():
     print("\n                                           __ ")
@@ -330,25 +347,39 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
         )
 
     try:
+        dirname, basename = os.path.split(output)
         # filter vcf file if required
         if mutations is not None and filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(mutations, logger)
-            write_vcf(in_vcf_header, removed_variants, f"{os.path.basename(output)}.removed_variants.vcf")
+            # create result directories
+            result_dir = unique_querynator_dir(f"{output}")
+            os.makedirs(f"{result_dir}/vcf_files")
+
+            write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
+            write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
             # create and set new input file for cgi query
-            write_vcf(in_vcf_header, candidate_variants, f"{os.path.basename(output)}.filtered_variants.vcf")
-            mutations = f"vcf_files/{os.path.basename(output)}.filtered_variants.vcf"
+            mutations = f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf"
              
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}
         query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output)
 
-        if filter_vep:
-            # move removed and filtered vcf files to result directory
-            if not os.path.isdir(f"{output}.cgi_results/vcf_files"):
-                os.mkdir(f"{output}.cgi_results/vcf_files")
+        # move downloaded results to result dir
+        if dirname != "":
+            shutil.move(f"{dirname}/{basename}.cgi_results", result_dir)
+            shutil.move(f"{dirname}/{basename}.cgi_results.zip", result_dir)
+        else:
+            shutil.move(f"{basename}.cgi_results", result_dir)
+            shutil.move(f"{basename}.cgi_results.zip", result_dir)
+
+
+        # if filter_vep:
+        #     # move removed and filtered vcf files to result directory
+        #     if not os.path.isdir(f"{output}.cgi_results/vcf_files"):
+        #         os.mkdir(f"{output}.cgi_results/vcf_files")
                 
-            shutil.move(f"vcf_files/{os.path.basename(output)}.removed_variants.vcf", f"{output}.cgi_results/vcf_files/{os.path.basename(output)}.removed_variants.vcf")
-            shutil.move(f"vcf_files/{os.path.basename(output)}.filtered_variants.vcf", f"{output}.cgi_results/vcf_files/{os.path.basename(output)}.filtered_variants.vcf")
+        #     shutil.move(f"vcf_files/{os.path.basename(output)}.removed_variants.vcf", f"{output}.cgi_results/vcf_files/{os.path.basename(output)}.removed_variants.vcf")
+        #     shutil.move(f"vcf_files/{os.path.basename(output)}.filtered_variants.vcf", f"{output}.cgi_results/vcf_files/{os.path.basename(output)}.filtered_variants.vcf")
 
 
     except FileNotFoundError:
@@ -381,20 +412,24 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 )
 def query_api_civic(vcf, output, filter_vep):
     try:
+        dirname, basename = os.path.split(output)
         if filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
-            print(os.path.basename(output))
-            write_vcf(in_vcf_header, removed_variants, f"{os.path.basename(output)}.removed_variants.vcf")
-            write_vcf(in_vcf_header, candidate_variants, f"{os.path.basename(output)}.filtered_variants.vcf")
+            # create result directories
+            result_dir = unique_querynator_dir(f"{output}")
+            os.makedirs(f"{result_dir}/vcf_files")
+
+            write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
+            write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
 
             logger.info("Querying the Clinical Interpretations of Variants In Cancer (CIViC)")
-            query_civic(candidate_variants, output, filter_vep, logger)
+            query_civic(candidate_variants, result_dir, filter_vep, logger)
 
-            # move removed and filtered vcf files to result directory
-            if not os.path.isdir(f"{output}/vcf_files"):
-                os.mkdir(f"{output}/vcf_files")
-            shutil.move(f"vcf_files/{os.path.basename(output)}.removed_variants.vcf", f"{output}/vcf_files/{os.path.basename(output)}.removed_variants.vcf")
-            shutil.move(f"vcf_files/{os.path.basename(output)}.filtered_variants.vcf", f"{output}/vcf_files/{os.path.basename(output)}.filtered_variants.vcf")
+            # # move removed and filtered vcf files to result directory
+            # if not os.path.isdir(f"{output}/vcf_files"):
+            #     os.mkdir(f"{output}/vcf_files")
+            # shutil.move(f"vcf_files/{os.path.basename(output)}.removed_variants.vcf", f"{output}/vcf_files/{os.path.basename(output)}.removed_variants.vcf")
+            # shutil.move(f"vcf_files/{os.path.basename(output)}.filtered_variants.vcf", f"{output}/vcf_files/{os.path.basename(output)}.filtered_variants.vcf")
             
         else:
             query_civic(vcf, output, filter_vep, logger)

@@ -248,7 +248,7 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
     :type output: str
 
     """
-
+    
     # unzip files if necessary
     input_files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
     for key, file_path in input_files.items():
