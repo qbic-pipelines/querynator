@@ -1,6 +1,24 @@
 Changelog
 ============
 
+0.2.2 - Sour Venus  (2023-03-16)
+---------------------------------------------
+
+**Added**
+
+* optional VEP annotation based filtering
+* additional metadata 
+* usage of pyVCF3 to read vcf files 
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+* usage of pysam to read vcf files
+
+
 0.2.1 - Sour Venus  (2023-02-16)
 ---------------------------------------------
 

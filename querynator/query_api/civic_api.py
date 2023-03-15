@@ -68,7 +68,7 @@ def get_coordinates_from_vcf(input, build):
     :type input: list or str
     :param build: Genome build version, currently only GRCh37 allowed
     :type build: str
-    :return: List of CoordinateQuery objects
+    :return: CoordinateQuery objects
     :rtype: list
     """
     if type(input) == list:
@@ -131,7 +131,7 @@ def access_civic_by_coordinate(coord_dict):
 
     :param coord_list: List of CoordinateQuery objects
     :type coord_list: list
-    :return: List of CIViC variant objects of successfully queried variants
+    :return: CIViC variant objects of successfully queried variants
     :rtype: list
     """
 
@@ -159,7 +159,7 @@ def get_variant_information_from_variant(variant_obj):
 
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :return: Dictionary with variant information for respective CIViC variant object
+    :return: Variant information for respective CIViC variant object
     :rtype: dict
     """
     return {
@@ -180,7 +180,7 @@ def get_molecular_profile_information_from_variant(variant_obj):
 
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :return: Dictionary with molecular profile information for respective CIViC variant object
+    :return: Molecular profile information for respective CIViC variant object
     :rtype: dict
     """
     try:
@@ -201,7 +201,7 @@ def get_gene_information_from_variant(variant_obj):
 
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :return: Dictionary with gene information for respective CIViC variant object
+    :return: Gene information for respective CIViC variant object
     :rtype: dict
     """
     gene = variant_obj.gene
@@ -220,7 +220,7 @@ def get_assertion_information_from_variant(variant_obj):
 
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :return: Dictionary with assertion information for respective CIViC variant object
+    :return: Assertion information for respective CIViC variant object
     :rtype: dict
     """
     try:
@@ -279,7 +279,7 @@ def get_evidence_information_from_variant(variant_obj):
 
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :return: Dictionary with evidence information for respective CIViC variant object
+    :return: Evidence information for respective CIViC variant object
     :rtype: dict
     """
     try:
@@ -324,7 +324,7 @@ def get_positional_information_from_coord_obj(coord_obj):
 
     :param coord_obj: CoordinateQuery Object to respective variant object
     :type coord_obj: CIViC CoordinateQuery Object
-    :return: Dictionary with positional information for respective CIViC variant object
+    :return: Positional information for respective CIViC variant object
     :rtype: dict
     """
     return {"chr": coord_obj[0], "start": coord_obj[1], "stop": coord_obj[2], "ref": coord_obj[4], "alt": coord_obj[3]}
@@ -336,7 +336,7 @@ def get_querynator_id(querynator_id):
 
     :param querynator_id: Querynator id
     :type querynator_id: str
-    :return: Dictionary of querynator id for respective CIViC variant object
+    :return: Querynator id for respective CIViC variant object
     :rtype: dict
     """
     return {"querynator_id" : querynator_id}
@@ -350,7 +350,7 @@ def concat_dicts(coord_id_dict, variant_obj, filter_vep):
     :type coord_obj: CIViC CoordinateQuery Object
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :return: Dictionary with all information for respective CIViC variant object
+    :return: All information for respective CIViC variant object
     :rtype: dict
     """
     coordinates_info = get_positional_information_from_coord_obj(list(coord_id_dict.keys())[0])
@@ -399,7 +399,7 @@ def sort_coord_list(coord_dict):
 
     :param coord_list: List of CoordinateQuery objects
     :type coord_list: list
-    :return: sorted coord_list
+    :return: sorted coordinates
     :rtype: list
     """
     return {key: value for key, value in sorted(coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))}
