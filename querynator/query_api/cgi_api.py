@@ -190,7 +190,6 @@ def download_cgi(url, headers, output, logger):
 
     """
 
-    # download results cgi
     try:
         payload = {"action": "download"}
         r = requests.get(url, headers=headers, params=payload)
@@ -223,6 +222,7 @@ def add_cgi_metadata(url, output, original_input, filter_vep):
         with open(output + ".cgi_results" + "/metadata.txt", "w") as f:
             f.write("CGI query date: " + str(date.today()))
             f.write("\nAPI version: " + url[:-20])
+            # add input files
             for file_type, input in original_input.items():
                 if input != None:
                     f.write(f"\nInput {file_type}: {input}")
@@ -257,8 +257,8 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
 
     """
     
-    # unzip files if necessary
     input_files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
+    # unzip files if necessary
     for key, file_path in input_files.items():
         if file_path is not None:
             if gzipped(file_path):

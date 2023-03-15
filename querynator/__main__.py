@@ -11,7 +11,7 @@ from vcf.parser import _Info as VcfInfo, field_counts as vcf_field_counts
 import shutil
 
 import querynator
-from querynator.query_api import query_cgi, query_civic, gzipped, gunzip_compressed_files
+from querynator.query_api import query_cgi, query_civic, gzipped, gunzip_compressed_files, vcf_file
 
 # Create logger
 logger = logging.getLogger("Querynator")
@@ -82,27 +82,15 @@ def Cancer():
 
     return Cancer_enum
 
-def vcf_file(vcf_path):
-    """
-    Function to check whether the input is a vcf-file.
-
-    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
-    :type vcf_path: str
-    :return: None
-    :rtype: None
-    """
-    if vcf_path.endswith(".vcf") or vcf_path.endswith(".vcf.gz"):
-        return True
-    else: return False
-
 def filter_vcf_by_vep(vcf_path, logger):
     """
-    Function to filters given vcf to remove synonymous and low impact variants based on VEP annotation 
+    Function to filter given vcf to remove synonymous and low impact variants based on VEP annotation 
 
     :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
     :type vcf_path: str
     :return: list of lists of pyVCF3 records (input file, removed, filtered)
     :rtype: list
+
     """
 
     if not vcf_file(vcf_path):
@@ -117,7 +105,7 @@ def filter_vcf_by_vep(vcf_path, logger):
 
     # creates dictionary with VEP info names as keys and index in list as columns
     # Name must be VEPs default "CSQ"
-    if  "CSQ" in in_vcf.infos:
+    if "CSQ" in in_vcf.infos:
         logger.info("Filtering vcf file")
 
         vep_dict = {name : pos for pos, name in enumerate(in_vcf.infos["CSQ"].desc.split(":")[1].strip().split("|"))}
@@ -233,11 +221,12 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
     if not os.path.isdir("vcf_files"):
         os.mkdir("vcf_files")
 
+    # add querynator_id info to header
     vcf_template.infos['QID'] = VcfInfo('QID', ".", str, "Querynator ID", '.','.','.')
     writer = vcf.Writer(open(f"{out_name}", "w"), vcf_template, lineterminator="\n")
 
     for record in vcf_record_list:
-        # add querynator id to record
+        # add querynator_id to record
         record.add_info('QID',random.randint(1000000,9999999))
         writer.write_record(record)
 
@@ -258,7 +247,6 @@ def get_unique_querynator_dir(querynator_output):
         querynator_output = filename + f"_{count}"
         count += 1
     
-    #os.mkdirs(f"{querynator_output}/querynator_results")
     return querynator_output
 
 
@@ -354,10 +342,8 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
         )
 
     try:
-        #dirname, basename = os.path.split(output)
         result_dir = get_unique_querynator_dir(f"{output}")
         dirname, basename = os.path.split(result_dir)
-        print(result_dir)
         original_input = {"mutations" : mutations, "translocations" : translocations, "cnas" : cnas}
         # filter vcf file if required
         if mutations is not None and filter_vep:
@@ -428,12 +414,11 @@ def query_api_civic(vcf, output, filter_vep):
             write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
 
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-
+            # run analysis
             query_civic(candidate_variants, result_dir, logger, vcf, filter_vep)
             
         else:
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-
             query_civic(vcf, result_dir, logger, vcf, filter_vep)
 
     except FileNotFoundError:

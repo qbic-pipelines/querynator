@@ -78,11 +78,11 @@ def get_coordinates_from_vcf(input, build):
             variant_file = vcf.Reader(open(input))
 
     coord_dict = {}
-    id_list = []
     for record in variant_file:
         if "QID" in record.INFO.keys():
             querynator_id = record.INFO["QID"]
         else:
+            # filter_vep not applied and no rerun with filtered vcf, generate random QID for following steps which will not be reported in results
             querynator_id = random.randint(1000000,9999999)
         for alt_base in record.ALT:
             # INSERTION
@@ -138,16 +138,13 @@ def access_civic_by_coordinate(coord_dict):
     # bulk search to quickly focus on variants found in the civic-db
     # time-intensive search must then only be done for variants that will be hits
     bulk = civic.bulk_search_variants_by_coordinates(list(coord_dict.keys()), search_mode="exact")
-    # reconnect passed coordinates from bulk search and respective IDs
+    
+    # reconnect coordinates that passed bulk search and respective IDs
     bulk_filtered_dict = {key: coord_dict[key] for key in bulk}
 
     # actual search for each variant
     variant_list = []
-    q_id_list = []
     for coord_obj, querynator_id in bulk_filtered_dict.items():
-        if querynator_id in q_id_list:
-            print("you fucked up in getting unique ids")
-            q_id_list.append(querynator_id)
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
         if len(variant) > 0:
             for variant_obj in variant:
@@ -406,7 +403,6 @@ def sort_coord_list(coord_dict):
     :rtype: list
     """
     return {key: value for key, value in sorted(coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))}
-    #return sorted(coord_list, key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))
 
 
 def add_civic_metadata(out_path, input_file, search_mode, filter_vep):
@@ -454,7 +450,7 @@ def query_civic(vcf, out_path, logger, input_file, filter_vep):
     """
     logger.info("Querying")
 
-    coord_dict = get_coordinates_from_vcf(vcf, "GRCh37", logger)
+    coord_dict = get_coordinates_from_vcf(vcf, "GRCh37")
 
     # coordinates needs to be sorted for bulk search
     coord_dict = sort_coord_list(coord_dict)
