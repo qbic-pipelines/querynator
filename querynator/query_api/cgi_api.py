@@ -203,7 +203,7 @@ def download_cgi(url, headers, output, logger):
         logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
 
-def add_cgi_metadata(url, output):
+def add_cgi_metadata(url, output, original_input, filter_vep):
     """
     Attach metadata to cgi query
 
@@ -211,23 +211,31 @@ def add_cgi_metadata(url, output):
     :type url: str
     :param output: sample name
     :type output: str
+    :param filter_vep: flag whether VEP based filtering should be performed
+    :type filter_vep: bool
     :return: None
     :raises: BadZipfile
 
     """
-
     try:
         ZipFile(output + ".cgi_results.zip").extractall(output + ".cgi_results")
         # create additional file with metadata
         with open(output + ".cgi_results" + "/metadata.txt", "w") as f:
             f.write("CGI query date: " + str(date.today()))
             f.write("\nAPI version: " + url[:-20])
+            for file_type, input in original_input.items():
+                if input != None:
+                    f.write(f"\nInput {file_type}: {input}")
+            if filter_vep:
+                f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
+            else:
+                f.write("\nNo filtering performed")
             f.close()
     except BadZipfile:
         logger.exception("Oops, sth went wrong with the zip archive. Please check your input format.")
 
 
-def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output):
+def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output, original_input, filter_vep):
     """
     Actual query to cgi
 
@@ -264,4 +272,4 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
     if done:
         logger.info("Downloading CGI results")
         download_cgi(url, headers, output, logger)
-        add_cgi_metadata(url, output)
+        add_cgi_metadata(url, output, original_input, filter_vep)

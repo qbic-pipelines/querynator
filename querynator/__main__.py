@@ -89,6 +89,7 @@ def vcf_file(vcf_path):
     :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
     :type vcf_path: str
     :return: None
+    :rtype: None
     """
     if vcf_path.endswith(".vcf") or vcf_path.endswith(".vcf.gz"):
         return True
@@ -100,6 +101,8 @@ def filter_vcf_by_vep(vcf_path, logger):
 
     :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
     :type vcf_path: str
+    :return: list of lists of pyVCF3 records (input file, removed, filtered)
+    :rtype: list
     """
 
     if not vcf_file(vcf_path):
@@ -224,6 +227,8 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
     :type vcf_record_list: list
     :param out_name: name for the created vcf file
     :type out_name: str
+    :return: None
+    :rtype: None
     """
     if not os.path.isdir("vcf_files"):
         os.mkdir("vcf_files")
@@ -236,12 +241,14 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
         record.add_info('QID',random.randint(1000000,9999999))
         writer.write_record(record)
 
-def unique_querynator_dir(querynator_output):
+def get_unique_querynator_dir(querynator_output):
     """
     add index if "querynator_results" already exists in user given out dir
     
-    :param output: path to store querynator results
-    :type output: str
+    :param querynator_output: path to store querynator results
+    :type querynator_output: str
+    :return: unique result directory
+    :rtype: str
     """
     filename, extension = os.path.splitext(querynator_output)
 
@@ -347,40 +354,39 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
         )
 
     try:
-        dirname, basename = os.path.split(output)
+        #dirname, basename = os.path.split(output)
+        result_dir = get_unique_querynator_dir(f"{output}")
+        dirname, basename = os.path.split(result_dir)
+        print(result_dir)
+        original_input = {"mutations" : mutations, "translocations" : translocations, "cnas" : cnas}
         # filter vcf file if required
         if mutations is not None and filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(mutations, logger)
+            
             # create result directories
-            result_dir = unique_querynator_dir(f"{output}")
             os.makedirs(f"{result_dir}/vcf_files")
-
             write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
             write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
+            
             # create and set new input file for cgi query
             mutations = f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf"
              
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}
-        query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output)
-
+        # run analysis
+        query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, result_dir, original_input, filter_vep)
+        
         # move downloaded results to result dir
         if dirname != "":
+            if not filter_vep:
+                os.makedirs(result_dir)
             shutil.move(f"{dirname}/{basename}.cgi_results", result_dir)
             shutil.move(f"{dirname}/{basename}.cgi_results.zip", result_dir)
         else:
+            if not filter_vep:
+                os.makedirs(result_dir)
             shutil.move(f"{basename}.cgi_results", result_dir)
             shutil.move(f"{basename}.cgi_results.zip", result_dir)
-
-
-        # if filter_vep:
-        #     # move removed and filtered vcf files to result directory
-        #     if not os.path.isdir(f"{output}.cgi_results/vcf_files"):
-        #         os.mkdir(f"{output}.cgi_results/vcf_files")
-                
-        #     shutil.move(f"vcf_files/{os.path.basename(output)}.removed_variants.vcf", f"{output}.cgi_results/vcf_files/{os.path.basename(output)}.removed_variants.vcf")
-        #     shutil.move(f"vcf_files/{os.path.basename(output)}.filtered_variants.vcf", f"{output}.cgi_results/vcf_files/{os.path.basename(output)}.filtered_variants.vcf")
-
 
     except FileNotFoundError:
         print("Cannot find file on disk. Please try another path.")
@@ -413,26 +419,22 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 def query_api_civic(vcf, output, filter_vep):
     try:
         dirname, basename = os.path.split(output)
+        result_dir = get_unique_querynator_dir(f"{output}")
         if filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
             # create result directories
-            result_dir = unique_querynator_dir(f"{output}")
             os.makedirs(f"{result_dir}/vcf_files")
-
             write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
             write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
 
-            logger.info("Querying the Clinical Interpretations of Variants In Cancer (CIViC)")
-            query_civic(candidate_variants, result_dir, filter_vep, logger)
+            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
 
-            # # move removed and filtered vcf files to result directory
-            # if not os.path.isdir(f"{output}/vcf_files"):
-            #     os.mkdir(f"{output}/vcf_files")
-            # shutil.move(f"vcf_files/{os.path.basename(output)}.removed_variants.vcf", f"{output}/vcf_files/{os.path.basename(output)}.removed_variants.vcf")
-            # shutil.move(f"vcf_files/{os.path.basename(output)}.filtered_variants.vcf", f"{output}/vcf_files/{os.path.basename(output)}.filtered_variants.vcf")
+            query_civic(candidate_variants, result_dir, logger, vcf, filter_vep)
             
         else:
-            query_civic(vcf, output, filter_vep, logger)
+            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
+
+            query_civic(vcf, result_dir, logger, vcf, filter_vep)
 
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")

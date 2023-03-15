@@ -5,6 +5,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 import os
 from datetime import date
+import random
 
 import civicpy
 import numpy as np
@@ -54,33 +55,35 @@ def vcf_file(vcf_path):
         return True
     else: return False
 
-def get_coordinates_from_vcf(vcf, build, logger):
+def get_coordinates_from_vcf(input, build):
     """
     Read in vcf file using "pyVCF3",
-    creates CoordinateQuery objects for each variant .
+    creates CoordinateQuery objects for each variant.
     This function does find (ref-alt):
     SNPs (A-T)
     DelIns (AA-TT)
     Deletions (TTTCA -  AT)
 
+    :param input: list of pyVCF3 records or vcf file to query
+    :type input: list or str
     :param build: Genome build version, currently only GRCh37 allowed
     :type build: str
     :return: List of CoordinateQuery objects
     :rtype: list
     """
-
-    if type(vcf) == list:
-        variant_file = vcf
+    if type(input) == list:
+        variant_file = input
     else:
-        if vcf_file(vcf):
-            variant_file = vcf.Reader(open(vcf))
+        if vcf_file(input):
+            variant_file = vcf.Reader(open(input))
 
     coord_dict = {}
     id_list = []
     for record in variant_file:
-        # save records querynator ID in list
-        # id_list.append(record.INFO["QID"])
-        querynator_id = record.INFO["QID"]
+        if "QID" in record.INFO.keys():
+            querynator_id = record.INFO["QID"]
+        else:
+            querynator_id = random.randint(1000000,9999999)
         for alt_base in record.ALT:
             # INSERTION
             if len(record.REF) < len(alt_base):
@@ -140,7 +143,11 @@ def access_civic_by_coordinate(coord_dict):
 
     # actual search for each variant
     variant_list = []
+    q_id_list = []
     for coord_obj, querynator_id in bulk_filtered_dict.items():
+        if querynator_id in q_id_list:
+            print("you fucked up in getting unique ids")
+            q_id_list.append(querynator_id)
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
         if len(variant) > 0:
             for variant_obj in variant:
@@ -325,6 +332,7 @@ def get_positional_information_from_coord_obj(coord_obj):
     """
     return {"chr": coord_obj[0], "start": coord_obj[1], "stop": coord_obj[2], "ref": coord_obj[4], "alt": coord_obj[3]}
 
+
 def get_querynator_id(querynator_id):
     """
     Get the querynator id in dict format
@@ -337,7 +345,7 @@ def get_querynator_id(querynator_id):
     return {"querynator_id" : querynator_id}
 
 
-def concat_dicts(coord_id_dict, variant_obj):
+def concat_dicts(coord_id_dict, variant_obj, filter_vep):
     """
     Create and combine different dictionaries created for single CIViC variant object
 
@@ -349,17 +357,19 @@ def concat_dicts(coord_id_dict, variant_obj):
     :rtype: dict
     """
     coordinates_info = get_positional_information_from_coord_obj(list(coord_id_dict.keys())[0])
-    querynator_id_info = get_querynator_id(coord_id_dict[list(coord_id_dict.keys())[0]])
     variant_info = get_variant_information_from_variant(variant_obj[0])
     gene_info = get_gene_information_from_variant(variant_obj[0])
     mol_profile_info = get_molecular_profile_information_from_variant(variant_obj[0])
     assertion_info = get_assertion_information_from_variant(variant_obj[0])
     evidence_info = get_evidence_information_from_variant(variant_obj[0])
+    if filter_vep:
+        querynator_id_info = get_querynator_id(coord_id_dict[list(coord_id_dict.keys())[0]])
+        return {**coordinates_info,  **querynator_id_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
+    else:
+        return {**coordinates_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
 
-    return {**coordinates_info,  **querynator_id_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
 
-
-def create_civic_results(variant_list, out_path, logger):
+def create_civic_results(variant_list, out_path, logger, filter_vep):
     """
     Combine result dictionaries of all CIViC variant objects
     to a table and write it to user-specified file
@@ -368,10 +378,14 @@ def create_civic_results(variant_list, out_path, logger):
     :type variant_list: list
     :param out_path: Name for directory in which result-table will be stored
     :type out_path: str
+    :param filter_vep: flag whether VEP based filtering should be performed
+    :type filter_vep: bool
+    :return: None
+    :rtype: None
     """
     civic_result_df = pd.DataFrame()
     for coord_id_dict, variant in variant_list:
-        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant), ignore_index=True)
+        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant, filter_vep), ignore_index=True)
 
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
@@ -395,22 +409,35 @@ def sort_coord_list(coord_dict):
     #return sorted(coord_list, key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))
 
 
-def add_civic_metadata(out_path):
+def add_civic_metadata(out_path, input_file, search_mode, filter_vep):
     """
     Attach metadata to civic query
 
     :param out_path: Name of directory in which results are stored
     :type out_path: str
+    :param input_file: path of original input file
+    :type input_file: str
+    :param search_mode: search mode used in CIViC Query 
+    :type search_mode: str
+    :param filter_vep: flag whether VEP based filtering should be performed
+    :type filter_vep: bool
     :return: None
+    :rtype: None
     """
 
     with open(out_path + "/metadata.txt", "w") as f:
         f.write("CIViC query date: " + str(date.today()))
-        f.write("\nAPI version: " + str(civicpy.version()))
+        f.write("\nCIViCpy version: " + str(civicpy.version()))
+        f.write("\nSearch mode: " + str(search_mode))
+        if filter_vep:
+            f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
+        else:
+            f.write("\nNo filtering performed")
+        f.write("\nInput File: " + str(input_file))
         f.close()
 
 
-def query_civic(vcf, out_path, filter_vep, logger):
+def query_civic(vcf, out_path, logger, input_file, filter_vep):
     """
     Command to query the CIViC API
 
@@ -418,15 +445,22 @@ def query_civic(vcf, out_path, filter_vep, logger):
     :type vcf: str or list
     :param out_path: Name for directory in which result-table will be stored
     :type out_path: str
-
+    :param input_file: path of original input file
+    :type input_file: str
+    :param filter_vep: flag whether VEP based filtering should be performed
+    :type filter_vep: bool
+    :return: None
+    :rtype: None
     """
+    logger.info("Querying")
+
     coord_dict = get_coordinates_from_vcf(vcf, "GRCh37", logger)
 
     # coordinates needs to be sorted for bulk search
     coord_dict = sort_coord_list(coord_dict)
 
     # create result table
-    create_civic_results(access_civic_by_coordinate(coord_dict), out_path, logger)
-    add_civic_metadata(out_path)
+    create_civic_results(access_civic_by_coordinate(coord_dict), out_path, logger, filter_vep)
+    add_civic_metadata(out_path, input_file, "exact", filter_vep)
 
     logger.info("CIViC Analysis done")
