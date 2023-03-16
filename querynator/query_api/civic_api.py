@@ -66,7 +66,7 @@ def get_coordinates_from_vcf(input, build):
 
     :param input: list of pyVCF3 records or vcf file to query
     :type input: list or str
-    :param build: Genome build version, currently only GRCh37 allowed
+    :param build: reference genome
     :type build: str
     :return: CoordinateQuery objects
     :rtype: list
@@ -131,6 +131,8 @@ def access_civic_by_coordinate(coord_dict, logger, build):
 
     :param coord_list: List of CoordinateQuery objects
     :type coord_list: list
+    :param build: reference genome
+    :type build: str 
     :return: CIViC variant objects of successfully queried variants
     :rtype: list
     """
