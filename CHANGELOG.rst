@@ -8,7 +8,8 @@ Changelog
 
 * optional VEP annotation based filtering
 * additional metadata 
-* usage of pyVCF3 to read vcf files 
+* usage of pyVCF3 to read vcf files
+* all possible reference genomes for CIViC 
 
 **Fixed**
 

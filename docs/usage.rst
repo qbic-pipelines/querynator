@@ -38,6 +38,8 @@ For further information please refer to their `FAQ <https://www.cancergenomeinte
     |   ├── metadata.txt
     |   └── mutation_analysis.tsv
 
+.. note::
+    The input variants for the CGI query must be sorted based on their coordinates. 
 
 Mutation, CNA & translocation analysis
 ======================================
@@ -149,8 +151,9 @@ A typical command to query the `Clinical Interpretations of Variants in Cancer -
 .. code-block:: bash
 
     querynator query-api-civic \
-        -v input_file.vcf,tsv,gtf \
-        -o outdir 
+        -v input_file.vcf \
+        -o outdir \
+        -g ref_genome [GRCh37, GRCh38, NCBI36]
 
 The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
 
@@ -172,15 +175,13 @@ The querynator requires a ``vcf`` file (>v. 4.0) in uncompressed or in `bgzipped
 It is recommended (although not required) to provide an index-file (``vcf.gz.tbi``) with the input ``vcf`` file, e.g. using `tabix <http://www.htslib.org/doc/tabix.html>`_.
 The index file must be stored in the same directory as the ``vcf`` file.
 
-.. note::
-    Currently only vcf's with the ``GRCh37`` reference genome can be queried.
-
 
 Filtering benign variants
 ****************************************************************
 
-An additional flag ``filter_vep`` can be set to filter out variants that are classified as ``low Impact`` and ``synonymous variants`` based on their `Ensembl VEP 
-annotation <https://www.ensembl.org/info/docs/tools/vep/index.html>`_. The filtering step can be applied before querying both KBs. 
+Variants that are classified as ``low Impact`` and ``synonymous variants`` will be filtered out based on their `Ensembl VEP 
+annotation <https://www.ensembl.org/info/docs/tools/vep/index.html>`_ if the additional flag ``filter_vep`` is set. 
+The filtering step can be applied before querying both KBs. 
 Currently filtering can only be applied on VEP annotated ``vcf`` files. In order to filter the file,
 the querynator expects a ``vcf`` that was annotated using VEP's standard key (``CSQ``).
 
@@ -189,7 +190,8 @@ To filter, the following fields are required in the VEP info column:
 - Consequence
 - IMPACT
 
-If the ``filter_vep`` step is applied, the filtered and removed variants are given out as results in the ``vcf_files`` directory. 
+If ``filter_vep`` is set, the filtered and removed variants are given out as results in the ``vcf_files`` directory. 
+
 A typical command for a CIViC query: 
 
 .. code-block:: bash
@@ -197,6 +199,7 @@ A typical command for a CIViC query:
     querynator query-api-civic \
         -v input_file.vcf,tsv,gtf \
         -o outdir \
+        -g ref_genome [GRCh37, GRCh38, NCBI36] \
         --filter_vep
 
 The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
