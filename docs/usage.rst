@@ -39,7 +39,7 @@ For further information please refer to their `FAQ <https://www.cancergenomeinte
     |   └── mutation_analysis.tsv
 
 .. note::
-    The input variants for the CGI query must be sorted based on their coordinates. 
+    The input variants for the CGI query must be sorted based on their coordinates.
 
 Mutation, CNA & translocation analysis
 ======================================
@@ -179,9 +179,9 @@ The index file must be stored in the same directory as the ``vcf`` file.
 Filtering benign variants
 ****************************************************************
 
-Variants that are classified as ``low Impact`` and ``synonymous variants`` will be filtered out based on their `Ensembl VEP 
+Variants that are classified as ``low Impact`` and ``synonymous variants`` will be filtered out based on their `Ensembl VEP
 annotation <https://www.ensembl.org/info/docs/tools/vep/index.html>`_ if the additional flag ``filter_vep`` is set. 
-The filtering step can be applied before querying both KBs. 
+The filtering step can be applied before querying both KBs.
 Currently filtering can only be applied on VEP annotated ``vcf`` files. In order to filter the file,
 the querynator expects a ``vcf`` that was annotated using VEP's standard key (``CSQ``).
 
@@ -190,9 +190,9 @@ To filter, the following fields are required in the VEP info column:
 - Consequence
 - IMPACT
 
-If ``filter_vep`` is set, the filtered and removed variants are given out as results in the ``vcf_files`` directory. 
+If ``filter_vep`` is set, the filtered and removed variants are given out as results in the ``vcf_files`` directory.
 
-A typical command for a CIViC query: 
+A typical command for a CIViC query:
 
 .. code-block:: bash
 
