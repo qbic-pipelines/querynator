@@ -180,7 +180,7 @@ Filtering benign variants
 ****************************************************************
 
 Variants that are classified as ``low Impact`` and ``synonymous variants`` will be filtered out based on their `Ensembl VEP
-annotation <https://www.ensembl.org/info/docs/tools/vep/index.html>`_ if the additional flag ``filter_vep`` is set. 
+annotation <https://www.ensembl.org/info/docs/tools/vep/index.html>`_ if the additional flag ``filter_vep`` is set.
 The filtering step can be applied before querying both KBs.
 Currently filtering can only be applied on VEP annotated ``vcf`` files. In order to filter the file,
 the querynator expects a ``vcf`` that was annotated using VEP's standard key (``CSQ``).

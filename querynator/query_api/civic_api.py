@@ -5,8 +5,8 @@ import warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 import os
-from datetime import date
 import random
+from datetime import date
 
 import civicpy
 import numpy as np
@@ -14,7 +14,7 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-from querynator.query_api import gzipped, gunzip_compressed_files
+from querynator.query_api import gunzip_compressed_files, gzipped
 
 # load the civic cache (necessary for bulk run)
 civic.load_cache()

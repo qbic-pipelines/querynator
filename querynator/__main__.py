@@ -3,15 +3,22 @@ import json
 import logging
 import os
 import random
+import shutil
 from enum import Enum
 
 import click
 import vcf
-from vcf.parser import _Info as VcfInfo, field_counts as vcf_field_counts
-import shutil
+from vcf.parser import _Info as VcfInfo
+from vcf.parser import field_counts as vcf_field_counts
 
 import querynator
-from querynator.query_api import query_cgi, query_civic, gzipped, gunzip_compressed_files, vcf_file
+from querynator.query_api import (
+    gunzip_compressed_files,
+    gzipped,
+    query_cgi,
+    query_civic,
+    vcf_file
+)
 
 # Create logger
 logger = logging.getLogger("Querynator")
