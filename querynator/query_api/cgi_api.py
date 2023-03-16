@@ -202,7 +202,7 @@ def download_cgi(url, headers, output, logger):
         logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
 
-def add_cgi_metadata(url, output, original_input, filter_vep):
+def add_cgi_metadata(url, output, original_input, genome, filter_vep):
     """
     Attach metadata to cgi query
 
@@ -226,6 +226,7 @@ def add_cgi_metadata(url, output, original_input, filter_vep):
             for file_type, input in original_input.items():
                 if input != None:
                     f.write(f"\nInput {file_type}: {input}")
+            f.write("\Reference genome: " + str(genome))
             if filter_vep:
                 f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
             else:
@@ -272,4 +273,4 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
     if done:
         logger.info("Downloading CGI results")
         download_cgi(url, headers, output, logger)
-        add_cgi_metadata(url, output, original_input, filter_vep)
+        add_cgi_metadata(url, output, original_input, genome, filter_vep)

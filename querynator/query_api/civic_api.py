@@ -419,7 +419,7 @@ def sort_coord_list(coord_dict):
     return {key: value for key, value in sorted(coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))}
 
 
-def add_civic_metadata(out_path, input_file, search_mode, filter_vep):
+def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
     """
     Attach metadata to civic query
 
@@ -439,6 +439,7 @@ def add_civic_metadata(out_path, input_file, search_mode, filter_vep):
         f.write("CIViC query date: " + str(date.today()))
         f.write("\nCIViCpy version: " + str(civicpy.version()))
         f.write("\nSearch mode: " + str(search_mode))
+        f.write("\nReference genome: " + str(genome))
         if filter_vep:
             f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
         else:
@@ -471,6 +472,6 @@ def query_civic(vcf, out_path, logger, input_file, genome, filter_vep):
 
     # create result table
     create_civic_results(access_civic_by_coordinate(coord_dict, logger, genome), out_path, logger, filter_vep)
-    add_civic_metadata(out_path, input_file, "exact", filter_vep)
+    add_civic_metadata(out_path, input_file, "exact", genome, filter_vep)
 
     logger.info("CIViC Analysis done")
