@@ -173,7 +173,7 @@ It is recommended (although not required) to provide an index-file (``vcf.gz.tbi
 The index file must be stored in the same directory as the ``vcf`` file.
 
 .. note::
-    Currently, only vcf's with the ``GRCh37`` reference genome can be queried.
+    Currently only vcf's with the ``GRCh37`` reference genome can be queried.
 
 
 Filtering benign variants
@@ -181,7 +181,7 @@ Filtering benign variants
 
 An additional flag ``filter_vep`` can be set to filter out variants that are classified as ``low Impact`` and ``synonymous variants`` based on their `Ensembl VEP 
 annotation <https://www.ensembl.org/info/docs/tools/vep/index.html>`_. The filtering step can be applied before querying both KBs. 
-Currently, filtering can only be applied on VEP annotated ``vcf`` files. In order to filter the file,
+Currently filtering can only be applied on VEP annotated ``vcf`` files. In order to filter the file,
 the querynator expects a ``vcf`` that was annotated using VEP's standard key (``CSQ``).
 
 To filter, the following fields are required in the VEP info column:

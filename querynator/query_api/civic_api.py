@@ -125,7 +125,7 @@ def get_coordinates_from_vcf(input, build):
     return coord_dict
 
 
-def access_civic_by_coordinate(coord_dict):
+def access_civic_by_coordinate(coord_dict, logger, build):
     """
     Query CIViC API for individual variants
 
@@ -137,18 +137,30 @@ def access_civic_by_coordinate(coord_dict):
 
     # bulk search to quickly focus on variants found in the civic-db
     # time-intensive search must then only be done for variants that will be hits
-    bulk = civic.bulk_search_variants_by_coordinates(list(coord_dict.keys()), search_mode="exact")
-    
-    # reconnect coordinates that passed bulk search and respective IDs
-    bulk_filtered_dict = {key: coord_dict[key] for key in bulk}
+    # only possible for GRCh37 ref genome
+    if build == "GRCh37":
+        bulk = civic.bulk_search_variants_by_coordinates(list(coord_dict.keys()), search_mode="exact")
+        # reconnect coordinates that passed bulk search and respective IDs
+        input_dict = {key: coord_dict[key] for key in bulk}
+    else:
+        input_dict = coord_dict
 
     # actual search for each variant
     variant_list = []
-    for coord_obj, querynator_id in bulk_filtered_dict.items():
+    for coord_obj, querynator_id in input_dict.items():
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
+        # variant is None and the program stops executing when the wrong build was chosen.
+        if variant == None:
+            logger.error("Variant was None. Did you choose the correct reference genome?")
+            exit(1)
         if len(variant) > 0:
             for variant_obj in variant:
                 variant_list.append([{coord_obj:querynator_id}, [variant_obj]])
+    
+    # break if no variants are found
+    if variant_list == None:
+        logger.error("No hits are found in CIViC for this vcf file")
+        exit(1)
 
     return variant_list
 
@@ -433,7 +445,7 @@ def add_civic_metadata(out_path, input_file, search_mode, filter_vep):
         f.close()
 
 
-def query_civic(vcf, out_path, logger, input_file, filter_vep):
+def query_civic(vcf, out_path, logger, input_file, genome, filter_vep):
     """
     Command to query the CIViC API
 
@@ -450,13 +462,13 @@ def query_civic(vcf, out_path, logger, input_file, filter_vep):
     """
     logger.info("Querying")
 
-    coord_dict = get_coordinates_from_vcf(vcf, "GRCh37")
+    coord_dict = get_coordinates_from_vcf(vcf, genome)
 
     # coordinates needs to be sorted for bulk search
     coord_dict = sort_coord_list(coord_dict)
 
     # create result table
-    create_civic_results(access_civic_by_coordinate(coord_dict), out_path, logger, filter_vep)
+    create_civic_results(access_civic_by_coordinate(coord_dict, logger, genome), out_path, logger, filter_vep)
     add_civic_metadata(out_path, input_file, "exact", filter_vep)
 
     logger.info("CIViC Analysis done")

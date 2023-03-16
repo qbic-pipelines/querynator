@@ -222,7 +222,7 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
         os.mkdir("vcf_files")
 
     # add querynator_id info to header
-    vcf_template.infos['QID'] = VcfInfo('QID', ".", str, "Querynator ID", '.','.','.')
+    vcf_template.infos['QID'] = VcfInfo('QID', ".", "String", "Querynator ID", '.','.','.')
     writer = vcf.Writer(open(f"{out_name}", "w"), vcf_template, lineterminator="\n")
 
     for record in vcf_record_list:
@@ -395,6 +395,14 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     help="Output name for output directory - i.e. sample name.",
 )
 @click.option(
+    "-g",
+    "--genome",
+    type=click.Choice(["GRCh37", "GRCh38", "NCBI36"], case_sensitive=True),
+    help="Please enter the reference genome version",
+    required=True,
+    default="GRCh37",
+)
+@click.option(
     "-f",
     "--filter_vep",
     help="if set, filters out synoymous and low impact variants based on VEP annotation",
@@ -402,7 +410,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     show_default=True,
     default=False,
 )
-def query_api_civic(vcf, output, filter_vep):
+def query_api_civic(vcf, output, genome, filter_vep):
     try:
         dirname, basename = os.path.split(output)
         result_dir = get_unique_querynator_dir(f"{output}")
@@ -415,11 +423,11 @@ def query_api_civic(vcf, output, filter_vep):
 
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
             # run analysis
-            query_civic(candidate_variants, result_dir, logger, vcf, filter_vep)
+            query_civic(candidate_variants, result_dir, logger, vcf, genome, filter_vep)
             
         else:
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            query_civic(vcf, result_dir, logger, vcf, filter_vep)
+            query_civic(vcf, result_dir, logger, vcf, genome, filter_vep)
 
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")
