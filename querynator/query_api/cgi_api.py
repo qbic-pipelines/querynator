@@ -226,11 +226,10 @@ def add_cgi_metadata(url, output, original_input, genome, filter_vep):
             for file_type, input in original_input.items():
                 if input != None:
                     f.write(f"\nInput {file_type}: {input}")
-            f.write("\Reference genome: " + str(genome))
+            f.write("\nReference genome: " + str(genome))
             if filter_vep:
                 f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
-            else:
-                f.write("\nNo filtering performed")
+                
             f.close()
     except BadZipfile:
         logger.exception("Oops, sth went wrong with the zip archive. Please check your input format.")

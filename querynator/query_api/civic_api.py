@@ -13,6 +13,8 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
+from querynator.query_api import gzipped, gunzip_compressed_files
+
 # load the civic cache (necessary for bulk run)
 civic.load_cache()
 
@@ -55,7 +57,7 @@ def vcf_file(vcf_path):
         return True
     else: return False
 
-def get_coordinates_from_vcf(input, build):
+def get_coordinates_from_vcf(input, build, logger):
     """
     Read in vcf file using "pyVCF3",
     creates CoordinateQuery objects for each variant.
@@ -75,7 +77,10 @@ def get_coordinates_from_vcf(input, build):
         variant_file = input
     else:
         if vcf_file(input):
-            variant_file = vcf.Reader(open(input))
+            if gzipped(input):
+                variant_file = vcf.Reader(open(gunzip_compressed_files(input, logger)))
+            else:
+                variant_file = vcf.Reader(open(input))
 
     coord_dict = {}
     for record in variant_file:
@@ -442,8 +447,6 @@ def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
         f.write("\nReference genome: " + str(genome))
         if filter_vep:
             f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
-        else:
-            f.write("\nNo filtering performed")
         f.write("\nInput File: " + str(input_file))
         f.close()
 
@@ -465,7 +468,7 @@ def query_civic(vcf, out_path, logger, input_file, genome, filter_vep):
     """
     logger.info("Querying")
 
-    coord_dict = get_coordinates_from_vcf(vcf, genome)
+    coord_dict = get_coordinates_from_vcf(vcf, genome, logger)
 
     # coordinates needs to be sorted for bulk search
     coord_dict = sort_coord_list(coord_dict)
