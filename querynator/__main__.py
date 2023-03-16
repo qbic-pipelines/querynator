@@ -82,9 +82,10 @@ def Cancer():
 
     return Cancer_enum
 
+
 def filter_vcf_by_vep(vcf_path, logger):
     """
-    Function to filter given vcf to remove synonymous and low impact variants based on VEP annotation 
+    Function to filter given vcf to remove synonymous and low impact variants based on VEP annotation
 
     :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
     :type vcf_path: str
@@ -96,7 +97,7 @@ def filter_vcf_by_vep(vcf_path, logger):
     if not vcf_file(vcf_path):
         logger.error("Can only filter variants in vcf files.")
         exit(1)
-    
+
     if gzipped(vcf_path):
         vcf_path = gunzip_compressed_files(vcf_path, logger)
 
@@ -108,8 +109,8 @@ def filter_vcf_by_vep(vcf_path, logger):
     if "CSQ" in in_vcf.infos:
         logger.info("Filtering vcf file")
 
-        vep_dict = {name : pos for pos, name in enumerate(in_vcf.infos["CSQ"].desc.split(":")[1].strip().split("|"))}
-        '''
+        vep_dict = {name: pos for pos, name in enumerate(in_vcf.infos["CSQ"].desc.split(":")[1].strip().split("|"))}
+        """
         Exemplary for nf-core/sarek (https://nf-co.re/sarek) output 
         {'Allele': 0,
         'Consequence': 1,
@@ -180,26 +181,33 @@ def filter_vcf_by_vep(vcf_path, logger):
         'HIGH_INF_POS': 66,
         'MOTIF_SCORE_CHANGE': 67,
         'TRANSCRIPTION_FACTORS': 68}
-        '''
+        """
 
         to_remove = []
         to_keep = []
         for record in in_vcf:
             if len(record.INFO["CSQ"]) > 1:
                 # filter out low impact & synonymous variants from variants with multiple vep annotations
-                if all(info_list[vep_dict['IMPACT']] == 'LOW' and info_list[vep_dict['Consequence']] == "synonymous_variant" for info_list in [i.split("|") for i in record.INFO["CSQ"]]):
+                if all(
+                    info_list[vep_dict["IMPACT"]] == "LOW"
+                    and info_list[vep_dict["Consequence"]] == "synonymous_variant"
+                    for info_list in [i.split("|") for i in record.INFO["CSQ"]]
+                ):
                     to_remove.append(record)
                 else:
                     to_keep.append(record)
             else:
                 # filter out low impact & synonymous variants from variants with single vep annotations
-                if record.INFO["CSQ"][0].split("|")[vep_dict['IMPACT']] == 'LOW' and record.INFO["CSQ"][0].split("|")[vep_dict['Consequence']] == "synonymous_variant":
+                if (
+                    record.INFO["CSQ"][0].split("|")[vep_dict["IMPACT"]] == "LOW"
+                    and record.INFO["CSQ"][0].split("|")[vep_dict["Consequence"]] == "synonymous_variant"
+                ):
                     to_remove.append(record)
                 else:
                     to_keep.append(record)
-        
-        return [in_vcf, to_keep, to_remove]        
-    
+
+        return [in_vcf, to_keep, to_remove]
+
     else:
         logger.error("vcf file does not include required VEP INFO fields (key must be default 'CSQ')")
         exit(1)
@@ -222,18 +230,19 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
         os.mkdir("vcf_files")
 
     # add querynator_id info to header
-    vcf_template.infos['QID'] = VcfInfo('QID', ".", "String", "Querynator ID", '.','.','.')
+    vcf_template.infos["QID"] = VcfInfo("QID", ".", "String", "Querynator ID", ".", ".", ".")
     writer = vcf.Writer(open(f"{out_name}", "w"), vcf_template, lineterminator="\n")
 
     for record in vcf_record_list:
         # add querynator_id to record
-        record.add_info('QID',random.randint(1000000,9999999))
+        record.add_info("QID", random.randint(1000000, 9999999))
         writer.write_record(record)
+
 
 def get_unique_querynator_dir(querynator_output):
     """
     add index if "querynator_results" already exists in user given out dir
-    
+
     :param querynator_output: path to store querynator results
     :type querynator_output: str
     :return: unique result directory
@@ -241,12 +250,12 @@ def get_unique_querynator_dir(querynator_output):
     """
     filename, extension = os.path.splitext(querynator_output)
 
-    #filename = os.path.basename(output)
+    # filename = os.path.basename(output)
     count = 1
     while os.path.exists(querynator_output):
         querynator_output = filename + f"_{count}"
         count += 1
-    
+
     return querynator_output
 
 
@@ -334,7 +343,6 @@ def querynator_cli():
     show_default=True,
     default=False,
 )
-
 def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output, filter_vep):
     if mutations is None and cnas is None and translocations is None:
         raise click.UsageError(
@@ -344,24 +352,26 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     try:
         result_dir = get_unique_querynator_dir(f"{output}")
         dirname, basename = os.path.split(result_dir)
-        original_input = {"mutations" : mutations, "translocations" : translocations, "cnas" : cnas}
+        original_input = {"mutations": mutations, "translocations": translocations, "cnas": cnas}
         # filter vcf file if required
         if mutations is not None and filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(mutations, logger)
-            
+
             # create result directories
             os.makedirs(f"{result_dir}/vcf_files")
             write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
             write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
-            
+
             # create and set new input file for cgi query
             mutations = f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf"
-             
+
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}
         # run analysis
-        query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, result_dir, original_input, filter_vep)
-        
+        query_cgi(
+            mutations, cnas, translocations, genome, cancer, headers, logger, result_dir, original_input, filter_vep
+        )
+
         # move downloaded results to result dir
         if dirname != "":
             if not filter_vep:
@@ -424,7 +434,7 @@ def query_api_civic(vcf, output, genome, filter_vep):
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
             # run analysis
             query_civic(candidate_variants, result_dir, logger, vcf, genome, filter_vep)
-            
+
         else:
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
             query_civic(vcf, result_dir, logger, vcf, genome, filter_vep)

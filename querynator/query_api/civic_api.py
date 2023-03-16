@@ -1,6 +1,7 @@
 """ Query the Clinical Interpretations of Variants In Cancer (CIViC) API via its python tool CIViCPY"""
 
 import warnings
+
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 import os
@@ -45,6 +46,7 @@ def check_vcf_input(vcf_path, logger):
             logger.error(f"vcf file requires header column!")
             exit(1)
 
+
 def vcf_file(vcf_path):
     """
     Checks whether input is vcf-file.
@@ -55,7 +57,9 @@ def vcf_file(vcf_path):
     """
     if vcf_path.endswith(".vcf") or vcf_path.endswith(".vcf.gz"):
         return True
-    else: return False
+    else:
+        return False
+
 
 def get_coordinates_from_vcf(input, build, logger):
     """
@@ -88,43 +92,49 @@ def get_coordinates_from_vcf(input, build, logger):
             querynator_id = record.INFO["QID"]
         else:
             # filter_vep not applied and no rerun with filtered vcf, generate random QID for following steps which will not be reported in results
-            querynator_id = random.randint(1000000,9999999)
+            querynator_id = random.randint(1000000, 9999999)
         for alt_base in record.ALT:
             # INSERTION
             if len(record.REF) < len(alt_base):
-                coord_dict.update({
-                    civic.CoordinateQuery(
-                        chr=str(record.CHROM),
-                        start=int(record.start) + 1,
-                        stop=int(record.start) + 2,
-                        alt=str(alt_base)[1:],
-                        ref="",
-                        build=build,
-                    ) : querynator_id}
+                coord_dict.update(
+                    {
+                        civic.CoordinateQuery(
+                            chr=str(record.CHROM),
+                            start=int(record.start) + 1,
+                            stop=int(record.start) + 2,
+                            alt=str(alt_base)[1:],
+                            ref="",
+                            build=build,
+                        ): querynator_id
+                    }
                 )
             # DELETION
             elif len(record.REF) > len(alt_base) and len(alt_base) == 1:
-                coord_dict.update({
-                    civic.CoordinateQuery(
-                        chr=str(record.CHROM),
-                        start=int(record.start) + 1,
-                        stop=int(record.end),
-                        alt="",
-                        ref=record.REF,
-                        build=build,
-                    ) : querynator_id}
+                coord_dict.update(
+                    {
+                        civic.CoordinateQuery(
+                            chr=str(record.CHROM),
+                            start=int(record.start) + 1,
+                            stop=int(record.end),
+                            alt="",
+                            ref=record.REF,
+                            build=build,
+                        ): querynator_id
+                    }
                 )
             # SNPs, DelIns
             else:
-                coord_dict.update({
-                    civic.CoordinateQuery(
-                        chr=str(record.CHROM),
-                        start=int(record.start) + 1,
-                        stop=int(record.end),
-                        alt=str(alt_base),
-                        ref=record.REF,
-                        build=build,
-                    ) : querynator_id}
+                coord_dict.update(
+                    {
+                        civic.CoordinateQuery(
+                            chr=str(record.CHROM),
+                            start=int(record.start) + 1,
+                            stop=int(record.end),
+                            alt=str(alt_base),
+                            ref=record.REF,
+                            build=build,
+                        ): querynator_id
+                    }
                 )
 
     return coord_dict
@@ -137,7 +147,7 @@ def access_civic_by_coordinate(coord_dict, logger, build):
     :param coord_list: List of CoordinateQuery objects
     :type coord_list: list
     :param build: reference genome
-    :type build: str 
+    :type build: str
     :return: CIViC variant objects of successfully queried variants
     :rtype: list
     """
@@ -162,8 +172,8 @@ def access_civic_by_coordinate(coord_dict, logger, build):
             exit(1)
         if len(variant) > 0:
             for variant_obj in variant:
-                variant_list.append([{coord_obj:querynator_id}, [variant_obj]])
-    
+                variant_list.append([{coord_obj: querynator_id}, [variant_obj]])
+
     # break if no variants are found
     if variant_list == None:
         logger.error("No hits are found in CIViC for this vcf file")
@@ -183,13 +193,13 @@ def get_variant_information_from_variant(variant_obj):
     """
     return {
         "variant_name": variant_obj.name,
-        "variant_aliases": ', '.join(variant_obj.aliases),
-        "variant_type": ', '.join([i.name for i in variant_obj.types]),
-        "variant_clinvar_entries": ', '.join(variant_obj.clinvar_entries),
+        "variant_aliases": ", ".join(variant_obj.aliases),
+        "variant_type": ", ".join([i.name for i in variant_obj.types]),
+        "variant_clinvar_entries": ", ".join(variant_obj.clinvar_entries),
         "variant_entrez_id": variant_obj.entrez_id,
         "variant_entrez_name": variant_obj.entrez_name,
-        "variant_hgvs_expressions": ', '.join(variant_obj.hgvs_expressions),
-        "variant_groups": ', '.join([i.name for i in variant_obj.variant_groups]),
+        "variant_hgvs_expressions": ", ".join(variant_obj.hgvs_expressions),
+        "variant_groups": ", ".join([i.name for i in variant_obj.variant_groups]),
     }
 
 
@@ -226,10 +236,10 @@ def get_gene_information_from_variant(variant_obj):
     gene = variant_obj.gene
     return {
         "gene_name": gene.name,
-        "gene_aliases": ', '.join(gene.aliases),
+        "gene_aliases": ", ".join(gene.aliases),
         "gene_description": gene.description,
         "gene_entrez_id": gene.entrez_id,
-        "gene_source": ', '.join([i.name for i in gene.sources]),
+        "gene_source": ", ".join([i.name for i in gene.sources]),
     }
 
 
@@ -246,23 +256,23 @@ def get_assertion_information_from_variant(variant_obj):
         assertion = variant_obj.molecular_profiles[0].assertions[0]
         assertion_dict = {
             "assertion_name": assertion.name,
-            "assertion_acmg_codes": ', '.join([i.code for i in assertion.acmg_codes]),
-            "assertion_acmg_codes_description": ', '.join([i.description for i in assertion.acmg_codes]),
+            "assertion_acmg_codes": ", ".join([i.code for i in assertion.acmg_codes]),
+            "assertion_acmg_codes_description": ", ".join([i.description for i in assertion.acmg_codes]),
             "assertion_amp_level": assertion.amp_level,
             "assertion_direction": assertion.assertion_direction,
             "assertion_type": assertion.assertion_type,
             "assertion_description": assertion.description,
-            "assertion_disease_name": ', '.join([i.name for i in assertion.disease]),
-            "assertion_disease_doid": ', '.join([i.doid for i in assertion.disease]),
-            "assertion_disease_url": ', '.join([i.disease_url for i in assertion.disease]),
-            "assertion_disease_aliases": ', '.join([i.aliases for i in assertion.disease]),
-            "assertion_phenotypes": ', '.join([i.name for i in assertion.phenotypes]),
+            "assertion_disease_name": ", ".join([i.name for i in assertion.disease]),
+            "assertion_disease_doid": ", ".join([i.doid for i in assertion.disease]),
+            "assertion_disease_url": ", ".join([i.disease_url for i in assertion.disease]),
+            "assertion_disease_aliases": ", ".join([i.aliases for i in assertion.disease]),
+            "assertion_phenotypes": ", ".join([i.name for i in assertion.phenotypes]),
             "assertion_significance": assertion.significance,
             "assertion_status": assertion.status,
             "assertion_summary": assertion.summary,
-            "assertion_therapies_name": ', '.join([i.name for i in assertion.therapies]),
-            "assertion_therapies_ncit_id": ', '.join([i.ncit_id for i in assertion.therapies]),
-            "assertion_therapies_aliases": ', '.join([', '.join(i.aliases) for i in assertion.therapies]),
+            "assertion_therapies_name": ", ".join([i.name for i in assertion.therapies]),
+            "assertion_therapies_ncit_id": ", ".join([i.ncit_id for i in assertion.therapies]),
+            "assertion_therapies_aliases": ", ".join([", ".join(i.aliases) for i in assertion.therapies]),
             "assertion_therapy_interaction_type": assertion.therapy_interaction_type,
             "assertion_variant_origin": assertion.variant_origin,
         }
@@ -275,7 +285,7 @@ def get_assertion_information_from_variant(variant_obj):
             "assertion_direction": np.nan,
             "assertion_type": np.nan,
             "assertion_description": np.nan,
-            "assertion_disease_name":np.nan,
+            "assertion_disease_name": np.nan,
             "assertion_disease_doid": np.nan,
             "assertion_disease_url": np.nan,
             "assertion_disease_aliases": np.nan,
@@ -310,12 +320,12 @@ def get_evidence_information_from_variant(variant_obj):
             "evidence_level": evidence.evidence_level,
             "evidence_support": evidence.evidence_direction,
             "evidence_type": evidence.evidence_type,
-            "evidence_phenotypes": ', '.join([i.name for i in evidence.phenotypes]),
+            "evidence_phenotypes": ", ".join([i.name for i in evidence.phenotypes]),
             "evidence_rating": evidence.rating,
             "evidence_significance": evidence.significance,
             "evidence_source": evidence.source,
             "evidence_status": evidence.status,
-            "evidence_therapies": ', '.join([i.name for i in evidence.therapies]),
+            "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
             "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
         }
     except IndexError:
@@ -358,7 +368,7 @@ def get_querynator_id(querynator_id):
     :return: Querynator id for respective CIViC variant object
     :rtype: dict
     """
-    return {"querynator_id" : querynator_id}
+    return {"querynator_id": querynator_id}
 
 
 def concat_dicts(coord_id_dict, variant_obj, filter_vep):
@@ -380,7 +390,15 @@ def concat_dicts(coord_id_dict, variant_obj, filter_vep):
     evidence_info = get_evidence_information_from_variant(variant_obj[0])
     if filter_vep:
         querynator_id_info = get_querynator_id(coord_id_dict[list(coord_id_dict.keys())[0]])
-        return {**coordinates_info,  **querynator_id_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
+        return {
+            **coordinates_info,
+            **querynator_id_info,
+            **variant_info,
+            **gene_info,
+            **mol_profile_info,
+            **assertion_info,
+            **evidence_info,
+        }
     else:
         return {**coordinates_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
 
@@ -421,7 +439,12 @@ def sort_coord_list(coord_dict):
     :return: sorted coordinates
     :rtype: list
     """
-    return {key: value for key, value in sorted(coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2]))}
+    return {
+        key: value
+        for key, value in sorted(
+            coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2])
+        )
+    }
 
 
 def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
@@ -432,7 +455,7 @@ def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
     :type out_path: str
     :param input_file: path of original input file
     :type input_file: str
-    :param search_mode: search mode used in CIViC Query 
+    :param search_mode: search mode used in CIViC Query
     :type search_mode: str
     :param filter_vep: flag whether VEP based filtering should be performed
     :type filter_vep: bool

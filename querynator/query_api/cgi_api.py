@@ -229,7 +229,7 @@ def add_cgi_metadata(url, output, original_input, genome, filter_vep):
             f.write("\nReference genome: " + str(genome))
             if filter_vep:
                 f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
-                
+
             f.close()
     except BadZipfile:
         logger.exception("Oops, sth went wrong with the zip archive. Please check your input format.")
@@ -256,7 +256,7 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
     :type output: str
 
     """
-    
+
     input_files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
     # unzip files if necessary
     for key, file_path in input_files.items():
