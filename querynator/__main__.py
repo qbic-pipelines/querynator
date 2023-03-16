@@ -17,7 +17,7 @@ from querynator.query_api import (
     gzipped,
     query_cgi,
     query_civic,
-    vcf_file
+    vcf_file,
 )
 
 # Create logger
