@@ -1,2 +1,0 @@
-CGI query date: 2023-02-06
-API version: https://www.cancergenomeinterpreter.org/api/v1/
