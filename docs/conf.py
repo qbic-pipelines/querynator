@@ -48,8 +48,8 @@ master_doc = "index"
 
 # General information about the project.
 project = "querynator"
-copyright = "2022, Susanne Jodoin & Mark Polster"
-author = "Susanne Jodoin, Mark Polster"
+copyright = "2022, Susanne Jodoin"
+author = "Susanne Jodoin"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout

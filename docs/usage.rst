@@ -31,15 +31,12 @@ For further information please refer to their `FAQ <https://www.cancergenomeinte
 
 .. code-block:: bash
 
-    sample_name
-    ├── sample_name.cgi_results
-    |   ├── drug_prescription.tsv
-    |   ├── input01.tsv
-    |   ├── metadata.txt
-    |   └── mutation_analysis.tsv
+    sample_name.cgi_results
+    ├── drug_prescription.tsv
+    ├── input01.tsv
+    ├── metadata.txt
+    └── mutation_analysis.tsv
 
-.. note::
-    The input variants for the CGI query must be sorted based on their coordinates.
 
 Mutation, CNA & translocation analysis
 ======================================
@@ -60,20 +57,15 @@ If you run the command with all possible input files, you will obtain:
         --token your-cgi-token
 
     # output
-    sample_name
-    ├── sample_name.cgi_results
-    |   ├── cna_analysis.tsv
-    |   ├── drug_prescription.tsv
-    |   ├── fusion_analysis.tsv
-    |   ├── input01.tsv
-    |   ├── input02.tsv
-    |   ├── input03.tsv
-    |   ├── metadata.txt
-    |   └── mutation_analysis.tsv
-    └── sample_name.cgi_results.zip
-
-
-Using the ``filter_vep`` `flag <https://querynator.readthedocs.io/en/latest/usage.html#filtering-benign-variants>`_, the querynator can filter out benign variants in ``vcf`` files before querying the knowledgebase (KB).
+    sample_name.cgi_results
+    ├── cna_analysis.tsv
+    ├── drug_prescription.tsv
+    ├── fusion_analysis.tsv
+    ├── input01.tsv
+    ├── input02.tsv
+    ├── input03.tsv
+    ├── metadata.txt
+    └── mutation_analysis.tsv
 
 
 Input file formats
@@ -83,7 +75,7 @@ For detailed information please refer to `CGI formats <https://www.cancergenomei
 The genomic tabular format ``gtf`` is displayed below and contains partly the same columns as a ``vcf`` file (>v. 4.0) and is tab-separated.
 The `sample column` is not mandatory, but recommended when more than one sample is contained in one file.
 
-A mutations/variant file can have the extensions ``vcf``, ``vcf.gz``, ``tsv`` or ``gtf``. The column names can also be uppercase letters as in a ``vcf``.
+A mutations/variant file can have the extensions ``vcf``, ``tsv`` or ``gtf``. The column names can also be uppercase letters as in a ``vcf``.
 
 .. list-table:: mutations.[vcf,tsv,gtf]
     :widths: 25 25 25 25 25
@@ -122,7 +114,7 @@ A copy number alterations file should be ``tsv`` and column names must be lowerc
         - TP53
         - del
 
-A translocation file should be ``tsv`` and column names must be lowercase.
+A copy number alterations file should be ``tsv`` and column names must be lowercase.
 
 .. list-table:: translocations.tsv
     :widths: 25 25
@@ -151,64 +143,22 @@ A typical command to query the `Clinical Interpretations of Variants in Cancer -
 .. code-block:: bash
 
     querynator query-api-civic \
-        -v input_file.vcf \
+        -v input_file.vcf,tsv,gtf \
         -o outdir \
-        -g ref_genome [GRCh37, GRCh38, NCBI36]
 
 The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
 
 .. code-block:: bash
 
-    sample_name
-    ├── sample_name.civic_results.tsv
+    outdir
+    ├── civic_results.tsv
     └── metadata.txt
 
-The querynator performs an ``exact`` search, meaning that variants in the KB must match the given coordinates, reference allele(s) and alternate allele(s) precicely
-
-Using the ``filter_vep`` `flag <https://querynator.readthedocs.io/en/latest/usage.html#filtering-benign-variants>`_, the querynator can filter out benign variants in ``vcf`` files before querying the KB.
 
 Input file format
 ==================
 
-The querynator requires a ``vcf`` file (>v. 4.0) in uncompressed or in `bgzipped format <http://www.htslib.org/doc/bgzip.html>`_ ``vcf.gz`` to query CIViC.
+The querynator requires a ``vcf`` file in uncompressed or in `bgzipped format <http://www.htslib.org/doc/bgzip.html>`_ ``vcf.gz`` to query CIViC.
 
 It is recommended (although not required) to provide an index-file (``vcf.gz.tbi``) with the input ``vcf`` file, e.g. using `tabix <http://www.htslib.org/doc/tabix.html>`_.
 The index file must be stored in the same directory as the ``vcf`` file.
-
-
-Filtering benign variants
-****************************************************************
-
-Variants that are classified as ``low Impact`` and ``synonymous variants`` will be filtered out based on their `Ensembl VEP
-annotation <https://www.ensembl.org/info/docs/tools/vep/index.html>`_ if the additional flag ``filter_vep`` is set.
-The filtering step can be applied before querying both KBs.
-Currently filtering can only be applied on VEP annotated ``vcf`` files. In order to filter the file,
-the querynator expects a ``vcf`` that was annotated using VEP's standard key (``CSQ``).
-
-To filter, the following fields are required in the VEP info column:
-
-- Consequence
-- IMPACT
-
-If ``filter_vep`` is set, the filtered and removed variants are given out as results in the ``vcf_files`` directory.
-
-A typical command for a CIViC query:
-
-.. code-block:: bash
-
-    querynator query-api-civic \
-        -v input_file.vcf,tsv,gtf \
-        -o outdir \
-        -g ref_genome [GRCh37, GRCh38, NCBI36] \
-        --filter_vep
-
-The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
-
-.. code-block:: bash
-
-    sample_name
-    ├── vcf_files
-    |   ├── sample_name.filtered_variants.vcf
-    |   ├── sample_name.removed_variants.vcf
-    ├── sample_name.civic_results.tsv
-    └── metadata.txt

@@ -152,7 +152,7 @@ def status_done(url, headers, logger):
         if log["status"] == "Error":
             logger.exception("An Error has occurred with your request. Please check your input format")
             raise SystemExit()
-        if counter == 20:
+        if counter == 5:
             print("Query took too looong :-(")
             break
         time.sleep(60)
@@ -190,6 +190,7 @@ def download_cgi(url, headers, output, logger):
 
     """
 
+    # download results cgi
     try:
         payload = {"action": "download"}
         r = requests.get(url, headers=headers, params=payload)
@@ -202,7 +203,7 @@ def download_cgi(url, headers, output, logger):
         logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
 
-def add_cgi_metadata(url, output, original_input, genome, filter_vep):
+def add_cgi_metadata(url, output):
     """
     Attach metadata to cgi query
 
@@ -210,32 +211,23 @@ def add_cgi_metadata(url, output, original_input, genome, filter_vep):
     :type url: str
     :param output: sample name
     :type output: str
-    :param filter_vep: flag whether VEP based filtering should be performed
-    :type filter_vep: bool
     :return: None
     :raises: BadZipfile
 
     """
+
     try:
         ZipFile(output + ".cgi_results.zip").extractall(output + ".cgi_results")
         # create additional file with metadata
         with open(output + ".cgi_results" + "/metadata.txt", "w") as f:
             f.write("CGI query date: " + str(date.today()))
             f.write("\nAPI version: " + url[:-20])
-            # add input files
-            for file_type, input in original_input.items():
-                if input != None:
-                    f.write(f"\nInput {file_type}: {input}")
-            f.write("\nReference genome: " + str(genome))
-            if filter_vep:
-                f.write("\nFiltered out synonymous & low impact variants based on VEP annotation")
-
             f.close()
     except BadZipfile:
         logger.exception("Oops, sth went wrong with the zip archive. Please check your input format.")
 
 
-def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output, original_input, filter_vep):
+def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output):
     """
     Actual query to cgi
 
@@ -257,8 +249,8 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
 
     """
 
-    input_files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
     # unzip files if necessary
+    input_files = {"mutations": mutations, "cnas": cnas, "translocations": translocations}
     for key, file_path in input_files.items():
         if file_path is not None:
             if gzipped(file_path):
@@ -272,4 +264,4 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
     if done:
         logger.info("Downloading CGI results")
         download_cgi(url, headers, output, logger)
-        add_cgi_metadata(url, output, original_input, genome, filter_vep)
+        add_cgi_metadata(url, output)

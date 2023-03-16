@@ -2,23 +2,14 @@
 import json
 import logging
 import os
-import random
-import shutil
+import sys
 from enum import Enum
 
 import click
-import vcf
-from vcf.parser import _Info as VcfInfo
-from vcf.parser import field_counts as vcf_field_counts
+import requests
 
 import querynator
-from querynator.query_api import (
-    gunzip_compressed_files,
-    gzipped,
-    query_cgi,
-    query_civic,
-    vcf_file,
-)
+from querynator.query_api import query_cgi, query_civic
 
 # Create logger
 logger = logging.getLogger("Querynator")
@@ -88,182 +79,6 @@ def Cancer():
         Cancer_enum = make_enum(jsonObj)
 
     return Cancer_enum
-
-
-def filter_vcf_by_vep(vcf_path, logger):
-    """
-    Function to filter given vcf to remove synonymous and low impact variants based on VEP annotation
-
-    :param vcf_path: Variant Call Format (VCF) file (Version 4.2)
-    :type vcf_path: str
-    :return: list of lists of pyVCF3 records (input file, removed, filtered)
-    :rtype: list
-
-    """
-
-    if not vcf_file(vcf_path):
-        logger.error("Can only filter variants in vcf files.")
-        exit(1)
-
-    if gzipped(vcf_path):
-        vcf_path = gunzip_compressed_files(vcf_path, logger)
-
-    # read vcf file in pyVCF
-    in_vcf = vcf.Reader(open(vcf_path))
-
-    # creates dictionary with VEP info names as keys and index in list as columns
-    # Name must be VEPs default "CSQ"
-    if "CSQ" in in_vcf.infos:
-        logger.info("Filtering vcf file")
-
-        vep_dict = {name: pos for pos, name in enumerate(in_vcf.infos["CSQ"].desc.split(":")[1].strip().split("|"))}
-        """
-        Exemplary for nf-core/sarek (https://nf-co.re/sarek) output 
-        {'Allele': 0,
-        'Consequence': 1,
-        'IMPACT': 2,
-        'SYMBOL': 3,
-        'Gene': 4,
-        'Feature_type': 5,
-        'Feature': 6,
-        'BIOTYPE': 7,
-        'EXON': 8,
-        'INTRON': 9,
-        'HGVSc': 10,
-        'HGVSp': 11,
-        'cDNA_position': 12,
-        'CDS_position': 13,
-        'Protein_position': 14,
-        'Amino_acids': 15,
-        'Codons': 16,
-        'Existing_variation': 17,
-        'DISTANCE': 18,
-        'STRAND': 19,
-        'FLAGS': 20,
-        'VARIANT_CLASS': 21,
-        'SYMBOL_SOURCE': 22,
-        'HGNC_ID': 23,
-        'CANONICAL': 24,
-        'MANE_SELECT': 25,
-        'MANE_PLUS_CLINICAL': 26,
-        'TSL': 27,
-        'APPRIS': 28,
-        'CCDS': 29,
-        'ENSP': 30,
-        'SWISSPROT': 31,
-        'TREMBL': 32,
-        'UNIPARC': 33,
-        'UNIPROT_ISOFORM': 34,
-        'GENE_PHENO': 35,
-        'SIFT': 36,
-        'PolyPhen': 37,
-        'DOMAINS': 38,
-        'miRNA': 39,
-        'AF': 40,
-        'AFR_AF': 41,
-        'AMR_AF': 42,
-        'EAS_AF': 43,
-        'EUR_AF': 44,
-        'SAS_AF': 45,
-        'AA_AF': 46,
-        'EA_AF': 47,
-        'gnomAD_AF': 48,
-        'gnomAD_AFR_AF': 49,
-        'gnomAD_AMR_AF': 50,
-        'gnomAD_ASJ_AF': 51,
-        'gnomAD_EAS_AF': 52,
-        'gnomAD_FIN_AF': 53,
-        'gnomAD_NFE_AF': 54,
-        'gnomAD_OTH_AF': 55,
-        'gnomAD_SAS_AF': 56,
-        'MAX_AF': 57,
-        'MAX_AF_POPS': 58,
-        'FREQS': 59,
-        'CLIN_SIG': 60,
-        'SOMATIC': 61,
-        'PHENO': 62,
-        'PUBMED': 63,
-        'MOTIF_NAME': 64,
-        'MOTIF_POS': 65,
-        'HIGH_INF_POS': 66,
-        'MOTIF_SCORE_CHANGE': 67,
-        'TRANSCRIPTION_FACTORS': 68}
-        """
-
-        to_remove = []
-        to_keep = []
-        for record in in_vcf:
-            if len(record.INFO["CSQ"]) > 1:
-                # filter out low impact & synonymous variants from variants with multiple vep annotations
-                if all(
-                    info_list[vep_dict["IMPACT"]] == "LOW"
-                    and info_list[vep_dict["Consequence"]] == "synonymous_variant"
-                    for info_list in [i.split("|") for i in record.INFO["CSQ"]]
-                ):
-                    to_remove.append(record)
-                else:
-                    to_keep.append(record)
-            else:
-                # filter out low impact & synonymous variants from variants with single vep annotations
-                if (
-                    record.INFO["CSQ"][0].split("|")[vep_dict["IMPACT"]] == "LOW"
-                    and record.INFO["CSQ"][0].split("|")[vep_dict["Consequence"]] == "synonymous_variant"
-                ):
-                    to_remove.append(record)
-                else:
-                    to_keep.append(record)
-
-        return [in_vcf, to_keep, to_remove]
-
-    else:
-        logger.error("vcf file does not include required VEP INFO fields (key must be default 'CSQ')")
-        exit(1)
-
-
-def write_vcf(vcf_template, vcf_record_list, out_name):
-    """
-    Function to write a vcf file from list of pyvcf3 records to result directory
-
-    :param vcf_header: pysam header object from input vcf
-    :type vcf_header: pysam header object
-    :param vcf_record_list: list of pysam records
-    :type vcf_record_list: list
-    :param out_name: name for the created vcf file
-    :type out_name: str
-    :return: None
-    :rtype: None
-    """
-    if not os.path.isdir("vcf_files"):
-        os.mkdir("vcf_files")
-
-    # add querynator_id info to header
-    vcf_template.infos["QID"] = VcfInfo("QID", ".", "String", "Querynator ID", ".", ".", ".")
-    writer = vcf.Writer(open(f"{out_name}", "w"), vcf_template, lineterminator="\n")
-
-    for record in vcf_record_list:
-        # add querynator_id to record
-        record.add_info("QID", random.randint(1000000, 9999999))
-        writer.write_record(record)
-
-
-def get_unique_querynator_dir(querynator_output):
-    """
-    add index if "querynator_results" already exists in user given out dir
-
-    :param querynator_output: path to store querynator results
-    :type querynator_output: str
-    :return: unique result directory
-    :rtype: str
-    """
-    filename, extension = os.path.splitext(querynator_output)
-
-    # filename = os.path.basename(output)
-    count = 1
-    while os.path.exists(querynator_output):
-        querynator_output = filename + f"_{count}"
-        count += 1
-
-    return querynator_output
 
 
 def run_querynator():
@@ -342,54 +157,36 @@ def querynator_cli():
     type=click.STRING,
     default=None,
 )
-@click.option(
-    "-f",
-    "--filter_vep",
-    help="if set, filters out synoymous and low impact variants based on VEP annotation",
-    is_flag=True,
-    show_default=True,
-    default=False,
-)
-def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output, filter_vep):
+def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output):
+    """
+    Command to query the cancergenomeinterpreter API
+
+    :param mutations: Variant file (vcf,tsv,gtf,hgvs)
+    :type mutations: str
+    :param cnas: File with copy number alterations
+    :type cnas: str
+    :param translocations: File with translocations
+    :type translocations: str
+    :param genome: Genome build version
+    :type genome: str
+    :param email:  To query cgi a user account is needed
+    :type email: str
+    :param cancer: Cancer type from cancertypes.js
+    :type cancer: str
+    :param logger: prints info to console
+    :param output: sample name
+    :type output: str
+    """
+
     if mutations is None and cnas is None and translocations is None:
         raise click.UsageError(
             "No input file provided. Please provide at least one of [mutations/cnas/translocations] as input."
         )
 
     try:
-        result_dir = get_unique_querynator_dir(f"{output}")
-        dirname, basename = os.path.split(result_dir)
-        original_input = {"mutations": mutations, "translocations": translocations, "cnas": cnas}
-        # filter vcf file if required
-        if mutations is not None and filter_vep:
-            in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(mutations, logger)
-
-            # create result directories
-            os.makedirs(f"{result_dir}/vcf_files")
-            write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
-            write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
-
-            # create and set new input file for cgi query
-            mutations = f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf"
-
         logger.info("Query the cancergenomeinterpreter (CGI)")
         headers = {"Authorization": email + " " + token}
-        # run analysis
-        query_cgi(
-            mutations, cnas, translocations, genome, cancer, headers, logger, result_dir, original_input, filter_vep
-        )
-
-        # move downloaded results to result dir
-        if dirname != "":
-            if not filter_vep:
-                os.makedirs(result_dir)
-            shutil.move(f"{dirname}/{basename}.cgi_results", result_dir)
-            shutil.move(f"{dirname}/{basename}.cgi_results.zip", result_dir)
-        else:
-            if not filter_vep:
-                os.makedirs(result_dir)
-            shutil.move(f"{basename}.cgi_results", result_dir)
-            shutil.move(f"{basename}.cgi_results.zip", result_dir)
+        query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, output)
 
     except FileNotFoundError:
         print("Cannot find file on disk. Please try another path.")
@@ -409,43 +206,21 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     "--output",
     required=True,
     type=click.STRING,
-    help="Output name for output directory - i.e. sample name.",
+    help="Output name for output files - i.e. sample name. Extension filled automatically",
 )
-@click.option(
-    "-g",
-    "--genome",
-    type=click.Choice(["GRCh37", "GRCh38", "NCBI36"], case_sensitive=True),
-    help="Please enter the reference genome version",
-    required=True,
-    default="GRCh37",
-)
-@click.option(
-    "-f",
-    "--filter_vep",
-    help="if set, filters out synoymous and low impact variants based on VEP annotation",
-    is_flag=True,
-    show_default=True,
-    default=False,
-)
-def query_api_civic(vcf, output, genome, filter_vep):
+def query_api_civic(vcf, output):
+    """
+    Command to query the CIViC API
+
+    :param vcf: Variant Call Format (VCF) file (Version 4.2)
+    :type vcf: str
+    :param output: Name for directory in which result-table will be stored
+    :type output: str
+    """
+
     try:
-        dirname, basename = os.path.split(output)
-        result_dir = get_unique_querynator_dir(f"{output}")
-        if filter_vep:
-            in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
-            # create result directories
-            os.makedirs(f"{result_dir}/vcf_files")
-            write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
-            write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
-
-            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            # run analysis
-            query_civic(candidate_variants, result_dir, logger, vcf, genome, filter_vep)
-
-        else:
-            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            query_civic(vcf, result_dir, logger, vcf, genome, filter_vep)
-
+        logger.info("Querying the Clinical Interpretations of Variants In Cancer (CIViC)")
+        query_civic(vcf, output, logger)
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")
 
