@@ -163,7 +163,7 @@ The command above generates the following result files using `CIViCpy <https://d
     ├── sample_name.civic_results.tsv
     └── metadata.txt
 
-The querynator performs an ``exact`` search, meaning that variants in the KB must match the given coordinates, reference allele(s) and alternate allele(s) precicely
+The querynator performs an ``exact`` search, meaning that variants in the KB must match the given coordinates, reference allele(s) and alternate allele(s) precisely.
 
 Using the ``filter_vep`` `flag <https://querynator.readthedocs.io/en/latest/usage.html#filtering-benign-variants>`_, the querynator can filter out benign variants in ``vcf`` files before querying the KB.
 
