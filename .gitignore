@@ -113,3 +113,6 @@ ENV/
 *.zip
 metadata.txt
 cgi_results/*
+
+# Development tests
+dev_tests/
