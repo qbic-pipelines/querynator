@@ -257,7 +257,6 @@ def get_unique_querynator_dir(querynator_output):
     """
     filename, extension = os.path.splitext(querynator_output)
 
-    # filename = os.path.basename(output)
     count = 1
     while os.path.exists(querynator_output):
         querynator_output = filename + f"_{count}"
