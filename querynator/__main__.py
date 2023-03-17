@@ -310,10 +310,10 @@ def querynator_cli():
 )
 @click.option(
     "-o",
-    "--output",
+    "--outdir",
     required=True,
     type=click.STRING,
-    help="Output name for output files - i.e. sample name. Extension filled automatically",
+    help="i.e. sample name. Directory in which results will be stored.",
 )
 @click.option(
     "-c",
@@ -405,10 +405,10 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 )
 @click.option(
     "-o",
-    "--output",
+    "--outdir",
     required=True,
     type=click.STRING,
-    help="Output name for output directory - i.e. sample name.",
+    help="i.e. sample name. Directory in which results will be stored.",
 )
 @click.option(
     "-g",
