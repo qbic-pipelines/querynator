@@ -24,7 +24,7 @@ def check_vcf_input(vcf_path, logger):
     """
     Checks whether input is vcf-file with all necessary columns.
 
-    :param vcf_path: Variant Call Format (VCF) file (Version > 4.0)
+    :param vcf_path: Variant Call Format (VCF) file (Version >= 4.0)
     :type vcf_path: str
     :return: None
     """
