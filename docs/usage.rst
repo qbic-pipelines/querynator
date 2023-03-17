@@ -41,6 +41,9 @@ For further information please refer to their `FAQ <https://www.cancergenomeinte
 .. note::
     The input variants for the CGI query must be sorted based on their coordinates.
 
+.. note::
+    Too many requests in too short amount of time can result in the email address used being blocked.
+
 Mutation, CNA & translocation analysis
 ======================================
 
@@ -212,3 +215,7 @@ The command above generates the following result files using `CIViCpy <https://d
     |   ├── sample_name.removed_variants.vcf
     ├── sample_name.civic_results.tsv
     └── metadata.txt
+
+.. note::
+    When the ``filter_vep`` flag is set a unique Querynator ID is added to the INFO column of each variant in the vcf file.
+    The same ID is added to the ``sample_name.civic_results.tsv`` if CIViC is queried.   
