@@ -349,14 +349,14 @@ def querynator_cli():
     show_default=True,
     default=False,
 )
-def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, output, filter_vep):
+def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email, outdir, filter_vep):
     if mutations is None and cnas is None and translocations is None:
         raise click.UsageError(
             "No input file provided. Please provide at least one of [mutations/cnas/translocations] as input."
         )
 
     try:
-        result_dir = get_unique_querynator_dir(f"{output}")
+        result_dir = get_unique_querynator_dir(f"{outdir}")
         dirname, basename = os.path.split(result_dir)
         original_input = {"mutations": mutations, "translocations": translocations, "cnas": cnas}
         # filter vcf file if required
@@ -426,10 +426,10 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     show_default=True,
     default=False,
 )
-def query_api_civic(vcf, output, genome, filter_vep):
+def query_api_civic(vcf, outdir, genome, filter_vep):
     try:
-        dirname, basename = os.path.split(output)
-        result_dir = get_unique_querynator_dir(f"{output}")
+        dirname, basename = os.path.split(outdir)
+        result_dir = get_unique_querynator_dir(f"{outdir}")
         if filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
             # create result directories
