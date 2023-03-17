@@ -417,7 +417,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     type=click.Choice(["GRCh37", "GRCh38", "NCBI36"], case_sensitive=True),
     help="Please enter the reference genome version",
     required=True,
-    default="GRCh37",
+    default="GRCh38",
 )
 @click.option(
     "-f",
