@@ -218,4 +218,4 @@ The command above generates the following result files using `CIViCpy <https://d
 
 .. note::
     When the ``filter_vep`` flag is set a unique Querynator ID is added to the INFO column of each variant in the vcf file.
-    The same ID is added to the ``sample_name.civic_results.tsv`` if CIViC is queried.   
+    The same ID is added to the ``sample_name.civic_results.tsv`` if CIViC is queried.
