@@ -345,7 +345,7 @@ def querynator_cli():
 @click.option(
     "-f",
     "--filter_vep",
-    help="if set, filters out synoymous and low impact variants based on VEP annotation",
+    help="If set, filters out synoymous and low impact variants based on VEP annotation",
     is_flag=True,
     show_default=True,
     default=False,
