@@ -6,11 +6,11 @@ Changelog
 
 **Added**
 
-* optional VEP annotation based filtering
-* additional metadata
-* usage of pyVCF3 to read vcf files
+* Optional VEP annotation based filtering
+* Additional metadata
+* Usage of pyVCF3 to read vcf files
 * Querynator ID added for filtered vcf files
-* all possible reference genomes for CIViC
+* All possible reference genomes for CIViC
 
 **Fixed**
 
@@ -18,7 +18,7 @@ Changelog
 
 **Deprecated**
 
-* usage of pysam to read vcf files
+* Usage of pysam to read vcf files
 
 
 0.2.1 - Sour Venus  (2023-02-16)
