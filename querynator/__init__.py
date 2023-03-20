@@ -2,4 +2,4 @@
 
 __author__ = """Susanne Jodoin"""
 __email__ = "susanne.jodoin@qbic.uni-tuebingen.de"
-__version__ = "0.2.1"
+__version__ = "0.2.2"
