@@ -1,0 +1,32 @@
+Sample ID	Gene	Protein Change	Oncogenic Summary	Oncogenic Prediction	External oncogenic annotation	Mutation	Consequence	Transcript	Strand	Type
+input01	RET	DVYE898-901-	passenger	passenger (oncodriveMUT)		chr10:43615613-43615613 GATGTTTATGAA>-	inframe_deletion	ENST00000355710	+	DEL
+input01	RET	M918T	driver (annotated)	passenger (oncodriveMUT)	cgi,oncokb	chr10:43617416 T>C	missense_variant	ENST00000355710	+	SNV
+input01	PTEN	K267X	passenger	passenger (oncodriveMUT)		chr10:89717775-89717775 A>-	frameshift_variant	ENST00000371953	+	DEL
+input01	PTEN	R335*	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb	chr10:89720852 C>T	stop_gained	ENST00000371953	+	SNV
+input01	WT1	-386-387CTX	passenger	passenger (oncodriveMUT)		chr11:32417908-32417909 ->ACCGTACA	frameshift_variant	ENST00000452863	+	INS
+input01	SF3B2	H666P	driver (annotated)	passenger (oncodriveMUT)	clinvar	chr11:65830499 A>C	missense_variant	ENST00000322535	+	SNV
+input01	SF3B2	E700G	driver (annotated)	passenger (oncodriveMUT)	clinvar	chr11:65830884 A>G	missense_variant	ENST00000322535	+	SNV
+input01	ERBB3	V104M	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb,clinvar	chr12:56478854 G>A	missense_variant	ENST00000267101	+	SNV
+input01	FLT3	D835-	driver (annotated)	passenger (oncodriveMUT)	clinvar	chr13:28592640-28592640 ATC>-	inframe_deletion	ENST00000241453	+	DEL
+input01	TSC2	Q1178*	driver (annotated)	passenger (oncodriveMUT)	cgi	chr16:2130300 C>T	stop_gained	ENST00000219476	+	SNV
+input01	CREBBP	R1446L	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	clinvar	chr16:3788617 C>A	missense_variant	ENST00000262367	+	SNV
+input01	ERBB2	G776A				chr17:37880998-37880999 GG>CT	missense_variant	ENST00000269571	+	MNV
+input01	TP53	R249G	driver (predicted)	driver (boostDM: non-tissue-specific model)		chr17:7577536 T>C	missense_variant	ENST00000269305	+	SNV
+input01	MAPK1	E322K	driver (predicted and annotated)	driver (oncodriveMUT)	cgi,oncokb,clinvar	chr22:22127164 C>T	missense_variant	ENST00000215832	+	SNV
+input01	CHEK2	V438F	driver (predicted)	driver (oncodriveMUT)		chr22:29091774 C>A	missense_variant	ENST00000382580	+	SNV
+input01	ALK	F1245C	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb	chr2:29436859 A>C	missense_variant	ENST00000389048	+	SNV
+input01	ALK	V1180L	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb,clinvar	chr2:29443679 C>G	missense_variant	ENST00000389048	+	SNV
+input01	GATA2	R398W	driver (annotated)	passenger (oncodriveMUT)	cgi	chr3:128200113 G>A	missense_variant	ENST00000341105	+	SNV
+input01	GATA2	T354M	driver (annotated)	passenger (oncodriveMUT)	cgi	chr3:128200744 G>A	missense_variant	ENST00000341105	+	SNV
+input01	FOXL2	C134W	driver (predicted and annotated)	driver (oncodriveMUT)	cgi,oncokb	chr3:138665163 G>C	missense_variant	ENST00000648323	+	SNV
+input01	KIT	Y553N	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb,clinvar	chr4:55593591 T>A	missense_variant	ENST00000288135	+	SNV
+input01	APC	KIGT1310-1313X	driver (annotated)	passenger (oncodriveMUT)	clinvar	chr5:112175219-112175219 AAGATTGGAAC>-	frameshift_variant	ENST00000257430	+	DEL
+input01	CSF1R	Y969*	driver (annotated)	passenger (oncodriveMUT)	clinvar	chr5:149433644 A>T	stop_gained	ENST00000286301	+	SNV
+input01	ESR1	E380Q	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb,clinvar	chr6:152332832 G>C	missense_variant	ENST00000440973	+	SNV
+input01	BRAF	G469A	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb	chr7:140481402 C>G	missense_variant	ENST00000496384	+	SNV
+input01	RHEB	Y35C	driver (predicted and annotated)	driver (oncodriveMUT)	cgi,oncokb	chr7:151188049 T>C	missense_variant	ENST00000262187	+	SNV
+input01	FGFR1	N577K	driver (predicted and annotated)	driver (oncodriveMUT)	oncokb	chr8:38274849 G>T	missense_variant	ENST00000425967	+	SNV
+input01	PPP6C	R301C	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,clinvar	chr9:127912080 G>A	missense_variant	ENST00000451402	+	SNV
+input01	GNAQ	Q209L	driver (annotated)	passenger (oncodriveMUT)	oncokb,clinvar	chr9:80409488-80409489 TG>AA	missense_variant	ENST00000286548	+	MNV
+input01	ARAF	S217F	driver (predicted and annotated)	driver (oncodriveMUT)	cgi,clinvar	chrX:47426121 C>T	missense_variant	ENST00000290277	+	SNV
+input01	AR	F877L	driver (predicted and annotated)	driver (boostDM: non-tissue-specific model)	cgi,oncokb	chrX:66943549 T>C	missense_variant	ENST00000374690	+	SNV

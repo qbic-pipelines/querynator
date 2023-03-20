@@ -1,0 +1,708 @@
+Sample ID	Alterations	Biomarker	Drugs	Diseases	Response	Evidence	Match	Source	BioM	Resist.	Tumor type
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Neratinib (ERBB2 inhibitor) + Capecitabine (Chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pertuzumab (ERBB2 inhibitor)+ Trastuzumab (ERBB2 inhibitor) + Docetaxel (Chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Pertuzumab (ERBB2 inhibitor) + Trastuzumab (ERBB2 inhibitor) + Docetaxel (Chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Lapatinib (ERBB2 inhibitor) + Letrozole (Hormone therapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 expression -	Fulvestrant (Estrogen receptor antagonist) + Palbociclib (CDK4/6 inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Margetuximab (ERBB2 inhibitor) 	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Margetuximab (ERBB2 inhibitor) 	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Tucatinib (ERBB2 inhibitor) + Trastuzumab (ERBB2 inhibitor) + Capecitabine (chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	FLT3 MUT* (D835-)	FLT3-ITD	Midostaurin (Pan-TK inhibitor)	Acute myeloid leukemia	Responsive	A	YES	cgi	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835,I836)	Gilteritinib (Kinase inhibitor )	Acute myeloid leukemia	Responsive	A	YES	cgi	complete		AML
+input01	FLT3 MUT* (D835-)	FLT3-ITD	Gilteritinib (Kinase inhibitor )	Acute myeloid leukemia	Responsive	A	YES	cgi	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835,I836)	Midostaurin (Pan-TK inhibitor)	Acute myeloid leukemia	Responsive	A	YES	cgi	complete		AML
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Pralsetinib (Tyrosine kinase inhibitor)	Thyroid medullary	Responsive	A	YES	cgi	only gene		THM
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Selpercatinib (RET kinase inhibitor)	Thyroid medullary	Responsive	A	YES	cgi	only gene		THM
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Cabozantinib (Kinase inhibitor )	Non-small cell lung	Responsive	C	YES	cgi	only gene		NSCLC
+input01	BRAF (G469A)	BRAF (V600E)	Trametinib (MEK inhibitor) + Dabrafenib (BRAF inhibitor)	Non-small cell lung	Responsive	A	YES	cgi	only alteration type		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK oncogenic mutation	Lorlatinib (ALK inhibitor)	Lung adenocarcinoma	Responsive	A	YES	cgi	complete		LUAD
+input01	BRAF (G469A)	BRAF (V600E)	Encorafenib (BRAF inhibitor) + Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	A	YES	cgi	only alteration type		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pembrolizumab (PD-1 blocking antibody) + Trastuzumab (ERBB2 mAb inhibitor)	Stomach, Gastroesophageal junction adenocarcinoma	Responsive	A	YES	cgi	only gene		ST, GEJA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Pembrolizumab (PD-1 blocking antibody) + Trastuzumab (ERBB2 mAb inhibitor)	Stomach, Gastroesophageal junction adenocarcinoma	Responsive	A	YES	cgi	only gene		ST, GEJA
+input01	KIT (Y553N)	KIT (Y823D,N822,C809G,D820,A829P,D816,T670I)	Ripretinib (Kinase inhibitor)	Gastrointestinal stromal	Responsive	A	YES	cgi	only alteration type		GIST
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Neratinib (ERBB2 inhibitor) + Capecitabine (Chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Lapatinib (ERBB2 inhibitor) + Letrozole (Hormone therapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Tucatinib (ERBB2 inhibitor) + Trastuzumab (ERBB2 inhibitor) + Capecitabine (chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Pralsetinib (Tyrosine kinase inhibitor)	Non-small cell lung	Responsive	A	YES	cgi	only gene		NSCLC
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Selpercatinib (RET kinase inhibitor)	Non-small cell lung	Responsive	A	YES	cgi	only gene		NSCLC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab deruxtecan-nxki (Antibody-drug conjugate: ERBB2 mAb inhibitor + topoisomerase I inhibitor)	Stomach, Gastroesophageal junction adenocarcinoma	Responsive	A	YES	cgi	only gene		ST, GEJA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Trastuzumab deruxtecan-nxki (Antibody-drug conjugate: ERBB2 mAb inhibitor + topoisomerase I inhibitor)	Stomach, Gastroesophageal junction adenocarcinoma	Responsive	A	YES	cgi	only gene		ST, GEJA
+input01	ERBB2 MUT* (G776A)	ERBB2 oncogenic mutation	Trastuzumab deruxtecan-nxki (Antibody-drug conjugate: ERBB2 mAb inhibitor + topoisomerase I inhibitor)	Non-small cell lung	Responsive	A	YES	cgi	only alteration type		NSCLC
+input01	ARAF (S217F)	ARAF oncogenic mutation	BRAF inhibitor + EGFR mAb inhibitors	Colorectal adenocarcinoma	Resistant	C	YES	cgi	complete		COREAD
+input01	ARAF (S217F)	ARAF oncogenic mutation	BRAF inhibitor + MEK inhibitors	Colorectal adenocarcinoma	Resistant	C	YES	cgi	complete		COREAD
+input01	BRAF (G469A)	BRAF (V600E,G469A)	EGFR TK inhibitors	Lung adenocarcinoma	Resistant	C	YES	cgi	complete		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	ALK inhibitor + IGF1R inhibitors	Lung adenocarcinoma	Responsive	D	YES	cgi	only gene		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	ALK inhibitor + MEK inhibitors	Lung adenocarcinoma	Responsive	D	YES	cgi	only gene		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	ALK inhibitor + SRC inhibitors	Lung adenocarcinoma	Responsive	D	YES	cgi	only gene		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	ALK inhibitors	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only gene		COREAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	HSP90 inhibitors	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	novel ALK inhibitors	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L)	novel ALK inhibitors	Lung adenocarcinoma	Responsive	D	YES	cgi	only alteration type		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Alectinib (ALK inhibitor)	Lung adenocarcinoma	Responsive	A	YES	cgi	only gene	399.0	LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Alectinib (ALK inhibitor)	Non-small cell lung	Responsive	A	YES	cgi	only gene	399.0	NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK amplification	Brigatinib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK (E1408V)	Brigatinib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK (L1196M)	Brigatinib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Ceritinib (ALK inhibitor)	Non-small cell lung, Lung adenocarcinoma	Responsive	A	YES	cgi	only gene		NSCLC, LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Ceritinib (ALK inhibitor)	Colorectal adenocarcinoma, Inflammatory myofibroblastic	Responsive	C	YES	cgi	only gene		COREAD, IM
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Ceritinib (ALK inhibitor)	Hematologic malignancies	Responsive	C	YES	cgi	only gene		HEMATO
+input01	ALK (F1245C), ALK (V1180L)	ALK inframe insertion (1151T)	Ceritinib (ALK inhibitor)	Lung adenocarcinoma	Responsive	A	YES	cgi	only alteration type		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK (L1196M,S1206Y,G1269A,I1171T)	Ceritinib (ALK inhibitor)	Lung adenocarcinoma	Responsive	A	YES	cgi	only alteration type		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib (ALK inhibitor)	Lymphoma, Glioblastoma	Responsive	C	YES	cgi	only gene	650.0	LY, GB
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib (ALK inhibitor)	Non-small cell lung, Lung adenocarcinoma	Responsive	A	YES	cgi	only gene	650.0	NSCLC, LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib (ALK inhibitor)	Inflammatory myofibroblastic, Thyroid carcinoma	Responsive	C	YES	cgi	only gene	650.0	IM, THCA
+input01	ALK (F1245C), ALK (V1180L)	ALK (F856S,A348D)	Crizotinib (ALK inhibitor)	Acute myeloid leukemia	Responsive	D	YES	cgi	only alteration type	650.0	AML
+input01	ALK (F1245C), ALK (V1180L)	ALK (L1198F)	Crizotinib (ALK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type	650.0	LUAD
+input01	ALK (F1245C)	ALK (R1275Q,G1128A,I1171N,R1192P,F1245C)	Crizotinib (ALK inhibitor)	Glioma	Responsive	D	YES	cgi	complete	650.0	G
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Entrectinib (Pan-TK inhibitor)	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only gene		COREAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Lorlatinib (ALK&ROS1 inhibitor)	Non-small cell lung	Responsive	C	YES	cgi	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Brigatinib (Pan-TK inhibitor)	Non-small cell lung	Responsive	A	YES	cgi	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (C1156Y)	Lorlatinib (ALK&ROS1 inhibitor)	Lung adenocarcinoma	Responsive	D	YES	cgi	only alteration type		LUAD
+input01	APC MUT* (KIGT1310-1313X)	APC oncogenic mutation	Tankyrase inhibitors	Colorectal adenocarcinoma	Responsive	D	YES	cgi	only alteration type		COREAD
+input01	AR (F877L)	AR amplification	AR inhibitor next gens	Prostate adenocarcinoma	Responsive	D	YES	cgi	only gene		PRAD
+input01	AR (F877L)	AR overexpression	AR inhibitors (Bicalutamide,Enzalutamide,Orterone,4OHtestosterone,etc)	Breast adenocarcinoma	Responsive	C	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	EGFR inhibitors	Lung adenocarcinoma	Resistant	D	YES	cgi	only gene		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	EGFR mAb inhibitors	Colorectal adenocarcinoma	Resistant	C	YES	cgi	only gene		COREAD
+input01	ERBB3 (V104M)	ERBB3 amplification	EGFR mAb inhibitors	Colorectal adenocarcinoma	Resistant	C	YES	cgi	only gene		COREAD
+input01	ESR1 (E380Q)	ESR1-YAP1 fusion	ESR1 inhibitors	Breast adenocarcinoma	Resistant	D	YES	cgi	only gene		BRCA
+input01	AR (F877L)	AR overexpression	Enzalutamide (AR inhibitor)	Prostate adenocarcinoma	Responsive	C	YES	cgi	only gene	707.0	PRAD
+input01	AR (F877L), AR (F877L)	AR (F877L) + AR (T878A)	Enzalutamide (AR inhibitor)	Prostate adenocarcinoma	Responsive	D	YES	cgi	only alteration type	707.0	PRAD
+input01	ARAF (S217F)	ARAF (S214C)	Sorafenib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type	627.0	LUAD
+input01	BRAF (G469A)	BRAF (V600E)	BRAF inhibitor + CDK2/4 inhibitors	Cutaneous melanoma	Responsive	D	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (V600)	BRAF inhibitor + EGFR mAb inhibitor +/- PI3K inhibitors	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only alteration type	92.0	COREAD
+input01	BRAF (G469A)	BRAF (V600E)	BRAF inhibitor + HSP90 inhibitors	Cutaneous melanoma	Responsive	D	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	BRAF inhibitor + MEK inhibitors	Thyroid	Responsive	C	YES	cgi	only alteration type	92.0	TH
+input01	BRAF (G469A)	BRAF fusion	BRAF inhibitor + MEK inhibitors	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene	92.0	LUAD
+input01	BRAF (G469A)	BRAF (V600E)	BRAF inhibitor + PI3K pathway inhibitors	Cutaneous melanoma	Responsive	D	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (L597R)	BRAF inhibitors	Cutaneous melanoma	Responsive	C	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	BRAF inhibitors	Glioma	Responsive	D	YES	cgi	only alteration type	92.0	G
+input01	BRAF (G469A)	BRAF (V600E)	BRAF inhibitors	Ovary	Responsive	C	YES	cgi	only alteration type	92.0	OV
+input01	BRAF (G469A)	BRAF (V600E)	ERK inhibitors	Cutaneous melanoma	Responsive	D	YES	cgi	only alteration type		CM
+input01	BRAF (G469A)	BRAF (G469A)	ERK inhibitors	Head an neck squamous	Responsive	C	YES	cgi	complete		HNSC
+input01	BRAF (G469A)	BRAF (L485W)	ERK inhibitors	Billiary tract	Responsive	C	YES	cgi	only alteration type		BT
+input01	BRAF (G469A)	BRAF (V600E)	ERK inhibitors	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	BRAF (G469A)	BRAF (V600E)	MEK inhibitors	Thyroid	Responsive	C	YES	cgi	only alteration type	427.0	TH
+input01	BRAF (G469A)	BRAF (V600E)	MEK inhibitors	Ovary	Responsive	D	YES	cgi	only alteration type	427.0	OV
+input01	BRAF (G469A)	BRAF inframe deletion (L485),inframe deletion (P490)	Pan-RAF inhibitors	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	BRAF (G469A)	BRAF (V600E)	Pan-RAF inhibitors	Cutaneous melanoma	Responsive	C	YES	cgi	only alteration type		CM
+input01	BRAF (G469A)	BRAF fusion	MEK inhibitors (Trametinib,etc)	Lung adenocarcinoma, Cutaneous melanoma, Prostate adenocarcinoma	Responsive	D	YES	cgi	only gene	427.0	LUAD, CM, PRAD
+input01	BRAF (G469A)	BRAF (K601R,L597R,V600R)	MEK inhibitors (Trametinib,etc)	Cutaneous melanoma	Responsive	C	YES	cgi	only alteration type	427.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib (BRAF inhibitor)	Lung adenocarcinoma, Thyroid	Responsive	C	YES	cgi	only alteration type	92.0	LUAD, TH
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib (BRAF inhibitor)	Non-small cell lung	Responsive	A	YES	cgi	only alteration type	92.0	NSCLC
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib (BRAF inhibitor)	Cutaneous melanoma	Responsive	A	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib (BRAF inhibitor)	Gastrointestinal stromal	Responsive	C	YES	cgi	only alteration type	92.0	GIST
+input01	BRAF (G469A)	BRAF (V600R)	Dabrafenib (BRAF inhibitor)	Cutaneous melanoma	Responsive	C	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib + Trametinib (BRAF inhibitor + MEK inhibitor)	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib + Trametinib (BRAF inhibitor + MEK inhibitor)	Neuroendocrine	Responsive	C	YES	cgi	only alteration type		NEU
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib + Trametinib (BRAF inhibitor + MEK inhibitor)	Lung adenocarcinoma	Responsive	A	YES	cgi	only alteration type		LUAD
+input01	BRAF (G469A)	BRAF (V600E,V600K)	Dabrafenib + Trametinib (BRAF inhibitor + MEK inhibitor)	Cutaneous melanoma	Responsive	A	YES	cgi	only alteration type		CM
+input01	BRAF (G469A)	BRAF (G466V)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Lung adenocarcinoma	Responsive	D	YES	cgi	only alteration type		LUAD
+input01	BRAF (G469A)	BRAF (Y472C)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	BRAF (G469A)	BRAF (V600)	Irinotecan + Vemurafenib + Cetuximab (TOPO1 inhibitor + BRAF inhibitor + EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600)	Panitumumab + Dabrafenib + BYL719 (EGFR mAb inhibitor + BRAF inhibitor + PI3K inhibitor)	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Panitumumab + Dabrafenib + Trametinib (EGFR mAb inhibitor + BRAF inhibitor + MEK inhibitor)	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	PLX4720 (BRAF inhibitor)	Malignant astrocytoma	Responsive	D	YES	cgi	only alteration type	92.0	MA
+input01	BRAF (G469A)	BRAF fusion	Selumetinib (MEK inhibitor)	Ovary	Responsive	C	YES	cgi	only gene	427.0	OV
+input01	BRAF (G469A)	BRAF (V600E)	Selumetinib (MEK inhibitor)	Pediatric glioma	Responsive	C	YES	cgi	only alteration type	427.0	PG
+input01	BRAF (G469A)	BRAF fusion	Sorafenib (Pan-TK inhibitor)	Cutaneous melanoma, Lung adenocarcinoma, Prostate adenocarcinoma	Responsive	D	YES	cgi	only gene	627.0	CM, LUAD, PRAD
+input01	BRAF (G469A)	BRAF (D594G,G469E)	Sorafenib (Pan-TK inhibitor)	Cutaneous melanoma	Responsive	D	YES	cgi	only alteration type	627.0	CM
+input01	BRAF (G469A)	BRAF (V600E,V600K)	Trametinib (MEK inhibitor)	Cutaneous melanoma	Responsive	A	YES	cgi	only alteration type	427.0	CM
+input01	BRAF (G469A)	BRAF (V600D,V600K,V600M,V600G,V600R)	Vemurafenib (BRAF inhibitor)	Cutaneous melanoma	Responsive	A	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib (BRAF inhibitor)	Lung adenocarcinoma, Hairy-Cell leukemia, Myeloma	Responsive	C	YES	cgi	only alteration type	92.0	LUAD, HCL, MYMA
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib (BRAF inhibitor)	Malignant astrocytoma	Responsive	C	YES	cgi	only alteration type	92.0	MA
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib (BRAF inhibitor)	Cutaneous melanoma	Responsive	A	YES	cgi	only alteration type	92.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib (BRAF inhibitor)	Thyroid carcinoma	Responsive	C	YES	cgi	only alteration type	92.0	THCA
+input01	BRAF (G469A)	BRAF (V600E,V600D,V600K,V600M,V600G,V600R)	Vemurafenib (BRAF inhibitor)	Non-small cell lung, Lagerhans cell histiocytosis, Erdheim-Chester histiocytosis	Responsive	A	YES	cgi	only alteration type	92.0	NSCLC, HISLC, HISEC
+input01	BRAF (G469A)	BRAF (V600E,V600K)	Vemurafenib + Cobimetinib (BRAF inhibitor + MEK inhibitor)	Cutaneous melanoma	Responsive	A	YES	cgi	only alteration type		CM
+input01	CHEK2 (V438F)	CHEK2 oncogenic mutation	Olaparib (PARP inhibitor)	Prostate adenocarcinoma	Responsive	A	YES	cgi	complete		PRAD
+input01	CHEK2 (V438F)	CHEK2 deletion	Olaparib (PARP inhibitor)	Prostate adenocarcinoma	Responsive	C	YES	cgi	only gene		PRAD
+input01	CSF1R (Y969*)	CSF1R (Y571D)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Myelodisplasic proliferative syndrome	Responsive	D	YES	cgi	only alteration type		MDPS
+input01	PTEN (R335*)	PTEN oncogenic mutation	EGFR mAb inhibitors	Colorectal adenocarcinoma	Resistant	B	YES	cgi	complete		COREAD
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	EGFR mAb inhibitors	Colorectal adenocarcinoma	Resistant	B	YES	cgi	only gene		COREAD
+input01	PTEN (R335*)	PTEN oncogenic mutation	MTOR inhibitors	Endometrium	No Responsive	C	YES	cgi	complete		ED
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	MTOR inhibitors	Endometrium	No Responsive	C	YES	cgi	only gene		ED
+input01	PTEN (R335*), BRAF (G469A)	PTEN oncogenic mutation + BRAF oncogenic mutation	BRAF inhibitors	Cutaneous melanoma	Resistant	C	YES	cgi	complete		CM
+input01	PTEN MUT* (K267X), PTEN (R335*), BRAF (G469A)	PTEN deletion + BRAF oncogenic mutation	BRAF inhibitors	Cutaneous melanoma	Resistant	C	YES	cgi	only gene		CM
+input01	PTEN (R335*), BRAF (G469A)	PTEN oncogenic mutation + BRAF oncogenic mutation	MEK inhibitors	Cutaneous melanoma	Resistant	D	YES	cgi	complete		CM
+input01	PTEN MUT* (K267X), PTEN (R335*), BRAF (G469A)	PTEN deletion + BRAF oncogenic mutation	MEK inhibitors	Cutaneous melanoma	Resistant	D	YES	cgi	only gene		CM
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	ERBB2 inhibitor + CDK4/6 inhibitors	Breast adenocarcinoma	Responsive	D	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 proximal exon 20	ERBB2 inhibitors (Afatinib,Lapatinib,Neratinib,etc)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 proximal exon 20	ERBB2 mAb inhibitors (Trastuzumab,etc)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Ado-Trastuzumab Emtansine (EGFR mAb inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene	409.0	BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Ado-Trastuzumab Emtansine (ERBB2 mAb inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 inframe insertion (A775YVMA),inframe insertion (G776VC)	Ado-Trastuzumab Emtansine (ERBB2 mAb inhibitor)	Lung	Responsive	C	YES	cgi	only alteration type		L
+input01	ERBB2 MUT* (G776A)	ERBB2 (V659E,S310F)	Ado-Trastuzumab Emtansine (ERBB2 mAb inhibitor)	Lung	Responsive	C	YES	cgi	only alteration type		L
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib (ERBB2&EGFR inhibitor 2nd gen)	Stomach	Responsive	C	YES	cgi	only gene		ST
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib (ERBB2&EGFR inhibitor 2nd gen)	Breast adenocarcinoma	Responsive	B	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib (ERBB2&EGFR inhibitor 2nd gen)	Bladder	Responsive	C	YES	cgi	only gene		BLCA
+input01	ERBB2 MUT* (G776A)	ERBB2 proximal exon 20	Afatinib (ERBB2&EGFR inhibitor 2nd gen)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 (T798I)	Afatinib (ERBB2&EGFR inhibitor 2nd gen)	Breast adenocarcinoma	Responsive	D	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 oncogenic mutation	Dacomitinib (Pan ERBB inhibitor)	Non-small cell lung	Responsive	C	YES	cgi	only alteration type		NSCLC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Lapatinib (ERBB2 inhibitor);Capecitabine (Chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Lapatinib (ERBB2 inhibitor)	Billiary tract	Responsive	C	YES	cgi	only gene		BT
+input01	ERBB2 MUT* (G776A)	ERBB2 (D769Y,D769H,R896C,V777L,V842I,G309A)	Lapatinib (ERBB2 inhibitor)	Breast adenocarcinoma	Responsive	D	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Lapatinib (ERBB2 inhibitor);Capecitabine (Chemotherapy)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 (V659E)	Lapatinib (ERBB2 inhibitor)	Breast adenocarcinoma, Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		BRCA, LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 proximal exon 20	Lapatinib (ERBB2 inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Lapatinib + Chemotherapy (ERBB2 inhibitor + Chemotherapy)	Stomach	Responsive	C	YES	cgi	only gene		ST
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	MK2206 + Trastuzumab (Allosteric AKT inhibitor + ERBB2 mAb inhibitor)	Solid tumors	Responsive	C	YES	cgi	only gene		SOLID
+input01	ERBB2 MUT* (G776A)	ERBB2 inframe deletion (755-759),inframe insertion (780GSP),inframe insertion (781GSP)	Neratinib (ERBB2 inhibitor)	Breast adenocarcinoma	Responsive	D	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 oncogenic mutation	Neratinib (ERBB2 inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Neratinib (ERBB2 inhibitor)	Breast adenocarcinoma	Responsive	B	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 (K753E)	Neratinib (ERBB2 inhibitor)	Breast adenocarcinoma	Responsive	D	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 (L755S,G309A,D769Y,D769H,R896C,V777L,V842I)	Neratinib (ERBB2 inhibitor)	Breast adenocarcinoma	Responsive	D	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 proximal exon 20	Neratinib (ERBB2 inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 (L869R)	Neratinib (ERBB2 inhibitor)	Breast adenocarcinoma	Responsive	C	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 (S310,L755,V777)	Neratinib (ERBB2 inhibitor)	Any cancer type	Responsive	C	YES	cgi	only alteration type		CANCER
+input01	ERBB2 MUT* (G776A)	ERBB2 inframe insertion (P780GSP),inframe insertion (781GSP),inframe insertion (A775YVMA),inframe insertion (G776YVMA)	Neratinib (ERBB2 inhibitor)	Any cancer type	Responsive	C	YES	cgi	only alteration type		CANCER
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pertuzumab (ERBB2 mAb inhibitor)	Stomach	Responsive	C	YES	cgi	only gene		ST
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pertuzumab (ERBB2 mAb inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pertuzumab (ERBB2 mAb inhibitor)	Billiary tract	Responsive	C	YES	cgi	only gene		BT
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Pertuzumab (ERBB2 mAb inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 oncogenic mutation	Tensirolimus (MTOR inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab (ERBB2 mAb inhibitor)	Stomach, Gastroesophageal junction adenocarcinoma	Responsive	A	YES	cgi	only gene		ST, GEJA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab (ERBB2 mAb inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab (ERBB2 mAb inhibitor)	Billiary tract	Responsive	C	YES	cgi	only gene		BT
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab (ERBB2 mAb inhibitor)	Head an neck	Responsive	C	YES	cgi	only gene		HNC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab (ERBB2 mAb inhibitor)	Ovary	Responsive	C	YES	cgi	only gene		OV
+input01	ERBB2 MUT* (G776A)	ERBB2 (D769Y,D769H,R896C,G309E,S310F,S310Y,C311R)	Trastuzumab (ERBB2 mAb inhibitor)	Breast adenocarcinoma, Any cancer type	Responsive	D	YES	cgi	only alteration type		BRCA, CANCER
+input01	ERBB2 MUT* (G776A)	ERBB2 (G309E,S310F,S310Y,C311R,E321G,C334S)	Trastuzumab (ERBB2 mAb inhibitor)	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	ERBB2 MUT* (G776A)	ERBB2 (G776L)	Trastuzumab (ERBB2 mAb inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Trastuzumab (ERBB2 mAb inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Trastuzumab (ERBB2 mAb inhibitor)	Stomach, Gastroesophageal junction adenocarcinoma	Responsive	A	YES	cgi	only gene		ST, GEJA
+input01	ERBB2 MUT* (G776A)	ERBB2 proximal exon 20	Trastuzumab (ERBB2 mAb inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Ado-Trastuzumab Emtansine (ERBB2 mAb inhibitor)	Colorectal adenocarcinoma	Responsive	C	YES	cgi	only gene		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Everolimus + Chemotherapy (ERBB2 mAb inhibitor + MTOR inhibitor + Chemotherapy)	Breast adenocarcinoma	Responsive	C	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + HSP90 inhibitor (ERBB2 mAb inhibitor + HSP90 inhibitor)	Breast adenocarcinoma	Responsive	C	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Lapatinib (ERBB2 mAb inhibitor + ERBB2 inhibitor)	Colorectal adenocarcinoma	Responsive	B	YES	cgi	only gene		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Lapatinib (ERBB2 mAb inhibitor + ERBB2 inhibitor)	Endometrium	Responsive	D	YES	cgi	only gene		ED
+input01	ERBB2 MUT* (G776A), ESR1 (E380Q)	ERBB2 expression + ESR1 overexpression	Hormonal therapys (Tamoxifen,Letrozole,Anastrozole,Exemestane,Fulvestrant,LHRH analogues or antagonist,etc)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A), ESR1 (E380Q)	ERBB2 expression + ESR1 overexpression	Abemaciclib (CDK4/6 inhibitor)	Breast adenocarcinoma	Responsive	C	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A), ESR1 (E380Q)	ERBB2 expression + ESR1 overexpression	Everolimus (MTOR inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 expression -	Palbociclib (CDK4/6 inhibitor)	Breast adenocarcinoma	Responsive	A	YES	cgi	only gene		BRCA
+input01	ERBB3 (V104M)	ERBB3 (P262H,G284R)	ERBB3 mAb inhibitors	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	ERBB3 (V104M)	ERBB3 (P262H,G284R,Q809R)	PI3K pathway inhibitor + MEK inhibitors	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	ERBB3 (V104M)	ERBB3 (G284R,R103G)	Afatinib (ERBB2&EGFR inhibitor 2nd gen)	Bladder	Responsive	C	YES	cgi	only alteration type		BLCA
+input01	ERBB3 (V104M)	ERBB3 (G284R,V104M,R103G)	Afatinib (ERBB2&EGFR inhibitor 2nd gen)	Bladder	Responsive	C	YES	cgi	complete		BLCA
+input01	ERBB3 (V104M)	ERBB3 (P262H,G284R,Q809R)	Lapatinib (ERBB2 inhibitor)	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	ERBB3 (V104M)	ERBB3 (P262H,G284R)	Pertuzumab (ERBB2 mAb inhibitor)	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	ERBB3 (V104M)	ERBB3 (P262H,G284R,Q809R)	Trastuzumab (ERBB2 mAb inhibitor)	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	TP53 (R249G)	TP53 oncogenic mutation	MDM2 inhibitors	Liposarcoma	Resistant	C	YES	cgi	complete		LIP
+input01	ESR1 (E380Q)	ESR1 (E380Q,537,538,L536,P535H)	novel ER degraders (GDC-0810,etc)	Breast adenocarcinoma	Responsive	C	YES	cgi	complete		BRCA
+input01	ESR1 (E380Q)	ESR1 oncogenic mutation	Fluvestrant (Hormonal therapy)	Breast adenocarcinoma	Responsive	B	YES	cgi	complete		BRCA
+input01	TP53 (R249G)	TP53 oncogenic mutation	Abemaciclib (CDK4/CDK6 inhibitor)	Breast adenocarcinoma	Resistant	C	YES	cgi	complete		BRCA
+input01	FGFR1 (N577K)	FGFR1 amplification	FGFR inhibitors	Lung squamous cell	Responsive	C	YES	cgi	only gene		LUSC
+input01	FGFR1 (N577K)	FGFR1 amplification	FGFR inhibitors	Endometrium	Responsive	C	YES	cgi	only gene		ED
+input01	FGFR1 (N577K)	FGFR1 amplification	FGFR inhibitors	Lung squamous cell	Responsive	C	YES	cgi	only gene		LUSC
+input01	FGFR1 (N577K)	FGFR1 amplification	FGFR inhibitors	Head an neck	Responsive	D	YES	cgi	only gene		HNC
+input01	FGFR1 (N577K)	FGFR1 amplification	FGFR inhibitors (Lucitanib,etc)	Breast adenocarcinoma	Responsive	C	YES	cgi	only gene		BRCA
+input01	AR (F877L)	AR amplification	Abiraterone (AR inhibitor)	Prostate adenocarcinoma	Resistant	C	YES	cgi	only gene		PRAD
+input01	AR (F877L)	AR (L702H,T878A)	Abiraterone (AR inhibitor)	Prostate adenocarcinoma	Resistant	C	YES	cgi	only alteration type		PRAD
+input01	ALK (F1245C), ALK (V1180L)	ALK (I1171T)	Alectinib (ALK inhibitor)	Lung adenocarcinoma	Resistant	C	YES	cgi	only alteration type		LUAD
+input01	AR (F877L)	AR (F877L)	Arn-509 (AR inhibitor)	Prostate adenocarcinoma	Resistant	C	YES	cgi	complete		PRAD
+input01	FLT3 MUT* (D835-)	FLT3-ITD	FLT3 inhibitors	Acute myeloid leukemia	Responsive	C	YES	cgi	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (F691)	novel FLT3 inhibitors	Acute myeloid leukemia	Responsive	D	YES	cgi	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (N676)	Crenolanib (FLT3 inhibitor)	Acute myeloid leukemia	Responsive	D	YES	cgi	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835)	Lestaurtinib (Pan-TK inhibitor)	Acute myeloid leukemia	Responsive	C	YES	cgi	complete		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835)	Midostaurin (Pan-TK inhibitor)	Acute myeloid leukemia	Responsive	C	YES	cgi	complete		AML
+input01	FLT3 MUT* (D835-)	FLT3 (N676)	Midostaurin (Pan-TK inhibitor)	Acute myeloid leukemia	Responsive	D	YES	cgi	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3-ITD	Quizartinib (Pan-TK inhibitor)	Acute myeloid leukemia	Responsive	C	YES	cgi	only alteration type	966.0	AML
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN biallelic inactivation	BYL719 (PIK3CA inhibitor)	Breast adenocarcinoma	Resistant	C	YES	cgi	only alteration type		BRCA
+input01	FLT3 MUT* (D835-)	FLT3-ITD	Sorafenib (Pan-TK inhibitor)	Acute myeloid leukemia	Responsive	C	YES	cgi	only alteration type	627.0	AML
+input01	FLT3 MUT* (D835-)	FLT3-ITD	Sorafenib + Azacytidine (Pan-TK inhibitor + Chemotherapy)	Acute myeloid leukemia	Responsive	C	YES	cgi	only alteration type		AML
+input01	ALK (F1245C), ALK (V1180L)	ALK (G1123S)	Ceritinib (ALK inhibitor)	Lung adenocarcinoma	Resistant	C	YES	cgi	only alteration type		LUAD
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209)	HDAC inhibitors	Cutaneous melanoma	Responsive	D	YES	cgi	complete		CM
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209)	PI3K pathway inhibitor + MEK inhibitors	Cutaneous melanoma	Responsive	D	YES	cgi	complete		CM
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209)	PKC inhibitors	Cutaneous melanoma	Responsive	D	YES	cgi	complete		CM
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209)	Selumetinib (MEK inhibitor)	Cutaneous melanoma	Responsive	C	YES	cgi	complete	427.0	CM
+input01	BRAF (G469A)	BRAF (V600E)	Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	B	YES	cgi	only alteration type		COREAD
+input01	KIT (Y553N)	KIT mutation in exon 11	HSP90 inhibitors	Gastrointestinal stromal	Responsive	C	YES	cgi	complete		GIST
+input01	KIT (Y553N)	KIT mutation in exon 9 or 17	HSP90 inhibitors	Gastrointestinal stromal	Responsive	D	YES	cgi	only alteration type		GIST
+input01	KIT (Y553N)	KIT wildtype	Dasatinib (BCR-ABL inhibitor 2nd gen)	Gastrointestinal stromal	Responsive	D	YES	cgi	only alteration type		GIST
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Dasatinib (BCR-ABL inhibitor 2nd gen)	Cutaneous melanoma	Responsive	C	YES	cgi	complete		CM
+input01	KIT (Y553N)	KIT (D816V)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Systemic mastocytosis	Responsive	C	YES	cgi	only alteration type		SM
+input01	KIT (Y553N)	KIT (D816V)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Acute myeloid leukemia	Responsive	C	YES	cgi	only alteration type		AML
+input01	KIT (Y553N)	KIT (D816Y,D816F,D816V)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	KIT (Y553N)	KIT (N822K)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Acute myeloid leukemia	Responsive	D	YES	cgi	only alteration type		AML
+input01	KIT (Y553N)	KIT inframe deletion (416-422),inframe insertion (416-422)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Acute myeloid leukemia	Responsive	D	YES	cgi	only alteration type		AML
+input01	KIT (Y553N)	KIT inframe deletion (V560)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Thymic	Responsive	C	YES	cgi	only alteration type		THYM
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Responsive	A	YES	cgi	complete		GIST
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Cutaneous melanoma	Responsive	B	YES	cgi	complete		CM
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Cutaneous melanoma	Responsive	A	YES	cgi	complete		CM
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN biallelic inactivation	Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	C	YES	cgi	only alteration type		COREAD
+input01	TP53 (R249G)	TP53 oncogenic mutation	Cisplatin (Chemotherapy)	Female germ cell tumor, Male germ cell tumor	Resistant	C	YES	cgi	complete		FGCT, MGCT
+input01	ALK (F1245C), ALK (V1180L)	ALK inframe insertion (1151T)	Crizotinib (ALK inhibitor)	Lung adenocarcinoma	Resistant	C	YES	cgi	only alteration type		LUAD
+input01	KIT (Y553N)	KIT (D820Y)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Cutaneous melanoma	Responsive	C	YES	cgi	only alteration type		CM
+input01	ALK (F1245C), ALK (V1180L)	ALK oncogenic mutation	Crizotinib (ALK inhibitor)	Non-small cell lung	Resistant	CLINICAL TRIALS	YES	cgi	complete		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK amplification	Crizotinib (ALK inhibitor)	Non-small cell lung	Resistant	CLINICAL TRIALS	YES	cgi	only gene		NSCLC
+input01	KIT (Y553N)	KIT (Y553N)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Thymic	Responsive	C	YES	cgi	complete		THYM
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Nilotinib (BCR-ABL inhibitor 2nd gen)	Cutaneous melanoma	Responsive	C	YES	cgi	complete		CM
+input01	KIT (Y553N)	KIT mutation in exon 17	Nilotinib (BCR-ABL inhibitor 2nd gen)	Gastrointestinal stromal	Responsive	C	YES	cgi	only alteration type		GIST
+input01	KIT (Y553N)	KIT (D820Y)	Nilotinib (BCR-ABL inhibitor 2nd gen)	Cutaneous melanoma	Responsive	C	YES	cgi	only alteration type		CM
+input01	KIT (Y553N)	KIT (788-828,829-860,550-592)	Ponatinib (BCR-ABL inhibitor 3rd gen&Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	C	YES	cgi	complete	956.0	GIST
+input01	KIT (Y553N)	KIT (A829P,V654A,T670I)	Ponatinib (BCR-ABL inhibitor 3rd gen&Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	D	YES	cgi	only alteration type	956.0	GIST
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Regorafenib (Pan-kinase inhibitor)	Gastrointestinal stromal	Responsive	A	YES	cgi	complete		GIST
+input01	KIT (Y553N)	KIT inframe deletion (577-579)	Sorafenib (Pan-TK inhibitor)	Thymic	Responsive	C	YES	cgi	only alteration type	627.0	THYM
+input01	KIT (Y553N)	KIT wildtype	Sorafenib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	C	YES	cgi	only alteration type	627.0	GIST
+input01	KIT (Y553N)	KIT mutation in exon 9 or 11	Sorafenib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	C	YES	cgi	complete	627.0	GIST
+input01	KIT (Y553N)	KIT (550-592,627-664,788-828,829-860)	Sorafenib (Pan-TK inhibitor)	Cutaneous melanoma	Responsive	C	YES	cgi	complete	627.0	CM
+input01	KIT (Y553N)	KIT mutation in exon 17	Sorafenib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	D	YES	cgi	only alteration type	627.0	GIST
+input01	KIT (Y553N)	KIT (D820E)	Sorafenib (Pan-TK inhibitor)	Thymic	Responsive	C	YES	cgi	only alteration type	627.0	THYM
+input01	KIT (Y553N)	KIT wildtype	Sunitinib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	B	YES	cgi	only alteration type	1023.0	GIST
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Sunitinib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	A	YES	cgi	complete	1023.0	GIST
+input01	ALK (F1245C), ALK (V1180L)	ALK amplification	Crizotinib (ALK inhibitor)	Lung adenocarcinoma	Resistant	C	YES	cgi	only gene		LUAD
+input01	KIT (Y553N)	KIT mutation in exon 9,11,13,14 or 17	Sunitinib (Pan-TK inhibitor)	Cutaneous melanoma	Responsive	B	YES	cgi	complete	1023.0	CM
+input01	ALK (F1245C), ALK (V1180L)	ALK (C1156Y,L1196M)	Crizotinib (ALK inhibitor)	Non-small cell lung	Resistant	C	YES	cgi	only alteration type		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L)	Crizotinib (ALK inhibitor)	Glioma	Resistant	D	YES	cgi	only alteration type		G
+input01	KIT (Y553N)	KIT (H697Y)	Sunitinib (Pan-TK inhibitor)	Thymic	Responsive	D	YES	cgi	only alteration type	1023.0	THYM
+input01	KIT (Y553N)	KIT (H697Y)	Sunitinib (Pan-TK inhibitor)	Thymic	Responsive	D	YES	cgi	only alteration type	1023.0	THYM
+input01	KIT (Y553N)	KIT (Y553N)	Sunitinib (Pan-TK inhibitor)	Thymic	Responsive	C	YES	cgi	complete	1023.0	THYM
+input01	ALK (F1245C), ALK (V1180L)	ALK (L1196M,L1152R,C1156Y,F1174L,G1202R,S1206Y,G1269A,I1171T)	Crizotinib (ALK inhibitor)	Lung adenocarcinoma	Resistant	C	YES	cgi	only alteration type		LUAD
+input01	AR (F877L)	AR (F877L)	Enzalutamide (AR inhibitor)	Prostate adenocarcinoma	Resistant	C	YES	cgi	complete		PRAD
+input01	ESR1 (E380Q)	ESR1 oncogenic mutation	Exemestane (Hormonal therapy)	Breast adenocarcinoma	Resistant	B	YES	cgi	complete		BRCA
+input01	AR (F877L)	AR (T878A)	Flutamide (AR inhibitor)	Prostate adenocarcinoma	Resistant	C	YES	cgi	only alteration type		PRAD
+input01	ESR1 (E380Q)	ESR1 (Y537S)	Fulvestrant (Hormonal therapy)	Breast adenocarcinoma	Resistant	D	YES	cgi	only alteration type		BRCA
+input01	KIT (Y553N)	KIT wildtype	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	B	YES	cgi	only alteration type		GIST
+input01	KIT (Y553N)	KIT (627-664,664-714,449-514)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	B	YES	cgi	only alteration type		GIST
+input01	KIT (Y553N)	KIT mutation in exon 17	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	D	YES	cgi	only alteration type		GIST
+input01	KIT (Y553N)	KIT mutation in exon 17 or 18	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Cutaneous melanoma	Resistant	C	YES	cgi	only alteration type		CM
+input01	KIT (Y553N)	KIT amplification	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Cutaneous melanoma	No Responsive	C	YES	cgi	only gene		CM
+input01	KIT (Y553N)	KIT (D816)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal, Myelodisplasic syndrome, Myelodisplasic proliferative syndrome, Hyper eosinophilic advanced snydrome, Eosinophilic chronic leukemia, Chronic myeloid leukemia, Acute lymphoblastic leukemia, Systemic mastocytosis	Resistant	A	YES	cgi	only alteration type		GIST, MDS, MDPS, HES, ECL, CML, ALL, SM
+input01	KIT (Y553N)	KIT (T670I)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	A	YES	cgi	only alteration type		GIST
+input01	KIT (Y553N)	KIT (V559I,H697Y,T670,V654A,A829P,D816,N822,Y823D)	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	D	YES	cgi	only alteration type		GIST
+input01	ERBB2 MUT* (G776A)	ERBB2 (K753E)	Lapatinib (ERBB2 inhibitor)	Breast adenocarcinoma	Resistant	D	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 (T798I)	Neratinib (ERBB2 inhibitor)	Breast adenocarcinoma	Resistant	C	YES	cgi	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Osimertinib (3rd generation EGFR inhibitor)	Lung adenocarcinoma	Resistant	C	YES	cgi	only gene		LUAD
+input01	BRAF (G469A)	BRAF (V600E)	Panitumumab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	B	YES	cgi	only alteration type		COREAD
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN biallelic inactivation	Panitumumab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	C	YES	cgi	only alteration type		COREAD
+input01	FLT3 MUT* (D835-)	FLT3 (D835,Y842)	Ponatinib (BCR-ABL inhibitor 3rd gen&Pan-TK inhibitor)	Acute myeloid leukemia	Resistant	D	YES	cgi	complete		AML
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET (I788N)	Ponatinib (BCR-ABL inhibitor 3rd gen&Pan-TK inhibitor)	Lung adenocarcinoma	Resistant	D	YES	cgi	only alteration type		LUAD
+input01	FLT3 MUT* (D835-)	FLT3 (F691,D835,N676,Y842)	Quizartinib (Pan-TK inhibitor)	Acute myeloid leukemia	Resistant	D	YES	cgi	complete		AML
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Rociletinib (3rd generation EGFR inhibitor)	Lung adenocarcinoma	Resistant	C	YES	cgi	only gene		LUAD
+input01	PTEN (R335*)	PTEN oncogenic mutation	AKT inhibitors	Pancreas	Responsive	C	YES	cgi	complete		PA
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	AKT inhibitors	Pancreas	Responsive	C	YES	cgi	only gene		PA
+input01	PTEN (R335*)	PTEN oncogenic mutation	ATM inhibitors	Breast adenocarcinoma	Responsive	D	YES	cgi	complete		BRCA
+input01	PTEN (R335*)	PTEN oncogenic mutation	PARP inhibitors	Endometrium	Responsive	C	YES	cgi	complete		ED
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	PARP inhibitors	Endometrium	Responsive	C	YES	cgi	only gene		ED
+input01	PTEN (R335*)	PTEN oncogenic mutation	PD1 Ab inhibitors	Cutaneous melanoma	Responsive	C	YES	cgi	complete		CM
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	PD1 Ab inhibitors	Cutaneous melanoma	Responsive	C	YES	cgi	only gene		CM
+input01	PTEN (R335*)	PTEN oncogenic mutation	PI3K pathway inhibitor + AR antagonists	Prostate adenocarcinoma	Responsive	D	YES	cgi	complete		PRAD
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	PI3K pathway inhibitor + AR antagonists	Prostate adenocarcinoma	Responsive	D	YES	cgi	only gene		PRAD
+input01	PTEN (R335*)	PTEN oncogenic mutation	PI3K pathway inhibitor + MEK inhibitors	Ovary	Responsive	D	YES	cgi	complete		OV
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	PI3K pathway inhibitor + MEK inhibitors	Ovary	Responsive	D	YES	cgi	only gene		OV
+input01	PTEN (R335*)	PTEN oncogenic mutation	PI3K pathway inhibitors	Thyroid, Glioma, Lung, Ovary, Breast adenocarcinoma, Any cancer type, Endometrium	Responsive	D	YES	cgi	complete		TH, G, L, OV, BRCA, CANCER, ED
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	PI3K pathway inhibitors	Thyroid, Glioma, Lung, Ovary, Breast adenocarcinoma, Any cancer type, Endometrium	Responsive	D	YES	cgi	only gene		TH, G, L, OV, BRCA, CANCER, ED
+input01	PTEN (R335*)	PTEN oncogenic mutation	PIK3CB inhibitors	Prostate adenocarcinoma	Responsive	C	YES	cgi	complete		PRAD
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	PIK3CB inhibitors	Prostate adenocarcinoma	Responsive	C	YES	cgi	only gene		PRAD
+input01	KIT (Y553N)	KIT mutation in exon 11	Sunitinib (Pan-TK inhibitor)	Gastrointestinal stromal	Resistant	B	YES	cgi	complete		GIST
+input01	PTEN (R335*)	PTEN oncogenic mutation	Everolimus (MTOR inhibitor)	Prostate adenocarcinoma	Responsive	C	YES	cgi	complete		PRAD
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	Everolimus (MTOR inhibitor)	Prostate adenocarcinoma	Responsive	C	YES	cgi	only gene		PRAD
+input01	KIT (Y553N)	KIT mutation in exon 17	Sunitinib (Pan-TK inhibitor)	Gastrointestinal stromal	Resistant	D	YES	cgi	only alteration type		GIST
+input01	PTEN (R335*)	PTEN oncogenic mutation	Sirolimus (MTOR inhibitor)	Any cancer type	Responsive	C	YES	cgi	complete		CANCER
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	Sirolimus (MTOR inhibitor)	Any cancer type	Responsive	C	YES	cgi	only gene		CANCER
+input01	KIT (Y553N)	KIT amplification	Sunitinib (Pan-TK inhibitor)	Cutaneous melanoma	No Responsive	C	YES	cgi	only gene		CM
+input01	ESR1 (E380Q)	ESR1 (E380Q,537,538,L536,P535H)	Tamoxifen (Hormonal therapy)	Breast adenocarcinoma	Resistant	C	YES	cgi	complete		BRCA
+input01	PTEN (R335*), ERBB2 MUT* (G776A)	PTEN oncogenic mutation + ERBB2 amplification	Everolimus + Trastuzumab + Chemotherapy (MTOR inhibitor + ERBB2 mAb inhibitor + Chemotherapy)	Breast adenocarcinoma	Responsive	B	YES	cgi	only gene		BRCA
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	RET inhibitors	Lung adenocarcinoma	Responsive	D	YES	cgi	only gene		LUAD
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET-TPCN1 fusion	RET inhibitors	Thyroid	Responsive	D	YES	cgi	only gene		TH
+input01	RET (M918T)	RET (C634W,M918T)	RET inhibitors	Thyroid	Responsive	D	YES	cgi	complete		TH
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Cabozantinib (Pan-kinase inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene		LUAD
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET-TPCN1 fusion	Cabozantinib (Pan-kinase inhibitor)	Thyroid carcinoma	Responsive	D	YES	cgi	only gene		THCA
+input01	RET (M918T)	RET (C634W,M918T)	Cabozantinib (Pan-kinase inhibitor)	Thyroid	Responsive	D	YES	cgi	complete		TH
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Nintedanib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene		LUAD
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Sunitinib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene	1023.0	LUAD
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET-TPCN1 fusion	Sunitinib (Pan-TK inhibitor)	Thyroid carcinoma	Responsive	D	YES	cgi	only gene	1023.0	THCA
+input01	RET (M918T)	RET (C634W,M918T)	Sunitinib (Pan-TK inhibitor)	Thyroid	Responsive	D	YES	cgi	complete	1023.0	TH
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Vandetanib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	YES	cgi	only gene		LUAD
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET-TPCN1 fusion	Vandetanib (Pan-TK inhibitor)	Thyroid carcinoma	Responsive	D	YES	cgi	only gene		THCA
+input01	RET (M918T)	RET (618,620,634,768,791,891,918,C634W,M918T)	Vandetanib (Pan-TK inhibitor)	Thyroid carcinoma	Responsive	A	YES	cgi	complete		THCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab (ERBB2 mAb inhibitor)	Endometrium	No Responsive	C	YES	cgi	only gene		ED
+input01	BRAF (G469A)	BRAF inframe deletion (L485),inframe deletion (P490)	Vemurafenib (BRAF inhibitor)	Any cancer type	Resistant	D	YES	cgi	only alteration type		CANCER
+input01	BRAF (G469A)	BRAF (V600)	Vemurafenib (BRAF inhibitor)	Colorectal adenocarcinoma	No Responsive	C	YES	cgi	only alteration type		COREAD
+input01	TP53 (R249G)	TP53 wildtype	HDM2 inhibitors	Acute myeloid leukemia	Responsive	C	YES	cgi	only alteration type		AML
+input01	TP53 (R249G)	TP53 (R248Q,R175H)	HSP90 inhibitors	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	TP53 (R249G)	TP53 (R248Q,R175H)	HSP90 inhibitors	Any cancer type	Responsive	D	YES	cgi	only alteration type		CANCER
+input01	TP53 (R249G)	TP53 oncogenic mutation	WEE1 inhibitors	Head an neck	Responsive	D	YES	cgi	complete		HNC
+input01	TP53 (R249G)	TP53 oncogenic mutation	AZD6738 (ATR inhibitor)	B cell lymphoma	Responsive	C	YES	cgi	complete		BCL
+input01	TP53 (R249G)	TP53 deletion	AZD6738 (ATR inhibitor)	B cell lymphoma	Responsive	C	YES	cgi	only gene		BCL
+input01	TP53 (R249G)	TP53 oncogenic mutation	Decitabine (Chemotherapy)	Acute myeloid leukemia, Myelodisplasic proliferative syndrome	Responsive	C	YES	cgi	complete		AML, MDPS
+input01	TP53 (R249G)	TP53 oncogenic mutation	Doxorubicin (Anthracycline antitumor antibiotic)	Bladder	Responsive	D	YES	cgi	complete		BLCA
+input01	TP53 (R249G)	TP53 oncogenic mutation	Gemcitabine (Chemotherapy)	Bladder	Responsive	D	YES	cgi	complete		BLCA
+input01	TP53 (R249G)	TP53 oncogenic mutation	Mitomycin C (Chemotherapy)	Bladder	Responsive	D	YES	cgi	complete		BLCA
+input01	TP53 (R249G)	TP53 oncogenic mutation	WEE1 inhibitors	Ovary	Responsive	C	YES	cgi	complete		OV
+input01	TP53 (R249G)	TP53 oncogenic mutation	Pramlintide (Amylin analogue)	Thymic	Responsive	D	YES	cgi	complete		THYM
+input01	TP53 (R249G)	TP53 deletion	Pramlintide (Amylin analogue)	Thymic	Responsive	D	YES	cgi	only gene		THYM
+input01	FLT3 MUT* (D835-)	FLT3-ITD	Venetoclax (BCL2 inhibitor)	Acute myeloid leukemia	Resistant	C	YES	cgi	only alteration type		AML
+input01	TSC2 (Q1178*)	TSC2 oncogenic mutation	MTOR inhibitors	Renal angiomyolipoma    	Responsive	C	YES	cgi	complete		RA
+input01	TSC2 (Q1178*)	TSC2 oncogenic mutation	SRC inhibitors	Lymphangioleiomyomatosis	Responsive	D	YES	cgi	complete		LAM
+input01	TSC2 (Q1178*)	TSC2 deletion	SRC inhibitors	Lymphangioleiomyomatosis	Responsive	D	YES	cgi	only gene		LAM
+input01	TSC2 (Q1178*)	TSC2 oncogenic mutation	Everolimus (MTOR inhibitor)	Bladder	Responsive	C	YES	cgi	complete		BLCA
+input01	TSC2 (Q1178*)	TSC2 oncogenic mutation	Everolimus (MTOR inhibitor)	Renal angiomyolipoma    , Giant cell astrocytoma	Responsive	A	YES	cgi	complete		RA, GCA
+input01	TSC2 (Q1178*)	TSC2 (Q1178*)	Everolimus (MTOR inhibitor)	Thyroid carcinoma	Responsive	C	YES	cgi	complete		THCA
+input01	TSC2 (Q1178*)	TSC2 (E66K)	Tensirolimus (MTOR inhibitor)	Endometrium	Responsive	C	YES	cgi	only alteration type		ED
+input01	PTEN (R335*)	PTEN (D326N,G165R,T277A,T160I,G129E,G165V,N48K,H93Y,N94I,D92E,D92G,F21A,R173P,L112R,K289E,L108P,R335L,H123Y,R130G,D92V,G251C,R15S,L181P,V133I,C124R,T131A,.,V343L,A126V,T131L,L112P,R173C,G129A,H61D,C136R,H123Q,H61R,P96Q,D331G,M134L,N276S,K342N,Y68H,D92N,M35R,Y68D,P95S,R130Q,R173H,Y155C,H123D,G20E,K62R,R159G,S10N,L23F,C105F,D162G,T319A,Y16C,A126D,H93R,K128Q,I122S,Y65C,F154L,K128T,R130K,R130L,V343E,G36R,A126S,D252G,G127N,F347L,G127E,K125E,A39P,S170N,G165E,P169H,Y27S,V217D,D162H,H118P,D92A,A34D,D24Y,L345Q,T131I,D92H,K128N,T167A,S170R,T401I,P95L,C124S,P38L,S227F,C124N,A121P,G129D,K128R,C136Y,F341V,K125L,R130A,D24N,H93D,L325F,C71Y,E157G,L42R,Y174N,A121E,A126G,G129R,R161G,G44D,I168F,R15K,H93Q,I122L,F241S,D107Y,K125M,L320S)	Gsk2636771 + Azd8186	Any cancer type	Responsive	D	YES	oncokb	complete		CANCER
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	Gsk2636771 + Azd8186	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1 amplification	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Lung squamous cell	Responsive	C	YES	oncokb	only gene		LUSC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib + Ceritinib	Sarcoma	Responsive	B	YES	oncokb	only gene		S
+input01	ALK (F1245C), ALK (V1180L)	ALK (G1202R,I1171N)	Alectinib	Non-small cell lung	Resistant	D	YES	oncokb	only alteration type		NSCLC
+input01	BRAF (G469A)	BRAF (D594.,G466.,G464.,N581.,D287H,K601.,G469.,G596.,L597.,F595L,S467L,V459L)	Plx8394	Any cancer type	Responsive	D	YES	oncokb	complete		CANCER
+input01	KIT (Y553N)	KIT (F522C,W557R,N463S,V654A,N822H,A829P,D820A,D572A,P838L,R634W,N822K,Y578C,N822Y,D816G,D816A,T670I,D820G,V560E,K558N,C809G,D820E,D820Y,D816Y,L576P,N822I,W557G,H697Y,I653T,V559A,V530I,V559I,S476I,V559G,D52N,.,N505I,S709F,V559C,D816N,D816V,M541L,V559D,Y823D,C443Y,D816E,Y553N,V560G,V852I,D816F,Y570H,K509I,E490K,D816.,N655K,K642E,V560D,W557C,D60N,D816H)	Sunitinib + Sorafenib	Thymic	Responsive	B	YES	oncokb	complete		THYM
+input01	KIT (Y553N)	KIT (Y823D,T670I,V654A,D820G,C809G,D820A,N822K,D816H)	Imatinib	Gastrointestinal stromal	Resistant	C	YES	CIVIC,oncokb	only alteration type		GIST
+input01	ERBB2 MUT* (G776A)	ERBB2 (T862A,L755S,V842I,V777A,D769H,.,R896C,R678W,R784C,V773A,C630Y,G309E,G292R,E645F,T733I,D769Y,G660R,T686A,D769A,Y803N,L651V,A644F,L674V,V839G,R217C,L869R,E719K,G660D,E265K,L785F,P650S,D277H,D808N,G776V,S653C,R487W,L841V,S310F,L755W,E693K,S335C,V659E,V794M,V659K,E321G,L915M,L866M,C311R,S1002R,D277Y,V659G,Q709L,L726I,G309A,N857S,L755P,T798M,L663P,E812K,S656C,T798I,R683Q,I682G,R678Q,V777L,P780L,A710V,R677L,S310Y,S783P,E717K,E719G,H878Y,G776S,L726F,D821N,V777M,I767M,S649T,C334S)	Neratinib	Breast adenocarcinoma	Responsive	C	YES	CIVIC,oncokb	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Neratinib	Breast adenocarcinoma	Responsive	B	YES	CIVIC,oncokb	only gene		BRCA
+input01	BRAF (G469A)	BRAF (V600)	Panitumumab + Dabrafenib + Trametinib	Colorectal adenocarcinoma	Responsive	C	YES	oncokb	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Encorafenib + Binimetinib + Cetuximab	Colorectal adenocarcinoma	Responsive	C	YES	oncokb	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF fusion	Cobimetinib + Trametinib	Ovary	Responsive	C	YES	oncokb	only gene		OV
+input01	ESR1 (E380Q)	ESR1 (L536P,S463P,L469V,L536Q,Y537N,.,L536H,Y537C,Y537S,D538G,L536R,E380Q)	Azd9496 + Fulvestrant	Breast adenocarcinoma	Responsive	C	YES	oncokb	complete		BRCA
+input01	ESR1 (E380Q)	ESR1-CCDC170 fusion	Azd9496 + Fulvestrant	Breast adenocarcinoma	Responsive	C	YES	oncokb	only gene		BRCA
+input01	ESR1 (E380Q)	ESR1-DAB2 fusion	Azd9496 + Fulvestrant	Breast adenocarcinoma	Responsive	C	YES	oncokb	only gene		BRCA
+input01	ESR1 (E380Q)	ESR1-GYG1 fusion	Azd9496 + Fulvestrant	Breast adenocarcinoma	Responsive	C	YES	oncokb	only gene		BRCA
+input01	ESR1 (E380Q)	ESR1-SOX9 fusion	Azd9496 + Fulvestrant	Breast adenocarcinoma	Responsive	C	YES	oncokb	only gene		BRCA
+input01	ESR1 (E380Q)	ESR1-YAP1 fusion	Azd9496 + Fulvestrant	Breast adenocarcinoma	Responsive	C	YES	oncokb	only gene		BRCA
+input01	ESR1 (E380Q)	ESR1 fusion	Azd9496 + Fulvestrant	Breast adenocarcinoma	Responsive	C	YES	oncokb	only gene		BRCA
+input01	KIT (Y553N)	KIT (F522C,W557R,N463S,V654A,N822H,A829P,D820A,D572A,P838L,R634W,N822K,Y578C,N822Y,D816G,D816A,T670I,D820G,V560E,K558N,C809G,D820E,D820Y,D816Y,L576P,N822I,W557G,H697Y,I653T,V559A,V530I,V559I,S476I,V559G,D52N,.,N505I,S709F,V559C,D816N,D816V,M541L,V559D,Y823D,C443Y,D816E,Y553N,V560G,V852I,D816F,Y570H,K509I,E490K,N655K,V560D,K642E,D816.,W557C,D60N,D816H)	Imatinib	Cutaneous melanoma	Responsive	B	YES	CIVIC,oncokb	complete		CM
+input01	KIT (Y553N)	KIT amplification	Imatinib	Cutaneous melanoma	Responsive	B	YES	oncokb	only gene		CM
+input01	KIT (Y553N)	KIT (D816)	Blu-285	Mastocytosis	Responsive	C	YES	oncokb	only alteration type		MAS
+input01	TSC2 (Q1178*)	TSC2 (S1653P,Q1503P,R905G,L830R,A889P,L146R,T1203K,V1673F,W1610G,V769E,C696Y,F615S,E75G,L448P,V299G,R611W,R1200W,R505Q,Q1554H,G1567D,G1596V,Y1571N,I427M,S1498N,L1584R,P1709L,L844R,V705E,R905Q,Y598C,L410R,R462C,R611Q,R905W,A614D,.,S1653F,P1675L,H1620R,S1036P,H597Y,L493P,T1623I,V1673D,V705M,L826P,L792R,A328P,L493V)	Everolimus	Renal clear cell	Responsive	B	YES	oncokb	complete		RCCC
+input01	TSC2 (Q1178*)	TSC2 deletion	Everolimus	Renal clear cell	Responsive	B	YES	oncokb	only gene		RCCC
+input01	ERBB2 MUT* (G776A)	ERBB2 (T862A,L755S,V842I,V777A,D769H,.,R896C,R678W,R784C,V773A,C630Y,G309E,G292R,E645F,T733I,D769Y,G660R,T686A,D769A,Y803N,L651V,A644F,L674V,V839G,R217C,L869R,E719K,G660D,E265K,L785F,P650S,D277H,D808N,G776V,S653C,R487W,L841V,S310F,E693K,S335C,V659E,V794M,V659K,E321G,L915M,L866M,C311R,S1002R,D277Y,V659G,Q709L,L726I,G309A,N857S,L755P,T798M,L663P,E812K,S656C,T798I,R683Q,I682G,R678Q,V777L,P780L,A710V,R677L,S310Y,S783P,E717K,E719G,H878Y,G776S,L726F,D821N,V777M,I767M,S649T,C334S)	Ado + Trastuzumab + Neratinib	Non-small cell lung	Responsive	C	YES	oncokb	only alteration type		NSCLC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Ado + Trastuzumab + Neratinib	Non-small cell lung	Responsive	C	YES	oncokb	only gene		NSCLC
+input01	BRAF (G469A)	BRAF (V600K,V600.,L597.,K601.,V600E,L597V)	Trametinib	Cutaneous melanoma	Responsive	B	YES	CIVIC,oncokb	only alteration type		CM
+input01	ARAF (S217F)	ARAF (G322S,S214T,F351L,.,S214C,N217I,S214A,S214F)	Sorafenib	Histiocytoma	Responsive	C	YES	oncokb	complete	627.0	HIS
+input01	FGFR1 (N577K)	FGFR1 amplification	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1-BCR fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1-CEP110 fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1-CUX1 fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1-ERLIN2 fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1-TACC1 fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1-FGFR1OP1 fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1 fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1 (V592M,K687E,.,N577K)	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	complete		CANCER
+input01	FGFR1 (N577K)	FGFR1-ZNF198 fusion	Azd4547 + Nvp-Bgj398 + Erdafitinib + 1265229-25-1	Any cancer type	Responsive	D	YES	oncokb	only gene		CANCER
+input01	ALK (F1245C), ALK (V1180L)	ALK (C1156Y,F1174L,L1196M,G1269A)	Crizotinib	Non-small cell lung	Resistant	D	YES	CIVIC,oncokb	only alteration type		NSCLC
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Cabozantinib + Vandetanib + Larotrectinib + 292 + 667	Non-small cell lung	Responsive	B	YES	oncokb	only gene		NSCLC
+input01	RET (M918T)	RET (C618R,C620R,C609Y,E768D,C630R,S904F,E511K,C634S,C634Y,V648I,I852M,S891A,A883T,A883F,C611Y,T338I,C634W,K603Q,D631Y,M918T,A919V,R833C,.,V804M,C634R,V804L,Y806C,M918V,L790F,M848T,R886W,Y791F)	Larotrectinib + 292 + 667	Thyroid medullary	Responsive	C	YES	oncokb	complete		THM
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Larotrectinib + 292 + 667	Thyroid medullary	Responsive	C	YES	oncokb	only gene		THM
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET-KIF5B fusion	Larotrectinib + 292 + 667	Thyroid medullary	Responsive	C	YES	oncokb	only gene		THM
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET-CCDC6 fusion	Larotrectinib + 292 + 667	Thyroid medullary	Responsive	C	YES	oncokb	only gene		THM
+input01	KIT (Y553N)	KIT amplification	Sunitinib + Sorafenib	Thymic	Responsive	B	YES	oncokb	only gene		THYM
+input01	BRAF (G469A)	BRAF fusion	Cobimetinib + Trametinib	Cutaneous melanoma	Responsive	C	YES	oncokb	only gene		CM
+input01	ARAF (S217F)	ARAF (G322S,S214T,F351L,.,S214C,N217I,S214A,S214F)	Sorafenib	Non-small cell lung	Responsive	C	YES	CIVIC,oncokb	complete	627.0	NSCLC
+input01	ALK (F1245C)	ALK (F1245C,F1174L)	Crizotinib	Neuroblastoma	Resistant	B	YES	CIVIC	complete		NB
+input01	ALK (F1245C)	ALK (F1245C,F1174L,R1275Q)	Lorlatinib	Neuroblastoma	Responsive	D	YES	CIVIC	complete		NB
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK)	Ipi + 504 + Crizotinib	Non-small cell lung	Responsive	D	YES	CIVIC	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK)	Crizotinib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene	165.0	NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (HIP1-ALK I1171N)	Crizotinib	Anaplastic large cell lymphoma	Resistant	D	YES	CIVIC	only alteration type		ALCL
+input01	ALK (F1245C), ALK (V1180L)	ALK (NPM-ALK)	Crizotinib	Any cancer type	Responsive	D	YES	CIVIC	only gene	165.0	CANCER
+input01	ALK (F1245C), ALK (V1180L)	ALK (L1196M;ALK__EML4,S1206Y;ALK__EML4,V1180L;ALK__EML4,C1156Y;ALK__EML4,G1269A;ALK__EML4,L1152R;ALK__EML4)	Crizotinib	Non-small cell lung	Resistant	B	YES	CIVIC	only alteration type		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L,R1275Q)	Crizotinib	Neuroblastoma	Responsive	B	YES	CIVIC	only alteration type	165.0	NB
+input01	ALK (F1245C), ALK (V1180L)	ALK (R1275Q)	Tae684	Neuroblastoma	Resistant	D	YES	CIVIC	only alteration type		NB
+input01	ALK (V1180L)	ALK (V1180L;ALK__EML4,S1206Y;ALK__EML4,L1196M;ALK__EML4)	Ceritinib	Non-small cell lung	Responsive	C	YES	CIVIC	complete		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK L1196M)	Alectinib	Non-small cell lung	Responsive	D	YES	CIVIC	only alteration type	399.0	NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib	Non-small cell lung	Responsive	A	YES	CIVIC	only gene	165.0	NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only gene	165.0	COREAD
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Alectinib	Non-small cell lung	Responsive	A	YES	CIVIC	only gene	399.0	NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (CLTC-ALK)	Tae684	Difuse large B Cell lymphoma	Responsive	D	YES	CIVIC	only gene		DLBCL
+input01	BRAF (G469A)	BRAF (G464V,N581S,G596R,G469A,G466V,P731T,G496A,G606E)	Vemurafenib	Any cancer type	Responsive	C	YES	CIVIC	complete	203.0	CANCER
+input01	BRAF (G469A)	BRAF (L597R,L597S,L597Q,K601E)	Trametinib + Vemurafenib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600K,V600D,L597R,V600E)	Vemurafenib	Cutaneous melanoma	Responsive	A	YES	CIVIC	only alteration type	203.0	CM
+input01	BRAF (G469A)	BRAF (V600K)	Cobimetinib + Vemurafenib	Cutaneous melanoma	Responsive	B	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (G469A,V600E,L505H)	Vemurafenib	Cutaneous melanoma	Resistant	B	YES	CIVIC	complete		CM
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib	Non-small cell lung	Resistant	C	YES	CIVIC	only alteration type		NSCLC
+input01	BRAF (G469A)	BRAF (.,G469A,V600E,D594G)	Cetuximab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	complete		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Thyroid carcinoma	Responsive	D	YES	CIVIC	only alteration type	203.0	THCA
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Leukemia	Responsive	B	YES	CIVIC	only alteration type	203.0	LK
+input01	BRAF (G469A)	BRAF (V600E)	Regorafenib	Colon carcinoma	Responsive	D	YES	CIVIC	only alteration type		COC
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Glioma	Responsive	B	YES	CIVIC	only alteration type	203.0	G
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Lung adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type	203.0	LUAD
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Histiocytoma	Responsive	C	YES	CIVIC	only alteration type	203.0	HIS
+input01	BRAF (G469A)	BRAF (V600E,D594G)	Cetuximab + Panitumumab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Selumetinib + Nvp + Dactolisib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Panitumumab + Cetuximab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Fluorouracil	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Bevacizumab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600K,V600.,V600E,K601E,V600D)	Dabrafenib	Cutaneous melanoma	Responsive	B	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Ci 1040	Thyroid carcinoma	Responsive	B	YES	CIVIC	only alteration type		THCA
+input01	BRAF (G469A)	BRAF (V600E)	Rdea 119	Thyroid carcinoma	Responsive	B	YES	CIVIC	only alteration type		THCA
+input01	BRAF (G469A)	BRAF (V600E)	Sorafenib	Thyroid carcinoma	Responsive	B	YES	CIVIC	only alteration type	627.0	THCA
+input01	BRAF (G469A)	BRAF (D594A,K483M)	2-Butanone + Sorafenib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF-MACF1 fusion	Vemurafenib	Any cancer type	Responsive	C	YES	CIVIC	only gene	203.0	CANCER
+input01	BRAF (G469A)	BRAF (V600.,V600E)	Vemurafenib	Non-small cell lung	Responsive	B	YES	CIVIC	only alteration type	203.0	NSCLC
+input01	BRAF (G469A)	BRAF (V600.,G596R)	Vemurafenib	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 (V777L,V842I,L755S,L866M)	Cetuximab	Colorectal adenocarcinoma	Resistant	D	YES	CIVIC	only alteration type		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 (L755S)	Lapatinib	Breast adenocarcinoma	Resistant	D	YES	CIVIC	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Lapatinib	Head an neck squamous	Responsive	C	YES	CIVIC	only gene		HNSC
+input01	ERBB2 MUT* (G776A)	ERBB2 (V777L,L755S)	Lapatinib + Neratinib + Trastuzumab	Colon carcinoma	Responsive	D	YES	CIVIC	only alteration type		COC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Lapatinib	Stomach	Responsive	B	YES	CIVIC	only gene		ST
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab	Breast adenocarcinoma	Responsive	A	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pp242	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Lapatinib	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only gene		COREAD
+input01	ESR1 (E380Q)	ESR1 (L536Q,Y537N,Y537C,Y537S,D538G)	Fulvestrant + Tamoxifen	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		BRCA
+input01	ESR1 (E380Q)	ESR1 (L536Q,Y537N,Y537C,Y537S,D538G)	Hormones	Breast adenocarcinoma	Resistant	D	YES	CIVIC	only alteration type		BRCA
+input01	ESR1 (E380Q)	ESR1 (S463P,Y537N,Y537C,Y537S,D538G)	Palbociclib	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		BRCA
+input01	FLT3 MUT* (D835-)	FLT3 (D835V,D835.,D835H)	Sunitinib	Acute myeloid leukemia	Responsive	C	YES	CIVIC	complete		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835V)	Tandutinib	Acute myeloid leukemia	Resistant	D	YES	CIVIC	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (T227M)	Sunitinib	Renal clear cell	Increased_Toxicity	B	YES	CIVIC	only alteration type		RCCC
+input01	FLT3 MUT* (D835-)	FLT3 (D835)	Ponatinib + Quizartinib	Acute myeloid leukemia	Resistant	D	YES	CIVIC	complete		AML
+input01	KIT (Y553N)	KIT (V654A,K642E,D816H)	Sunitinib	Gastrointestinal stromal	Responsive	B	YES	CIVIC	only alteration type		GIST
+input01	KIT (Y553N)	KIT (V559D,K642E,L576P)	Dasatinib	Cutaneous melanoma	Responsive	C	YES	CIVIC	only alteration type		CM
+input01	KIT (Y553N)	KIT (V559D)	Sunitinib + Tandutinib + Bis(2-Mercaptoethylsulfone) + Imatinib	Any cancer type	Responsive	D	YES	CIVIC	only alteration type		CANCER
+input01	KIT (Y553N)	KIT (V559D)	Imatinib + Sorafenib + Nilotinib + Dasatinib	Gastrointestinal stromal	Responsive	D	YES	CIVIC	only alteration type		GIST
+input01	KIT (Y553N)	KIT (K642E,V560G,L576P,N822K,V559D)	Regorafenib	Gastrointestinal stromal	Responsive	C	YES	CIVIC	only alteration type		GIST
+input01	KIT (Y553N)	KIT (T670I,V654A,D820G,D820A,N822K,D816H)	Regorafenib	Gastrointestinal stromal	Resistant	D	YES	CIVIC	only alteration type		GIST
+input01	KIT (Y553N)	KIT (N822K,V560G,L576P,D816V,V559D)	Sunitinib	Gastrointestinal stromal	Resistant	C	YES	CIVIC	only alteration type		GIST
+input01	KIT (Y553N)	KIT (D816V)	Dasatinib	Acute myeloid leukemia	Responsive	C	YES	CIVIC	only alteration type		AML
+input01	PTEN (R335*)	PTEN oncogenic mutation	Everolimus	Endometrial adenocarcinoma	Responsive	B	YES	CIVIC	complete		EDA
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Alectinib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene	399.0	NSCLC
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Cabozantinib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET expression	Vandetanib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET (C634W)	Regorafenib	Gastrointestinal stromal	Responsive	D	YES	CIVIC	only alteration type		GIST
+input01	TP53 (R249G)	TP53 (M237I,R248Q,R249S,V157F,R280T,R158H,R280K,R158L,G245S)	Amgmds3	Any cancer type	Resistant	D	YES	CIVIC	only alteration type		CANCER
+input01	TP53 (R249G)	TP53 (R213P,Y220C,R282L,R273C,.,R175H)	2-Aminoethyl Dihydrogen Phosphate	Stomach	Responsive	C	YES	CIVIC	complete		ST
+input01	TP53 (R249G)	TP53 oncogenic mutation	Docetaxel + Selumetinib	Non-small cell lung	Responsive	D	YES	CIVIC	complete		NSCLC
+input01	APC MUT* (KIGT1310-1313X)	APC oncogenic mutation	G007	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		COREAD
+input01	AR (F877L)	AR overexpression	Nvp + Dactolisib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ERBB3 (V104M)	ERBB3 (V855A)	Pertuzumab + Afatinib	Non-small cell lung	Responsive	D	YES	CIVIC	only alteration type		NSCLC
+input01	ERBB3 (V104M)	ERBB3 overexpression	Selumetinib + Cp-724714 + Gefitinib	Any cancer type	Resistant	D	YES	CIVIC	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1 amplification	Ponatinib	Ewing sarcoma	Responsive	D	YES	CIVIC	only gene		EWS
+input01	FGFR1 (N577K)	FGFR1 amplification	Azd4547	Breast adenocarcinoma	Responsive	C	YES	CIVIC	only gene		BRCA
+input01	FGFR1 (N577K)	FGFR1 amplification	Dovitinib	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209P)	Plx-4720	Cutaneous melanoma	Resistant	D	YES	CIVIC	only alteration type		CM
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L)	Crizotinib	Lung	Resistant	D	YES	CIVIC	only alteration type		L
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L)	Azd3463	Neuroblastoma	Responsive	D	YES	CIVIC	only alteration type		NB
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK)	P154	Non-small cell lung	Responsive	D	YES	CIVIC	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (G1269A;ALK__EML4,I1171N;ALK__HIP1,C1156Y;ALK__EML4,L1196M;ALK__EML4)	Crizotinib	Lung adenocarcinoma	Resistant	C	YES	CIVIC	only alteration type		LUAD
+input01	ALK (F1245C), ALK (V1180L)	ALK (I1171N;ALK__HIP1,I1171S;ALK__EML4)	Alectinib + Crizotinib	Non-small cell lung	Resistant	C	YES	CIVIC	only alteration type		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (G1269A;ALK__EML4,I1171S;ALK__EML4)	Crizotinib	Lung	Resistant	D	YES	CIVIC	only alteration type		L
+input01	ALK (V1180L)	ALK (EML4-ALK V1180L)	Alectinib	Non-small cell lung	Resistant	D	YES	CIVIC	complete		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Entrectinib	Any cancer type	Responsive	B	YES	CIVIC	only gene		CANCER
+input01	ALK (F1245C), ALK (V1180L)	ALK (CLTC-ALK)	Crizotinib	Difuse large B Cell lymphoma	Responsive	C	YES	CIVIC	only gene	165.0	DLBCL
+input01	ARAF (S217F)	ARAF (S214C)	Trametinib	Non-small cell lung	Responsive	D	YES	CIVIC	only alteration type		NSCLC
+input01	KIT (Y553N)	KIT (V559D)	Dasatinib	Any cancer type	Responsive	D	YES	CIVIC	only alteration type		CANCER
+input01	KIT (Y553N)	KIT (V654A,D816V,V560G,D816H)	Dasatinib	Chronic myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		CML
+input01	KIT (Y553N)	KIT (D816V)	Bosutinib Monohydrate	Chronic myeloid leukemia	Resistant	D	YES	CIVIC	only alteration type		CML
+input01	CSF1R (Y969*)	CSF1R (MEF2D-CSF1R)	2580 + Imatinib	Any cancer type	Responsive	D	YES	CIVIC	only gene		CANCER
+input01	PTEN (R335*)	PTEN oncogenic mutation	Taselisib + Gdc	Head an neck squamous	Resistant	D	YES	CIVIC	complete		HNSC
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Vandetanib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	RET (M918T)	RET (M918T)	Sorafenib	Thyroid medullary	Responsive	B	YES	CIVIC	complete	627.0	THM
+input01	RET (M918T)	RET (M918T)	Azd1480	Thyroid medullary	Responsive	D	YES	CIVIC	complete		THM
+input01	TP53 (R249G)	TP53 oncogenic mutation	Alemtuzumab	Chronic lymphocytic leukemia	Responsive	B	YES	CIVIC	complete		CLL
+input01	BRAF (G469A)	BRAF (KIAA1549-BRAF)	Trametinib	Cutaneous melanoma	Responsive	C	YES	CIVIC	only gene		CM
+input01	BRAF (G469A)	BRAF oncogenic mutation	Panitumumab + Cetuximab	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	complete		COREAD
+input01	BRAF (G469A)	BRAF oncogenic mutation	Trametinib	Any cancer type	Responsive	D	YES	CIVIC	complete		CANCER
+input01	BRAF (G469A)	BRAF (CUX1-BRAF)	Vemurafenib	Pancreas adenocarcinoma	Responsive	C	YES	CIVIC	only gene	203.0	PAAD
+input01	BRAF (G469A)	BRAF (TRIM24-BRAF)	Vemurafenib	Cutaneous melanoma	Resistant	D	YES	CIVIC	only gene		CM
+input01	BRAF (G469A)	BRAF (,V600.)	Ro4987655	Cutaneous melanoma	Responsive	B	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Plx-4720 + Nutlin-3	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type	203.0	COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Trametinib + 391210-10-9	Cutaneous melanoma	Resistant	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Pictilisib	Cutaneous melanoma	Responsive	C	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Uveal melanoma	Responsive	C	YES	CIVIC	only alteration type	203.0	UVM
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Thyroid papillary	Responsive	B	YES	CIVIC	only alteration type	203.0	THP
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Multiple myeloma	Responsive	C	YES	CIVIC	only alteration type	203.0	MM
+input01	BRAF (G469A)	BRAF (D594K,V600E)	Oxaliplatin	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (D594K,V600E)	Irinotecan	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Pd 0325901	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Pd 0325901	Non-small cell lung	Responsive	D	YES	CIVIC	only alteration type		NSCLC
+input01	BRAF (G469A)	BRAF (D594V)	Trametinib + Sorafenib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (ZKSCAN1-BRAF)	Trametinib	Cutaneous melanoma	Responsive	C	YES	CIVIC	only gene		CM
+input01	BRAF (G469A)	BRAF (V600)	Panitumumab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only alteration type		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 (R678Q)	Lapatinib + Neratinib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 (L866M)	Neratinib + Lapatinib + Trastuzumab	Colon carcinoma	Responsive	D	YES	CIVIC	only alteration type		COC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pertuzumab + Trastuzumab + Docetaxel	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Lapatinib	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Pilaralisib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab	Stomach	Responsive	A	YES	CIVIC	only gene		ST
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Pictilisib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ESR1 (E380Q)	ESR1 (S463P)	Aromatase	Breast adenocarcinoma	Resistant	D	YES	CIVIC	only alteration type		BRCA
+input01	FLT3 MUT* (D835-)	FLT3 (D835V)	Jq-1	Acute myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		AML
+input01	KIT (Y553N)	KIT amplification	Imatinib	Mucosal melanoma	Resistant	B	YES	CIVIC	only gene		MUCM
+input01	KIT (Y553N)	KIT (N822K)	Imatinib Mesylate	Acute myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		AML
+input01	KIT (Y553N)	KIT (L576P)	Sorafenib + Nilotinib + Imatinib	Cutaneous melanoma	Resistant	D	YES	CIVIC	only alteration type		CM
+input01	APC MUT* (KIGT1310-1313X)	APC oncogenic mutation	Jw 55	Colon carcinoma	Responsive	D	YES	CIVIC	only alteration type		COC
+input01	AR (F877L)	AR oncogenic mutation	Nilutamide + Cyproterone + Flutamide + Bicalutamide	Prostate adenocarcinoma	Resistant	B	YES	CIVIC	complete		PRAD
+input01	ERBB3 (V104M)	ERBB3 (V104M,G284R,R103G)	Afatinib	Bladder	Responsive	B	YES	CIVIC	complete		BLCA
+input01	FGFR1 (N577K)	FGFR1 expression	Nvp-Bgj398	Stomach	Responsive	D	YES	CIVIC	only gene		ST
+input01	FGFR1 (N577K)	FGFR1 (N546K)	Ponatinib	Ewing sarcoma	Responsive	D	YES	CIVIC	only alteration type		EWS
+input01	FGFR1 (N577K)	FGFR1 amplification	219580-11-7	Non-small cell lung	Responsive	D	YES	CIVIC	only gene		NSCLC
+input01	FGFR1 (N577K)	FGFR1 amplification	Dovitinib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209)	N-(1-Benzyl-2 + 3-Dihydroxy-4-{3-Methyl-2-[2-(2-Methyl-Propane-2-Sulfonylmethyl)-3-Naphthalen-1-Yl-Propionylamino]-Butyrylamino}-5-Phenyl-Pentyl)-3-Methyl-2-[2-(2-Methyl-Propane-2-Sulfonylmethyl)-3-Naphthalen-1-Yl-Propionylamino]-Butyramide	Uveal melanoma	Responsive	C	YES	CIVIC	complete		UVM
+input01	MAPK1 (E322K)	MAPK1 amplification	Wz4002	Non-small cell lung	Resistant	D	YES	CIVIC	only gene		NSCLC
+input01	MAPK1 (E322K)	MAPK1 (E322K)	Erlotinib	Head an neck squamous	Responsive	C	YES	CIVIC	complete	827.0	HNSC
+input01	BRAF (G469A)	BRAF amplification	Dabrafenib + Panitumumab	Colorectal adenocarcinoma	Resistant	C	YES	CIVIC	only gene		COREAD
+input01	BRAF (G469A)	BRAF (TRIM24-BRAF)	Trametinib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only gene		CM
+input01	BRAF (G469A)	BRAF (V600E)	Dasatinib	Thyroid papillary	Responsive	D	YES	CIVIC	only alteration type		THP
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Sarcoma	Responsive	C	YES	CIVIC	only alteration type	203.0	S
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Malignant astrocytoma	Responsive	C	YES	CIVIC	only alteration type	203.0	MA
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Ovary	Responsive	C	YES	CIVIC	only alteration type	203.0	OV
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Malignant peripheral nerve sheat tumor	Responsive	C	YES	CIVIC	only alteration type	203.0	MPN
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib + Gefitinib + Cetuximab	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib + Panitumumab	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Nvp + Dactolisib + Gdc + 0879	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Gsk	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib + Trametinib	Non-small cell lung	Responsive	B	YES	CIVIC	only alteration type		NSCLC
+input01	BRAF (G469A)	BRAF-WASFL fusion	Vemurafenib	Any cancer type	Responsive	C	YES	CIVIC	only gene	203.0	CANCER
+input01	BRAF (G469A)	BRAF (G464V)	Sorafenib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type	627.0	BRCA
+input01	BRAF (G469A)	BRAF (V600)	Vemurafenib + Cetuximab	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600)	Vemurafenib	Lagerhans cell histiocytosis	Responsive	B	YES	CIVIC	only alteration type	203.0	HISLC
+input01	BRAF (G469A)	BRAF (V600)	Trametinib + Dabrafenib	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600)	N-(1-Benzyl-2 + 3-Dihydroxy-4-{3-Methyl-2-[2-(2-Methyl-Propane-2-Sulfonylmethyl)-3-Naphthalen-1-Yl-Propionylamino]-Butyrylamino}-5-Phenyl-Pentyl)-3-Methyl-2-[2-(2-Methyl-Propane-2-Sulfonylmethyl)-3-Naphthalen-1-Yl-Propionylamino]-Butyramide	Cutaneous melanoma	Resistant	C	YES	CIVIC	only alteration type		CM
+input01	ERBB2 MUT* (G776A)	ERBB2 (G776L)	Afatinib	Lung adenocarcinoma	Responsive	C	YES	CIVIC	only alteration type		LUAD
+input01	ERBB2 MUT* (G776A)	ERBB2 (V773A)	Lapatinib	Head an neck squamous	Responsive	D	YES	CIVIC	only alteration type		HNSC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Akti-1/2	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib + Lapatinib + Trastuzumab	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Lapatinib + Trastuzumab	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Cetuximab + Oxaliplatin + Capecitabine	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only gene		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab	Uterine corpus endometroid carcinoma	Responsive	C	YES	CIVIC	only gene		UCEC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Cetuximab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only gene		COREAD
+input01	FLT3 MUT* (D835-)	FLT3 (D835V)	Tyrphostin Ag 1296 + As602868	Acute myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 overexpression	Sunitinib	Acute lymphoblastic leukemia	Responsive	C	YES	CIVIC	only gene		ALL
+input01	FLT3 MUT* (D835-)	FLT3 (D835.,D835H)	Sorafenib	Acute myeloid leukemia	Resistant	B	YES	CIVIC	complete		AML
+input01	KIT (Y553N)	KIT (N822H,V560G)	Imatinib	Any cancer type	Resistant	D	YES	CIVIC	only alteration type		CANCER
+input01	KIT (Y553N)	KIT (V654A,V560G,D816H)	Bosutinib Monohydrate	Chronic myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		CML
+input01	KIT (Y553N)	KIT (D816H)	Imatinib Mesylate	Acute myeloid leukemia	Resistant	D	YES	CIVIC	only alteration type		AML
+input01	KIT (Y553N)	KIT (V559D,L576P,V560G)	Imatinib	Gastrointestinal stromal	Responsive	C	YES	CIVIC	only alteration type		GIST
+input01	KIT (Y553N)	KIT oncogenic mutation	Pictilisib + Imatinib	Gastrointestinal stromal	Responsive	D	YES	CIVIC	complete		GIST
+input01	PTEN (R335*)	PTEN oncogenic mutation	Enzalutamide + Alpelisib + Azd8186	Prostate adenocarcinoma	Responsive	D	YES	CIVIC	complete		PRAD
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN expression	Fulvestrant + Everolimus	Breast adenocarcinoma	Resistant	C	YES	CIVIC	only gene		BRCA
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN expression	Egfr	Glioma	Responsive	B	YES	CIVIC	only gene		G
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Larotrectinib + 292	Thyroid papillary	Responsive	B	YES	CIVIC	only gene		THP
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Larotrectinib + 292	Lung	Responsive	B	YES	CIVIC	only gene		L
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET fusion	Larotrectinib + 292	Any cancer type	Responsive	D	YES	CIVIC	only gene		CANCER
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET (CCDC6-RET)	Nintedanib	Non-small cell lung	Responsive	C	YES	CIVIC	only gene		NSCLC
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET (KIF5B-RET)	Everolimus + Vandetanib	Lung adenocarcinoma	Responsive	C	YES	CIVIC	only gene		LUAD
+input01	TP53 (R249G)	TP53 (R175H,.,R249.)	Doxorubicin	Breast adenocarcinoma	Responsive	B	YES	CIVIC	complete		BRCA
+input01	TP53 (R249G)	TP53 oncogenic mutation	Docetaxel	Non-small cell lung	Resistant	D	YES	CIVIC	complete		NSCLC
+input01	TP53 (R249G)	TP53 oncogenic mutation	Chemotherapy	Stomach	Responsive	B	YES	CIVIC	complete		ST
+input01	TP53 (R249G)	TP53 oncogenic mutation	Tamoxifen	Breast adenocarcinoma	Resistant	C	YES	CIVIC	complete		BRCA
+input01	TP53 (R249G)	TP53 wildtype	Unii-Q8Mi0X869M	Leukemia	Responsive	B	YES	CIVIC	only alteration type		LK
+input01	ALK (F1245C), ALK (V1180L)	ALK (RANBP2-ALK)	Crizotinib	Sarcoma	Responsive	C	YES	CIVIC	only gene	165.0	S
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L)	Crizotinib	Sarcoma	Resistant	D	YES	CIVIC	only alteration type		S
+input01	ALK (F1245C), ALK (V1180L)	ALK (NPM-ALK)	Crizotinib	Anaplastic large cell lymphoma	Responsive	B	YES	CIVIC	only gene	165.0	ALCL
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK C1156Y)	Lorlatinib	Non-small cell lung	Responsive	C	YES	CIVIC	only alteration type		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK C1156Y)	Nvp-Auy922 + Ceritinib + Crizotinib	Non-small cell lung	Resistant	C	YES	CIVIC	only alteration type		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L,R1275Q)	Tae684	Neuroblastoma	Responsive	D	YES	CIVIC	only alteration type		NB
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK S1206Y)	Ceritinib	Any cancer type	Responsive	D	YES	CIVIC	only alteration type		CANCER
+input01	ALK (V1180L)	ALK (EML4-ALK V1180L)	Tae684	Non-small cell lung	Responsive	D	YES	CIVIC	complete		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Ipi + 504	Non-small cell lung	Responsive	C	YES	CIVIC	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene	165.0	BRCA
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Ceritinib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Pemetrexed	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib	Anaplastic large cell lymphoma	Responsive	C	YES	CIVIC	only gene	165.0	ALCL
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib	Sarcoma	Responsive	B	YES	CIVIC	only gene	165.0	S
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib	Difuse large B Cell lymphoma	Responsive	C	YES	CIVIC	only gene	165.0	DLBCL
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Crizotinib	Lung adenocarcinoma	Responsive	C	YES	CIVIC	only gene	165.0	LUAD
+input01	ERBB3 (V104M)	ERBB3 overexpression	Pertuzumab	Cutaneous melanoma	Responsive	D	YES	CIVIC	only gene		CM
+input01	ERBB3 (V104M)	ERBB3 overexpression	Selumetinib + Trametinib	Uveal melanoma	Resistant	D	YES	CIVIC	only gene		UVM
+input01	ERBB3 (V104M)	ERBB3 expression	Av-203	Any cancer type	Responsive	D	YES	CIVIC	only gene		CANCER
+input01	ERBB3 (V104M)	ERBB3 expression	9F7 + Chlorure De 1 Phenyle De Pyridine 4-Aldoxime [French] + Pertuzumab	Pancreas adenocarcinoma	Responsive	D	YES	CIVIC	only gene		PAAD
+input01	FGFR1 (N577K)	FGFR1 expression	Nvp-Bgj398	Head an neck squamous	Responsive	D	YES	CIVIC	only gene		HNSC
+input01	FGFR1 (N577K)	FGFR1 (ZNF198-FGFR1)	Midostaurin	Chronic myeloproliferitve neoplasm	Responsive	C	YES	CIVIC	only gene		CMP
+input01	FGFR1 (N577K)	FGFR1 amplification	219580-11-7	Lung squamous cell	Responsive	D	YES	CIVIC	only gene		LUSC
+input01	FGFR1 (N577K)	FGFR1 amplification	1-{4-[(2-Chloro-5-{1-[3-(4-Cyclopropylpiperazin-1-Yl)Propyl]-5-(Methylsulfonyl)-4 + 5 + 6 + 7-Tetrahydro-1H-Pyrazolo[4 + 3-C]Pyridin-3-Yl}Phenyl)Ethynyl]Phenyl}-N-[(4-Chlorophenyl)Methyl]Methanamine	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB3 (V104M)	ERBB3 overexpression	Lapatinib	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	FGFR1 (N577K)	FGFR1 expression	Nvp-Bgj398	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only gene		COREAD
+input01	FGFR1 (N577K)	FGFR1 expression	Dovitinib + 219580-11-7	Bladder	Responsive	D	YES	CIVIC	only gene		BLCA
+input01	FGFR1 (N577K)	FGFR1 expression	Ponatinib	Lung	Responsive	D	YES	CIVIC	only gene		L
+input01	FGFR1 (N577K)	FGFR1 amplification	Nvp-Bgj398	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	GNAQ MUT* (Q209L)	GNAQ oncogenic mutation	391210-10-9 + Sotrastaurin Acetate	Uveal melanoma	Responsive	D	YES	CIVIC	only alteration type		UVM
+input01	GNAQ MUT* (Q209L)	GNAQ oncogenic mutation	1268524-70-4	Uveal melanoma	Responsive	D	YES	CIVIC	only alteration type		UVM
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209P)	Vemurafenib	Cutaneous melanoma	Resistant	C	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (PPFIBP2-BRAF)	Trametinib	Cutaneous melanoma	Responsive	C	YES	CIVIC	only gene		CM
+input01	BRAF (G469A)	BRAF (L597S)	Malathion	Cutaneous melanoma	Responsive	C	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (G469A)	Erlotinib	Non-small cell lung	Resistant	D	YES	CIVIC	complete		NSCLC
+input01	BRAF (G469A)	BRAF (V600E)	Sorafenib	Colorectal adenocarcinoma	Resistant	D	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib + Trametinib	Cutaneous melanoma	Responsive	B	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Plx-4720 + Gdc-0941	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Dasatinib	Cutaneous melanoma	Resistant	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib	Pilocityc astrocytoma	Responsive	C	YES	CIVIC	only alteration type	203.0	PIA
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib + Cobimetinib	Cutaneous melanoma	Responsive	B	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Dabrafenib + Trametinib + Vemurafenib	Digestive system	Responsive	C	YES	CIVIC	only alteration type		DS
+input01	BRAF (G469A)	BRAF (V600E)	Cobimetinib	Any cancer type	Responsive	D	YES	CIVIC	only alteration type		CANCER
+input01	BRAF (G469A)	BRAF (G469E,V600E)	Sorafenib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type	627.0	CM
+input01	BRAF (G469A)	BRAF (V600.,V600E)	Trametinib + Dabrafenib	Cutaneous melanoma	Responsive	A	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (AGK-BRAF)	Sorafenib	Cutaneous melanoma	Responsive	C	YES	CIVIC	only gene	627.0	CM
+input01	ERBB2 MUT* (G776A)	ERBB2 (H878Y)	Lapatinib	Hepatic carcinoma	Responsive	D	YES	CIVIC	only alteration type		HC
+input01	ERBB2 MUT* (G776A)	ERBB2 (T862A)	Lapatinib	Stomach	Responsive	D	YES	CIVIC	only alteration type		ST
+input01	ERBB2 MUT* (G776A)	ERBB2 (V842I)	Trastuzumab + Lapatinib + Neratinib	Colon carcinoma	Responsive	D	YES	CIVIC	only alteration type		COC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib	Uterine corpus endometroid carcinoma	Responsive	D	YES	CIVIC	only gene		UCEC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	1166227-08-2	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Palbociclib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Cetuximab + Panitumumab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only gene		COREAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab	Solid tumors	Responsive	C	YES	CIVIC	only gene		SOLID
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Dacomitinib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	FLT3 MUT* (D835-)	FLT3 (D835V)	Quizartinib	Acute myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835V)	Daunorubicin + Sunitinib	Acute myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835V)	Cytarabine + Sunitinib	Acute myeloid leukemia	Responsive	D	YES	CIVIC	only alteration type		AML
+input01	FLT3 MUT* (D835-)	FLT3 (D835)	Su-5614	Acute myeloid leukemia	Resistant	D	YES	CIVIC	complete		AML
+input01	KIT (Y553N)	KIT (T670I)	Dasatinib	Any cancer type	Resistant	D	YES	CIVIC	only alteration type		CANCER
+input01	PTEN (R335*)	PTEN oncogenic mutation	Ipatasertib	Any cancer type	Responsive	D	YES	CIVIC	complete		CANCER
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN expression	Dacomitinib	Glioma	Responsive	D	YES	CIVIC	only gene		G
+input01	TP53 (R249G)	TP53 (P47S)	Cisplatin	Any cancer type	Resistant	D	YES	CIVIC	only alteration type		CANCER
+input01	TP53 (R249G)	TP53 wildtype	Nutlin-3	Any cancer type	Responsive	D	YES	CIVIC	only alteration type		CANCER
+input01	TP53 (R249G)	TP53 wildtype	Amgmds3	Any cancer type	Responsive	D	YES	CIVIC	only alteration type		CANCER
+input01	TP53 (R249G)	TP53 wildtype	Oxaliplatin + Capecitabine + Cetuximab	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		COREAD
+input01	ALK (F1245C), ALK (V1180L)	ALK oncogenic mutation	Ceritinib	Non-small cell lung	Responsive	B	YES	CIVIC	complete		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK)	Lorlatinib	Non-small cell lung	Responsive	D	YES	CIVIC	only gene		NSCLC
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK)	Erlotinib	Any cancer type	Resistant	C	YES	CIVIC	only gene		CANCER
+input01	ALK (F1245C), ALK (V1180L)	ALK fusion	Brigatinib	Non-small cell lung	Responsive	B	YES	CIVIC	only gene		NSCLC
+input01	KIT (Y553N)	KIT expression	Imatinib	Endometrial adenocarcinoma	Responsive	C	YES	CIVIC	only gene		EDA
+input01	KIT (Y553N)	KIT (D820Y)	Imatinib	Cutaneous melanoma	Resistant	C	YES	CIVIC	only alteration type		CM
+input01	KIT (Y553N)	KIT (D816V)	Midostaurin	Systemic mastocytosis	Responsive	B	YES	CIVIC	only alteration type		SM
+input01	ALK (F1245C), ALK (V1180L)	ALK (F1174L)	Alectinib	Neuroblastoma	Responsive	D	YES	CIVIC	only alteration type	399.0	NB
+input01	ALK (F1245C), ALK (V1180L)	ALK (EML4-ALK)	Alvespimycin + Crizotinib	Non-small cell lung	Responsive	D	YES	CIVIC	only gene		NSCLC
+input01	ALK (V1180L)	ALK (EML4-ALK V1180L)	Brigatinib	Non-small cell lung	Responsive	D	YES	CIVIC	complete		NSCLC
+input01	ARAF (S217F)	ARAF (S490T)	Irinotecan + Cetuximab + Vemurafenib	Colorectal adenocarcinoma	Resistant	C	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (KIAA1549-BRAF)	Temsirolimus + Bevacizumab + Sorafenib	Sarcoma	Responsive	C	YES	CIVIC	only gene		S
+input01	BRAF (G469A)	BRAF (V600E)	Capecitabine + Vemurafenib + Bevacizumab	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Vemurafenib + Cetuximab + Irinotecan	Colorectal adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (V600E)	Selumetinib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only alteration type		CM
+input01	BRAF (G469A)	BRAF (V600E)	Selumetinib	Glioma	Responsive	B	YES	CIVIC	only alteration type		G
+input01	BRAF (G469A)	BRAF (V600E)	Sorafenib + Cetuximab	Colorectal adenocarcinoma	Responsive	D	YES	CIVIC	only alteration type		COREAD
+input01	BRAF (G469A)	BRAF (BRAF-CUL1)	2-Butanone	Ovary serous	Responsive	C	YES	CIVIC	only gene		OVSE
+input01	BRAF (G469A)	BRAF (G596C)	Trametinib + Dabrafenib	Non-small cell lung	Responsive	D	YES	CIVIC	only alteration type		NSCLC
+input01	BRAF (G469A)	BRAF (PAPSS1-BRAF)	Trametinib	Cutaneous melanoma	Responsive	D	YES	CIVIC	only gene		CM
+input01	BRAF (G469A)	BRAF (PAPSS1-BRAF)	Vemurafenib	Cutaneous melanoma	Resistant	D	YES	CIVIC	only gene		CM
+input01	BRAF (G469A)	BRAF (AGK-BRAF)	Vemurafenib	Cutaneous melanoma	Resistant	D	YES	CIVIC	only gene		CM
+input01	ERBB2 MUT* (G776A)	ERBB2 (N857S)	Lapatinib	Ovary	Responsive	D	YES	CIVIC	only alteration type		OV
+input01	ERBB2 MUT* (G776A)	ERBB2 oncogenic mutation	Platinum	Bladder	Responsive	C	YES	CIVIC	only alteration type		BLCA
+input01	ERBB2 MUT* (G776A)	ERBB2 overexpression	Ado + Trastuzumab	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab	Endometrial adenocarcinoma	Responsive	B	YES	CIVIC	only gene		EDA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Irinotecan	Small cell lung	Responsive	C	YES	CIVIC	only gene		SCLC
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Lapatinib + Capecitabine	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib	Pancreas adenocarcinoma	Responsive	D	YES	CIVIC	only gene		PAAD
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Afatinib + Trastuzumab	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Trastuzumab + Capecitabine	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	221	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	ERBB2 MUT* (G776A)	ERBB2 amplification	Gefitinib + Erlotinib	Lung adenocarcinoma	Resistant	C	YES	CIVIC	only gene		LUAD
+input01	ESR1 (E380Q)	ESR1 overexpression	Palbociclib + Letrozole	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	FLT3 MUT* (D835-)	FLT3 (D835)	Quizartinib + Sorafenib	Acute myeloid leukemia	Resistant	B	YES	CIVIC	complete		AML
+input01	GATA2 (R398W), GATA2 (T354M)	GATA2 expression	Fasudil + Bortezomib	Lung adenocarcinoma	Responsive	D	YES	CIVIC	only gene		LUAD
+input01	KIT (Y553N)	KIT (N822K)	Imatinib	Any cancer type	Responsive	D	YES	CIVIC	only alteration type		CANCER
+input01	KIT (Y553N)	KIT (M541L)	Imatinib	Leukemia	Responsive	C	YES	CIVIC	only alteration type		LK
+input01	KIT (Y553N)	KIT (L576P)	Nilotinib + Imatinib + Dasatinib	Non-small cell lung	Responsive	D	YES	CIVIC	only alteration type		NSCLC
+input01	PTEN (R335*)	PTEN oncogenic mutation	Pictilisib + N-Alpha-L-Acetyl-Arginine	Head an neck	Responsive	D	YES	CIVIC	complete		HNC
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN expression	Gefitinib + Erlotinib	Glioma	Responsive	B	YES	CIVIC	only gene		G
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN expression	Trastuzumab	Breast adenocarcinoma	Responsive	B	YES	CIVIC	only gene		BRCA
+input01	PTEN MUT* (K267X), PTEN (R335*)	PTEN deletion	Everolimus	Prostate adenocarcinoma	Responsive	B	YES	CIVIC	only gene		PRAD
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET overexpression	Sunitinib	Renal papillary cell	Responsive	C	YES	CIVIC	only gene		RPC
+input01	RET (M918T)	RET (C634W,M918T)	Axitinib	Thyroid medullary	Resistant	D	YES	CIVIC	complete		THM
+input01	RET (M918T)	RET (C634W,M918T)	Motesanib	Thyroid medullary	Resistant	D	YES	CIVIC	complete		THM
+input01	RET MUT* (DVYE898-901-), RET (M918T)	RET (KIF5B-RET)	Vandetanib	Lung adenocarcinoma	Responsive	C	YES	CIVIC	only gene		LUAD
+input01	TP53 (R249G)	TP53 overexpression	Carboplatin + Cisplatin	Ovary	Resistant	B	YES	CIVIC	only gene		OV
+input01	TP53 (R249G)	TP53 (Y234C,R273L)	Cisplatin + Carboplatin	Ovary	Resistant	C	YES	CIVIC	only alteration type		OV
+input01	TP53 (R249G)	TP53 wildtype	Chemotherapy	Esophagous adenocarcinoma	Responsive	B	YES	CIVIC	only alteration type		ESA
+input01	TP53 (R249G)	TP53 wildtype	Adjuvant Chemotherapy	Non-small cell lung	Responsive	B	YES	CIVIC	only alteration type		NSCLC
+input01	AR (F877L)	AR (F877L)	5-Iminopentanamide + Enzalutamide	Prostate adenocarcinoma	Resistant	D	YES	CIVIC	complete		PRAD
+input01	AR (F877L)	AR (W742)	Bicalutamide	Prostate adenocarcinoma	Resistant	D	YES	CIVIC	only alteration type		PRAD
+input01	ERBB3 (V104M)	ERBB3 overexpression	Cetuximab	Colorectal adenocarcinoma	Resistant	B	YES	CIVIC	only gene		COREAD
+input01	ERBB3 (V104M)	ERBB3 overexpression	Selumetinib + Afatinib	Any cancer type	Responsive	D	YES	CIVIC	only gene		CANCER
+input01	FGFR1 (N577K)	FGFR1 expression	Nvp-Bgj398 + Azd4547 + Tyrosine	Sarcoma	Responsive	D	YES	CIVIC	only gene		S
+input01	FGFR1 (N577K)	FGFR1 amplification	Ponatinib	Breast adenocarcinoma	Responsive	D	YES	CIVIC	only gene		BRCA
+input01	FGFR1 (N577K)	FGFR1 amplification	1-{4-[(2-Chloro-5-{1-[3-(4-Cyclopropylpiperazin-1-Yl)Propyl]-5-(Methylsulfonyl)-4 + 5 + 6 + 7-Tetrahydro-1H-Pyrazolo[4 + 3-C]Pyridin-3-Yl}Phenyl)Ethynyl]Phenyl}-N-[(4-Chlorophenyl)Methyl]Methanamine	Bladder	Responsive	C	YES	CIVIC	only gene		BLCA
+input01	FGFR1 (N577K)	FGFR1 amplification	4-Hydroxytamoxifen	Breast adenocarcinoma	Resistant	D	YES	CIVIC	only gene		BRCA
+input01	GNAQ MUT* (Q209L)	GNAQ oncogenic mutation	Trametinib	Uveal melanoma	Responsive	B	YES	CIVIC	only alteration type		UVM
+input01	GNAQ MUT* (Q209L)	GNAQ (Q209)	Selumetinib	Uveal melanoma	Responsive	B	YES	CIVIC	complete		UVM

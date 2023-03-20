@@ -1,0 +1,4 @@
+CGI query date: 2023-03-16
+API version: https://www.cancergenomeinterpreter.org/api/v1/
+Input mutations: /Users/students/Documents/work_dir/querynator/example_files/example.vcf.gz
+Reference genome: hg19
