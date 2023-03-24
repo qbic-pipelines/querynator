@@ -61,6 +61,18 @@ def vcf_file(vcf_path):
         return False
 
 
+def get_int_from_chr(s):
+    """
+    extracts integer value from chromosome (chr1 -> 1)
+    :param s: chromosome of variant 
+    :type vcf_path: pyVCF3 CHROM object
+    :return: integer value from variant's chromosome
+    :rtype: None
+    """
+    int_chr = s.split("chr")[1] if str(s).startswith("chr") else s
+    return str(int_chr)
+
+
 def get_coordinates_from_vcf(input, build, logger):
     """
     Read in vcf file using "pyVCF3",
@@ -99,7 +111,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=str(record.CHROM),
+                            chr=get_int_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.start) + 2,
                             alt=str(alt_base)[1:],
@@ -113,7 +125,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=str(record.CHROM),
+                            chr=get_int_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.end),
                             alt="",
@@ -127,7 +139,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=str(record.CHROM),
+                            chr=get_int_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.end),
                             alt=str(alt_base),
@@ -167,12 +179,13 @@ def access_civic_by_coordinate(coord_dict, logger, build):
     for coord_obj, querynator_id in input_dict.items():
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
         # variant is None and the program stops executing when the wrong build was chosen.
-        if variant == None:
-            logger.error("Variant was None. Did you choose the correct reference genome?")
-            exit(1)
-        if len(variant) > 0:
+        # if variant == None:
+        #     logger.error("Variant was None. Did you choose the correct reference genome?")
+        #     exit(1)
+        if variant != None and len(variant) > 0:
             for variant_obj in variant:
                 variant_list.append([{coord_obj: querynator_id}, [variant_obj]])
+        print(len(variant_list))
 
     # break if no variants are found
     if variant_list == None:
@@ -439,13 +452,24 @@ def sort_coord_list(coord_dict):
     :return: sorted coordinates
     :rtype: list
     """
-    return {
-        key: value
-        for key, value in sorted(
-            coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2])
-        )
-    }
+    return {key: value for key, value in sorted(coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" and x[0][0] != "Y" and x[0][0] != "M" else sort_rules(x[0][0]), x[0][1], x[0][2]))}
 
+
+def sort_rules(s):
+    """
+    Set rules to correctly sort chromosomes X,Y,M
+
+    :param s: "string" chromosome (X,Y,M)
+    :type s: str
+    :return: integer to sort by
+    :rtype: int
+    """
+    if s=="X":
+        return 100
+    elif s=="Y":
+        return 1000
+    elif s=="M":
+        return 10000 
 
 def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
     """
