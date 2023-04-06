@@ -20,6 +20,12 @@ from querynator.query_api import (
     vcf_file,
 )
 
+from querynator.report_scripts import (
+    combine_civic,
+    combine_cgi,
+    combine_cgi_civic
+)
+
 # Create logger
 logger = logging.getLogger("Querynator")
 # Create console handler
@@ -428,8 +434,8 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 )
 def query_api_civic(vcf, outdir, genome, filter_vep):
     try:
-        dirname, basename = os.path.split(outdir)
         result_dir = get_unique_querynator_dir(f"{outdir}")
+        dirname, basename = os.path.split(result_dir)
         if filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
             # create result directories
@@ -448,6 +454,41 @@ def query_api_civic(vcf, outdir, genome, filter_vep):
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")
 
+
+
+# querynator create report
+@querynator_cli.command()
+@click.option(
+    "-c",
+    "--cgi_path",
+    help="Path to a CGI result folder generated using the querynator",
+    required=True,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-j",
+    "--civic_path",
+    help="Path to a CIViC result folder generated using the querynator",
+    required=True,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-o",
+    "--outdir",
+    required=True,
+    type=click.STRING,
+    help="Name of new directory in which reports will be stored.",
+)
+def create_report(cgi_path, civic_path, outdir):
+    # create outdir
+    report_dir = get_unique_querynator_dir(outdir)
+    os.makedirs(f"{report_dir}/combined_files")
+    os.makedirs(f"{report_dir}/report")
+    
+    # combine the results
+    combine_civic(civic_path, report_dir, logger)
+    combine_cgi(cgi_path, report_dir, logger)
+    combine_cgi_civic(report_dir, logger)
 
 if __name__ == "__main__":
     run_querynator()

@@ -1,4 +1,4 @@
-""" Query the Clinical Interpretations of Variants In Cancer (CIViC) API via its python tool CIViCPY"""
+""" Query the Clinical Interpretations of Variants In Cancer (CIViC) API via its python tool CIViCPY """
 
 import warnings
 
@@ -61,13 +61,13 @@ def vcf_file(vcf_path):
         return False
 
 
-def get_int_from_chr(s):
+def get_num_from_chr(s):
     """
-    extracts integer value from chromosome (chr1 -> 1)
+    extracts numerical value from chromosome (chr1 -> 1)
     :param s: chromosome of variant 
     :type vcf_path: pyVCF3 CHROM object
-    :return: integer value from variant's chromosome
-    :rtype: None
+    :return: numerical value from variant's chromosome
+    :rtype: str
     """
     int_chr = s.split("chr")[1] if str(s).startswith("chr") else s
     return str(int_chr)
@@ -111,7 +111,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=get_int_from_chr(record.CHROM),
+                            chr=get_num_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.start) + 2,
                             alt=str(alt_base)[1:],
@@ -125,7 +125,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=get_int_from_chr(record.CHROM),
+                            chr=get_num_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.end),
                             alt="",
@@ -139,7 +139,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=get_int_from_chr(record.CHROM),
+                            chr=get_num_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.end),
                             alt=str(alt_base),
@@ -178,14 +178,10 @@ def access_civic_by_coordinate(coord_dict, logger, build):
     variant_list = []
     for coord_obj, querynator_id in input_dict.items():
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
-        # variant is None and the program stops executing when the wrong build was chosen.
-        # if variant == None:
-        #     logger.error("Variant was None. Did you choose the correct reference genome?")
-        #     exit(1)
+        
         if variant != None and len(variant) > 0:
             for variant_obj in variant:
                 variant_list.append([{coord_obj: querynator_id}, [variant_obj]])
-        print(len(variant_list))
 
     # break if no variants are found
     if variant_list == None:
