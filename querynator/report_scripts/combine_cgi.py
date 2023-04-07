@@ -204,17 +204,33 @@ def get_all_alterations(row):
     alteration_links = [j.split(")")[0] for j in [i.split("(")[1] for i in row["Alterations"].split(", ")]]
     return alteration_links
 
-def link_biomarkers(biomarkers_path):
+
+def get_highest_evidence(row, biomarkers_df):
+    """
+    get highest associated CGI evidence of the current alteration (A-D) from the biomarkers datafrane
+
+    :param row: row of a pandas DataFrame  
+    :type row: pandas Series
+    :param biomarkers_df: pd DataFrame of the projects "biomarkers.tsv"
+    :type biomarkers_df: pandas DataFrame
+    :return: highest associated evidence
+    :rtype: str
+    """
+    alteration = row["Protein Change_CGI"]
+    for evidence in ["A","B","C","D"]:
+        if not biomarkers_df.loc[(biomarkers_df["alterations_link"].str.contains('A682G')) & (biomarkers_df["Response"] == "Responsive") & (biomarkers_df["Evidence"] == evidence)].empty:
+            return evidence
+
+
+def link_biomarkers(biomarkers_df):
     """
     add alteration-link column to "biomarkers.tsv"
 
-    :param biomarkers_path: Path to project's "biomarkers.tsv"
-    :type biomarkers_path: str
+    :param biomarkers_df: pd DataFrame of the projects "biomarkers.tsv"
+    :type biomarkers_df: pandas DataFrame
     :return: DataFrame of biomarkers with additional alteration-link col
     :rtype: pandas DataFrame
     """
-    biomarkers_df = pd.read_csv(biomarkers_path, sep="\t")
-    
     biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x : get_all_alterations(x), axis=1)
 
     return biomarkers_df
@@ -240,12 +256,20 @@ def combine_cgi(cgi_path, outdir, logger):
     alterations_path = f"{cgi_path}/{basename}.cgi_results/alterations.tsv"
     biomarkers_path = f"{cgi_path}/{basename}.cgi_results/biomarkers.tsv"
 
+    # read biomarkers.tsv to pd df
+    biomarkers_df = pd.read_csv(biomarkers_path, sep="\t")
+
     # combine cgi & vep 
     vep_df = read_filtered_vcf(filtered_vcf)
     alterations_df = read_modify_alterations(alterations_path)
     merged_df = merge_alterations_vep(vep_df, alterations_df)
+    # add CGI evidence level to merged df
+    merged_df["evidence_CGI"] = merged_df.apply(lambda x : get_highest_evidence(x, biomarkers_path), axis=1)
     # write merged to report dir
     merged_df.to_csv(f"{outdir}/combined_files/alterations_vep.tsv", sep="\t", index=False)
+
+    
+
 
     # link alterations in biomarkers
     biomarkers_df = link_biomarkers(biomarkers_path)
