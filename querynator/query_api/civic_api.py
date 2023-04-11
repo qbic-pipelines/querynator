@@ -282,7 +282,7 @@ def get_assertion_information_from_variant(variant_obj):
             "assertion_therapies_name": ", ".join([i.name for i in assertion.therapies]),
             "assertion_therapies_ncit_id": ", ".join([i.ncit_id for i in assertion.therapies]),
             "assertion_therapies_aliases": ", ".join([", ".join(i.aliases) for i in assertion.therapies]),
-            "assertion_therapy_interaction_type": assertion.therapy_interaction_type,
+            "assertion_therapies_interaction_type": assertion.therapy_interaction_type,
             "assertion_variant_origin": assertion.variant_origin,
         }
     except IndexError:
@@ -305,7 +305,7 @@ def get_assertion_information_from_variant(variant_obj):
             "assertion_therapies_name": np.nan,
             "assertion_therapies_ncit_id": np.nan,
             "assertion_therapies_aliases": np.nan,
-            "assertion_therapy_interaction_type": np.nan,
+            "assertion_therapies_interaction_type": np.nan,
             "assertion_variant_origin": np.nan,
         }
     return assertion_dict
