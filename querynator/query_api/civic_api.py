@@ -302,7 +302,7 @@ def get_assertion_information_from_variant(variant_obj):
             "assertion_significance": np.nan,
             "assertion_status": np.nan,
             "assertion_summary": np.nan,
-            "assertion_therapies": np.nan,
+            "assertion_therapies_name": np.nan,
             "assertion_therapies_ncit_id": np.nan,
             "assertion_therapies_aliases": np.nan,
             "assertion_therapy_interaction_type": np.nan,
