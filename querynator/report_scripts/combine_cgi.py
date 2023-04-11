@@ -3,6 +3,7 @@
 import pandas as pd
 import vcf
 import os
+import numpy as np
 
 pd.options.mode.chained_assignment = None 
 
@@ -64,7 +65,9 @@ def read_filtered_vcf(filtered_vcf):
                 # all later entries
                 else:
                     for i, anno in enumerate(vep_anno.split("|")):
-                        vep_list[i] = sorted(flatten([vep_list[i], anno]))
+                        vep_list[i] = ",".join([i for i in sorted(flatten([vep_list[i], anno]))])
+            # remove "empty" strings (",")
+            vep_list = [i if any(i.split(",")) else "" for i in vep_list]
                     
         else: # just one entry
             vep_list = record.INFO["CSQ"][0].split("|")
