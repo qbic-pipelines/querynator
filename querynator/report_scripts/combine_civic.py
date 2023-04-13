@@ -138,9 +138,4 @@ def combine_civic(civic_path, outdir, logger):
 
     # add merged df to outdir 
     merged_df.to_csv(f"{outdir}/combined_files/civic_vep.tsv", sep="\t", index=False)
-
-
-
-
-
-    logger.info("CIViC combined")
+    

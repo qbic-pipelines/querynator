@@ -1,9 +1,6 @@
 """ Combine CIViC-VEP with CGI-VEP """
 
 import pandas as pd
-import vcf
-import os
-
 
 
 def merge_civic_cgi(alterations_vep, civic_vep):

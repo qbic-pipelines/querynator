@@ -282,5 +282,3 @@ def combine_cgi(cgi_path, outdir, logger):
     merged_df["evidence_CGI"] = merged_df.apply(lambda x : get_highest_evidence(x, biomarkers_linked), axis=1)
     # write merged to report dir
     merged_df.to_csv(f"{outdir}/combined_files/alterations_vep.tsv", sep="\t", index=False)
-
-    logger.info("CGI combined") 

@@ -23,7 +23,8 @@ from querynator.query_api import (
 from querynator.report_scripts import (
     combine_civic,
     combine_cgi,
-    combine_cgi_civic
+    combine_cgi_civic,
+    add_tiers_and_scores_to_df
 )
 
 # Create logger
@@ -489,6 +490,10 @@ def create_report(cgi_path, civic_path, outdir):
     combine_civic(civic_path, report_dir, logger)
     combine_cgi(cgi_path, report_dir, logger)
     combine_cgi_civic(report_dir, logger)
+    
+    # add tiers & ranking-score to merged results
+    add_tiers_and_scores_to_df(report_dir, logger)
+
 
 if __name__ == "__main__":
     run_querynator()
