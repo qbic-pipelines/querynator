@@ -294,7 +294,7 @@ def scoring_variants(row):
     score = 0
 
     # present in both KBs 
-    if not pd.isnull(row["chr_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
+    if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and not pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
         score += 3
     
     # multiple external  oncogenic annotations
