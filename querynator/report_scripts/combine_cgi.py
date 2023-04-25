@@ -274,8 +274,8 @@ def combine_cgi(cgi_path, outdir, logger):
     biomarkers_df = link_biomarkers(biomarkers_df)
     biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t", index=False)
 
-    # adapt biomarkers to only consider "complete" matches between alteration & biomarker 
-    biomarkers_linked = biomarkers_df[biomarkers_df.BioM == "complete"]
+    # adapt biomarkers to only consider "complete" matches between alteration & biomarker and only Drugs with "Responsive" response
+    biomarkers_linked = biomarkers_linked[(biomarkers_linked.BioM == "complete") & (biomarkers_linked["Response"] == "Responsive")]
     #biomarkers_linked["alterations_link"] = biomarkers_linked["alterations_link"].astype(str)
     biomarkers_linked["alterations_link"] = biomarkers_linked["alterations_link"].apply(str)
     #add CGI evidence col
