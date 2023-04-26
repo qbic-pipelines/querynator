@@ -23,7 +23,7 @@ def subset_variants_into_tiers(row):
     """
     # check whether civic already provides AMP-based Tiers
     if not pd.isnull(row["assertion_amp_level_CIVIC"]):
-        if "TIER_I" in row["assertion_amp_level_CIVIC"]:
+        if "TIER_I_" in row["assertion_amp_level_CIVIC"]:
             return "tier_1"
         elif "TIER_II_" in row["assertion_amp_level_CIVIC"]:
             return "tier_2"
