@@ -23,6 +23,7 @@ def subset_variants_into_tiers(row):
     """
     # check whether civic already provides AMP-based Tiers
     if not pd.isnull(row["assertion_amp_level_CIVIC"]):
+        #print(row["assertion_amp_level_CIVIC"])
         if "TIER_I_" in row["assertion_amp_level_CIVIC"]:
             return "tier_1"
         elif "TIER_II_" in row["assertion_amp_level_CIVIC"]:
@@ -32,15 +33,20 @@ def subset_variants_into_tiers(row):
         elif "TIER_IV_" in row["assertion_amp_level_CIVIC"]:
             return "tier_4"
     else:
-        if not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]) or row["evidence_level_CIVIC"] in ["A","B"] or row["evidence_CGI"] == "A":
+        if row["evidence_CGI"] == "A":
             return "tier_1"
-        elif row["evidence_level_CIVIC"] in ["C","D"] or row["evidence_CGI"] in ["B","C","D"]:
+        elif not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]):
+            if row["evidence_level_CIVIC"] in ["A","B"]:
+                return "tier_1"
+            elif row["evidence_level_CIVIC"] in ["C","D"]:
+                return "tier_2"
+        elif row["evidence_CGI"] in ["B","C","D"]:
             return "tier_2"
         elif row["evidence_level_CIVIC"] == "E":
             return "tier_3"
         else: # no drugs associated
             # Tier 3 if oncogenic
-            if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and pd.isnull(row["Oncogenic Summary_CGI"]) == False :
+            if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and pd.isnull(row["Oncogenic Summary_CGI"]) == False:
                 return "tier_3"
             else:
                 return "tier_4"
