@@ -36,17 +36,19 @@ def subset_variants_into_tiers(row):
         if row["evidence_CGI"] == "A":
             return "tier_1"
         elif not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]):
-            if row["evidence_level_CIVIC"] in ["A","B"]:
+            if row["evidence_level_CIVIC"] == "A" and row["evidence_type_CIVIC"] == "PREDICTIVE":
                 return "tier_1"
-            elif row["evidence_level_CIVIC"] in ["C","D"]:
+            elif row["evidence_level_CIVIC"] in ["B","C","D"] and row["evidence_type_CIVIC"] == "PREDICTIVE":
                 return "tier_2"
+            else: 
+                return "tier_3" # therapeutic with an unkown clinical significance
         elif row["evidence_CGI"] in ["B","C","D"]:
             return "tier_2"
-        elif row["evidence_level_CIVIC"] == "E":
-            return "tier_3"
         else: # no drugs associated
             # Tier 3 if oncogenic
             if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and pd.isnull(row["Oncogenic Summary_CGI"]) == False:
+                return "tier_3"
+            elif not pd.isnull(row["evidence_level_CIVIC"]): # evidence given but not therapeutic
                 return "tier_3"
             else:
                 return "tier_4"
@@ -310,11 +312,21 @@ def scoring_variants(row):
     # drugs associated
     if not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]) or not pd.isnull(row["evidence_CGI"]):
         score += 2
-        if row["evidence_level_CIVIC"] == "A" or row["evidence_CGI"] == "A":
+        if row["evidence_level_CIVIC"] == "A" and row["evidence_type_CIVIC"] == "PREDICTIVE":
             score += 2
-        elif row["evidence_level_CIVIC"] == "B" or row["evidence_CGI"] == "B":
+        elif row["evidence_CGI"] == "A":
+            score += 2
+        elif row["evidence_level_CIVIC"] == "B" and row["evidence_type_CIVIC"] == "PREDICTIVE":
+            score += 1
+        elif row["evidence_CGI"] == "B":
             score += 1
     
+    # Non therapeutic CIViC Evidence
+    if row["evidence_level_CIVIC"] == "A" and row["evidence_type_CIVIC"] != "PREDICTIVE":
+        score += 2
+    elif row["evidence_level_CIVIC"] == "B" and row["evidence_type_CIVIC"] != "PREDICTIVE":
+        score += 1
+
     # consequence
     score += generate_consequence_score(row["Consequence_CGI"], row["variant_type_CIVIC"])
     
