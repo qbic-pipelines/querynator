@@ -201,6 +201,28 @@ def download_cgi(url, headers, output, logger):
     except Exception:
         logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
+def delete_job_cgi(url, headers, output, logger):
+    """
+    Delete query from the CGI server after analysis is complete
+
+    :param url: API url with job_id
+    :type url: str
+    :param headers: Valid headers for API query
+    :type headers: dict
+    :param output: sample name
+    :type output: str
+    :raises: Exception
+
+    """
+    try:
+        payload = {"action": "download"}
+        r = requests.delete(url, headers=headers)
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        raise SystemExit(err)
+    except Exception:
+        logger.exception("Ooops, sth went wrong deleting the job from the CGI Server. Sorry for the inconvenience. If this happens too often, please make space on the website or you will not be able to make more queries with your account.")
+
 
 def add_cgi_metadata(url, output, original_input, genome, filter_vep):
     """
@@ -273,3 +295,4 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
         logger.info("Downloading CGI results")
         download_cgi(url, headers, output, logger)
         add_cgi_metadata(url, output, original_input, genome, filter_vep)
+        delete_job_cgi(url, headers, output, logger)
