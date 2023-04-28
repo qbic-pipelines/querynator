@@ -60,8 +60,10 @@ def subset_variants_into_tiers(row):
             return "tier_2"
         else: # no evidence given (tier 3 or 4)
             # Tier 3 if oncogenic & MAF fits
-            if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and pd.isnull(row["Oncogenic Summary_CGI"]) == False:
-                if get_allele_freq_tiering(row) or row["evidence_level_CIVIC"] == "E":
+            if row["evidence_level_CIVIC"] == "E":
+                return "tier_3"
+            elif row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and pd.isnull(row["Oncogenic Summary_CGI"]) == False:
+                if get_allele_freq_tiering(row):
                     return "tier_3"
                 else: return "tier_4"
             else:

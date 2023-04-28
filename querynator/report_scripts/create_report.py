@@ -1,0 +1,531 @@
+""" Create one of the querynator results and individual reports for each variant  """
+
+import os
+import pandas as pd
+import numpy as np
+
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.offline
+
+from pretty_html_table import build_table
+
+from querynator.helper_functions import (
+    flatten
+)
+
+
+
+# ============================================================================ #
+#                               Overall Report
+# ============================================================================ #
+
+
+def get_KB_count(df):
+    """
+    Get the count of variants for each Knowledgebase to add into the pieplot
+
+    :param df: Variant dataframe
+    :type df: pandas DataFrame
+    :return: Count of variants for each Knowledgebase
+    :rtype: pandas DataFrame
+    """
+    cgi_count = (df["sources"] == "cgi").sum() + (df["sources"] == "cgi,civic").sum()
+    civic_count = sum(df["sources"] == "civic") + sum(df["sources"] == "cgi,civic")
+    both_count = (df["sources"] == "cgi,civic").sum()
+    none_count = (df["sources"] == "").sum()
+
+    return [cgi_count, civic_count, both_count, none_count]
+
+    
+
+def get_sources(row):
+    """
+    Get the Knowledgebases containing information about the variant
+
+    :param row: Row of the variant dataframe
+    :type row: pandas DataFrame row
+    """
+    if not pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
+        return "cgi,civic"
+    elif not pd.isnull(row["Oncogenic Summary_CGI"]) and pd.isnull(row["chr_CIVIC"]):
+        return "cgi"
+    elif pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
+        return "civic"
+    else:
+        return ""
+
+
+def assign_comb_evidence_labels(row):
+    """
+    Assign the evidence labels for each Knowledgebase
+
+    :param row: Row of the variant dataframe
+    :type row: pandas DataFrame row
+    :return: Evidence labels for each Knowledgebase
+    :rtype: str
+    """
+    cgi_str = "-"
+    civic_str = "-"
+    if not pd.isnull(row["evidence_CGI"]):
+        cgi_str = row["evidence_CGI"]
+    
+    if not pd.isnull(row["evidence_level_CIVIC"]):
+        civic_str = row["evidence_level_CIVIC"]
+
+    return f"{cgi_str}(cgi), {civic_str}(civic)"
+
+
+def get_disease_names_CIViC(row):
+    """
+    Get CIViC's disease names for the variant
+
+    :param row: Row of the variant dataframe
+    :type row: pandas DataFrame row
+    :return: Disease names for the variant
+    :rtype: str
+    """
+
+    disease_rows = [row["evidence_phenotypes_CIVIC"], row["assertion_phenotypes_CIVIC"], row["evidence_disease_CIVIC"], row["assertion_disease_name_CIVIC"]]
+    disease_list = [i for i in disease_rows if not pd.isnull(i)]
+        
+    if disease_list != []:
+        return ", ".join([i for i in disease_list])
+    else:
+        return ""
+
+
+def get_therapy_names(row, civic_only):
+    """
+    Get the therapy names for the variant
+
+    :param row: Row of the variant dataframe
+    :type row: pandas DataFrame row
+    """
+    therapy_str = ""
+    therapy_rows = [row["assertion_therapies_name_CIVIC"], row["evidence_therapies_CIVIC"]]
+    therapy_list = [i.split(",") for i in therapy_rows if not pd.isnull(i)]
+    if therapy_list != []:
+        therapy_list = [i.strip() for i in flatten(therapy_list)]
+        therapy_str = ", ".join([i for i in set(therapy_list)])
+    if not pd.isnull(row["evidence_CGI"]) and not civic_only:
+        if therapy_list != []:
+            therapy_str = therapy_str + ", CGI (see Details)"
+        else: therapy_str = "CGI (see Details)"
+    else: return ""
+
+    return therapy_str
+
+
+def add_variant_name_report(df):
+    """
+    Adds a column with a name of the variant for the report to the df
+
+    :param df: result df
+    :type df: pandas DataFrame
+    :return: List of variant names
+    :rtype: list
+    """
+    result_list = []
+    for index, row in df.iterrows():
+        name_str = "chr{}-{}-{}-{}".format(row["chr_VEP"], row["pos_VEP"], row["ref_VEP"], row["alt_VEP"])
+        count=1
+        while name_str in result_list:
+            name_str = name_str + f"_{count}"
+            count +=1
+        result_list.append(name_str)
+    
+    return result_list
+
+def create_link_col(row, report_path):
+    """
+    Creates a link to the individual report to display in the overall report
+    
+    :param row: row of the df
+    :type row: pandas Series
+    :param report_path: path to the directory in which the individual reports will be saved in
+    :type report_path: str
+    :return: link to the individual report
+    :rtype: str"""
+    return f'<a href="file://{report_path}/{row["report_name"]}.html">Variant: {row["report_name"]}</a>'
+
+
+def create_pieplot(values, names, title):
+    """
+    Create a pieplot with the given values and names
+    :param values: Values for the pieplot
+    :type values: list
+    :param names: Names for the pieplot
+    :type names: list
+    :param title: Title of the pieplot
+    :type title: str
+    :return: Plotly figure
+    :rtype: plotly figure
+    """
+    fig = px.pie(values=values, names=names, title=title)
+
+    fig.update_layout(
+        autosize=False,
+        width=500,
+        height=500,)
+    
+    return fig
+
+
+def create_tier_table(df, tier, report_path):
+    """
+    Creates a table for the report for the given tier
+
+    :param df: df containing all variants
+    :type df: pandas DataFrame
+    :param tier: tier to create the table for
+    :type tier: int
+    :param report_path: path to the directory in which the individual reports will be saved in
+    :type report_path: str
+    :return: df containing the variants of the given tier
+    :rtype: pandas DataFrame
+    """
+    # extract tier from full df
+    tier_x = df[df["report_tier"] == tier]
+
+    # sort based on ranking_score
+    tier_x = tier_x.sort_values("ranking_score", ascending=False)
+
+    # TODO: write function to get links
+    # assign "link col" to test
+    # tier_x["report_link"] = '<a href="file:///Users/students/Documents/work_dir/masterthesis/output_scripts/templates/template_individual.html">Individual Template</a>' 
+    tier_x["report_link"] = tier_x.apply(lambda x : create_link_col(x, report_path), axis=1)
+
+    # create new df structure for report
+    # source | HGVS | Oncogenic Summary | Disease Name | Therapy Name | Evidence_Level | link
+    tier_report_subset = tier_x[["sources", "Mutation_CGI", "Oncogenic Summary_CGI", "disease_names_report", "therapy_names_report", "evidence_levels_comb", "report_link"]]
+    tier_report_subset = tier_report_subset.rename(columns={"sources": "Sources", "Mutation_CGI" : "HGVS", "Oncogenic Summary_CGI" : "Oncogenicity", "disease_names_report" : "Disease Name", "therapy_names_report" : "Therapies", "evidence_levels_comb" : "Evidence Level", "report_link" : "Details"})
+    html_table = build_table(tier_report_subset, color="blue_light", escape=False,  width_dict=['100px','300px', '200px', '200px','200px', '100px','auto'], text_align="center")
+
+    return html_table
+
+
+
+def write_overall_report(template_html, report_html, fig_kb, fig_tiers, tier_table_list):
+    """
+    Create the overall report for the querynator results
+
+    :param template_html: Path to the template html file
+    :type template_html: str
+    :param report_html: Path to the report html file
+    :type report_html: str
+    :param fig_kb: Plotly figure of the kb distribution
+    :type fig_kb: plotly figure
+    :param fig_tiers: Plotly figure of the tier distribution
+    :type fig_tiers: plotly figure
+    :param tier_table_list: List of pretty-html-tables of the tier tables
+    :type tier_table_list: list
+    :return: None
+    :rtype: None
+    """
+    with open(template_html, "r") as f:
+        with open(report_html, "w") as r:
+            for line in f:
+                if "TEMPLATE_1" in line:
+                    r.write(plotly.offline.plot(fig_kb, include_plotlyjs=False, output_type='div').split("<div>")[1])
+                    # line = line.replace("TEMPLATE_1", "teste.png")
+                    # r.write(line)
+                elif "TEMPLATE_2" in line:
+                    r.write(plotly.offline.plot(fig_tiers, include_plotlyjs=False, output_type='div').split("<div>")[1])
+                    # line = line.replace("TEMPLATE_2", "teste.png")
+                    # r.write(line)
+                elif "TEMPLATE_TIER1" in line:
+                    r.write(tier_table_list[0])
+                elif "TEMPLATE_TIER2" in line:
+                    r.write(tier_table_list[1])
+                elif "TEMPLATE_TIER3" in line:
+                    r.write(tier_table_list[2])
+                else: r.write(line)
+
+
+
+
+
+
+# ============================================================================ #
+#                               Individual Report
+# ============================================================================ #
+
+
+def add_variant_name_report(df):
+    """
+    Adds a column with a name of the variant for the report to the df
+    :param df: result df
+    :type df: pandas DataFrame"""
+    result_list = []
+    for index, row in df.iterrows():
+        name_str = "{}-{}-{}-{}".format(row["chr_VEP"], row["pos_VEP"], row["ref_VEP"], row["alt_VEP"])
+        count=1
+        while name_str in result_list:
+            name_str = name_str + f"_{count}"
+            count +=1
+        result_list.append(name_str)
+    
+    return result_list
+
+
+def check_if_nan(value):
+    """
+    Checks if a value is NaN and returns an empty string if it is.
+    :param value: The value to check.
+    :type value: str
+    :return: The value if it is not NaN, otherwise an empty string.
+    :rtype: str
+    """
+    if not pd.isnull(value):
+        return value
+    else:
+        return "None"
+
+
+def create_html_link(s):
+    """
+    Creates a clickable link from a string.
+    Used to convert file path into clickable form.
+
+    :param s: The string to create a link from.
+    :type s: str
+    :return: The string as a clickable link.
+    :rtype: str
+    """
+    splitted = s.split("https")
+    if "oncokb" in s and "CIVIC" in s:
+        return s
+    else:
+        for i in splitted:
+            if i.startswith("://"):
+                path = f"https{i}"
+                return f'<a href="{path}">{s}</a>'
+        return s
+
+def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
+    """
+    Gets all associated disease names of a specific variant.
+    :param row: The row of the dataframe.
+    :type row: pandas.Series
+    :param biomarkers_df: The biomarkers dataframe from CGI.
+    :type biomarkers_df: pandas.DataFrame
+    :param response: The response to a specific drug.
+    :type response: str
+    :param width_dict: A list containing the width of each column.
+    :type width_dict: list
+    :return: A pandas DataFrame containing all Therapy & Drug related information provided by CGI for a specific Protein Change.
+    :rtype: pandas.DataFrame
+    """
+    if not pd.isnull(row["Protein Change_CGI"]):
+        alterations_df = biomarkers_df[biomarkers_df["alterations_link"].str.contains(row["Protein Change_CGI"])][["Drugs", "Response", "Evidence", "Diseases", "Tumor type", "Source"]]
+        alterations_df.columns = alterations_df.columns = ['associated Diseases' if x=='Diseases' else x for x in alterations_df.columns]
+        alterations_df["Source"] = alterations_df["Source"].apply(lambda x: create_html_link(x))
+
+        if response == "Responsive":
+            return build_table(alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True), color="blue_light", escape=False, width_dict=width_dict)
+            #return alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True)
+        else:
+            return build_table(alterations_df[alterations_df["Response"] != "Responsive"].sort_values("Evidence", ascending=True),color="blue_light", escape=False, width_dict=width_dict)
+    
+    else: return ""
+
+
+
+def create_evidence_table(row):
+    """
+    Creates a table containing CIViC evidence information for a specific variant.
+    :param row: The row of the dataframe.
+    :type row: pandas.Series
+    """
+    test = row.to_frame().T
+    evidence_subset = row.loc[["evidence_name_CIVIC", "evidence_type_CIVIC", "evidence_level_CIVIC", "evidence_rating_CIVIC", "evidence_significance_CIVIC", "evidence_support_CIVIC"]].to_frame().T
+    evidence_subset.columns = ["Name", "Level", "Rating", "Type", "Significance", "Direction"]
+    if len(evidence_subset) > 0:
+        return build_table(evidence_subset, color="blue_light", escape=False)
+    else: return ""
+
+
+def get_knowledgebases(row):
+    """
+    Gets all knowledgebases that have information about a specific variant.
+    :param row: The row of the dataframe.
+    :type row: pandas.Series
+    :return: A string of the associated knowledgebases.
+    :rtype: str
+    """
+    if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and not pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
+        return "CGI,CIViC"
+    elif row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and not pd.isnull(row["Oncogenic Summary_CGI"]) and pd.isnull(row["chr_CIVIC"]):
+        return "CGI"
+    elif row["Oncogenic Summary_CGI"] in(["non-oncogenic", "non-protein affecting"]) or pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
+        return "CIViC"
+    else:
+        return "None"
+
+def create_therapy_table(row, response, width_dict, biomarkers_df):
+    """
+    Creates a HTML table containing all Therapy & Drug related information provided by CGI for a specific Protein Change.
+    :param row: The row of the dataframe.
+    :type row: pandas.Series
+    :param response: The response to a specific drug.
+    :type response: str
+    :param width_dict: A list containing the width of each column.
+    :type width_dict: list
+    :param biomarkers_df: The biomarkers dataframe from CGI.
+    :type biomarkers_df: pandas.DataFrame
+    :return: A HTML table containing all Therapy & Drug related information provided by CGI for a specific Protein Change.
+    :rtype: HTML table
+    """
+    return build_table(get_therapy_information_CGI(row, biomarkers_df, response), color="blue_light", escape=False, width_dict=width_dict)
+
+
+def retrieve_info_from_row(row, biomarkers_df):
+    """
+    This function retrieves the information from a row of the merged dataframe 
+    and returns a dictionary with the information for the report of a specific variant.
+
+    :param row: row of the dataframe
+    :type row: pandas.core.series.Series
+    :param biomarkers_df: dataframe with all biomarkers linked to a specific variant
+    :type biomarkers_df: pandas.core.frame.DataFrame
+    :return: dictionary with the information for the report of a specific variant
+    :rtype: dict
+    """
+    info_dict = {}
+    info_dict["VARIANT_NAME"] = check_if_nan(row["report_name"])
+    info_dict["TIER_ASSIGNED"] = check_if_nan(row["report_tier"])
+    info_dict["CHROMOSOME"] = check_if_nan(row["chr_CGI"])
+    info_dict["POSITION"] = check_if_nan(row["pos_CGI"])
+    info_dict["REF"] = check_if_nan(row["ref_CGI"])
+    info_dict["ALT"] = check_if_nan(row["alt_CGI"])
+    info_dict["STRAND"] = check_if_nan(row["Strand_CGI"])
+    info_dict["HGVS_NOTATION"] = check_if_nan(row["Mutation_CGI"])
+    info_dict["VARIANT_CIVIC"] = check_if_nan(row["variant_name_CIVIC"])
+    info_dict["ENTREZ_NAME"] = check_if_nan(row["variant_entrez_name_CIVIC"])
+    info_dict["ENTREZ_ID"] = check_if_nan(row["variant_entrez_id_CIVIC"])
+    info_dict["VARIANT_TYPE"] = check_if_nan(row["Type_CGI"])
+    info_dict["CIVIC_GENE"] = check_if_nan(row["gene_name_CIVIC"])
+    info_dict["CGI_GENE"] = check_if_nan(row["Gene_CGI"])
+    info_dict["GENE_DESCRIPTION"] = check_if_nan(row["gene_description_CIVIC"])
+    info_dict["REF_BUILD"] = "None"
+    info_dict["SIFT_SCORE"] = check_if_nan(row["SIFT_VEP"])
+    info_dict["PolyPhen2_SCORE"] = check_if_nan(row["PolyPhen_VEP"])
+    info_dict["ALLELE_FREQ"] = check_if_nan(row["AF_VEP"])
+    info_dict["GNOMAD_FREQ"] = check_if_nan(row["gnomAD_AF_VEP"])
+    info_dict["CONSEQUENCE_CGI"] = check_if_nan(row["Consequence_CGI"])
+    info_dict["CONSEQUENCE_CIVIC"] = check_if_nan(row["variant_type_CIVIC"])
+    info_dict["ONCOGENICITY_CGI"] = check_if_nan(row["Oncogenic Summary_CGI"])
+    info_dict["ONCOGENIC_PREDICTION"] = check_if_nan(row["Oncogenic Prediction_CGI"])
+    info_dict["CLINVAR_ENTRIES"] = check_if_nan(row["variant_clinvar_entries_CIVIC"])
+    info_dict["PROT_CHANGE"] = check_if_nan(row["Protein Change_CGI"])
+    info_dict["CIVIC_CGI_PRESENT"] = get_knowledgebases(row)
+    info_dict["EXT_ANNOS"] = check_if_nan(row["External oncogenic annotation_CGI"])
+    info_dict["LINKED_DISEASES"] = get_disease_names_CIViC(row) if get_disease_names_CIViC(row) != "" else "None"
+    info_dict["LINKED_THERAPIES_CIVIC"] = get_therapy_names(row,civic_only=True) if get_therapy_names(row,civic_only=True) != "" else "None"
+    info_dict["EVIDENCE_LIST"] = create_evidence_table(row) if create_evidence_table(row) != "" else "None"
+    info_dict["CIVIC_SUMMARY"] = check_if_nan(row["assertion_summary_CIVIC"])
+    info_dict["ASSERTION_DESCRIPTION"] = check_if_nan(row["assertion_description_CIVIC"])
+    info_dict["EVIDENCE_DESCRIPTION"] = check_if_nan(row["evidence_description_CIVIC"])
+    info_dict["LINKED_DRUGS_RESPONSIVE"] = get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"]) if get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"]) != "" else "None"
+    info_dict["LINKED_DRUGS_RESISTANT"] = get_therapy_information_CGI(row, biomarkers_df, "Resistant", ["40%", "20%", "20%", "20%", "20%", "20%"]) if get_therapy_information_CGI(row, biomarkers_df, "Resistant", ["40%", "20%", "20%", "20%", "20%", "20%"]) != "" else "None"
+    info_dict["EVIDENCE_DESCRIPTION"] = check_if_nan(row["evidence_description_CIVIC"])
+    info_dict["LITERATURE_CIVIC"] = check_if_nan(row["evidence_source_CIVIC"])
+    
+    return info_dict
+
+
+
+def write_individual_report(row, template_html, report_path, biomarkers_df):
+    """
+    This function creates a report for a specific variant.
+
+    :param row: row of the dataframe
+    :type row: pandas.core.series.Series
+    :param template_html: path to the template html file
+    :type template_html: str
+    :param report_path: path to the individual report directory
+    :type report_path: str
+    :param biomarkers_df: dataframe with the biomarkers linked to the therapies
+    :type biomarkers_df: pandas.core.frame.DataFrame
+    :return: None
+    :rtype: None
+    """
+    info_dict = retrieve_info_from_row(row, biomarkers_df)
+    
+    report_html = "{}/{}.html".format(report_path, row["report_name"])
+    
+    with open(template_html, "r") as f:
+        with open(report_html, "w") as r:
+            for line in f:
+                for i in info_dict:
+                    if i in line:
+                        line = line.replace(i, str(info_dict[i]))
+                r.write(line)
+
+
+
+# ============================================================================ #
+#                               Build the Report
+# ============================================================================ #
+
+
+
+def create_report_htmls(outdir, basename, logger):
+    """
+    Creates the overall report for all variants and 
+    the individual reports for each variant
+
+    :param outdir: Path to report directory
+    :type outdir: str
+    :param basename: User given Project name
+    :type basename: str
+    :return: None
+    :rtype: None
+    """
+
+    logger.info("Creating HTML Reports")
+    
+    # read in files
+    vep_civic_cgi_merge = pd.read_csv(f"{outdir}/combined_files/civic_cgi_vep.tsv", sep="\t")
+    biomarkers_df = pd.read_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t")
+    # get path to save individual reports
+    report_path = f"{os.path.abspath(outdir)}/report/variant_reports"
+
+    # add additional columns used in report
+    vep_civic_cgi_merge["sources"] = vep_civic_cgi_merge.apply(lambda x : get_sources(x), axis=1)
+    vep_civic_cgi_merge["report_name"] = add_variant_name_report(vep_civic_cgi_merge)
+    vep_civic_cgi_merge["disease_names_report"] = vep_civic_cgi_merge.apply(lambda x : get_disease_names_CIViC(x), axis=1)
+    vep_civic_cgi_merge["therapy_names_report"] = vep_civic_cgi_merge.apply(lambda x : get_therapy_names(x,civic_only=False), axis=1)
+    vep_civic_cgi_merge["evidence_levels_comb"] = vep_civic_cgi_merge.apply(lambda x : assign_comb_evidence_labels(x), axis=1)
+    vep_civic_cgi_merge["report_name"] = add_variant_name_report(vep_civic_cgi_merge)
+
+
+
+    # create "pretty_html_tables" for each tier
+    tier_list = ["tier_1", "tier_2", "tier_3"]
+    tier_table_list = [create_tier_table(vep_civic_cgi_merge, i, report_path) for i in tier_list]
+
+    # Overall Report
+    write_overall_report(
+        template_html = os.path.join(os.path.dirname(__file__), "templates/template_overall.html"),
+        #template_html="/templates/template_overall.html", 
+        report_html=f"{os.path.abspath(outdir)}/report/{basename}_overall_report.html", 
+        fig_kb=create_pieplot(get_KB_count(vep_civic_cgi_merge), ["CGI", "CIViC", "CGI&CIViC", "No Hit"], "Knowledgebase Hits"), 
+        fig_tiers=create_pieplot(vep_civic_cgi_merge["report_tier"].value_counts().values, vep_civic_cgi_merge["report_tier"].value_counts().index, "Tiers"), 
+        tier_table_list=tier_table_list)
+
+
+    # Individual Reports
+
+    # we only create individual reports for variants in tier 1,2 and 3
+    vep_civic_cgi_merge = vep_civic_cgi_merge[vep_civic_cgi_merge["report_tier"].isin(["tier_1", "tier_2", "tier_3"])]
+    
+
+    vep_civic_cgi_merge.apply(lambda x : write_individual_report(
+        x, 
+        template_html=os.path.join(os.path.dirname(__file__), "templates/template_individual.html"),
+        report_path=report_path,
+        biomarkers_df=biomarkers_df), axis=1)
+
+    logger.info("Reports created")

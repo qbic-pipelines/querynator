@@ -12,3 +12,5 @@ pandas
 numpy
 civicpy==3.0.0
 pyvcf3==1.0.3
+pretty_html_table==0.9.16
+plotly==5.14.0

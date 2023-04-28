@@ -274,11 +274,14 @@ def combine_cgi(cgi_path, outdir, logger):
     biomarkers_df = link_biomarkers(biomarkers_df)
     biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t", index=False)
 
-    # adapt biomarkers to only consider "complete" matches between alteration & biomarker and only Drugs with "Responsive" response
-    biomarkers_linked = biomarkers_linked[(biomarkers_linked.BioM == "complete") & (biomarkers_linked["Response"] == "Responsive")]
+
+    # add CGI evidence col to merged_df
+    
+    # adapt biomarkers to only consider "complete" matches between alteration & biomarker
+    biomarkers_df = biomarkers_df[biomarkers_df.BioM == "complete"]
     #biomarkers_linked["alterations_link"] = biomarkers_linked["alterations_link"].astype(str)
-    biomarkers_linked["alterations_link"] = biomarkers_linked["alterations_link"].apply(str)
+    biomarkers_df["alterations_link"] = biomarkers_df["alterations_link"].apply(str)
     #add CGI evidence col
-    merged_df["evidence_CGI"] = merged_df.apply(lambda x : get_highest_evidence(x, biomarkers_linked), axis=1)
+    merged_df["evidence_CGI"] = merged_df.apply(lambda x : get_highest_evidence(x, biomarkers_df), axis=1)
     # write merged to report dir
     merged_df.to_csv(f"{outdir}/combined_files/alterations_vep.tsv", sep="\t", index=False)
