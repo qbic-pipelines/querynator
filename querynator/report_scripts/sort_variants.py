@@ -12,6 +12,28 @@ import numpy as np
 #                      ASSIGN VARIANTS TO TIERS
 # ============================================================================ #
 
+def get_allele_freq_tiering(row):
+    """
+    checks if AF is < 0.01 to assign to tier 3 (true) or 4 (false)
+    :param row: row of a pandas DataFrame
+    :type row: pandas Series
+    :return: True if AF < 0.01, False if AF > 0.01
+    :rtype: bool
+    """
+    af, gnomad = row["AF_VEP"], row["gnomAD_AF_VEP"]
+    bool_nan, nan_val, not_nan_val = check_nan_in_pair([af, gnomad])
+
+    if bool_nan and nan_val == "both":
+        return True
+    elif bool_nan and type(nan_val) == int:
+        if get_largest_af([af, gnomad][not_nan_val]) < 0.01:
+            return True
+        else: return False
+    elif bool_nan == False:
+        if get_largest_af(af) < 0.01 and get_largest_af(gnomad) < 0.01:
+            return True
+        else: return False    
+
 def subset_variants_into_tiers(row):
     """
     decides tier (1-4) for specific variant 
@@ -23,7 +45,6 @@ def subset_variants_into_tiers(row):
     """
     # check whether civic already provides AMP-based Tiers
     if not pd.isnull(row["assertion_amp_level_CIVIC"]):
-        #print(row["assertion_amp_level_CIVIC"])
         if "TIER_I_" in row["assertion_amp_level_CIVIC"]:
             return "tier_1"
         elif "TIER_II_" in row["assertion_amp_level_CIVIC"]:
@@ -33,23 +54,16 @@ def subset_variants_into_tiers(row):
         elif "TIER_IV_" in row["assertion_amp_level_CIVIC"]:
             return "tier_4"
     else:
-        if row["evidence_CGI"] == "A":
+        if row["evidence_CGI"] in ["A", "B"] or row["evidence_level_CIVIC"] in ["A","B"]:
             return "tier_1"
-        elif not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]):
-            if row["evidence_level_CIVIC"] == "A" and row["evidence_type_CIVIC"] == "PREDICTIVE":
-                return "tier_1"
-            elif row["evidence_level_CIVIC"] in ["B","C","D"] and row["evidence_type_CIVIC"] == "PREDICTIVE":
-                return "tier_2"
-            else: 
-                return "tier_3" # therapeutic with an unkown clinical significance
-        elif row["evidence_CGI"] in ["B","C","D"]:
+        elif row["evidence_CGI"] in ["C","D"] or row["evidence_level_CIVIC"] in ["C","D"]:
             return "tier_2"
-        else: # no drugs associated
-            # Tier 3 if oncogenic
+        else: # no evidence given (tier 3 or 4)
+            # Tier 3 if oncogenic & MAF fits
             if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and pd.isnull(row["Oncogenic Summary_CGI"]) == False:
-                return "tier_3"
-            elif not pd.isnull(row["evidence_level_CIVIC"]): # evidence given but not therapeutic
-                return "tier_3"
+                if get_allele_freq_tiering(row) or row["evidence_level_CIVIC"] == "E":
+                    return "tier_3"
+                else: return "tier_4"
             else:
                 return "tier_4"
 
@@ -312,14 +326,18 @@ def scoring_variants(row):
     # drugs associated
     if not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]) or not pd.isnull(row["evidence_CGI"]):
         score += 2
-        if row["evidence_level_CIVIC"] == "A" and row["evidence_type_CIVIC"] == "PREDICTIVE":
-            score += 2
-        elif row["evidence_CGI"] == "A":
-            score += 2
-        elif row["evidence_level_CIVIC"] == "B" and row["evidence_type_CIVIC"] == "PREDICTIVE":
-            score += 1
-        elif row["evidence_CGI"] == "B":
-            score += 1
+
+    # Evidence associated
+    if row["evidence_level_CIVIC"] == "A" or row["evidence_CGI"] == "A":
+        score += 5
+    elif row["evidence_level_CIVIC"] == "B" or row["evidence_CGI"] == "B":
+        score += 3
+    elif row["evidence_level_CIVIC"] == "C" or row["evidence_CGI"] == "C":
+        score += 2
+    elif row["evidence_level_CIVIC"] == "D" or row["evidence_CGI"] == "D":
+        score += 2
+    elif row["evidence_level_CIVIC"] == "E":
+        score += 1
     
     # Non therapeutic CIViC Evidence
     if row["evidence_level_CIVIC"] == "A" and row["evidence_type_CIVIC"] != "PREDICTIVE":

@@ -237,7 +237,7 @@ def get_highest_evidence(row, biomarkers_linked):
     """
     if not pd.isnull(row["Protein Change_CGI"]):
         for evidence in ["A","B","C","D"]:
-            if not biomarkers_linked.loc[(biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"])) & (biomarkers_linked["Response"] == "Responsive") & (biomarkers_linked["Evidence"] == evidence)].empty:
+            if not biomarkers_linked.loc[(biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"])) & (biomarkers_linked["Evidence"] == evidence)].empty:
                 return evidence
     else:
         return row["Protein Change_CGI"] # return nan
