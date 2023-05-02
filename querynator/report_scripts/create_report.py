@@ -5,14 +5,11 @@ import os
 from io import BytesIO
 
 import pandas as pd
-
 from matplotlib import pyplot as plt
 from pretty_html_table import build_table
 from upsetplot import from_indicators, plot
 
-
 from querynator.helper_functions import flatten
-
 
 # ============================================================================ #
 #                               Overall Report
