@@ -12,23 +12,14 @@ from vcf.parser import _Info as VcfInfo
 from vcf.parser import field_counts as vcf_field_counts
 
 import querynator
-from querynator.query_api import (
-    query_cgi,
-    query_civic,
-    vcf_file,
-)
-
+from querynator.helper_functions import gunzip_compressed_files, gzipped
+from querynator.query_api import query_cgi, query_civic, vcf_file
 from querynator.report_scripts import (
-    combine_civic,
+    add_tiers_and_scores_to_df,
     combine_cgi,
     combine_cgi_civic,
-    add_tiers_and_scores_to_df,
+    combine_civic,
     create_report_htmls,
-)
-
-from querynator.helper_functions import (
-    gunzip_compressed_files,
-    gzipped,
 )
 
 # Create logger

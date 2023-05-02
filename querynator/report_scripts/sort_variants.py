@@ -4,9 +4,8 @@
     (Li MM etal. Standards and Guidelines for the Interpretation and Reporting of Sequence Variants in Cancer: A Joint Consensus Recommendation of the Association for Molecular Pathology, American Society of Clinical Oncology, and College of American Pathologists. J Mol Diagn. 2017 Jan;19(1):4-23. doi: 10.1016/j.jmoldx.2016.10.002. PMID: 27993330; PMCID: PMC5707196.)      
 """
 
-import pandas as pd
 import numpy as np
-
+import pandas as pd
 
 # ============================================================================ #
 #                      ASSIGN VARIANTS TO TIERS

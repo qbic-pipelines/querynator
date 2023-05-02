@@ -1,9 +1,10 @@
 """ Combine the results of the CGI query with the initial VEP annotation """
 
+import os
+
+import numpy as np
 import pandas as pd
 import vcf
-import os
-import numpy as np
 
 pd.options.mode.chained_assignment = None
 

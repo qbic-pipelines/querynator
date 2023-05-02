@@ -18,11 +18,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-
-from querynator.helper_functions import (
-    gzipped,
-    gunzip_compressed_files,
-)
+from querynator.helper_functions import gunzip_compressed_files, gzipped
 
 
 def hg_assembly(genome):

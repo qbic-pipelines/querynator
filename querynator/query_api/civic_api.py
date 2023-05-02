@@ -14,7 +14,11 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-from querynator.helper_functions import gunzip_compressed_files, gzipped, get_num_from_chr
+from querynator.helper_functions import (
+    get_num_from_chr,
+    gunzip_compressed_files,
+    gzipped,
+)
 
 # load the civic cache (necessary for bulk run)
 civic.load_cache()

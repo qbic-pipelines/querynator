@@ -1,9 +1,10 @@
 """ Combine the results of the CIViC query with the initial VEP annotation """
 
+import os
+
+import numpy as np
 import pandas as pd
 import vcf
-import os
-import numpy as np
 
 from querynator.helper_functions import flatten, get_num_from_chr
 
