@@ -1,15 +1,15 @@
 """ Create one report of the querynator results and individual reports for each variant  """
 
 import base64
-from io import BytesIO
 import os
+from io import BytesIO
 
 import pandas as pd
 
 from matplotlib import pyplot as plt
+from pretty_html_table import build_table
 from upsetplot import from_indicators, plot
 
-from pretty_html_table import build_table
 
 from querynator.helper_functions import flatten
 
