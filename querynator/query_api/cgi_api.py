@@ -176,6 +176,7 @@ def download_cgi(url, headers, output, logger):
     except Exception:
         logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
 
+
 def delete_job_cgi(url, headers, output, logger):
     """
     Delete query from the CGI server after analysis is complete
@@ -196,7 +197,9 @@ def delete_job_cgi(url, headers, output, logger):
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
     except Exception:
-        logger.exception("Ooops, sth went wrong deleting the job from the CGI Server. Sorry for the inconvenience. If this happens too often, please make space on the website or you will not be able to make more queries with your account.")
+        logger.exception(
+            "Ooops, sth went wrong deleting the job from the CGI Server. Sorry for the inconvenience. If this happens too often, please make space on the website or you will not be able to make more queries with your account."
+        )
 
 
 def add_cgi_metadata(url, output, original_input, genome, filter_vep):

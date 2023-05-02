@@ -11,10 +11,7 @@ from upsetplot import from_indicators, plot
 
 from pretty_html_table import build_table
 
-from querynator.helper_functions import (
-    flatten
-)
-
+from querynator.helper_functions import flatten
 
 
 # ============================================================================ #
@@ -38,7 +35,6 @@ def get_KB_count(df):
 
     return [cgi_count, civic_count, both_count, none_count]
 
-    
 
 def get_sources(row):
     """
@@ -70,7 +66,7 @@ def assign_comb_evidence_labels(row):
     civic_str = "-"
     if not pd.isnull(row["evidence_CGI"]):
         cgi_str = row["evidence_CGI"]
-    
+
     if not pd.isnull(row["evidence_level_CIVIC"]):
         civic_str = row["evidence_level_CIVIC"]
 
@@ -87,9 +83,14 @@ def get_disease_names_CIViC(row):
     :rtype: str
     """
 
-    disease_rows = [row["evidence_phenotypes_CIVIC"], row["assertion_phenotypes_CIVIC"], row["evidence_disease_CIVIC"], row["assertion_disease_name_CIVIC"]]
+    disease_rows = [
+        row["evidence_phenotypes_CIVIC"],
+        row["assertion_phenotypes_CIVIC"],
+        row["evidence_disease_CIVIC"],
+        row["assertion_disease_name_CIVIC"],
+    ]
     disease_list = [i for i in disease_rows if not pd.isnull(i)]
-        
+
     if disease_list != []:
         return ", ".join([i for i in disease_list])
     else:
@@ -112,8 +113,10 @@ def get_therapy_names(row, civic_only):
     if not pd.isnull(row["evidence_CGI"]) and not civic_only:
         if therapy_list != []:
             therapy_str = therapy_str + ", CGI (see Details)"
-        else: therapy_str = "CGI (see Details)"
-    else: return ""
+        else:
+            therapy_str = "CGI (see Details)"
+    else:
+        return ""
 
     return therapy_str
 
@@ -130,18 +133,19 @@ def add_variant_name_report(df):
     result_list = []
     for index, row in df.iterrows():
         name_str = "chr{}-{}-{}-{}".format(row["chr_VEP"], row["pos_VEP"], row["ref_VEP"], row["alt_VEP"])
-        count=1
+        count = 1
         while name_str in result_list:
             name_str = name_str + f"_{count}"
-            count +=1
+            count += 1
         result_list.append(name_str)
-    
+
     return result_list
+
 
 def create_link_col(row, report_path):
     """
     Creates a link to the individual report to display in the overall report
-    
+
     :param row: row of the df
     :type row: pandas Series
     :param report_path: path to the directory in which the individual reports will be saved in
@@ -168,8 +172,9 @@ def create_pieplot(values, names, title):
     fig.update_layout(
         autosize=False,
         width=500,
-        height=500,)
-    
+        height=500,
+    )
+
     return fig
 
 
@@ -188,11 +193,12 @@ def save_plot(input, title, out_path):
     """
 
     fig = plt.figure(figsize=(6, 4))
-    plot(input, subset_size='count', show_counts=True, facecolor="darkblue", element_size=None, fig=fig)
+    plot(input, subset_size="count", show_counts=True, facecolor="darkblue", element_size=None, fig=fig)
     plt.suptitle(title)
     plt.savefig(out_path)
-    
+
     return fig
+
 
 def create_upsetplots(df, out_path):
     """
@@ -212,15 +218,14 @@ def create_upsetplots(df, out_path):
     # fill KB df & transform to upsetplot input format
     df_kb["cgi"] = df["Oncogenic Summary_CGI"].apply(lambda x: True if pd.isnull(x) == False else False)
     df_kb["civic"] = df["chr_CIVIC"].apply(lambda x: True if pd.isnull(x) == False else False)
-    df_kb["none"] = ~(df_kb['cgi'] | df_kb['civic'])
+    df_kb["none"] = ~(df_kb["cgi"] | df_kb["civic"])
 
     kb_input = from_indicators(df_kb)
-
 
     # fill tier df  & transform to upsetplot input format
     for i in ["tier_1", "tier_2", "tier_3", "tier_4"]:
         df_tiers[i] = df["report_tier"].apply(lambda x: True if x == i else False)
-    
+
     tier_input = from_indicators(df_tiers)
 
     # create upsetplot figures
@@ -228,6 +233,7 @@ def create_upsetplots(df, out_path):
     fig_tiers = save_plot(tier_input, "Number of variants per Tier", os.path.join(out_path, "tier_upsetplot.png"))
 
     return [fig_kb, fig_tiers]
+
 
 def encode_upsetplot(fig):
     """
@@ -239,10 +245,11 @@ def encode_upsetplot(fig):
     :rtype: str
     """
     tmpfile = BytesIO()
-    fig.savefig(tmpfile, format='png')
-    encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
+    fig.savefig(tmpfile, format="png")
+    encoded = base64.b64encode(tmpfile.getvalue()).decode("utf-8")
 
-    return '<img src=\'data:image/png;base64,{}\'>'.format(encoded)
+    return "<img src='data:image/png;base64,{}'>".format(encoded)
+
 
 def create_tier_table(df, tier, report_path):
     """
@@ -264,16 +271,41 @@ def create_tier_table(df, tier, report_path):
     tier_x = tier_x.sort_values("ranking_score", ascending=False)
 
     # assign "link col" to test
-    tier_x["report_link"] = tier_x.apply(lambda x : create_link_col(x, report_path), axis=1)
+    tier_x["report_link"] = tier_x.apply(lambda x: create_link_col(x, report_path), axis=1)
 
     # create new df structure for report
     # source | HGVS | Oncogenic Summary | Disease Name | Therapy Name | Evidence_Level | link
-    tier_report_subset = tier_x[["sources", "Mutation_CGI", "Oncogenic Summary_CGI", "disease_names_report", "therapy_names_report", "evidence_levels_comb", "report_link"]]
-    tier_report_subset = tier_report_subset.rename(columns={"sources": "Sources", "Mutation_CGI" : "HGVS", "Oncogenic Summary_CGI" : "Oncogenicity", "disease_names_report" : "Disease Name", "therapy_names_report" : "Therapies", "evidence_levels_comb" : "Evidence Level", "report_link" : "Details"})
-    html_table = build_table(tier_report_subset, color="blue_light", escape=False,  width_dict=['100px','300px', '200px', '200px','200px', '100px','auto'], text_align="center")
+    tier_report_subset = tier_x[
+        [
+            "sources",
+            "Mutation_CGI",
+            "Oncogenic Summary_CGI",
+            "disease_names_report",
+            "therapy_names_report",
+            "evidence_levels_comb",
+            "report_link",
+        ]
+    ]
+    tier_report_subset = tier_report_subset.rename(
+        columns={
+            "sources": "Sources",
+            "Mutation_CGI": "HGVS",
+            "Oncogenic Summary_CGI": "Oncogenicity",
+            "disease_names_report": "Disease Name",
+            "therapy_names_report": "Therapies",
+            "evidence_levels_comb": "Evidence Level",
+            "report_link": "Details",
+        }
+    )
+    html_table = build_table(
+        tier_report_subset,
+        color="blue_light",
+        escape=False,
+        width_dict=["100px", "300px", "200px", "200px", "200px", "100px", "auto"],
+        text_align="center",
+    )
 
     return html_table
-
 
 
 def write_overall_report(template_html, report_html, fig_kb, fig_tiers, tier_table_list):
@@ -309,11 +341,8 @@ def write_overall_report(template_html, report_html, fig_kb, fig_tiers, tier_tab
                     r.write(tier_table_list[1])
                 elif "TEMPLATE_TIER3" in line:
                     r.write(tier_table_list[2])
-                else: r.write(line)
-
-
-
-
+                else:
+                    r.write(line)
 
 
 # ============================================================================ #
@@ -355,6 +384,7 @@ def create_html_link(s):
                 return f'<a href="{path}">{s}</a>'
         return s
 
+
 def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
     """
     Gets all associated disease names of a specific variant.
@@ -370,18 +400,32 @@ def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
     :rtype: pandas.DataFrame
     """
     if not pd.isnull(row["Protein Change_CGI"]):
-        alterations_df = biomarkers_df[biomarkers_df["alterations_link"].str.contains(row["Protein Change_CGI"])][["Drugs", "Response", "Evidence", "Diseases", "Tumor type", "Source"]]
-        alterations_df.columns = alterations_df.columns = ['associated Diseases' if x=='Diseases' else x for x in alterations_df.columns]
+        alterations_df = biomarkers_df[biomarkers_df["alterations_link"].str.contains(row["Protein Change_CGI"])][
+            ["Drugs", "Response", "Evidence", "Diseases", "Tumor type", "Source"]
+        ]
+        alterations_df.columns = alterations_df.columns = [
+            "associated Diseases" if x == "Diseases" else x for x in alterations_df.columns
+        ]
         alterations_df["Source"] = alterations_df["Source"].apply(lambda x: create_html_link(x))
 
         if response == "Responsive":
-            return build_table(alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True), color="blue_light", escape=False, width_dict=width_dict)
-            #return alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True)
+            return build_table(
+                alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True),
+                color="blue_light",
+                escape=False,
+                width_dict=width_dict,
+            )
+            # return alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True)
         else:
-            return build_table(alterations_df[alterations_df["Response"] != "Responsive"].sort_values("Evidence", ascending=True),color="blue_light", escape=False, width_dict=width_dict)
-    
-    else: return ""
+            return build_table(
+                alterations_df[alterations_df["Response"] != "Responsive"].sort_values("Evidence", ascending=True),
+                color="blue_light",
+                escape=False,
+                width_dict=width_dict,
+            )
 
+    else:
+        return ""
 
 
 def create_evidence_table(row):
@@ -390,11 +434,25 @@ def create_evidence_table(row):
     :param row: The row of the dataframe.
     :type row: pandas.Series
     """
-    evidence_subset = row.loc[["evidence_name_CIVIC", "evidence_type_CIVIC", "evidence_level_CIVIC", "evidence_rating_CIVIC", "evidence_significance_CIVIC", "evidence_support_CIVIC"]].to_frame().T
+    evidence_subset = (
+        row.loc[
+            [
+                "evidence_name_CIVIC",
+                "evidence_type_CIVIC",
+                "evidence_level_CIVIC",
+                "evidence_rating_CIVIC",
+                "evidence_significance_CIVIC",
+                "evidence_support_CIVIC",
+            ]
+        ]
+        .to_frame()
+        .T
+    )
     evidence_subset.columns = ["Name", "Level", "Rating", "Type", "Significance", "Direction"]
     if len(evidence_subset) > 0:
         return build_table(evidence_subset, color="blue_light", escape=False)
-    else: return ""
+    else:
+        return ""
 
 
 def create_therapy_table(row, response, width_dict, biomarkers_df):
@@ -411,7 +469,12 @@ def create_therapy_table(row, response, width_dict, biomarkers_df):
     :return: A HTML table containing all Therapy & Drug related information provided by CGI for a specific Protein Change.
     :rtype: HTML table
     """
-    return build_table(get_therapy_information_CGI(row, biomarkers_df, response), color="blue_light", escape=False, width_dict=width_dict)
+    return build_table(
+        get_therapy_information_CGI(row, biomarkers_df, response),
+        color="blue_light",
+        escape=False,
+        width_dict=width_dict,
+    )
 
 
 def get_reference_build(metadata_path):
@@ -429,10 +492,9 @@ def get_reference_build(metadata_path):
         return ""
 
 
-
 def retrieve_info_from_row(row, biomarkers_df, metadata_path):
     """
-    This function retrieves the information from a row of the merged dataframe 
+    This function retrieves the information from a row of the merged dataframe
     and returns a dictionary with the information for the report of a specific variant.
 
     :param row: row of the dataframe
@@ -455,7 +517,11 @@ def retrieve_info_from_row(row, biomarkers_df, metadata_path):
     info_dict["HGVS_NOTATION"] = check_if_nan(row["Mutation_CGI"])
     info_dict["VARIANT_CIVIC"] = check_if_nan(row["variant_name_CIVIC"])
     info_dict["ENTREZ_NAME"] = check_if_nan(row["variant_entrez_name_CIVIC"])
-    info_dict["ENTREZ_ID"] = int(check_if_nan(row["variant_entrez_id_CIVIC"])) if check_if_nan(row["variant_entrez_id_CIVIC"]) != "None" else check_if_nan(row["variant_entrez_id_CIVIC"])
+    info_dict["ENTREZ_ID"] = (
+        int(check_if_nan(row["variant_entrez_id_CIVIC"]))
+        if check_if_nan(row["variant_entrez_id_CIVIC"]) != "None"
+        else check_if_nan(row["variant_entrez_id_CIVIC"])
+    )
     info_dict["VARIANT_TYPE"] = check_if_nan(row["Type_CGI"])
     info_dict["CIVIC_GENE"] = check_if_nan(row["gene_name_CIVIC"])
     info_dict["CGI_GENE"] = check_if_nan(row["Gene_CGI"])
@@ -474,18 +540,29 @@ def retrieve_info_from_row(row, biomarkers_df, metadata_path):
     info_dict["CIVIC_CGI_PRESENT"] = check_if_nan(row["sources"])
     info_dict["EXT_ANNOS"] = check_if_nan(row["External oncogenic annotation_CGI"])
     info_dict["LINKED_DISEASES"] = get_disease_names_CIViC(row) if get_disease_names_CIViC(row) != "" else "None"
-    info_dict["LINKED_THERAPIES_CIVIC"] = get_therapy_names(row,civic_only=True) if get_therapy_names(row,civic_only=True) != "" else "None"
+    info_dict["LINKED_THERAPIES_CIVIC"] = (
+        get_therapy_names(row, civic_only=True) if get_therapy_names(row, civic_only=True) != "" else "None"
+    )
     info_dict["EVIDENCE_LIST"] = create_evidence_table(row) if create_evidence_table(row) != "" else "None"
     info_dict["CIVIC_SUMMARY"] = check_if_nan(row["assertion_summary_CIVIC"])
     info_dict["ASSERTION_DESCRIPTION"] = check_if_nan(row["assertion_description_CIVIC"])
     info_dict["EVIDENCE_DESCRIPTION"] = check_if_nan(row["evidence_description_CIVIC"])
-    info_dict["LINKED_DRUGS_RESPONSIVE"] = get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"]) if get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"]) != "" else "None"
-    info_dict["LINKED_DRUGS_RESISTANT"] = get_therapy_information_CGI(row, biomarkers_df, "Resistant", ["40%", "20%", "20%", "20%", "20%", "20%"]) if get_therapy_information_CGI(row, biomarkers_df, "Resistant", ["40%", "20%", "20%", "20%", "20%", "20%"]) != "" else "None"
+    info_dict["LINKED_DRUGS_RESPONSIVE"] = (
+        get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"])
+        if get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"])
+        != ""
+        else "None"
+    )
+    info_dict["LINKED_DRUGS_RESISTANT"] = (
+        get_therapy_information_CGI(row, biomarkers_df, "Resistant", ["40%", "20%", "20%", "20%", "20%", "20%"])
+        if get_therapy_information_CGI(row, biomarkers_df, "Resistant", ["40%", "20%", "20%", "20%", "20%", "20%"])
+        != ""
+        else "None"
+    )
     info_dict["EVIDENCE_DESCRIPTION"] = check_if_nan(row["evidence_description_CIVIC"])
     info_dict["LITERATURE_CIVIC"] = check_if_nan(row["evidence_source_CIVIC"])
-    
-    return info_dict
 
+    return info_dict
 
 
 def write_individual_report(row, template_html, report_path, biomarkers_df, metadata_path):
@@ -506,9 +583,9 @@ def write_individual_report(row, template_html, report_path, biomarkers_df, meta
     :rtype: None
     """
     info_dict = retrieve_info_from_row(row, biomarkers_df, metadata_path)
-    
+
     report_html = "{}/{}.html".format(report_path, row["report_name"])
-    
+
     with open(template_html, "r") as f:
         with open(report_html, "w") as r:
             for line in f:
@@ -518,16 +595,14 @@ def write_individual_report(row, template_html, report_path, biomarkers_df, meta
                 r.write(line)
 
 
-
 # ============================================================================ #
 #                               Build the Report
 # ============================================================================ #
 
 
-
 def create_report_htmls(outdir, basename, civic_path, logger):
     """
-    Creates the overall report for all variants and 
+    Creates the overall report for all variants and
     the individual reports for each variant
 
     :param outdir: Path to report directory
@@ -541,23 +616,27 @@ def create_report_htmls(outdir, basename, civic_path, logger):
     """
 
     logger.info("Creating HTML Reports")
-    
+
     # read in files
     vep_civic_cgi_merge = pd.read_csv(f"{outdir}/combined_files/civic_cgi_vep.tsv", sep="\t")
     biomarkers_df = pd.read_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t")
-    metadata_civic = f"{civic_path}/metadata.txt" # read reference genome from metadata file
+    metadata_civic = f"{civic_path}/metadata.txt"  # read reference genome from metadata file
     # get path to save individual reports
     report_path = f"{os.path.abspath(outdir)}/report/variant_reports"
 
     # add additional columns used in report
-    vep_civic_cgi_merge["sources"] = vep_civic_cgi_merge.apply(lambda x : get_sources(x), axis=1)
+    vep_civic_cgi_merge["sources"] = vep_civic_cgi_merge.apply(lambda x: get_sources(x), axis=1)
     vep_civic_cgi_merge["report_name"] = add_variant_name_report(vep_civic_cgi_merge)
-    vep_civic_cgi_merge["disease_names_report"] = vep_civic_cgi_merge.apply(lambda x : get_disease_names_CIViC(x), axis=1)
-    vep_civic_cgi_merge["therapy_names_report"] = vep_civic_cgi_merge.apply(lambda x : get_therapy_names(x,civic_only=False), axis=1)
-    vep_civic_cgi_merge["evidence_levels_comb"] = vep_civic_cgi_merge.apply(lambda x : assign_comb_evidence_labels(x), axis=1)
+    vep_civic_cgi_merge["disease_names_report"] = vep_civic_cgi_merge.apply(
+        lambda x: get_disease_names_CIViC(x), axis=1
+    )
+    vep_civic_cgi_merge["therapy_names_report"] = vep_civic_cgi_merge.apply(
+        lambda x: get_therapy_names(x, civic_only=False), axis=1
+    )
+    vep_civic_cgi_merge["evidence_levels_comb"] = vep_civic_cgi_merge.apply(
+        lambda x: assign_comb_evidence_labels(x), axis=1
+    )
     vep_civic_cgi_merge["report_name"] = add_variant_name_report(vep_civic_cgi_merge)
-
-
 
     # create "pretty_html_tables" for each tier
     tier_list = ["tier_1", "tier_2", "tier_3"]
@@ -568,25 +647,28 @@ def create_report_htmls(outdir, basename, civic_path, logger):
 
     # Overall Report
     write_overall_report(
-        template_html = os.path.join(os.path.dirname(__file__), "templates/template_overall_upsetplots.html"),
-        #template_html="/templates/template_overall.html", 
-        report_html=f"{os.path.abspath(outdir)}/report/{basename}_overall_report.html", 
+        template_html=os.path.join(os.path.dirname(__file__), "templates/template_overall_upsetplots.html"),
+        # template_html="/templates/template_overall.html",
+        report_html=f"{os.path.abspath(outdir)}/report/{basename}_overall_report.html",
         fig_kb=encode_upsetplot(fig_kb),
         fig_tiers=encode_upsetplot(fig_tiers),
-        tier_table_list=tier_table_list)
-
+        tier_table_list=tier_table_list,
+    )
 
     # Individual Reports
 
     # we only create individual reports for variants in tier 1,2 and 3
     vep_civic_cgi_merge = vep_civic_cgi_merge[vep_civic_cgi_merge["report_tier"].isin(["tier_1", "tier_2", "tier_3"])]
-    
 
-    vep_civic_cgi_merge.apply(lambda x : write_individual_report(
-        x, 
-        template_html=os.path.join(os.path.dirname(__file__), "templates/template_individual.html"),
-        report_path=report_path,
-        biomarkers_df=biomarkers_df,
-        metadata_path=metadata_civic), axis=1)
+    vep_civic_cgi_merge.apply(
+        lambda x: write_individual_report(
+            x,
+            template_html=os.path.join(os.path.dirname(__file__), "templates/template_individual.html"),
+            report_path=report_path,
+            biomarkers_df=biomarkers_df,
+            metadata_path=metadata_civic,
+        ),
+        axis=1,
+    )
 
     logger.info("Reports created")

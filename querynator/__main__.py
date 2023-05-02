@@ -23,13 +23,12 @@ from querynator.report_scripts import (
     combine_cgi,
     combine_cgi_civic,
     add_tiers_and_scores_to_df,
-    create_report_htmls
+    create_report_htmls,
 )
 
 from querynator.helper_functions import (
     gunzip_compressed_files,
     gzipped,
-    
 )
 
 # Create logger
@@ -461,7 +460,6 @@ def query_api_civic(vcf, outdir, genome, filter_vep):
         print("The provided file cannot be found. Please try another path.")
 
 
-
 # querynator create report
 @querynator_cli.command()
 @click.option(
@@ -492,18 +490,17 @@ def create_report(cgi_path, civic_path, outdir):
     os.makedirs(f"{report_dir}/combined_files")
     os.makedirs(f"{report_dir}/report/variant_reports")
     os.makedirs(f"{report_dir}/report/plots")
-    
+
     # combine the results
     combine_civic(civic_path, report_dir, logger)
     combine_cgi(cgi_path, report_dir, logger)
     combine_cgi_civic(report_dir, logger)
-    
+
     # add tiers & ranking-score to merged results
     add_tiers_and_scores_to_df(report_dir, logger)
 
     # create report
     create_report_htmls(report_dir, basename, civic_path, logger)
-    
 
 
 if __name__ == "__main__":

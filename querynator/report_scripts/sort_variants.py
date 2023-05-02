@@ -12,6 +12,7 @@ import numpy as np
 #                      ASSIGN VARIANTS TO TIERS
 # ============================================================================ #
 
+
 def get_allele_freq_tiering(row):
     """
     checks if AF is < 0.01 to assign to tier 3 (true) or 4 (false)
@@ -28,17 +29,20 @@ def get_allele_freq_tiering(row):
     elif bool_nan and type(nan_val) == int:
         if get_largest_af([af, gnomad][not_nan_val]) < 0.01:
             return True
-        else: return False
+        else:
+            return False
     elif bool_nan == False:
         if get_largest_af(af) < 0.01 and get_largest_af(gnomad) < 0.01:
             return True
-        else: return False    
+        else:
+            return False
+
 
 def subset_variants_into_tiers(row):
     """
-    decides tier (1-4) for specific variant 
+    decides tier (1-4) for specific variant
 
-    :param row: row of a pandas DataFrame  
+    :param row: row of a pandas DataFrame
     :type row: pandas Series
     :return: variant's tier
     :rtype: str
@@ -54,30 +58,30 @@ def subset_variants_into_tiers(row):
         elif "TIER_IV_" in row["assertion_amp_level_CIVIC"]:
             return "tier_4"
     else:
-        if row["evidence_CGI"] in ["A", "B"] or row["evidence_level_CIVIC"] in ["A","B"]:
+        if row["evidence_CGI"] in ["A", "B"] or row["evidence_level_CIVIC"] in ["A", "B"]:
             return "tier_1"
-        elif row["evidence_CGI"] in ["C","D"] or row["evidence_level_CIVIC"] in ["C","D"]:
+        elif row["evidence_CGI"] in ["C", "D"] or row["evidence_level_CIVIC"] in ["C", "D"]:
             return "tier_2"
-        else: # no evidence given (tier 3 or 4)
+        else:  # no evidence given (tier 3 or 4)
             # Tier 3 if oncogenic & MAF fits
             if row["evidence_level_CIVIC"] == "E":
                 return "tier_3"
-            elif row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and pd.isnull(row["Oncogenic Summary_CGI"]) == False:
+            elif (
+                row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"]
+                and pd.isnull(row["Oncogenic Summary_CGI"]) == False
+            ):
                 if get_allele_freq_tiering(row):
                     return "tier_3"
-                else: return "tier_4"
+                else:
+                    return "tier_4"
             else:
                 return "tier_4"
-
-
-
-
-
 
 
 # ============================================================================ #
 #                       ADD SCORE TO RANK WITHIN TIERS
 # ============================================================================ #
+
 
 def check_nan_in_pair(pair):
     """
@@ -143,6 +147,7 @@ def get_largest_path_score(ps_string, ps_score):
     if ps_score == "polyphen":
         return np.nanmin([extract_num(i) for i in ps_string.split(",")])
 
+
 def generate_allele_freq_score(af, gnomad):
     """
     generates the variantMTB score for the allele frequency of a specific variant
@@ -177,6 +182,7 @@ def generate_allele_freq_score(af, gnomad):
         elif get_largest_af(af) >= 0.01 or get_largest_af(gnomad) >= 0.01:
             return -10
 
+
 def get_consequence_score(consequence_str):
     """
     Returns the highest score of the associated CIViC variant types for a variant
@@ -187,14 +193,66 @@ def get_consequence_score(consequence_str):
     :rtype: int
     """
     # consequence scoring lists
-    high_impact = ["transcript_ablation", "splice_acceptor_variant", "splice_donor_variant", "stop_gained", "frameshift_variant", "stop_lost", "start_lost", "transcript_amplification"]
+    high_impact = [
+        "transcript_ablation",
+        "splice_acceptor_variant",
+        "splice_donor_variant",
+        "stop_gained",
+        "frameshift_variant",
+        "stop_lost",
+        "start_lost",
+        "transcript_amplification",
+    ]
     moderate_impact = ["inframe_insertion", "inframe_deletion", "missense_variant", "protein_altering_variant"]
-    low_impact = ["splice_region_variant", "splice_donor_5th_base_variant", "splice_donor_region_variant", "splice_polypyrimidine_tract_variant", "incomplete_terminal_codon_variant", "start_retained_variant", "stop_retained_variant", "synonymous_variant"]
-    modifier_impact = ["coding_sequence_variant", "mature_miRNA_variant", "5_prime_UTR_variant", "3_prime_UTR_variant", "non_coding_transcript_exon_variant", "intron_variant", "NMD_transcript_variant", "non_coding_transcript_variant", "upstream_gene_variant", "downstream_gene_variant", "TFBS_ablation", "TFBS_amplification", "TF_binding_site_variant", "regulatory_region_ablation", "regulatory_region_amplification", "feature_elongation", "regulatory_region_variant", "feature_truncation", "intergenic_variant"]
+    low_impact = [
+        "splice_region_variant",
+        "splice_donor_5th_base_variant",
+        "splice_donor_region_variant",
+        "splice_polypyrimidine_tract_variant",
+        "incomplete_terminal_codon_variant",
+        "start_retained_variant",
+        "stop_retained_variant",
+        "synonymous_variant",
+    ]
+    modifier_impact = [
+        "coding_sequence_variant",
+        "mature_miRNA_variant",
+        "5_prime_UTR_variant",
+        "3_prime_UTR_variant",
+        "non_coding_transcript_exon_variant",
+        "intron_variant",
+        "NMD_transcript_variant",
+        "non_coding_transcript_variant",
+        "upstream_gene_variant",
+        "downstream_gene_variant",
+        "TFBS_ablation",
+        "TFBS_amplification",
+        "TF_binding_site_variant",
+        "regulatory_region_ablation",
+        "regulatory_region_amplification",
+        "feature_elongation",
+        "regulatory_region_variant",
+        "feature_truncation",
+        "intergenic_variant",
+    ]
 
-    score_dict_civic = {"Frameshift Truncation" : 2, "Gene Variant" : 0, "Transcript Variant" : 0, "Loss Of Function Variant" : 2, "Gain Of Function Variant" : 2, "Exon Variant" : 0,
-                    "Transcript Fusion" : 2, "Gene Fusion" : 2, "Transcript Translocation" : 2, "Feature Translocation" : 2, "Transcript Fusion" : 2, "Wild Type" : -2,
-                    "Loss Of Heterozygosity" : 2, "Copy Number Change" : 2, "Exon Loss Variant" : 2}
+    score_dict_civic = {
+        "Frameshift Truncation": 2,
+        "Gene Variant": 0,
+        "Transcript Variant": 0,
+        "Loss Of Function Variant": 2,
+        "Gain Of Function Variant": 2,
+        "Exon Variant": 0,
+        "Transcript Fusion": 2,
+        "Gene Fusion": 2,
+        "Transcript Translocation": 2,
+        "Feature Translocation": 2,
+        "Transcript Fusion": 2,
+        "Wild Type": -2,
+        "Loss Of Heterozygosity": 2,
+        "Copy Number Change": 2,
+        "Exon Loss Variant": 2,
+    }
 
     if consequence_str in high_impact:
         return 2
@@ -212,11 +270,11 @@ def get_consequence_score(consequence_str):
             print(consequence_str)
             print("whoops, I dont know this consequence")
             return 0
-    
+
 
 def get_civic_consequence_score(civic_consequence):
     """
-    Translates the CIViC consequence (variant type) (https://civic.readthedocs.io/en/latest/model/variants/types.html) nomenclature 
+    Translates the CIViC consequence (variant type) (https://civic.readthedocs.io/en/latest/model/variants/types.html) nomenclature
     in the CGI/VEP nomenclature when possible and scores the variant
 
     :param civic_consequence: a variant's consequence as given by CIViC
@@ -224,20 +282,46 @@ def get_civic_consequence_score(civic_consequence):
     :return: CIViC consequence score
     :rtype: int
     """
-    translation_dict = {"Missense Variant" : "missense_variant", "Stop Gained": "stop_gained", "Protein Altering Variant" : "protein_altering_variant",
-                        "Inframe Deletion" : "inframe_deletion", "Inframe Insertion" : "inframe_insertion",  "Splice Acceptor Variant" : "splice_acceptor_variant", 
-                        "Splice Donor Variant" : "splice_donor_variant", "Transcript Amplification" : "transcript_amplification", "Transcript Ablation" : "transcript_ablation", 
-                        "5 Prime UTR Variant" : "5_prime_UTR_variant", "3_prime_UTR_variant" : "5_prime_UTR_variant", "Synonymous Variant" : "synonymous_variant",
-                        "Frameshift Truncation" : "Frameshift Truncation", "Gene Variant" : "Gene Variant", "Transcript Variant" : "Transcript Variant", 
-                        "Loss Of Function Variant" : "Loss Of Function Variant", "Gain Of Function Variant" : "Gain Of Function Variant", "Exon Variant" : "Exon Variant",
-                        "Transcript Fusion" : "Transcript Fusion", "Gene Fusion" : "Gene Fusion", "Transcript Translocation" : "Transcript Translocation", 
-                        "Feature Translocation" : "Feature Translocation", "Transcript Fusion" : "Transcript Fusion", "Wild Type" : "Wild Type",
-                        "Loss Of Heterozygosity" : "Loss Of Heterozygosity", "Copy Number Change" : "Copy Number Change", "Exon Loss Variant" : "Exon Loss Variant"}
+    translation_dict = {
+        "Missense Variant": "missense_variant",
+        "Stop Gained": "stop_gained",
+        "Protein Altering Variant": "protein_altering_variant",
+        "Inframe Deletion": "inframe_deletion",
+        "Inframe Insertion": "inframe_insertion",
+        "Splice Acceptor Variant": "splice_acceptor_variant",
+        "Splice Donor Variant": "splice_donor_variant",
+        "Transcript Amplification": "transcript_amplification",
+        "Transcript Ablation": "transcript_ablation",
+        "5 Prime UTR Variant": "5_prime_UTR_variant",
+        "3_prime_UTR_variant": "5_prime_UTR_variant",
+        "Synonymous Variant": "synonymous_variant",
+        "Frameshift Truncation": "Frameshift Truncation",
+        "Gene Variant": "Gene Variant",
+        "Transcript Variant": "Transcript Variant",
+        "Loss Of Function Variant": "Loss Of Function Variant",
+        "Gain Of Function Variant": "Gain Of Function Variant",
+        "Exon Variant": "Exon Variant",
+        "Transcript Fusion": "Transcript Fusion",
+        "Gene Fusion": "Gene Fusion",
+        "Transcript Translocation": "Transcript Translocation",
+        "Feature Translocation": "Feature Translocation",
+        "Transcript Fusion": "Transcript Fusion",
+        "Wild Type": "Wild Type",
+        "Loss Of Heterozygosity": "Loss Of Heterozygosity",
+        "Copy Number Change": "Copy Number Change",
+        "Exon Loss Variant": "Exon Loss Variant",
+    }
 
-    
     if not pd.isnull(civic_consequence):
-        return max([get_consequence_score(translation_dict[i.strip()]) if i in translation_dict else 0 for i in civic_consequence.split(",")])    
-    else:return 0 # unknown consequence provided (usually CIViC variant type that is not given here: https://civic.readthedocs.io/en/latest/model/variants/types.html)
+        return max(
+            [
+                get_consequence_score(translation_dict[i.strip()]) if i in translation_dict else 0
+                for i in civic_consequence.split(",")
+            ]
+        )
+    else:
+        return 0  # unknown consequence provided (usually CIViC variant type that is not given here: https://civic.readthedocs.io/en/latest/model/variants/types.html)
+
 
 def get_cgi_consequence_score(cgi_consequence):
     """
@@ -250,7 +334,8 @@ def get_cgi_consequence_score(cgi_consequence):
     """
     if not pd.isnull(cgi_consequence):
         return get_consequence_score(cgi_consequence)
-    else: return 0
+    else:
+        return 0
 
 
 def generate_pathogenicity_score_score(sift, polyphen):
@@ -273,13 +358,13 @@ def generate_pathogenicity_score_score(sift, polyphen):
     # one is nan
     elif bool_nan and type(nan_val) == int:
         # SIFT is nan
-        if not_nan_val == 0: 
+        if not_nan_val == 0:
             if get_largest_path_score([sift, polyphen][not_nan_val], "polyphen") <= 0.05:
                 return 1
             else:
                 return 0
         # PolyPhen is nan
-        elif not_nan_val == 1: 
+        elif not_nan_val == 1:
             if get_largest_path_score([sift, polyphen][not_nan_val], "sift") >= 0.85:
                 return 1
             else:
@@ -288,7 +373,8 @@ def generate_pathogenicity_score_score(sift, polyphen):
     elif bool_nan == False:
         if get_largest_path_score(sift, "sift") <= 0.05 and get_largest_path_score(polyphen, "polyphen") >= 0.85:
             return 1
-        else: return 0
+        else:
+            return 0
 
 
 def generate_consequence_score(cgi_consequence, civic_consequence):
@@ -304,6 +390,7 @@ def generate_consequence_score(cgi_consequence, civic_consequence):
     """
     return max([get_cgi_consequence_score(cgi_consequence), get_civic_consequence_score(civic_consequence)])
 
+
 def generate_evidence_score(evidence_col):
     """
     generates the variantMTB score for the evidence level of one of the Knowledgebases of a specific variant
@@ -313,40 +400,47 @@ def generate_evidence_score(evidence_col):
     :rtype: int
     """
     if evidence_col == "A":
-        return 5 
+        return 5
     elif evidence_col == "B":
         return 3
     elif evidence_col in ["C", "D"]:
         return 2
     elif evidence_col == "E":
         return 1
-    else: return 0
-
+    else:
+        return 0
 
 
 def scoring_variants(row):
     """
     adds score to each variant to rank them within their tiers.
 
-    :param row: row of a pandas DataFrame  
+    :param row: row of a pandas DataFrame
     :type row: pandas Series
     :return: variant's score
     :rtype: int
     """
     score = 0
 
-    # present in both KBs 
-    if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and not pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
+    # present in both KBs
+    if (
+        row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"]
+        and not pd.isnull(row["Oncogenic Summary_CGI"])
+        and not pd.isnull(row["chr_CIVIC"])
+    ):
         score += 3
-    
+
     # multiple external  oncogenic annotations
     if not pd.isnull(row["External oncogenic annotation_CGI"]):
         score += len(row["External oncogenic annotation_CGI"].split(","))
-    
-    # drugs associated
-    if not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]) or not pd.isnull(row["evidence_CGI"]):
-        score += 2
 
+    # drugs associated
+    if (
+        not pd.isnull(row["evidence_therapies_CIVIC"])
+        or not pd.isnull(row["assertion_therapies_name_CIVIC"])
+        or not pd.isnull(row["evidence_CGI"])
+    ):
+        score += 2
 
     # Evidence associated CIViC
     score += generate_evidence_score(row["evidence_level_CIVIC"])
@@ -356,19 +450,20 @@ def scoring_variants(row):
 
     # consequence
     score += generate_consequence_score(row["Consequence_CGI"], row["variant_type_CIVIC"])
-    
+
     # Allele Freq
     score += generate_allele_freq_score(row["AF_VEP"], row["gnomAD_AF_VEP"])
 
-
     # SIFT / PolyPhen2
-    score += generate_pathogenicity_score_score(row["SIFT_VEP"], row["PolyPhen_VEP"]) 
-    
+    score += generate_pathogenicity_score_score(row["SIFT_VEP"], row["PolyPhen_VEP"])
+
     return score
+
 
 # ============================================================================ #
 #                       REPORT TIERS & SCORES
 # ============================================================================ #
+
 
 def add_tiers_and_scores_to_df(outdir, logger):
     """
@@ -384,13 +479,12 @@ def add_tiers_and_scores_to_df(outdir, logger):
     vep_civic_cgi_merge = pd.read_csv(f"{outdir}/combined_files/civic_cgi_vep.tsv", sep="\t")
 
     # add tiers
-    vep_civic_cgi_merge["report_tier"] = vep_civic_cgi_merge.apply(lambda x : subset_variants_into_tiers(x), axis=1)
+    vep_civic_cgi_merge["report_tier"] = vep_civic_cgi_merge.apply(lambda x: subset_variants_into_tiers(x), axis=1)
 
     # add ranking-score
-    vep_civic_cgi_merge["ranking_score"] = vep_civic_cgi_merge.apply(lambda x : scoring_variants(x), axis=1) 
+    vep_civic_cgi_merge["ranking_score"] = vep_civic_cgi_merge.apply(lambda x: scoring_variants(x), axis=1)
 
     # write tiers & scores to result dir
     vep_civic_cgi_merge.to_csv(f"{outdir}/combined_files/civic_cgi_vep.tsv", sep="\t", index=False)
-    
 
     logger.info("Tiers assigned")

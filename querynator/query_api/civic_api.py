@@ -14,11 +14,7 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-from querynator.helper_functions import (
-    gunzip_compressed_files, 
-    gzipped,
-    get_num_from_chr
-)
+from querynator.helper_functions import gunzip_compressed_files, gzipped, get_num_from_chr
 
 # load the civic cache (necessary for bulk run)
 civic.load_cache()
@@ -166,12 +162,11 @@ def access_civic_by_coordinate(coord_dict, logger, build):
     else:
         input_dict = coord_dict
 
-
     # actual search for each variant
     variant_list = []
     for coord_obj, querynator_id in input_dict.items():
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
-        
+
         if variant != None and len(variant) > 0:
             for variant_obj in variant:
                 variant_list.append([{coord_obj: querynator_id}, [variant_obj]])
@@ -441,7 +436,17 @@ def sort_coord_list(coord_dict):
     :return: sorted coordinates
     :rtype: list
     """
-    return {key: value for key, value in sorted(coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" and x[0][0] != "Y" and x[0][0] != "M" else sort_rules(x[0][0]), x[0][1], x[0][2]))}
+    return {
+        key: value
+        for key, value in sorted(
+            coord_dict.items(),
+            key=lambda x: (
+                int(x[0][0]) if x[0][0] != "X" and x[0][0] != "Y" and x[0][0] != "M" else sort_rules(x[0][0]),
+                x[0][1],
+                x[0][2],
+            ),
+        )
+    }
 
 
 def sort_rules(s):
@@ -453,12 +458,13 @@ def sort_rules(s):
     :return: integer to sort by
     :rtype: int
     """
-    if s=="X":
+    if s == "X":
         return 100
-    elif s=="Y":
+    elif s == "Y":
         return 1000
-    elif s=="M":
-        return 10000 
+    elif s == "M":
+        return 10000
+
 
 def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
     """

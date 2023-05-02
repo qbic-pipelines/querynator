@@ -4,9 +4,10 @@ import gzip
 import os
 import shutil
 
+
 def flatten(l_l):
     """
-    flattens a list of lists consisting of strings 
+    flattens a list of lists consisting of strings
 
     :param l_l: list of lists
     :type values: list
@@ -15,9 +16,9 @@ def flatten(l_l):
     """
     flattened_list = []
     for i in l_l:
-        if isinstance(i,list): 
+        if isinstance(i, list):
             flattened_list.extend(flatten(i))
-        else: 
+        else:
             flattened_list.append(i)
     return flattened_list
 
@@ -32,7 +33,6 @@ def gzipped(file_path):
     """
     with open(file_path, "rb") as test_f:
         return test_f.read(2) == b"\x1f\x8b"
-
 
 
 def gunzip_compressed_files(file_path, logger):
@@ -57,7 +57,7 @@ def gunzip_compressed_files(file_path, logger):
 def get_num_from_chr(s):
     """
     extracts numerical value from chromosome (chr1 -> 1)
-    :param s: chromosome of variant 
+    :param s: chromosome of variant
     :type vcf_path: pyVCF3 CHROM object
     :return: numerical value from variant's chromosome
     :rtype: str
