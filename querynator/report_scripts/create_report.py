@@ -1,8 +1,8 @@
-""" Create one of the querynator results and individual reports for each variant  """
+""" Create one report of the querynator results and individual reports for each variant  """
 
-import os
-from io import BytesIO
 import base64
+from io import BytesIO
+import os
 
 import pandas as pd
 
