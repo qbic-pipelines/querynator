@@ -194,7 +194,7 @@ def delete_job_cgi(url, headers, output, logger):
         raise SystemExit(err)
     except Exception:
         logger.exception(
-            "Ooops, sth went wrong deleting the job from the CGI Server. Sorry for the inconvenience. If this happens too often, please make space on the website or you will not be able to make more queries with your account."
+            "Deleting the job from the CGI Server was not successful. If this happens more often, please log in to the website and remove old jobs or you will not be able to make more queries with your account."
         )
 
 
