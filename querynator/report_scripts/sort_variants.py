@@ -304,6 +304,24 @@ def generate_consequence_score(cgi_consequence, civic_consequence):
     """
     return max([get_cgi_consequence_score(cgi_consequence), get_civic_consequence_score(civic_consequence)])
 
+def generate_evidence_score(evidence_col):
+    """
+    generates the variantMTB score for the evidence level of one of the Knowledgebases of a specific variant
+
+    :param evidence_col: evidence value of one of the Knowledgebases
+    :return: evidence score
+    :rtype: int
+    """
+    if evidence_col == "A":
+        return 5 
+    elif evidence_col == "B":
+        return 3
+    elif evidence_col in ["C", "D"]:
+        return 2
+    elif evidence_col == "E":
+        return 1
+    else: return 0
+
 
 
 def scoring_variants(row):
@@ -329,23 +347,12 @@ def scoring_variants(row):
     if not pd.isnull(row["evidence_therapies_CIVIC"]) or not pd.isnull(row["assertion_therapies_name_CIVIC"]) or not pd.isnull(row["evidence_CGI"]):
         score += 2
 
-    # Evidence associated
-    if row["evidence_level_CIVIC"] == "A" or row["evidence_CGI"] == "A":
-        score += 5
-    elif row["evidence_level_CIVIC"] == "B" or row["evidence_CGI"] == "B":
-        score += 3
-    elif row["evidence_level_CIVIC"] == "C" or row["evidence_CGI"] == "C":
-        score += 2
-    elif row["evidence_level_CIVIC"] == "D" or row["evidence_CGI"] == "D":
-        score += 2
-    elif row["evidence_level_CIVIC"] == "E":
-        score += 1
-    
-    # Non therapeutic CIViC Evidence
-    if row["evidence_level_CIVIC"] == "A" and row["evidence_type_CIVIC"] != "PREDICTIVE":
-        score += 2
-    elif row["evidence_level_CIVIC"] == "B" and row["evidence_type_CIVIC"] != "PREDICTIVE":
-        score += 1
+
+    # Evidence associated CIViC
+    score += generate_evidence_score(row["evidence_level_CIVIC"])
+
+    # Evidence associated CGI
+    score += generate_evidence_score(row["evidence_CGI"])
 
     # consequence
     score += generate_consequence_score(row["Consequence_CGI"], row["variant_type_CIVIC"])

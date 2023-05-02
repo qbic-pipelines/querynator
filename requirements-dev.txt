@@ -8,9 +8,10 @@ httplib2==0.21.0
 requests==2.28.1
 requests-cache==0.9.6
 prettier
-pandas
+pandas==1.5.1
 numpy
 civicpy==3.0.0
 pyvcf3==1.0.3
 pretty_html_table==0.9.16
-plotly==5.14.0
+matplotlib==3.6.1
+upsetplot==0.8.0

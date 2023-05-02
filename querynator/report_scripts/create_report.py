@@ -1,12 +1,13 @@
 """ Create one of the querynator results and individual reports for each variant  """
 
 import os
-import pandas as pd
-import numpy as np
+from io import BytesIO
+import base64
 
-import plotly.express as px
-import plotly.graph_objects as go
-import plotly.offline
+import pandas as pd
+
+from matplotlib import pyplot as plt
+from upsetplot import from_indicators, plot
 
 from pretty_html_table import build_table
 
@@ -23,7 +24,7 @@ from querynator.helper_functions import (
 
 def get_KB_count(df):
     """
-    Get the count of variants for each Knowledgebase to add into the pieplot
+    Get the count of variants for each Knowledgebase to add to the pieplot
 
     :param df: Variant dataframe
     :type df: pandas DataFrame
@@ -172,6 +173,77 @@ def create_pieplot(values, names, title):
     return fig
 
 
+def save_plot(input, title, out_path):
+    """
+    Creates and saves a upsetplot figure as png
+
+    :param input: input dataframe
+    :type input: pandas.DataFrame
+    :param title: title of the plot
+    :type title: str
+    :param out_path: output path
+    :type out_path: str
+    :return: matplotlib figure
+    :rtype: matplotlib figure
+    """
+
+    fig = plt.figure(figsize=(6, 4))
+    plot(input, subset_size='count', show_counts=True, facecolor="darkblue", element_size=None, fig=fig)
+    plt.suptitle(title)
+    plt.savefig(out_path)
+    
+    return fig
+
+def create_upsetplots(df, out_path):
+    """
+    Create of (1) the number of variants per Knowledgebase and (2) the number of variants per tier
+
+    :param df: Variant dataframe
+    :type df: pandas.DataFrame
+    :param out_path: Path to output directory
+    :type out_path: str
+    :return: List of Upsetplot figures
+    :rtype: list
+    """
+
+    df_kb = pd.DataFrame()
+    df_tiers = pd.DataFrame()
+
+    # fill KB df & transform to upsetplot input format
+    df_kb["cgi"] = df["Oncogenic Summary_CGI"].apply(lambda x: True if pd.isnull(x) == False else False)
+    df_kb["civic"] = df["chr_CIVIC"].apply(lambda x: True if pd.isnull(x) == False else False)
+    df_kb["none"] = ~(df_kb['cgi'] | df_kb['civic'])
+
+    kb_input = from_indicators(df_kb)
+
+
+    # fill tier df  & transform to upsetplot input format
+    for i in ["tier_1", "tier_2", "tier_3", "tier_4"]:
+        df_tiers[i] = df["report_tier"].apply(lambda x: True if x == i else False)
+    
+    tier_input = from_indicators(df_tiers)
+
+    # create upsetplot figures
+    fig_kb = save_plot(kb_input, "Number of variants per Knowledgebase", os.path.join(out_path, "kb_upsetplot.png"))
+    fig_tiers = save_plot(tier_input, "Number of variants per Tier", os.path.join(out_path, "tier_upsetplot.png"))
+
+    return [fig_kb, fig_tiers]
+
+def encode_upsetplot(fig):
+    """
+    Encodes an upsetplot figure as base64
+
+    :param fig: Upsetplot figure
+    :type fig: matplotlib figure
+    :return: Encoded upsetplot figure as string to add to report
+    :rtype: str
+    """
+    tmpfile = BytesIO()
+    fig.savefig(tmpfile, format='png')
+    encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
+
+    return '<img src=\'data:image/png;base64,{}\'>'.format(encoded)
+
 def create_tier_table(df, tier, report_path):
     """
     Creates a table for the report for the given tier
@@ -191,9 +263,7 @@ def create_tier_table(df, tier, report_path):
     # sort based on ranking_score
     tier_x = tier_x.sort_values("ranking_score", ascending=False)
 
-    # TODO: write function to get links
     # assign "link col" to test
-    # tier_x["report_link"] = '<a href="file:///Users/students/Documents/work_dir/masterthesis/output_scripts/templates/template_individual.html">Individual Template</a>' 
     tier_x["report_link"] = tier_x.apply(lambda x : create_link_col(x, report_path), axis=1)
 
     # create new df structure for report
@@ -214,10 +284,10 @@ def write_overall_report(template_html, report_html, fig_kb, fig_tiers, tier_tab
     :type template_html: str
     :param report_html: Path to the report html file
     :type report_html: str
-    :param fig_kb: Plotly figure of the kb distribution
-    :type fig_kb: plotly figure
-    :param fig_tiers: Plotly figure of the tier distribution
-    :type fig_tiers: plotly figure
+    :param fig_kb: Path to upset plot of the kb distribution
+    :type fig_kb: str
+    :param fig_tiers: Path to upset plot of the tier distribution
+    :type fig_tiers: str
     :param tier_table_list: List of pretty-html-tables of the tier tables
     :type tier_table_list: list
     :return: None
@@ -227,13 +297,12 @@ def write_overall_report(template_html, report_html, fig_kb, fig_tiers, tier_tab
         with open(report_html, "w") as r:
             for line in f:
                 if "TEMPLATE_1" in line:
-                    r.write(plotly.offline.plot(fig_kb, include_plotlyjs=False, output_type='div').split("<div>")[1])
-                    # line = line.replace("TEMPLATE_1", "teste.png")
-                    # r.write(line)
+                    line = line.replace("TEMPLATE_1", fig_kb)
+                    line = line.replace("TEMPLATE_1", fig_tiers)
+                    r.write(line)
                 elif "TEMPLATE_2" in line:
-                    r.write(plotly.offline.plot(fig_tiers, include_plotlyjs=False, output_type='div').split("<div>")[1])
-                    # line = line.replace("TEMPLATE_2", "teste.png")
-                    # r.write(line)
+                    line = line.replace("TEMPLATE_2", fig_tiers)
+                    r.write(line)
                 elif "TEMPLATE_TIER1" in line:
                     r.write(tier_table_list[0])
                 elif "TEMPLATE_TIER2" in line:
@@ -250,23 +319,6 @@ def write_overall_report(template_html, report_html, fig_kb, fig_tiers, tier_tab
 # ============================================================================ #
 #                               Individual Report
 # ============================================================================ #
-
-
-def add_variant_name_report(df):
-    """
-    Adds a column with a name of the variant for the report to the df
-    :param df: result df
-    :type df: pandas DataFrame"""
-    result_list = []
-    for index, row in df.iterrows():
-        name_str = "{}-{}-{}-{}".format(row["chr_VEP"], row["pos_VEP"], row["ref_VEP"], row["alt_VEP"])
-        count=1
-        while name_str in result_list:
-            name_str = name_str + f"_{count}"
-            count +=1
-        result_list.append(name_str)
-    
-    return result_list
 
 
 def check_if_nan(value):
@@ -338,30 +390,12 @@ def create_evidence_table(row):
     :param row: The row of the dataframe.
     :type row: pandas.Series
     """
-    test = row.to_frame().T
     evidence_subset = row.loc[["evidence_name_CIVIC", "evidence_type_CIVIC", "evidence_level_CIVIC", "evidence_rating_CIVIC", "evidence_significance_CIVIC", "evidence_support_CIVIC"]].to_frame().T
     evidence_subset.columns = ["Name", "Level", "Rating", "Type", "Significance", "Direction"]
     if len(evidence_subset) > 0:
         return build_table(evidence_subset, color="blue_light", escape=False)
     else: return ""
 
-
-def get_knowledgebases(row):
-    """
-    Gets all knowledgebases that have information about a specific variant.
-    :param row: The row of the dataframe.
-    :type row: pandas.Series
-    :return: A string of the associated knowledgebases.
-    :rtype: str
-    """
-    if row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and not pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
-        return "CGI,CIViC"
-    elif row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"] and not pd.isnull(row["Oncogenic Summary_CGI"]) and pd.isnull(row["chr_CIVIC"]):
-        return "CGI"
-    elif row["Oncogenic Summary_CGI"] in(["non-oncogenic", "non-protein affecting"]) or pd.isnull(row["Oncogenic Summary_CGI"]) and not pd.isnull(row["chr_CIVIC"]):
-        return "CIViC"
-    else:
-        return "None"
 
 def create_therapy_table(row, response, width_dict, biomarkers_df):
     """
@@ -380,7 +414,23 @@ def create_therapy_table(row, response, width_dict, biomarkers_df):
     return build_table(get_therapy_information_CGI(row, biomarkers_df, response), color="blue_light", escape=False, width_dict=width_dict)
 
 
-def retrieve_info_from_row(row, biomarkers_df):
+def get_reference_build(metadata_path):
+    """
+    Gets the reference build from the metadata file.
+    :param metadata_path: The path to the metadata file.
+    :type metadata_path: str
+    :return: The reference build.
+    :rtype: str
+    """
+    with open(metadata_path, "r") as f:
+        for line in f:
+            if line.startswith("Reference genome"):
+                return line.split(":")[1].strip()
+        return ""
+
+
+
+def retrieve_info_from_row(row, biomarkers_df, metadata_path):
     """
     This function retrieves the information from a row of the merged dataframe 
     and returns a dictionary with the information for the report of a specific variant.
@@ -389,6 +439,8 @@ def retrieve_info_from_row(row, biomarkers_df):
     :type row: pandas.core.series.Series
     :param biomarkers_df: dataframe with all biomarkers linked to a specific variant
     :type biomarkers_df: pandas.core.frame.DataFrame
+    :param metadata_path: The path to the metadata file.
+    :type metadata_path: str
     :return: dictionary with the information for the report of a specific variant
     :rtype: dict
     """
@@ -403,12 +455,12 @@ def retrieve_info_from_row(row, biomarkers_df):
     info_dict["HGVS_NOTATION"] = check_if_nan(row["Mutation_CGI"])
     info_dict["VARIANT_CIVIC"] = check_if_nan(row["variant_name_CIVIC"])
     info_dict["ENTREZ_NAME"] = check_if_nan(row["variant_entrez_name_CIVIC"])
-    info_dict["ENTREZ_ID"] = check_if_nan(row["variant_entrez_id_CIVIC"])
+    info_dict["ENTREZ_ID"] = int(check_if_nan(row["variant_entrez_id_CIVIC"])) if check_if_nan(row["variant_entrez_id_CIVIC"]) != "None" else check_if_nan(row["variant_entrez_id_CIVIC"])
     info_dict["VARIANT_TYPE"] = check_if_nan(row["Type_CGI"])
     info_dict["CIVIC_GENE"] = check_if_nan(row["gene_name_CIVIC"])
     info_dict["CGI_GENE"] = check_if_nan(row["Gene_CGI"])
     info_dict["GENE_DESCRIPTION"] = check_if_nan(row["gene_description_CIVIC"])
-    info_dict["REF_BUILD"] = "None"
+    info_dict["BUILD"] = get_reference_build(metadata_path) if get_reference_build(metadata_path) != "" else "None"
     info_dict["SIFT_SCORE"] = check_if_nan(row["SIFT_VEP"])
     info_dict["PolyPhen2_SCORE"] = check_if_nan(row["PolyPhen_VEP"])
     info_dict["ALLELE_FREQ"] = check_if_nan(row["AF_VEP"])
@@ -419,7 +471,7 @@ def retrieve_info_from_row(row, biomarkers_df):
     info_dict["ONCOGENIC_PREDICTION"] = check_if_nan(row["Oncogenic Prediction_CGI"])
     info_dict["CLINVAR_ENTRIES"] = check_if_nan(row["variant_clinvar_entries_CIVIC"])
     info_dict["PROT_CHANGE"] = check_if_nan(row["Protein Change_CGI"])
-    info_dict["CIVIC_CGI_PRESENT"] = get_knowledgebases(row)
+    info_dict["CIVIC_CGI_PRESENT"] = check_if_nan(row["sources"])
     info_dict["EXT_ANNOS"] = check_if_nan(row["External oncogenic annotation_CGI"])
     info_dict["LINKED_DISEASES"] = get_disease_names_CIViC(row) if get_disease_names_CIViC(row) != "" else "None"
     info_dict["LINKED_THERAPIES_CIVIC"] = get_therapy_names(row,civic_only=True) if get_therapy_names(row,civic_only=True) != "" else "None"
@@ -436,7 +488,7 @@ def retrieve_info_from_row(row, biomarkers_df):
 
 
 
-def write_individual_report(row, template_html, report_path, biomarkers_df):
+def write_individual_report(row, template_html, report_path, biomarkers_df, metadata_path):
     """
     This function creates a report for a specific variant.
 
@@ -448,10 +500,12 @@ def write_individual_report(row, template_html, report_path, biomarkers_df):
     :type report_path: str
     :param biomarkers_df: dataframe with the biomarkers linked to the therapies
     :type biomarkers_df: pandas.core.frame.DataFrame
+    :param metadata_path: path to the metadata file
+    :type metadata_path: str
     :return: None
     :rtype: None
     """
-    info_dict = retrieve_info_from_row(row, biomarkers_df)
+    info_dict = retrieve_info_from_row(row, biomarkers_df, metadata_path)
     
     report_html = "{}/{}.html".format(report_path, row["report_name"])
     
@@ -471,7 +525,7 @@ def write_individual_report(row, template_html, report_path, biomarkers_df):
 
 
 
-def create_report_htmls(outdir, basename, logger):
+def create_report_htmls(outdir, basename, civic_path, logger):
     """
     Creates the overall report for all variants and 
     the individual reports for each variant
@@ -480,6 +534,8 @@ def create_report_htmls(outdir, basename, logger):
     :type outdir: str
     :param basename: User given Project name
     :type basename: str
+    :civic_path: Path to civic results
+    :type civic_path: str
     :return: None
     :rtype: None
     """
@@ -489,6 +545,7 @@ def create_report_htmls(outdir, basename, logger):
     # read in files
     vep_civic_cgi_merge = pd.read_csv(f"{outdir}/combined_files/civic_cgi_vep.tsv", sep="\t")
     biomarkers_df = pd.read_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t")
+    metadata_civic = f"{civic_path}/metadata.txt" # read reference genome from metadata file
     # get path to save individual reports
     report_path = f"{os.path.abspath(outdir)}/report/variant_reports"
 
@@ -506,13 +563,16 @@ def create_report_htmls(outdir, basename, logger):
     tier_list = ["tier_1", "tier_2", "tier_3"]
     tier_table_list = [create_tier_table(vep_civic_cgi_merge, i, report_path) for i in tier_list]
 
+    # create the upset plots
+    fig_kb, fig_tiers = create_upsetplots(vep_civic_cgi_merge, os.path.join(os.path.abspath(outdir), "report/plots"))
+
     # Overall Report
     write_overall_report(
-        template_html = os.path.join(os.path.dirname(__file__), "templates/template_overall.html"),
+        template_html = os.path.join(os.path.dirname(__file__), "templates/template_overall_upsetplots.html"),
         #template_html="/templates/template_overall.html", 
         report_html=f"{os.path.abspath(outdir)}/report/{basename}_overall_report.html", 
-        fig_kb=create_pieplot(get_KB_count(vep_civic_cgi_merge), ["CGI", "CIViC", "CGI&CIViC", "No Hit"], "Knowledgebase Hits"), 
-        fig_tiers=create_pieplot(vep_civic_cgi_merge["report_tier"].value_counts().values, vep_civic_cgi_merge["report_tier"].value_counts().index, "Tiers"), 
+        fig_kb=encode_upsetplot(fig_kb),
+        fig_tiers=encode_upsetplot(fig_tiers),
         tier_table_list=tier_table_list)
 
 
@@ -526,6 +586,7 @@ def create_report_htmls(outdir, basename, logger):
         x, 
         template_html=os.path.join(os.path.dirname(__file__), "templates/template_individual.html"),
         report_path=report_path,
-        biomarkers_df=biomarkers_df), axis=1)
+        biomarkers_df=biomarkers_df,
+        metadata_path=metadata_civic), axis=1)
 
     logger.info("Reports created")

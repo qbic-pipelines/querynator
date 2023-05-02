@@ -8,10 +8,7 @@ import numpy as np
 pd.options.mode.chained_assignment = None 
 
 from querynator.helper_functions import (
-    flatten
-)
-
-from querynator.query_api import (
+    flatten,
     get_num_from_chr
 )
 

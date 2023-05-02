@@ -19,35 +19,10 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 
-def gzipped(file_path):
-    """
-    Helper function to test if given vcf is gzipped.
-    If so, the first 2 bytes are "1f 8b"
-
-    :param file_path: Path to gzipped input file
-    :type file_path: str
-    """
-    with open(file_path, "rb") as test_f:
-        return test_f.read(2) == b"\x1f\x8b"
-
-
-def gunzip_compressed_files(file_path, logger):
-    """
-    gunzips gzipped vcf file
-
-    :param file_path: Path to gzipped input file
-    :type file_path: str
-    """
-    logger.info(f"Unzipping input file ({os.path.basename(os.path.normpath(file_path))})")
-
-    if not file_path.endswith(".gz"):
-        logger.error("Given file does not end with '.gz'")
-        exit(1)
-    else:
-        with gzip.open(file_path, "rb") as f_in:
-            with open(file_path[: -len(".gz")], "wb") as f_out:
-                shutil.copyfileobj(f_in, f_out)
-        return file_path[: -len(".gz")]
+from querynator.helper_functions import (
+    gzipped,
+    gunzip_compressed_files,
+)
 
 
 def hg_assembly(genome):

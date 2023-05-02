@@ -14,7 +14,11 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-from querynator.query_api import gunzip_compressed_files, gzipped
+from querynator.helper_functions import (
+    gunzip_compressed_files, 
+    gzipped,
+    get_num_from_chr
+)
 
 # load the civic cache (necessary for bulk run)
 civic.load_cache()
@@ -59,18 +63,6 @@ def vcf_file(vcf_path):
         return True
     else:
         return False
-
-
-def get_num_from_chr(s):
-    """
-    extracts numerical value from chromosome (chr1 -> 1)
-    :param s: chromosome of variant 
-    :type vcf_path: pyVCF3 CHROM object
-    :return: numerical value from variant's chromosome
-    :rtype: str
-    """
-    int_chr = s.split("chr")[1] if str(s).startswith("chr") else s
-    return str(int_chr)
 
 
 def get_coordinates_from_vcf(input, build, logger):
@@ -173,6 +165,7 @@ def access_civic_by_coordinate(coord_dict, logger, build):
         input_dict = {key: coord_dict[key] for key in bulk}
     else:
         input_dict = coord_dict
+
 
     # actual search for each variant
     variant_list = []

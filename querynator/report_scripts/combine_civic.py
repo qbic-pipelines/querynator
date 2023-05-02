@@ -6,14 +6,9 @@ import os
 import numpy as np
 
 from querynator.helper_functions import (
-    flatten
-)
-
-from querynator.query_api import (
+    flatten,
     get_num_from_chr
 )
-
-
 
 def read_filtered_vcf(filtered_vcf):
     """

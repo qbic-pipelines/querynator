@@ -15,6 +15,10 @@
         display: inline;
         cursor: pointer;
     }
+    .left {
+        display: inline;
+        cursor: pointer;
+    }
     .indented {
         padding-left: 50pt;
         padding-right: 50pt;
@@ -32,6 +36,8 @@
     <div class="twocol">
         Tier: TIER_ASSIGNED
         <br>
+        Reference: BUILD
+        <br>
         chr: CHROMOSOME | Pos: POSITION | Ref: REF | Alt: ALT 
         <br>
         Strand: STRAND
@@ -48,8 +54,6 @@
             <summary> Gene: CIViC: CIVIC_GENE | CGI: CGI_GENE </summary>
             GENE_DESCRIPTION
         </details>
-        <br>
-        Reference Build: REF_BUILD
     </div>
 
     <hr />
@@ -88,7 +92,11 @@
     <strong> Linked Therapies: </strong> LINKED_THERAPIES_CIVIC
     <br>
     <br>
-    <strong> Evidence: </strong> 
+    <details class="left">
+        <summary> <strong> Evidence: </strong>  </summary> 
+        Learn more about CIViC Evidence Items <a href="https://civic.readthedocs.io/en/latest/model/evidence.html">here</a>
+        </ul> 
+    </details>
     <br>
     EVIDENCE_LIST
     <br>

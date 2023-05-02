@@ -13,8 +13,6 @@ from vcf.parser import field_counts as vcf_field_counts
 
 import querynator
 from querynator.query_api import (
-    gunzip_compressed_files,
-    gzipped,
     query_cgi,
     query_civic,
     vcf_file,
@@ -26,6 +24,12 @@ from querynator.report_scripts import (
     combine_cgi_civic,
     add_tiers_and_scores_to_df,
     create_report_htmls
+)
+
+from querynator.helper_functions import (
+    gunzip_compressed_files,
+    gzipped,
+    
 )
 
 # Create logger
@@ -487,6 +491,7 @@ def create_report(cgi_path, civic_path, outdir):
     dirname, basename = os.path.split(report_dir)
     os.makedirs(f"{report_dir}/combined_files")
     os.makedirs(f"{report_dir}/report/variant_reports")
+    os.makedirs(f"{report_dir}/report/plots")
     
     # combine the results
     combine_civic(civic_path, report_dir, logger)
@@ -497,7 +502,7 @@ def create_report(cgi_path, civic_path, outdir):
     add_tiers_and_scores_to_df(report_dir, logger)
 
     # create report
-    create_report_htmls(report_dir, basename, logger)
+    create_report_htmls(report_dir, basename, civic_path, logger)
     
 
 
