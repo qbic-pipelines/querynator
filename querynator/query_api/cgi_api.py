@@ -170,7 +170,7 @@ def download_cgi(url, headers, output, logger):
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
     except Exception:
-        logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
+        logger.exception("An unexpected error has occured during the download." + type(err))
 
 
 def delete_job_cgi(url, headers, output, logger):
