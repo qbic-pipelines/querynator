@@ -175,6 +175,7 @@ def save_plot(input, title, out_path):
     return fig
 
 
+
 def create_upsetplots(df, out_path):
     """
     Create of (1) the number of variants per Knowledgebase and (2) the number of variants per tier
