@@ -391,7 +391,7 @@ def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
                 escape=False,
                 width_dict=width_dict,
             )
-            # return alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True)
+            
         else:
             return build_table(
                 alterations_df[alterations_df["Response"] != "Responsive"].sort_values("Evidence", ascending=True),
