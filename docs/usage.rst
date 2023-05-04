@@ -12,7 +12,7 @@ The ``querynator`` is used from the command line. Use the help function to displ
 
 VCF Normalization
 **************************************
-We recommend to normalize the input vcf's using `bcftools norm <https://samtools.github.io/bcftools/bcftools.html>`_ before 
+We recommend to normalize the input vcf's using `bcftools norm <https://samtools.github.io/bcftools/bcftools.html>`_ before
 running the querynator to unify the input:
 
 The vcf file must be indexed to run ``bcftools norm``, e.g. using `tabix <http://www.htslib.org/doc/tabix.html>`_:
@@ -23,8 +23,8 @@ The vcf file must be indexed to run ``bcftools norm``, e.g. using `tabix <http:/
 
 Then run ``bcftools norm`` in the following way:
 
-.. code-block:: bash 
-    
+.. code-block:: bash
+
     bcftools norm \
         -a \
         --atom-overlaps . \
@@ -247,15 +247,15 @@ The command above generates the following result files using `CIViCpy <https://d
 Create an HTML Report
 **************************************
 
-After querying the knowledgebases included in the querynator, it is possible to combine the results into one table 
+After querying the knowledgebases included in the querynator, it is possible to combine the results into one table
 and to create an HTML report summarizing the most important features of each variant.
 
 
 .. note::
-    This functionality was specifically created to be included into the ``variantMTB`` nextflow pipeline 
+    This functionality was specifically created to be included into the ``variantMTB`` nextflow pipeline
     which can be found `here`_. (Currently under development)
 
-.. _here: https://github.com/qbic-pipelines/querynator 
+.. _here: https://github.com/qbic-pipelines/querynator
 
 
 A typical command to create such a report:
@@ -282,7 +282,7 @@ The command above generates the following result directory:
     |   |   ├── variant_reports
     |   |   |    ├── chr1-1234-A-T.html
     |   |   |    ├── chr1-1245-C-G.html
-    |   |   |    └── ... 
+    |   |   |    └── ...
     |   |   ├── plots
     |   |   |    ├── kb_upsetplot.png
     └── └── └──  └── tier_upsetplot.png
@@ -290,4 +290,4 @@ The command above generates the following result directory:
 
 
 The command creates one overall report which includes some statistics and shows an overwiev of the most important variants in the project.
-The ``Details`` column in the overall report links directly to a more detailed report on the variant in question.  
+The ``Details`` column in the overall report links directly to a more detailed report on the variant in question.
