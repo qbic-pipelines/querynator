@@ -170,7 +170,7 @@ def download_cgi(url, headers, output, logger):
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
     except Exception:
-        logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
+        logger.exception("An unexpected error has occured during the download." + type(err))
 
 
 def delete_job_cgi(url, headers, output, logger):
@@ -194,7 +194,7 @@ def delete_job_cgi(url, headers, output, logger):
         raise SystemExit(err)
     except Exception:
         logger.exception(
-            "Deleting the job from the CGI Server was not successful. If this happens more often, please log in to the website and remove old jobs or you will not be able to make more queries with your account."
+            "Deleting the job from the CGI Server was not successful. If this happens more often, please login to the website and remove old jobs or you will not be able to make more queries with your account."
         )
 
 

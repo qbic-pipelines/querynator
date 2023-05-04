@@ -68,7 +68,6 @@ def read_filtered_vcf(filtered_vcf):
 
         else:  # just one entry
             vep_list = record.INFO["CSQ"][0].split("|")
-            # vep_list.insert(0,int("".join(record.INFO["QID"])))
 
         # add variant information
         vep_list.insert(0, get_num_from_chr(record.CHROM))

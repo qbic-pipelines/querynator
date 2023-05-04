@@ -152,28 +152,6 @@ def create_link_col(row, report_path):
     return f'<a href="file://{report_path}/{row["report_name"]}.html">Variant: {row["report_name"]}</a>'
 
 
-def create_pieplot(values, names, title):
-    """
-    Create a pieplot with the given values and names
-    :param values: Values for the pieplot
-    :type values: list
-    :param names: Names for the pieplot
-    :type names: list
-    :param title: Title of the pieplot
-    :type title: str
-    :return: Plotly figure
-    :rtype: plotly figure
-    """
-    fig = px.pie(values=values, names=names, title=title)
-
-    fig.update_layout(
-        autosize=False,
-        width=500,
-        height=500,
-    )
-
-    return fig
-
 
 def save_plot(input, title, out_path):
     """
@@ -195,6 +173,7 @@ def save_plot(input, title, out_path):
     plt.savefig(out_path)
 
     return fig
+
 
 
 def create_upsetplots(df, out_path):
@@ -412,7 +391,7 @@ def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
                 escape=False,
                 width_dict=width_dict,
             )
-            # return alterations_df[alterations_df["Response"] == "Responsive"].sort_values("Evidence", ascending=True)
+            
         else:
             return build_table(
                 alterations_df[alterations_df["Response"] != "Responsive"].sort_values("Evidence", ascending=True),
