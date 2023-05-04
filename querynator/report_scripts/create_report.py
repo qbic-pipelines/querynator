@@ -622,7 +622,6 @@ def create_report_htmls(outdir, basename, civic_path, logger):
     # Overall Report
     write_overall_report(
         template_html=os.path.join(os.path.dirname(__file__), "templates/template_overall_upsetplots.html"),
-        # template_html="/templates/template_overall.html",
         report_html=f"{os.path.abspath(outdir)}/report/{basename}_overall_report.html",
         fig_kb=encode_upsetplot(fig_kb),
         fig_tiers=encode_upsetplot(fig_tiers),
