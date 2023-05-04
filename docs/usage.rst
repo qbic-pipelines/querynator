@@ -255,7 +255,7 @@ and to create an HTML report summarizing the most important features of each var
     This functionality was specifically created to be included into the ``variantMTB`` nextflow pipeline
     which can be found `here`_. (Currently under development)
 
-.. _here: https://github.com/qbic-pipelines/querynator
+.. _here: https://github.com/qbic-pipelines/variantmtb
 
 
 A typical command to create such a report:
