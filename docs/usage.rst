@@ -19,7 +19,7 @@ The vcf file must be indexed to run ``bcftools norm``, e.g. using `tabix <http:/
 
 .. code-block:: bash
 
-    tabix /path/to/vcf.vcf
+    tabix /path/to/vcf_file.vcf
 
 Then run ``bcftools norm`` in the following way:
 
