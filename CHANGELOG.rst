@@ -1,6 +1,21 @@
 Changelog
 ============
 
+0.3.0 - Iron Mercury  (2023-05-03)
+---------------------------------------------
+
+**Added**
+
+* Added functionality to combine the results of the Knowledgebases in an HTML report
+* Added possibility to have non-numerical chromosome columns in the input vcf
+* Added deletion of CGI jobs from CGI Server after completion
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
 0.2.2 - Sour Venus  (2023-03-16)
 ---------------------------------------------
 
