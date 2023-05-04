@@ -152,7 +152,6 @@ def create_link_col(row, report_path):
     return f'<a href="file://{report_path}/{row["report_name"]}.html">Variant: {row["report_name"]}</a>'
 
 
-
 def save_plot(input, title, out_path):
     """
     Creates and saves a upsetplot figure as png
@@ -390,7 +389,7 @@ def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
                 escape=False,
                 width_dict=width_dict,
             )
-            
+
         else:
             return build_table(
                 alterations_df[alterations_df["Response"] != "Responsive"].sort_values("Evidence", ascending=True),
