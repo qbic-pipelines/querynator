@@ -18,36 +18,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-
-def gzipped(file_path):
-    """
-    Helper function to test if given vcf is gzipped.
-    If so, the first 2 bytes are "1f 8b"
-
-    :param file_path: Path to gzipped input file
-    :type file_path: str
-    """
-    with open(file_path, "rb") as test_f:
-        return test_f.read(2) == b"\x1f\x8b"
-
-
-def gunzip_compressed_files(file_path, logger):
-    """
-    gunzips gzipped vcf file
-
-    :param file_path: Path to gzipped input file
-    :type file_path: str
-    """
-    logger.info(f"Unzipping input file ({os.path.basename(os.path.normpath(file_path))})")
-
-    if not file_path.endswith(".gz"):
-        logger.error("Given file does not end with '.gz'")
-        exit(1)
-    else:
-        with gzip.open(file_path, "rb") as f_in:
-            with open(file_path[: -len(".gz")], "wb") as f_out:
-                shutil.copyfileobj(f_in, f_out)
-        return file_path[: -len(".gz")]
+from querynator.helper_functions import gunzip_compressed_files, gzipped
 
 
 def hg_assembly(genome):
@@ -199,7 +170,32 @@ def download_cgi(url, headers, output, logger):
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
     except Exception:
-        logger.exception("Ooops, sth went wrong with the download. Sorry for the inconvenience.")
+        logger.exception("An unexpected error has occured during the download." + type(err))
+
+
+def delete_job_cgi(url, headers, output, logger):
+    """
+    Delete query from the CGI server after analysis is complete
+
+    :param url: API url with job_id
+    :type url: str
+    :param headers: Valid headers for API query
+    :type headers: dict
+    :param output: sample name
+    :type output: str
+    :raises: Exception
+
+    """
+    try:
+        payload = {"action": "download"}
+        r = requests.delete(url, headers=headers)
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        raise SystemExit(err)
+    except Exception:
+        logger.exception(
+            "Deleting the job from the CGI Server was not successful. If this happens more often, please login to the website and remove old jobs or you will not be able to make more queries with your account."
+        )
 
 
 def add_cgi_metadata(url, output, original_input, genome, filter_vep):
@@ -273,3 +269,4 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
         logger.info("Downloading CGI results")
         download_cgi(url, headers, output, logger)
         add_cgi_metadata(url, output, original_input, genome, filter_vep)
+        delete_job_cgi(url, headers, output, logger)

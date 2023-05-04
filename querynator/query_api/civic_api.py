@@ -1,4 +1,4 @@
-""" Query the Clinical Interpretations of Variants In Cancer (CIViC) API via its python tool CIViCPY"""
+""" Query the Clinical Interpretations of Variants In Cancer (CIViC) API via its python tool CIViCPY """
 
 import warnings
 
@@ -14,7 +14,11 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-from querynator.query_api import gunzip_compressed_files, gzipped
+from querynator.helper_functions import (
+    get_num_from_chr,
+    gunzip_compressed_files,
+    gzipped,
+)
 
 # load the civic cache (necessary for bulk run)
 civic.load_cache()
@@ -99,7 +103,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=str(record.CHROM),
+                            chr=get_num_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.start) + 2,
                             alt=str(alt_base)[1:],
@@ -113,7 +117,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=str(record.CHROM),
+                            chr=get_num_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.end),
                             alt="",
@@ -127,7 +131,7 @@ def get_coordinates_from_vcf(input, build, logger):
                 coord_dict.update(
                     {
                         civic.CoordinateQuery(
-                            chr=str(record.CHROM),
+                            chr=get_num_from_chr(record.CHROM),
                             start=int(record.start) + 1,
                             stop=int(record.end),
                             alt=str(alt_base),
@@ -166,11 +170,8 @@ def access_civic_by_coordinate(coord_dict, logger, build):
     variant_list = []
     for coord_obj, querynator_id in input_dict.items():
         variant = civic.search_variants_by_coordinates(coord_obj, search_mode="exact")
-        # variant is None and the program stops executing when the wrong build was chosen.
-        if variant == None:
-            logger.error("Variant was None. Did you choose the correct reference genome?")
-            exit(1)
-        if len(variant) > 0:
+
+        if variant != None and len(variant) > 0:
             for variant_obj in variant:
                 variant_list.append([{coord_obj: querynator_id}, [variant_obj]])
 
@@ -273,7 +274,7 @@ def get_assertion_information_from_variant(variant_obj):
             "assertion_therapies_name": ", ".join([i.name for i in assertion.therapies]),
             "assertion_therapies_ncit_id": ", ".join([i.ncit_id for i in assertion.therapies]),
             "assertion_therapies_aliases": ", ".join([", ".join(i.aliases) for i in assertion.therapies]),
-            "assertion_therapy_interaction_type": assertion.therapy_interaction_type,
+            "assertion_therapies_interaction_type": assertion.therapy_interaction_type,
             "assertion_variant_origin": assertion.variant_origin,
         }
     except IndexError:
@@ -293,10 +294,10 @@ def get_assertion_information_from_variant(variant_obj):
             "assertion_significance": np.nan,
             "assertion_status": np.nan,
             "assertion_summary": np.nan,
-            "assertion_therapies": np.nan,
+            "assertion_therapies_name": np.nan,
             "assertion_therapies_ncit_id": np.nan,
             "assertion_therapies_aliases": np.nan,
-            "assertion_therapy_interaction_type": np.nan,
+            "assertion_therapies_interaction_type": np.nan,
             "assertion_variant_origin": np.nan,
         }
     return assertion_dict
@@ -442,9 +443,31 @@ def sort_coord_list(coord_dict):
     return {
         key: value
         for key, value in sorted(
-            coord_dict.items(), key=lambda x: (int(x[0][0]) if x[0][0] != "X" else np.inf, x[0][1], x[0][2])
+            coord_dict.items(),
+            key=lambda x: (
+                int(x[0][0]) if x[0][0] != "X" and x[0][0] != "Y" and x[0][0] != "M" else sort_rules(x[0][0]),
+                x[0][1],
+                x[0][2],
+            ),
         )
     }
+
+
+def sort_rules(s):
+    """
+    Set rules to correctly sort chromosomes X,Y,M
+
+    :param s: "string" chromosome (X,Y,M)
+    :type s: str
+    :return: integer to sort by
+    :rtype: int
+    """
+    if s == "X":
+        return 100
+    elif s == "Y":
+        return 1000
+    elif s == "M":
+        return 10000
 
 
 def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):

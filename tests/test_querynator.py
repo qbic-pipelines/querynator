@@ -36,6 +36,11 @@ def test_command_line_interface():
     assert civic_help_result.exit_code == 0
     assert "--help                          Show this message and exit." in civic_help_result.output
 
+    """Test CREATE-REPORT help message"""
+    civic_help_result = runner.invoke(querynator.__main__.querynator_cli, ["create-report", "--help"])
+    assert civic_help_result.exit_code == 0
+    assert "--help                 Show this message and exit." in civic_help_result.output
+
     """Test non-existing subcommand"""
     result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-clinvar"])
     assert result.exit_code == 2

@@ -8,7 +8,7 @@ Installation
 Stable release
 --------------
 
-To install querynator, run this command in your terminal:
+To install the querynator, run this command in your terminal:
 
 .. code-block:: console
 
@@ -22,6 +22,14 @@ you through the process.
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
 
+You can also install the querynator using `conda`_:
+
+.. _conda: https://www.anaconda.com/
+
+
+.. code-block:: console
+
+    $ conda install querynator
 
 From sources
 ------------

@@ -12,12 +12,14 @@ from vcf.parser import _Info as VcfInfo
 from vcf.parser import field_counts as vcf_field_counts
 
 import querynator
-from querynator.query_api import (
-    gunzip_compressed_files,
-    gzipped,
-    query_cgi,
-    query_civic,
-    vcf_file,
+from querynator.helper_functions import gunzip_compressed_files, gzipped
+from querynator.query_api import query_cgi, query_civic, vcf_file
+from querynator.report_scripts import (
+    add_tiers_and_scores_to_df,
+    combine_cgi,
+    combine_cgi_civic,
+    combine_civic,
+    create_report_htmls,
 )
 
 # Create logger
@@ -118,7 +120,7 @@ def filter_vcf_by_vep(vcf_path, logger):
 
         vep_dict = {name: pos for pos, name in enumerate(in_vcf.infos["CSQ"].desc.split(":")[1].strip().split("|"))}
         """
-        Exemplary for nf-core/sarek (https://nf-co.re/sarek) output 
+        Exemplary for nf-core/sarek (https://nf-co.re/sarek) output
         {'Allele': 0,
         'Consequence': 1,
         'IMPACT': 2,
@@ -233,8 +235,6 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
     :return: None
     :rtype: None
     """
-    if not os.path.isdir("vcf_files"):
-        os.mkdir("vcf_files")
 
     # add querynator_id info to header
     vcf_template.infos["QID"] = VcfInfo("QID", ".", "String", "Querynator ID", ".", ".", ".")
@@ -428,8 +428,8 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
 )
 def query_api_civic(vcf, outdir, genome, filter_vep):
     try:
-        dirname, basename = os.path.split(outdir)
         result_dir = get_unique_querynator_dir(f"{outdir}")
+        dirname, basename = os.path.split(result_dir)
         if filter_vep:
             in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
             # create result directories
@@ -447,6 +447,49 @@ def query_api_civic(vcf, outdir, genome, filter_vep):
 
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")
+
+
+# querynator create report
+@querynator_cli.command()
+@click.option(
+    "-c",
+    "--cgi_path",
+    help="Path to a CGI result folder generated using the querynator",
+    required=True,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-j",
+    "--civic_path",
+    help="Path to a CIViC result folder generated using the querynator",
+    required=True,
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-o",
+    "--outdir",
+    required=True,
+    type=click.STRING,
+    help="Name of new directory in which reports will be stored.",
+)
+def create_report(cgi_path, civic_path, outdir):
+    # create outdir
+    report_dir = get_unique_querynator_dir(outdir)
+    dirname, basename = os.path.split(report_dir)
+    os.makedirs(f"{report_dir}/combined_files")
+    os.makedirs(f"{report_dir}/report/variant_reports")
+    os.makedirs(f"{report_dir}/report/plots")
+
+    # combine the results
+    combine_civic(civic_path, report_dir, logger)
+    combine_cgi(cgi_path, report_dir, logger)
+    combine_cgi_civic(report_dir, logger)
+
+    # add tiers & ranking-score to merged results
+    add_tiers_and_scores_to_df(report_dir, logger)
+
+    # create report
+    create_report_htmls(report_dir, basename, civic_path, logger)
 
 
 if __name__ == "__main__":
