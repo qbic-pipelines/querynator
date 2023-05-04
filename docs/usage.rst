@@ -289,5 +289,5 @@ The command above generates the following result directory:
 
 
 
-The command creates one overall report which includes some statistics and shows an overwiev of the most important variants in the project.
+The command creates one overall report which includes some statistics and shows an overview of the most important variants in the project.
 The ``Details`` column in the overall report links directly to a more detailed report on the variant in question.
