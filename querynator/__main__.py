@@ -120,7 +120,7 @@ def filter_vcf_by_vep(vcf_path, logger):
 
         vep_dict = {name: pos for pos, name in enumerate(in_vcf.infos["CSQ"].desc.split(":")[1].strip().split("|"))}
         """
-        Exemplary for nf-core/sarek (https://nf-co.re/sarek) output 
+        Exemplary for nf-core/sarek (https://nf-co.re/sarek) output
         {'Allele': 0,
         'Consequence': 1,
         'IMPACT': 2,
@@ -235,8 +235,6 @@ def write_vcf(vcf_template, vcf_record_list, out_name):
     :return: None
     :rtype: None
     """
-    if not os.path.isdir("vcf_files"):
-        os.mkdir("vcf_files")
 
     # add querynator_id info to header
     vcf_template.infos["QID"] = VcfInfo("QID", ".", "String", "Querynator ID", ".", ".", ".")
