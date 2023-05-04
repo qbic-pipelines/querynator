@@ -10,6 +10,7 @@ This section contains the API of the modules and functions.
     .. autofunction:: query_api_cgi
     .. autofunction:: create_report
     .. autofunction:: sort_variants
+    
 .. automodule:: querynator.query_api.cgi_api
     :members:
     :undoc-members:
