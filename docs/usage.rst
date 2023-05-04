@@ -10,6 +10,29 @@ The ``querynator`` is used from the command line. Use the help function to displ
     querynator query-api-cgi --help
     querynator query-api-civic --help
 
+VCF Normalization
+**************************************
+We recommend to normalize the input vcf's using `bcftools norm <https://samtools.github.io/bcftools/bcftools.html>`_ before
+running the querynator to unify the input:
+
+The vcf file must be indexed to run ``bcftools norm``, e.g. using `tabix <http://www.htslib.org/doc/tabix.html>`_:
+
+.. code-block:: bash
+
+    tabix /path/to/vcf_file.vcf
+
+Then run ``bcftools norm`` in the following way:
+
+.. code-block:: bash
+
+    bcftools norm \
+        -a \
+        --atom-overlaps . \
+        -f /path/to/reference_file \
+        /path/to/vcf
+
+
+
 
 Query the cancergenomeinterpeter - CGI
 **************************************
@@ -219,3 +242,52 @@ The command above generates the following result files using `CIViCpy <https://d
 .. note::
     When the ``filter_vep`` flag is set a unique Querynator ID is added to the INFO column of each variant in the vcf file.
     The same ID is added to the ``sample_name.civic_results.tsv`` if CIViC is queried.
+
+
+Create an HTML Report
+**************************************
+
+After querying the knowledgebases included in the querynator, it is possible to combine the results into one table
+and to create an HTML report summarizing the most important features of each variant.
+
+
+.. note::
+    This functionality was specifically created to be included into the ``variantMTB`` nextflow pipeline
+    which can be found `here`_. (Currently under development)
+
+.. _here: https://github.com/qbic-pipelines/variantmtb
+
+
+A typical command to create such a report:
+
+.. code-block:: bash
+
+    querynator create-report \
+        --cgi_path path/to/cgi_results \
+        --civic_path path/to/civic_results \
+        --outdir path/to/save/results
+
+The command above generates the following result directory:
+
+.. code-block:: bash
+
+    outdir
+    ├── combined_files
+    |   ├── alterations_vep.tsv
+    |   ├── biomarkers_linked.tsv
+    |   ├── civic_cgi_vep.tsv
+    |   └── civic_vep.tsv
+    ├── report
+    |   |   ├── overall_report.html
+    |   |   ├── variant_reports
+    |   |   |    ├── chr1-1234-A-T.html
+    |   |   |    ├── chr1-1245-C-G.html
+    |   |   |    └── ...
+    |   |   ├── plots
+    |   |   |    ├── kb_upsetplot.png
+    └── └── └──  └── tier_upsetplot.png
+
+
+
+The command creates one overall report which includes some statistics and shows an overview of the most important variants in the project.
+The ``Details`` column in the overall report links directly to a more detailed report on the variant in question.

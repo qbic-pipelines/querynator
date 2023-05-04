@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>variantMTB VARIANT_NAME</title>
+    <style>
+      h1 {
+        font-family: "Arial";
+        text-align: center;
+      }
+      details {
+        font-family: "Times New Roman";
+        text-align: center;
+      }
+      details.left {
+        font-family: "Times New Roman";
+        text-align: left;
+      }
+      h2 {
+        font-family: "Arial";
+        text-align: left;
+      }
+      p {
+        font-family: "Times New Roman";
+        text-align: center;
+      }
+      div {
+        font-family: "Times New Roman";
+        text-align: center;
+        margin: 0 auto;
+      }
+      details summary > * {
+        display: inline;
+        cursor: pointer;
+      }
+      .left {
+        display: inline;
+        cursor: pointer;
+      }
+      .indented {
+        padding-left: 50pt;
+        padding-right: 50pt;
+      }
+      div.twocol {
+        font-family: "Times New Roman";
+        text-align: left;
+        column-count: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>variantMTB Individual Report</h1>
+    <h2>General</h2>
+    <div class="twocol">
+      Tier: TIER_ASSIGNED
+      <br />
+      Reference: BUILD
+      <br />
+      chr: CHROMOSOME | Pos: POSITION | Ref: REF | Alt: ALT
+      <br />
+      Strand: STRAND
+      <br />
+      HGVS: HGVS_NOTATION
+      <br />
+      Variant Name CIViC: VARIANT_CIVIC
+      <br />
+      Entrez Name: ENTREZ_NAME (Entrez ID: ENTREZ_ID)
+      <br />
+      Variant Type: VARIANT_TYPE
+      <br />
+      <details class="left">
+        <summary>Gene: CIViC: CIVIC_GENE | CGI: CGI_GENE</summary>
+        GENE_DESCRIPTION
+      </details>
+    </div>
+
+    <hr />
+
+    <h2>Variant Information</h2>
+
+    <strong> Pathogenicity: </strong> <em> SIFT: </em> SIFT_SCORE
+    <em> PolyPhen2: </em> PolyPhen2_SCORE
+    <br />
+    <br />
+    <strong> Allele Frequency: </strong> <em> AF: </em> ALLELE_FREQ
+    <em> gnomAD: </em> GNOMAD_FREQ
+    <br />
+    <br />
+    <strong> Consequence: </strong> <em> CGI: </em> CONSEQUENCE_CGI
+    <em> CIViC: </em> CONSEQUENCE_CIVIC
+    <br />
+    <br />
+    <strong> Oncogenicity - CGI: </strong> ONCOGENICITY_CGI &nbsp;&nbsp;&nbsp; -
+    <strong> Oncogenic Prediction: </strong> ONCOGENIC_PREDICTION
+    <br />
+    <br />
+    <strong> ClinVAR Entries: </strong> CLINVAR_ENTRIES
+    <br />
+    <br />
+    <strong> Protein Change: </strong> PROT_CHANGE
+
+    <hr />
+
+    <h2>Knowledgebase Annotations</h2>
+
+    <strong> Seen In: </strong> CIVIC_CGI_PRESENT (External Annotations CGI:
+    EXT_ANNOS)
+    <br />
+    <br />
+
+    <h3><em>CIViC</em></h3>
+    <strong> Linked Diseases: </strong> LINKED_DISEASES
+    <br />
+    <br />
+    <strong> Linked Therapies: </strong> LINKED_THERAPIES_CIVIC
+    <br />
+    <br />
+    <details class="left">
+      <summary><strong> Evidence: </strong></summary>
+      Learn more about CIViC Evidence Items
+      <a href="https://civic.readthedocs.io/en/latest/model/evidence.html"
+        >here</a
+      >
+    </details>
+    <br />
+    EVIDENCE_LIST
+    <br />
+    <br />
+    <details class="left">
+      <summary><strong> Description: </strong> CIVIC_SUMMARY</summary>
+      <ul>
+        <li>ASSERTION_DESCRIPTION</li>
+        <br />
+        <li>EVIDENCE_DESCRIPTION</li>
+      </ul>
+    </details>
+    <br />
+    <br />
+    <strong> Literature: </strong> LITERATURE_CIVIC
+
+    <h3><em>CGI</em></h3>
+
+    <details class="left">
+      <summary><h4>Linked Therapies</h4></summary>
+      Here we show those drugs that are linked to the Protein Change of this
+      variant in the CGI Knowledgebase.
+    </details>
+    <br />
+    <strong> Linked Therapies responsive: </strong> LINKED_DRUGS_RESPONSIVE
+    <br />
+    <br />
+    <strong> Linked Therapies resistant: </strong> LINKED_DRUGS_RESISTANT
+    <br />
+    <br />
+
+    <hr />
+  </body>
+</html>
