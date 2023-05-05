@@ -42,6 +42,7 @@ setup(
     keywords="querynator",
     name="querynator",
     packages=find_packages(exclude=("docs")),
+    package_data={"": ["report_scripts/templates/*.html"]},
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/qbic-pipelines/querynator",
