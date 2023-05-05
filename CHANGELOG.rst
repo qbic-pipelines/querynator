@@ -1,6 +1,19 @@
 Changelog
 ============
 
+0.3.2 - Iron Mercury  (2023-05-05)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Fixed version bump
+
+**Dependencies**
+
+**Deprecated**
+
 0.3.1 - Iron Mercury  (2023-05-05)
 ---------------------------------------------
 
