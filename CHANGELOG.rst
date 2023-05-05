@@ -1,6 +1,19 @@
 Changelog
 ============
 
+0.3.1 - Iron Mercury  (2023-05-05)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Fixed import of site-packages in setup.py
+
+**Dependencies**
+
+**Deprecated**
+
 0.3.0 - Iron Mercury  (2023-05-04)
 ---------------------------------------------
 
