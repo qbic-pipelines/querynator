@@ -5,9 +5,10 @@ click>=8.1.3
 httplib2
 requests
 requests-cache
+urllib3<2
 pandas~=1.5.1
 numpy
-civicpy==3.0.0
+civicpy~=3.0.0
 pyvcf3~=1.0.3
 pretty_html_table~=0.9.16
 matplotlib~=3.6.1
