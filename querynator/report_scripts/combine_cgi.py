@@ -188,10 +188,36 @@ def subset_alterations(df):
     :rtype: pandas DataFrame
     """
     # subset df
-    df = df[["CGI-INFO", "CGI-Gene", "CGI-Protein Change", "CGI-Oncogenic Summary", "CGI-Oncogenic Prediction", "CGI-External oncogenic annotation", "CGI-Mutation", "CGI-Consequence", "CGI-Transcript", "CGI-STRAND", "CGI-Type"]]
+    df = df[
+        [
+            "CGI-INFO",
+            "CGI-Gene",
+            "CGI-Protein Change",
+            "CGI-Oncogenic Summary",
+            "CGI-Oncogenic Prediction",
+            "CGI-External oncogenic annotation",
+            "CGI-Mutation",
+            "CGI-Consequence",
+            "CGI-Transcript",
+            "CGI-STRAND",
+            "CGI-Type",
+        ]
+    ]
 
     # rename cols
-    new_col_names = ['Sample ID', 'Gene', 'Protein Change', 'Oncogenic Summary', 'Oncogenic Prediction', 'External oncogenic annotation', 'Mutation', 'Consequence', 'Transcript', 'Strand', 'Type']
+    new_col_names = [
+        "Sample ID",
+        "Gene",
+        "Protein Change",
+        "Oncogenic Summary",
+        "Oncogenic Prediction",
+        "External oncogenic annotation",
+        "Mutation",
+        "Consequence",
+        "Transcript",
+        "Strand",
+        "Type",
+    ]
     df.columns = new_col_names
     return df
 
