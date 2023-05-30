@@ -1,0 +1,24 @@
+==============================
+=== Report of the analysis ===
+==============================
+
+Date: 2023-05-30 15:43:09
+CGI version: v23.05.3
+
+Analysed mutations: 88
+Cancer type: CANCER
+Dataset: input.tsv
+Date: 2023-05-30 13:42:47
+Drivers: 81
+Drivers per sample: 81.0
+Id: cfa230edfac4ad4897c8
+Known drivers: 74
+Mutations per sample: 88.0
+Predicted drivers: 51
+Prescription complete: 387
+Prescription repurposing: 0
+Reference: hg19
+Samples: 1
+Samples without drivers: 0
+Title: CGI_query
+User: forsky2@gmx.de
