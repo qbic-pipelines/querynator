@@ -267,6 +267,6 @@ def combine_civic(civic_path, outdir, logger):
             "MOTIF_SCORE_CHANGE_VEP",
             "TRANSCRIPTION_FACTORS_VEP",
         ]
-
+        
         merged_df = pd.DataFrame(columns=columns)
         merged_df.to_csv(f"{outdir}/combined_files/civic_vep.tsv", sep="\t", index=False)
