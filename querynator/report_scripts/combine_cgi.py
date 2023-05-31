@@ -271,7 +271,11 @@ def link_biomarkers(biomarkers_df):
     :return: DataFrame of biomarkers with additional alteration-link col
     :rtype: pandas DataFrame
     """
-    biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
+    # only works when biomarkers_df is not an empty df
+    try:
+        biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
+    except ValueError:
+        biomarkers_df["alterations_link"] = ""
 
     return biomarkers_df
 
@@ -287,7 +291,12 @@ def get_highest_evidence(row, biomarkers_linked):
     :return: highest associated evidence
     :rtype: str
     """
+    
+    x=False
     if not pd.isnull(row["Protein Change_CGI"]):
+        # escape special characters seen to be used in the Protein Change column 
+        if row["Protein Change_CGI"].startswith("*"):
+            row["Protein Change_CGI"] = row["Protein Change_CGI"].replace("*", "\*")
         for evidence in ["A", "B", "C", "D"]:
             if not biomarkers_linked.loc[
                 (biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))
