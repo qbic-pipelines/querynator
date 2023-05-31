@@ -1,4 +1,5 @@
-CGI query date: 2023-03-16
+CGI query date: 2023-05-30
 API version: https://www.cancergenomeinterpreter.org/api/v1/
-Input mutations: /Users/students/Documents/work_dir/querynator/example_files/example.vcf.gz
-Reference genome: hg19
+Input mutations: /Users/students/Documents/work_dir/querynator/example_files/example.vcf
+Reference genome: GRCh37
+Filtered out synonymous & low impact variants based on VEP annotation

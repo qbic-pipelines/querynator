@@ -1,5 +1,6 @@
-CIViC query date: 2023-03-16
+CIViC query date: 2023-05-30
 CIViCpy version: 3.0.0
 Search mode: exact
 Reference genome: GRCh37
-Input File: /Users/students/Documents/work_dir/querynator/example_files/example.vcf.gz
+Filtered out synonymous & low impact variants based on VEP annotation
+Input File: /Users/students/Documents/work_dir/querynator/example_files/example.vcf
