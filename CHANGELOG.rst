@@ -1,6 +1,20 @@
 Changelog
 ============
 
+0.4.0 - Stormy Saturn  (2023-05-31)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Fixed functionality for new CGI file structure
+* Fixed case when CIViC has no hits
+
+**Dependencies**
+
+**Deprecated**
+
 0.3.3 - Iron Mercury  (2023-05-05)
 ---------------------------------------------
 

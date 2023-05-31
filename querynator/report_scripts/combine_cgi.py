@@ -160,6 +160,10 @@ def read_modify_alterations(alterations_path):
     """
     alterations_df = pd.read_csv(alterations_path, sep="\t")
 
+    # change alterations_df format to prior format
+
+    alterations_df = subset_alterations(alterations_df)
+
     # extract positional information & add to df
     alterations_df[["chr", "pos", "ref", "alt"]] = alterations_df.apply(lambda x: extract_coords(x), axis=1)
 
@@ -173,6 +177,49 @@ def read_modify_alterations(alterations_path):
     alterations_df = alterations_df.add_suffix("_CGI")
 
     return alterations_df
+
+
+def subset_alterations(df):
+    """
+    subset alterations file to only include relevant columns
+    :param df: alterations DataFrame
+    :type df: pandas DataFrame
+    :return: subsetted alterations DataFrame
+    :rtype: pandas DataFrame
+    """
+    # subset df
+    df = df[
+        [
+            "CGI-INFO",
+            "CGI-Gene",
+            "CGI-Protein Change",
+            "CGI-Oncogenic Summary",
+            "CGI-Oncogenic Prediction",
+            "CGI-External oncogenic annotation",
+            "CGI-Mutation",
+            "CGI-Consequence",
+            "CGI-Transcript",
+            "CGI-STRAND",
+            "CGI-Type",
+        ]
+    ]
+
+    # rename cols
+    new_col_names = [
+        "Sample ID",
+        "Gene",
+        "Protein Change",
+        "Oncogenic Summary",
+        "Oncogenic Prediction",
+        "External oncogenic annotation",
+        "Mutation",
+        "Consequence",
+        "Transcript",
+        "Strand",
+        "Type",
+    ]
+    df.columns = new_col_names
+    return df
 
 
 def merge_alterations_vep(vep_df, alterations_df):
@@ -224,7 +271,11 @@ def link_biomarkers(biomarkers_df):
     :return: DataFrame of biomarkers with additional alteration-link col
     :rtype: pandas DataFrame
     """
-    biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
+    # only works when biomarkers_df is not an empty df
+    try:
+        biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
+    except ValueError:
+        biomarkers_df["alterations_link"] = ""
 
     return biomarkers_df
 
@@ -240,7 +291,12 @@ def get_highest_evidence(row, biomarkers_linked):
     :return: highest associated evidence
     :rtype: str
     """
+
+    x = False
     if not pd.isnull(row["Protein Change_CGI"]):
+        # escape special characters seen to be used in the Protein Change column
+        if row["Protein Change_CGI"].startswith("*"):
+            row["Protein Change_CGI"] = row["Protein Change_CGI"].replace("*", "\*")
         for evidence in ["A", "B", "C", "D"]:
             if not biomarkers_linked.loc[
                 (biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))
