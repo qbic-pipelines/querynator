@@ -291,10 +291,10 @@ def get_highest_evidence(row, biomarkers_linked):
     :return: highest associated evidence
     :rtype: str
     """
-    
-    x=False
+
+    x = False
     if not pd.isnull(row["Protein Change_CGI"]):
-        # escape special characters seen to be used in the Protein Change column 
+        # escape special characters seen to be used in the Protein Change column
         if row["Protein Change_CGI"].startswith("*"):
             row["Protein Change_CGI"] = row["Protein Change_CGI"].replace("*", "\*")
         for evidence in ["A", "B", "C", "D"]:

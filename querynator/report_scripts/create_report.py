@@ -193,27 +193,29 @@ def create_upsetplots(df, out_path):
     df_kb["cgi"] = df["Oncogenic Summary_CGI"].apply(lambda x: True if pd.isnull(x) == False else False)
     df_kb["civic"] = df["chr_CIVIC"].apply(lambda x: True if pd.isnull(x) == False else False)
     df_kb["none"] = ~(df_kb["cgi"] | df_kb["civic"])
-    
-    
+
     kb_input = from_indicators(df_kb)
-    
+
     # fill tier df  & transform to upsetplot input format
     for i in ["tier_1", "tier_2", "tier_3", "tier_4"]:
         df_tiers[i] = df["report_tier"].apply(lambda x: True if x == i else False)
 
     tier_input = from_indicators(df_tiers)
-    
 
     # create upsetplot figures
     # if only one col of df_kb is True and all others cols are False, no UpSetPlot can be generated. If that's the case, just generate a barplot
-    try: 
+    try:
         fig_kb = save_plot(kb_input, "Number of variants per Knowledgebase", os.path.join(out_path, "kb_upsetplot.png"))
     except AttributeError:
-        fig_kb = create_barplot(df_kb, "Number of variants per Knowledgebase", os.path.join(out_path, "kb_upsetplot.png"))
-    try:           
+        fig_kb = create_barplot(
+            df_kb, "Number of variants per Knowledgebase", os.path.join(out_path, "kb_upsetplot.png")
+        )
+    try:
         fig_tiers = save_plot(tier_input, "Number of variants per Tier", os.path.join(out_path, "tier_upsetplot.png"))
     except AttributeError:
-        fig_tiers = create_barplot(tier_input, "Number of variants per Tier", os.path.join(out_path, "tier_upsetplot.png"))
+        fig_tiers = create_barplot(
+            tier_input, "Number of variants per Tier", os.path.join(out_path, "tier_upsetplot.png")
+        )
 
     return [fig_kb, fig_tiers]
 
@@ -231,10 +233,10 @@ def create_barplot(input, title, out_path):
     :return: matplotlib figure
     :rtype: matplotlib figure
     """
-    
+
     counts = input.sum().to_list()
     kbs = input.columns.to_list()
-    
+
     # plot
     fig = plt.figure(figsize=(6, 4))
     plt.bar(kbs, counts, color="darkblue")
