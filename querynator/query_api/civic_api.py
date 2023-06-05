@@ -313,18 +313,18 @@ def get_evidence_information_from_variant(variant_obj):
     :rtype: dict
     """
     try:
-        evidence = variant_obj.molecular_profiles[0].assertions[0].evidence[0]
+        evidence = variant_obj.molecular_profiles[0].evidence[0]
         evidence_dict = {
             "evidence_name": evidence.name,
             "evidence_description": evidence.description,
-            "evidence_disease": evidence.disease,
+            "evidence_disease": evidence.disease.name,
             "evidence_level": evidence.evidence_level,
             "evidence_support": evidence.evidence_direction,
             "evidence_type": evidence.evidence_type,
             "evidence_phenotypes": ", ".join([i.name for i in evidence.phenotypes]),
             "evidence_rating": evidence.rating,
             "evidence_significance": evidence.significance,
-            "evidence_source": evidence.source,
+            "evidence_source": evidence.source.name,
             "evidence_status": evidence.status,
             "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
             "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
@@ -346,7 +346,6 @@ def get_evidence_information_from_variant(variant_obj):
             "evidence_therapy_interaction_type": np.nan,
         }
     return evidence_dict
-
 
 def get_positional_information_from_coord_obj(coord_obj):
     """
