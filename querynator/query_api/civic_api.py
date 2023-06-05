@@ -436,7 +436,6 @@ def get_evidence_information_from_variant(variant_obj):
 
     return smoothen_dict(evidence_dict)
 
-
 def get_positional_information_from_coord_obj(coord_obj):
     """
     Get information about the position of the variant in the genome
