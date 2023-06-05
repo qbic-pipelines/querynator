@@ -65,7 +65,7 @@ def assign_comb_evidence_labels(row):
         cgi_str = row["evidence_CGI"]
 
     if not pd.isnull(row["evidence_level_CIVIC"]):
-        civic_str = row["evidence_level_CIVIC"]
+        civic_str = min(row["evidence_level_CIVIC"].split(","))
 
     return f"{cgi_str}(cgi), {civic_str}(civic)"
 
@@ -86,10 +86,11 @@ def get_disease_names_CIViC(row):
         row["evidence_disease_CIVIC"],
         row["assertion_disease_name_CIVIC"],
     ]
+    
     disease_list = [i for i in disease_rows if not pd.isnull(i)]
 
     if disease_list != []:
-        return ", ".join([i for i in disease_list])
+        return ", ".join([i for i in disease_list]).replace("nan", "")
     else:
         return ""
 
@@ -105,8 +106,8 @@ def get_therapy_names(row, civic_only):
     therapy_rows = [row["assertion_therapies_name_CIVIC"], row["evidence_therapies_CIVIC"]]
     therapy_list = [i.split(",") for i in therapy_rows if not pd.isnull(i)]
     if therapy_list != []:
-        therapy_list = [i.strip() for i in flatten(therapy_list)]
-        therapy_str = ", ".join([i for i in set(therapy_list)])
+        therapy_list = set([i.strip() for i in flatten(therapy_list)])
+        therapy_str = ", ".join([i for i in set(therapy_list) if not i == ""])
     if not pd.isnull(row["evidence_CGI"]) and not civic_only:
         if therapy_list != []:
             therapy_str = therapy_str + ", CGI (see Details)"
@@ -462,6 +463,10 @@ def create_evidence_table(row):
     )
     evidence_subset.columns = ["Name", "Level", "Rating", "Type", "Significance", "Direction"]
     if len(evidence_subset) > 0:
+        # split each evidence entry into an individual row
+        evidence_subset = evidence_subset.apply(lambda x: x.str.split(',')).apply(pd.Series.explode)
+        evidence_subset = evidence_subset.reset_index(drop=True)
+        evidence_subset = evidence_subset.sort_values("Rating", ascending=True)
         return build_table(evidence_subset, color="blue_light", escape=False)
     else:
         return ""
@@ -470,6 +475,7 @@ def create_evidence_table(row):
 def create_therapy_table(row, response, width_dict, biomarkers_df):
     """
     Creates a HTML table containing all Therapy & Drug related information provided by CGI for a specific Protein Change.
+    
     :param row: The row of the dataframe.
     :type row: pandas.Series
     :param response: The response to a specific drug.

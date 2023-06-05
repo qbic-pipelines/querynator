@@ -36,6 +36,20 @@ def get_allele_freq_tiering(row):
         else:
             return False
 
+def get_min(e):
+    """
+    returns minimum of an input
+    
+    :param e: string or np.nan
+    :type e: str
+    :return: min of string or np.nan
+    :rtype: str
+    """
+    if pd.isnull(e):
+        return np.nan
+    else:
+        return min(e.split(","))
+
 
 def subset_variants_into_tiers(row):
     """
@@ -47,6 +61,7 @@ def subset_variants_into_tiers(row):
     :rtype: str
     """
     # check whether civic already provides AMP-based Tiers
+    
     if not pd.isnull(row["assertion_amp_level_CIVIC"]):
         if "TIER_I_" in row["assertion_amp_level_CIVIC"]:
             return "tier_1"
@@ -57,13 +72,13 @@ def subset_variants_into_tiers(row):
         elif "TIER_IV_" in row["assertion_amp_level_CIVIC"]:
             return "tier_4"
     else:
-        if row["evidence_CGI"] in ["A", "B"] or row["evidence_level_CIVIC"] in ["A", "B"]:
+        if row["evidence_CGI"] in ["A", "B"] or get_min(row["evidence_level_CIVIC"]) in ["A", "B"]:
             return "tier_1"
-        elif row["evidence_CGI"] in ["C", "D"] or row["evidence_level_CIVIC"] in ["C", "D"]:
+        elif row["evidence_CGI"] in ["C", "D"] or get_min(row["evidence_level_CIVIC"]) in ["C", "D"]:
             return "tier_2"
         else:  # no evidence given (tier 3 or 4)
             # Tier 3 if oncogenic & MAF fits
-            if row["evidence_level_CIVIC"] == "E":
+            if get_min(row["evidence_level_CIVIC"]) == "E":
                 return "tier_3"
             elif (
                 row["Oncogenic Summary_CGI"] not in ["non-oncogenic", "non-protein affecting"]
@@ -442,8 +457,8 @@ def scoring_variants(row):
         score += 2
 
     # Evidence associated CIViC
-    score += generate_evidence_score(row["evidence_level_CIVIC"])
-
+    score += generate_evidence_score(get_min(row["evidence_level_CIVIC"]))
+    
     # Evidence associated CGI
     score += generate_evidence_score(row["evidence_CGI"])
 
