@@ -166,19 +166,26 @@ def append_to_dict(dict1, dict2):
                 
     return dict1
 
-def smoothen_dict(dict):
+def smoothen_dict(dict, s):
     """
     makes string out of lists
     
     :param dict: dict with lists as values
     :type dict: dict
+    :param s: True if string and special string character needed
+    :type s: bool
     :return: dict with strings as values
     :rtype: dict
     """
     for key in dict:
         if type(dict[key]) == list:
             filtered_list = [i if i is not None else '' for i in dict[key]]
-            dict[key] = ",".join(str(i) for i in filtered_list)
+            if s:
+                if key in ["evidence_source", "evidence_description"]:
+                    dict[key] = "|".join(str(i) for i in filtered_list)
+                else: dict[key] = ",".join(str(i) for i in filtered_list)
+            else:
+                dict[key] = ",".join(str(i) for i in filtered_list)
     return dict
 
 
@@ -265,7 +272,7 @@ def get_molecular_profile_information_from_variant(variant_obj):
             new_dict = {"mol_profile_name": None, "mol_profile_definition": None, "mol_profile_score": None}
         mol_profile_dict = append_to_dict(mol_profile_dict, new_dict)
 
-    return smoothen_dict(mol_profile_dict)
+    return smoothen_dict(mol_profile_dict, False)
 
 
 def get_gene_information_from_variant(variant_obj):
@@ -367,7 +374,7 @@ def get_assertion_information_from_variant(variant_obj):
                     "assertion_variant_origin": np.nan,
                 }
             assertion_dict = append_to_dict(assertion_dict, new_dict)
-    return smoothen_dict(assertion_dict)
+    return smoothen_dict(assertion_dict, False)
 
 
 
@@ -432,9 +439,9 @@ def get_evidence_information_from_variant(variant_obj):
                     "evidence_therapies": np.nan,
                     "evidence_therapy_interaction_type": np.nan,
                 }
-        evidence_dict = append_to_dict(evidence_dict, new_dict)
+            evidence_dict = append_to_dict(evidence_dict, new_dict)
 
-    return smoothen_dict(evidence_dict)
+    return smoothen_dict(evidence_dict, True)
 
 def get_positional_information_from_coord_obj(coord_obj):
     """
