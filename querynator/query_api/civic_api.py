@@ -161,15 +161,16 @@ def append_to_dict(dict1, dict2):
             else:
                 if dict1[key] == "":
                     dict1[key] = dict2[key]
-                else: 
+                else:
                     dict1[key] = [dict1[key], dict2[key]]
-                
+
     return dict1
+
 
 def smoothen_dict(dict, s):
     """
     makes string out of lists
-    
+
     :param dict: dict with lists as values
     :type dict: dict
     :param s: True if string and special string character needed
@@ -179,11 +180,12 @@ def smoothen_dict(dict, s):
     """
     for key in dict:
         if type(dict[key]) == list:
-            filtered_list = [i if i is not None else '' for i in dict[key]]
+            filtered_list = [i if i is not None else "" for i in dict[key]]
             if s:
                 if key in ["evidence_source", "evidence_description"]:
                     dict[key] = "|".join(str(i) for i in filtered_list)
-                else: dict[key] = ",".join(str(i) for i in filtered_list)
+                else:
+                    dict[key] = ",".join(str(i) for i in filtered_list)
             else:
                 dict[key] = ",".join(str(i) for i in filtered_list)
     return dict
@@ -259,10 +261,10 @@ def get_molecular_profile_information_from_variant(variant_obj):
     :rtype: dict
     """
     mol_profile_dict = {"mol_profile_name": "", "mol_profile_definition": "", "mol_profile_score": ""}
-    
+
     for mol_profile in variant_obj.molecular_profiles:
         try:
-            #mol_profile = variant_obj.molecular_profiles[0]
+            # mol_profile = variant_obj.molecular_profiles[0]
             new_dict = {
                 "mol_profile_name": mol_profile.name,
                 "mol_profile_definition": mol_profile.description,
@@ -323,8 +325,8 @@ def get_assertion_information_from_variant(variant_obj):
         "assertion_therapies_ncit_id": "",
         "assertion_therapies_aliases": "",
         "assertion_therapies_interaction_type": "",
-        "assertion_variant_origin": ""
-    }   
+        "assertion_variant_origin": "",
+    }
     for mol_prof in variant_obj.molecular_profiles:
         for assertion in mol_prof.assertions:
             try:
@@ -377,7 +379,6 @@ def get_assertion_information_from_variant(variant_obj):
     return smoothen_dict(assertion_dict, False)
 
 
-
 def get_evidence_information_from_variant(variant_obj):
     """
     Get all evidence from a single CIViC variant object
@@ -387,27 +388,27 @@ def get_evidence_information_from_variant(variant_obj):
     :return: Evidence information for respective CIViC variant object
     :rtype: dict
     """
-    
+
     evidence_dict = {
-            "evidence_name": "",
-            "evidence_description": "",
-            "evidence_disease": "",
-            "evidence_level": "",
-            "evidence_support": "",
-            "evidence_type": "",
-            "evidence_phenotypes": "",
-            "evidence_rating": "",
-            "evidence_significance": "",
-            "evidence_source": "",
-            "evidence_status": "",
-            "evidence_therapies": "",
-            "evidence_therapy_interaction_type": ""
-        }
-    
+        "evidence_name": "",
+        "evidence_description": "",
+        "evidence_disease": "",
+        "evidence_level": "",
+        "evidence_support": "",
+        "evidence_type": "",
+        "evidence_phenotypes": "",
+        "evidence_rating": "",
+        "evidence_significance": "",
+        "evidence_source": "",
+        "evidence_status": "",
+        "evidence_therapies": "",
+        "evidence_therapy_interaction_type": "",
+    }
+
     for mol_prof in variant_obj.molecular_profiles:
         for evidence in mol_prof.evidence:
             try:
-                #evidence = variant_obj.molecular_profiles[0].evidence[0]
+                # evidence = variant_obj.molecular_profiles[0].evidence[0]
                 new_dict = {
                     "evidence_name": evidence.name,
                     "evidence_description": evidence.description,
@@ -442,6 +443,7 @@ def get_evidence_information_from_variant(variant_obj):
             evidence_dict = append_to_dict(evidence_dict, new_dict)
 
     return smoothen_dict(evidence_dict, True)
+
 
 def get_positional_information_from_coord_obj(coord_obj):
     """

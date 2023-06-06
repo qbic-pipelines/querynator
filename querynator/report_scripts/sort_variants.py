@@ -36,10 +36,11 @@ def get_allele_freq_tiering(row):
         else:
             return False
 
+
 def get_min(e):
     """
     returns minimum of an input
-    
+
     :param e: string or np.nan
     :type e: str
     :return: min of string or np.nan
@@ -61,7 +62,7 @@ def subset_variants_into_tiers(row):
     :rtype: str
     """
     # check whether civic already provides AMP-based Tiers
-    
+
     if not pd.isnull(row["assertion_amp_level_CIVIC"]):
         if "TIER_I_" in row["assertion_amp_level_CIVIC"]:
             return "tier_1"
@@ -458,7 +459,7 @@ def scoring_variants(row):
 
     # Evidence associated CIViC
     score += generate_evidence_score(get_min(row["evidence_level_CIVIC"]))
-    
+
     # Evidence associated CGI
     score += generate_evidence_score(row["evidence_CGI"])
 

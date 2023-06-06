@@ -86,7 +86,7 @@ def get_disease_names_CIViC(row):
         row["evidence_disease_CIVIC"],
         row["assertion_disease_name_CIVIC"],
     ]
-    
+
     disease_list = [i for i in disease_rows if not pd.isnull(i)]
 
     if disease_list != []:
@@ -267,14 +267,14 @@ def encode_upsetplot(fig):
 def remove_dups(row):
     """
     Removes duplicates from string
-    
+
     :param row: row of pd DataFrame
     :type row: pd Series
     :return: row without duplicates
     :rtype: pd Series
     """
     return ", ".join(list(set(row.split(","))))
-    
+
 
 def create_tier_table(df, tier, report_path):
     """
@@ -297,7 +297,6 @@ def create_tier_table(df, tier, report_path):
 
     # assign "link col" to test
     tier_x["report_link"] = tier_x.apply(lambda x: create_link_col(x, report_path), axis=1)
-    
 
     # create new df structure for report
     # source | HGVS | Oncogenic Summary | Disease Name | Therapy Name | Evidence_Level | link
@@ -323,10 +322,10 @@ def create_tier_table(df, tier, report_path):
             "report_link": "Details",
         }
     )
-    
+
     # remove duplicates from therapies & diseases
-    tier_report_subset["Therapies"] = tier_report_subset["Therapies"].apply(lambda x : remove_dups(x))
-    tier_report_subset["Disease Name"] = tier_report_subset["Disease Name"].apply(lambda x : remove_dups(x))
+    tier_report_subset["Therapies"] = tier_report_subset["Therapies"].apply(lambda x: remove_dups(x))
+    tier_report_subset["Disease Name"] = tier_report_subset["Disease Name"].apply(lambda x: remove_dups(x))
 
     html_table = build_table(
         tier_report_subset,
@@ -458,10 +457,11 @@ def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
     else:
         return ""
 
+
 def split_cols(col, col_name):
     """
     splits specific string cols differently
-    
+
     :param col: The column of the dataframe.
     :type row: pandas.Series
     :param col_name: the name of the column
@@ -469,10 +469,10 @@ def split_cols(col, col_name):
     :return: Split column
     :rtype: pandas.Series
     """
-    if col_name not in ['evidence_description_CIVIC', 'evidence_source_CIVIC']:
-        return col.astype(str).str.split(',')
+    if col_name not in ["evidence_description_CIVIC", "evidence_source_CIVIC"]:
+        return col.astype(str).str.split(",")
     else:
-        return col.astype(str).str.split('.,')
+        return col.astype(str).str.split(".,")
 
 
 def create_evidence_table(row, width_dict):
@@ -493,7 +493,7 @@ def create_evidence_table(row, width_dict):
                 "evidence_support_CIVIC",
                 "evidence_disease_CIVIC",
                 "evidence_description_CIVIC",
-                "evidence_source_CIVIC"
+                "evidence_source_CIVIC",
             ]
         ]
         .to_frame()
@@ -501,7 +501,7 @@ def create_evidence_table(row, width_dict):
     )
     evidence_subset.columns = ["Name", "Type", "Level", "Significance", "Direction", "Disease", "Description", "Source"]
     evidence_subset.to_csv("bug/test.tsv", sep="\t")
-    #drop completly nan rows
+    # drop completly nan rows
     evidence_subset = evidence_subset.dropna(how="all")
     if not evidence_subset.empty:
         exploded_columns = evidence_subset.columns
@@ -509,24 +509,25 @@ def create_evidence_table(row, width_dict):
         for _, row in evidence_subset.iterrows():
             exploded_row = pd.DataFrame(
                 data=[
-                    pd.Series(row[col].split(",")) if col not in ["Description", "Source"] 
-                    else pd.Series(row[col].split("|")) 
+                    pd.Series(row[col].split(","))
+                    if col not in ["Description", "Source"]
+                    else pd.Series(row[col].split("|"))
                     for col in exploded_columns
                 ],
-                index=exploded_columns
+                index=exploded_columns,
             ).T
             exploded_data.append(exploded_row)
-                
+
         evidence_subset = pd.concat(exploded_data, ignore_index=True).sort_values("Level", ascending=True)
         return build_table(evidence_subset, color="blue_light", escape=False, width_dict=width_dict)
     else:
         return ""
-    
+
 
 def create_therapy_table(row, response, width_dict, biomarkers_df):
     """
     Creates a HTML table containing all Therapy & Drug related information provided by CGI for a specific Protein Change.
-    
+
     :param row: The row of the dataframe.
     :type row: pandas.Series
     :param response: The response to a specific drug.
@@ -564,7 +565,7 @@ def get_reference_build(metadata_path):
 def get_evidence_description(row):
     """
     takes in string of evidence descriptions and returns them as a HTML list
-    
+
     :param row: row of the dataframe
     :type row: pandas.core.series.Series
     :return: string of evidence descriptions
@@ -624,7 +625,11 @@ def retrieve_info_from_row(row, biomarkers_df, metadata_path):
     info_dict["LINKED_THERAPIES_CIVIC"] = (
         get_therapy_names(row, civic_only=True) if get_therapy_names(row, civic_only=True) != "" else "None"
     )
-    info_dict["EVIDENCE_LIST"] = create_evidence_table(row, ["5%", "5%", "5%", "5%", "5%", "5%", "65%", "5"]) if create_evidence_table(row, ["40%", "20%", "20%", "20%", "20%", "20%", "20%"]) != "" else "None"
+    info_dict["EVIDENCE_LIST"] = (
+        create_evidence_table(row, ["5%", "5%", "5%", "5%", "5%", "5%", "65%", "5"])
+        if create_evidence_table(row, ["40%", "20%", "20%", "20%", "20%", "20%", "20%"]) != ""
+        else "None"
+    )
     info_dict["LINKED_DRUGS_RESPONSIVE"] = (
         get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"])
         if get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"])
