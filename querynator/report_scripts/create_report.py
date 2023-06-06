@@ -108,11 +108,12 @@ def get_therapy_names(row, civic_only):
     if therapy_list != []:
         therapy_list = set([i.strip() for i in flatten(therapy_list)])
         therapy_str = ", ".join([i for i in set(therapy_list) if not i == ""])
-    if not pd.isnull(row["evidence_CGI"]) and not civic_only:
-        if therapy_list != []:
-            therapy_str = therapy_str + ", CGI (see Details)"
-        else:
-            therapy_str = "CGI (see Details)"
+    if not pd.isnull(row["evidence_CGI"]):
+        if not civic_only:
+            if therapy_list != []:
+                therapy_str = therapy_str + ", CGI (see Details)"
+            else:
+                therapy_str = "CGI (see Details)"
     else:
         return ""
 
