@@ -501,7 +501,6 @@ def create_evidence_table(row, width_dict):
         .T
     )
     evidence_subset.columns = ["Name", "Type", "Level", "Significance", "Direction", "Disease", "Description", "Source"]
-    evidence_subset.to_csv("bug/test.tsv", sep="\t")
     # drop completly nan rows
     evidence_subset = evidence_subset.dropna(how="all")
     if not evidence_subset.empty:
