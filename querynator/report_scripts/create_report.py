@@ -508,7 +508,7 @@ def create_evidence_table(row, width_dict):
         exploded_data = []
         for _, row in evidence_subset.iterrows():
             # replace nan values with empty string
-            row = row.fillna('')
+            row = row.fillna("")
             # explode row --> split the individual evidence annotations and create a single col for each
             exploded_row = pd.DataFrame(
                 data=[
