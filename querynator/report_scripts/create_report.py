@@ -504,7 +504,7 @@ def create_evidence_table(row, width_dict):
     # drop completly nan rows
     evidence_subset = evidence_subset.dropna(how="all")
     if not evidence_subset.empty:
-        exploded_columns = evidence_subset.columns
+        evidence_cols = evidence_subset.columns
         exploded_data = []
         for _, row in evidence_subset.iterrows():
             exploded_row = pd.DataFrame(
@@ -512,9 +512,9 @@ def create_evidence_table(row, width_dict):
                     pd.Series(row[col].split(","))
                     if col not in ["Description", "Source"]
                     else pd.Series(row[col].split("|"))
-                    for col in exploded_columns
+                    for col in evidence_cols
                 ],
-                index=exploded_columns,
+                index=evidence_cols,
             ).T
             exploded_data.append(exploded_row)
 
