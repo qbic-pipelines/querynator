@@ -1,6 +1,19 @@
 Changelog
 ============
 
+0.4.1 - Stormy Saturn  (2023-06-13)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Bug fixes to include all evidence of CIViC
+
+**Dependencies**
+
+**Deprecated**
+
 0.4.0 - Stormy Saturn  (2023-05-31)
 ---------------------------------------------
 
