@@ -8,7 +8,7 @@ Changelog
 
 **Fixed**
 
-* Bug fixes
+* Bug fixes to include all evidence of CIViC
 
 **Dependencies**
 
