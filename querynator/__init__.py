@@ -2,4 +2,4 @@
 
 __author__ = """Susanne Jodoin & Mark Polster"""
 __email__ = "susanne.jodoin@qbic.uni-tuebingen.de | mark.polster@uni-tuebingen.de"
-__version__ = "0.4.0"
+__version__ = "0.4.1"
