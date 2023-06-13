@@ -65,7 +65,7 @@ def assign_comb_evidence_labels(row):
         cgi_str = row["evidence_CGI"]
 
     if not pd.isnull(row["evidence_level_CIVIC"]):
-        civic_str = row["evidence_level_CIVIC"]
+        civic_str = min(row["evidence_level_CIVIC"].split(","))
 
     return f"{cgi_str}(cgi), {civic_str}(civic)"
 
@@ -86,10 +86,11 @@ def get_disease_names_CIViC(row):
         row["evidence_disease_CIVIC"],
         row["assertion_disease_name_CIVIC"],
     ]
+
     disease_list = [i for i in disease_rows if not pd.isnull(i)]
 
     if disease_list != []:
-        return ", ".join([i for i in disease_list])
+        return ", ".join([i for i in disease_list]).replace("nan", "")
     else:
         return ""
 
@@ -105,13 +106,14 @@ def get_therapy_names(row, civic_only):
     therapy_rows = [row["assertion_therapies_name_CIVIC"], row["evidence_therapies_CIVIC"]]
     therapy_list = [i.split(",") for i in therapy_rows if not pd.isnull(i)]
     if therapy_list != []:
-        therapy_list = [i.strip() for i in flatten(therapy_list)]
-        therapy_str = ", ".join([i for i in set(therapy_list)])
-    if not pd.isnull(row["evidence_CGI"]) and not civic_only:
-        if therapy_list != []:
-            therapy_str = therapy_str + ", CGI (see Details)"
-        else:
-            therapy_str = "CGI (see Details)"
+        therapy_list = set([i.strip() for i in flatten(therapy_list)])
+        therapy_str = ", ".join([i for i in set(therapy_list) if not i == ""])
+    if not pd.isnull(row["evidence_CGI"]):
+        if not civic_only:
+            if therapy_list != []:
+                therapy_str = therapy_str + ", CGI (see Details)"
+            else:
+                therapy_str = "CGI (see Details)"
     else:
         return ""
 
@@ -263,6 +265,18 @@ def encode_upsetplot(fig):
     return "<img src='data:image/png;base64,{}'>".format(encoded)
 
 
+def remove_dups(row):
+    """
+    Removes duplicates from string
+
+    :param row: row of pd DataFrame
+    :type row: pd Series
+    :return: row without duplicates
+    :rtype: pd Series
+    """
+    return ", ".join(list(set(row.split(","))))
+
+
 def create_tier_table(df, tier, report_path):
     """
     Creates a table for the report for the given tier
@@ -309,11 +323,16 @@ def create_tier_table(df, tier, report_path):
             "report_link": "Details",
         }
     )
+
+    # remove duplicates from therapies & diseases
+    tier_report_subset["Therapies"] = tier_report_subset["Therapies"].apply(lambda x: remove_dups(x))
+    tier_report_subset["Disease Name"] = tier_report_subset["Disease Name"].apply(lambda x: remove_dups(x))
+
     html_table = build_table(
         tier_report_subset,
         color="blue_light",
         escape=False,
-        width_dict=["100px", "300px", "200px", "200px", "200px", "100px", "auto"],
+        width_dict=["50px", "200px", "100px", "500px", "500px", "100px", "auto"],
         text_align="center",
     )
 
@@ -440,11 +459,30 @@ def get_therapy_information_CGI(row, biomarkers_df, response, width_dict):
         return ""
 
 
-def create_evidence_table(row):
+def split_cols(col, col_name):
+    """
+    splits specific string cols differently
+
+    :param col: The column of the dataframe.
+    :type row: pandas.Series
+    :param col_name: the name of the column
+    :type: col_name: str
+    :return: Split column
+    :rtype: pandas.Series
+    """
+    if col_name not in ["evidence_description_CIVIC", "evidence_source_CIVIC"]:
+        return col.astype(str).str.split(",")
+    else:
+        return col.astype(str).str.split(".,")
+
+
+def create_evidence_table(row, width_dict):
     """
     Creates a table containing CIViC evidence information for a specific variant.
     :param row: The row of the dataframe.
     :type row: pandas.Series
+    :param width_dict: A list containing the width of each column.
+    :type width_dict: list
     """
     evidence_subset = (
         row.loc[
@@ -452,17 +490,39 @@ def create_evidence_table(row):
                 "evidence_name_CIVIC",
                 "evidence_type_CIVIC",
                 "evidence_level_CIVIC",
-                "evidence_rating_CIVIC",
                 "evidence_significance_CIVIC",
                 "evidence_support_CIVIC",
+                "evidence_disease_CIVIC",
+                "evidence_description_CIVIC",
+                "evidence_source_CIVIC",
             ]
         ]
         .to_frame()
         .T
     )
-    evidence_subset.columns = ["Name", "Level", "Rating", "Type", "Significance", "Direction"]
-    if len(evidence_subset) > 0:
-        return build_table(evidence_subset, color="blue_light", escape=False)
+    evidence_subset.columns = ["Name", "Type", "Level", "Significance", "Direction", "Disease", "Description", "Source"]
+    # drop completly nan rows
+    evidence_subset = evidence_subset.dropna(how="all")
+    if not evidence_subset.empty:
+        evidence_cols = evidence_subset.columns
+        exploded_data = []
+        for _, row in evidence_subset.iterrows():
+            # replace nan values with empty string
+            row = row.fillna("")
+            # explode row --> split the individual evidence annotations and create a single col for each
+            exploded_row = pd.DataFrame(
+                data=[
+                    pd.Series(row[col].split(","))
+                    if col not in ["Description", "Source"]
+                    else pd.Series(row[col].split("|"))
+                    for col in evidence_cols
+                ],
+                index=evidence_cols,
+            ).T
+            exploded_data.append(exploded_row)
+
+        evidence_subset = pd.concat(exploded_data, ignore_index=True).sort_values("Level", ascending=True)
+        return build_table(evidence_subset, color="blue_light", escape=False, width_dict=width_dict)
     else:
         return ""
 
@@ -470,6 +530,7 @@ def create_evidence_table(row):
 def create_therapy_table(row, response, width_dict, biomarkers_df):
     """
     Creates a HTML table containing all Therapy & Drug related information provided by CGI for a specific Protein Change.
+
     :param row: The row of the dataframe.
     :type row: pandas.Series
     :param response: The response to a specific drug.
@@ -502,6 +563,18 @@ def get_reference_build(metadata_path):
             if line.startswith("Reference genome"):
                 return line.split(":")[1].strip()
         return ""
+
+
+def get_evidence_description(row):
+    """
+    takes in string of evidence descriptions and returns them as a HTML list
+
+    :param row: row of the dataframe
+    :type row: pandas.core.series.Series
+    :return: string of evidence descriptions
+    :rtype: str
+    """
+    pass
 
 
 def retrieve_info_from_row(row, biomarkers_df, metadata_path):
@@ -555,10 +628,11 @@ def retrieve_info_from_row(row, biomarkers_df, metadata_path):
     info_dict["LINKED_THERAPIES_CIVIC"] = (
         get_therapy_names(row, civic_only=True) if get_therapy_names(row, civic_only=True) != "" else "None"
     )
-    info_dict["EVIDENCE_LIST"] = create_evidence_table(row) if create_evidence_table(row) != "" else "None"
-    info_dict["CIVIC_SUMMARY"] = check_if_nan(row["assertion_summary_CIVIC"])
-    info_dict["ASSERTION_DESCRIPTION"] = check_if_nan(row["assertion_description_CIVIC"])
-    info_dict["EVIDENCE_DESCRIPTION"] = check_if_nan(row["evidence_description_CIVIC"])
+    info_dict["EVIDENCE_LIST"] = (
+        create_evidence_table(row, ["5%", "5%", "5%", "5%", "5%", "5%", "65%", "5"])
+        if create_evidence_table(row, ["40%", "20%", "20%", "20%", "20%", "20%", "20%"]) != ""
+        else "None"
+    )
     info_dict["LINKED_DRUGS_RESPONSIVE"] = (
         get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"])
         if get_therapy_information_CGI(row, biomarkers_df, "Responsive", ["40%", "20%", "20%", "20%", "20%", "20%"])
@@ -571,8 +645,6 @@ def retrieve_info_from_row(row, biomarkers_df, metadata_path):
         != ""
         else "None"
     )
-    info_dict["EVIDENCE_DESCRIPTION"] = check_if_nan(row["evidence_description_CIVIC"])
-    info_dict["LITERATURE_CIVIC"] = check_if_nan(row["evidence_source_CIVIC"])
 
     return info_dict
 

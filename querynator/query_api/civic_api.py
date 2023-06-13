@@ -144,6 +144,53 @@ def get_coordinates_from_vcf(input, build, logger):
     return coord_dict
 
 
+def append_to_dict(dict1, dict2):
+    """
+    appends values of a dictionary to another dictionary with lists as values
+    :param dict1: dictionary to append to
+    :type dict1: dict
+    :param dict2: dictionary with values to append
+    :type: dict2: dict
+    :return: appended dict
+    :rtype: dict
+    """
+    for key, value in dict2.items():
+        if key in dict1:
+            if type(dict1[key]) == list:
+                dict1[key].append(value)
+            else:
+                if dict1[key] == "":
+                    dict1[key] = dict2[key]
+                else:
+                    dict1[key] = [dict1[key], dict2[key]]
+
+    return dict1
+
+
+def smoothen_dict(dict, s):
+    """
+    makes string out of lists
+
+    :param dict: dict with lists as values
+    :type dict: dict
+    :param s: True if string and special string character needed
+    :type s: bool
+    :return: dict with strings as values
+    :rtype: dict
+    """
+    for key in dict:
+        if type(dict[key]) == list:
+            filtered_list = [i if i is not None else "" for i in dict[key]]
+            if s:
+                if key in ["evidence_source", "evidence_description"]:
+                    dict[key] = "|".join(str(i) for i in filtered_list)
+                else:
+                    dict[key] = ",".join(str(i) for i in filtered_list)
+            else:
+                dict[key] = ",".join(str(i) for i in filtered_list)
+    return dict
+
+
 def access_civic_by_coordinate(coord_dict, logger, build):
     """
     Query CIViC API for individual variants
@@ -213,16 +260,21 @@ def get_molecular_profile_information_from_variant(variant_obj):
     :return: Molecular profile information for respective CIViC variant object
     :rtype: dict
     """
-    try:
-        mol_profile = variant_obj.molecular_profiles[0]
-        mol_profile_dict = {
-            "mol_profile_name": mol_profile.name,
-            "mol_profile_definition": mol_profile.description,
-            "mol_profile_score": mol_profile.molecular_profile_score,
-        }
-    except IndexError:
-        mol_profile_dict = {"mol_profile_name": None, "mol_profile_definition": None, "mol_profile_score": None}
-    return mol_profile_dict
+    mol_profile_dict = {"mol_profile_name": "", "mol_profile_definition": "", "mol_profile_score": ""}
+
+    for mol_profile in variant_obj.molecular_profiles:
+        try:
+            # mol_profile = variant_obj.molecular_profiles[0]
+            new_dict = {
+                "mol_profile_name": mol_profile.name,
+                "mol_profile_definition": mol_profile.description,
+                "mol_profile_score": mol_profile.molecular_profile_score,
+            }
+        except IndexError:
+            new_dict = {"mol_profile_name": None, "mol_profile_definition": None, "mol_profile_score": None}
+        mol_profile_dict = append_to_dict(mol_profile_dict, new_dict)
+
+    return smoothen_dict(mol_profile_dict, False)
 
 
 def get_gene_information_from_variant(variant_obj):
@@ -253,54 +305,78 @@ def get_assertion_information_from_variant(variant_obj):
     :return: Assertion information for respective CIViC variant object
     :rtype: dict
     """
-    try:
-        assertion = variant_obj.molecular_profiles[0].assertions[0]
-        assertion_dict = {
-            "assertion_name": assertion.name,
-            "assertion_acmg_codes": ", ".join([i.code for i in assertion.acmg_codes]),
-            "assertion_acmg_codes_description": ", ".join([i.description for i in assertion.acmg_codes]),
-            "assertion_amp_level": assertion.amp_level,
-            "assertion_direction": assertion.assertion_direction,
-            "assertion_type": assertion.assertion_type,
-            "assertion_description": assertion.description,
-            "assertion_disease_name": ", ".join([i.name for i in assertion.disease]),
-            "assertion_disease_doid": ", ".join([i.doid for i in assertion.disease]),
-            "assertion_disease_url": ", ".join([i.disease_url for i in assertion.disease]),
-            "assertion_disease_aliases": ", ".join([i.aliases for i in assertion.disease]),
-            "assertion_phenotypes": ", ".join([i.name for i in assertion.phenotypes]),
-            "assertion_significance": assertion.significance,
-            "assertion_status": assertion.status,
-            "assertion_summary": assertion.summary,
-            "assertion_therapies_name": ", ".join([i.name for i in assertion.therapies]),
-            "assertion_therapies_ncit_id": ", ".join([i.ncit_id for i in assertion.therapies]),
-            "assertion_therapies_aliases": ", ".join([", ".join(i.aliases) for i in assertion.therapies]),
-            "assertion_therapies_interaction_type": assertion.therapy_interaction_type,
-            "assertion_variant_origin": assertion.variant_origin,
-        }
-    except IndexError:
-        assertion_dict = {
-            "assertion_name": np.nan,
-            "assertion_acmg_codes": np.nan,
-            "assertion_acmg_codes_description": np.nan,
-            "assertion_amp_level": np.nan,
-            "assertion_direction": np.nan,
-            "assertion_type": np.nan,
-            "assertion_description": np.nan,
-            "assertion_disease_name": np.nan,
-            "assertion_disease_doid": np.nan,
-            "assertion_disease_url": np.nan,
-            "assertion_disease_aliases": np.nan,
-            "assertion_phenotypes": np.nan,
-            "assertion_significance": np.nan,
-            "assertion_status": np.nan,
-            "assertion_summary": np.nan,
-            "assertion_therapies_name": np.nan,
-            "assertion_therapies_ncit_id": np.nan,
-            "assertion_therapies_aliases": np.nan,
-            "assertion_therapies_interaction_type": np.nan,
-            "assertion_variant_origin": np.nan,
-        }
-    return assertion_dict
+    assertion_dict = {
+        "assertion_name": "",
+        "assertion_acmg_codes": "",
+        "assertion_acmg_codes_description": "",
+        "assertion_amp_level": "",
+        "assertion_direction": "",
+        "assertion_type": "",
+        "assertion_description": "",
+        "assertion_disease_name": "",
+        "assertion_disease_doid": "",
+        "assertion_disease_url": "",
+        "assertion_disease_aliases": "",
+        "assertion_phenotypes": "",
+        "assertion_significance": "",
+        "assertion_status": "",
+        "assertion_summary": "",
+        "assertion_therapies_name": "",
+        "assertion_therapies_ncit_id": "",
+        "assertion_therapies_aliases": "",
+        "assertion_therapies_interaction_type": "",
+        "assertion_variant_origin": "",
+    }
+    for mol_prof in variant_obj.molecular_profiles:
+        for assertion in mol_prof.assertions:
+            try:
+                new_dict = {
+                    "assertion_name": assertion.name,
+                    "assertion_acmg_codes": ", ".join([i.code for i in assertion.acmg_codes]),
+                    "assertion_acmg_codes_description": ", ".join([i.description for i in assertion.acmg_codes]),
+                    "assertion_amp_level": assertion.amp_level,
+                    "assertion_direction": assertion.assertion_direction,
+                    "assertion_type": assertion.assertion_type,
+                    "assertion_description": assertion.description,
+                    "assertion_disease_name": ", ".join([i.name for i in assertion.disease]),
+                    "assertion_disease_doid": ", ".join([i.doid for i in assertion.disease]),
+                    "assertion_disease_url": ", ".join([i.disease_url for i in assertion.disease]),
+                    "assertion_disease_aliases": ", ".join([i.aliases for i in assertion.disease]),
+                    "assertion_phenotypes": ", ".join([i.name for i in assertion.phenotypes]),
+                    "assertion_significance": assertion.significance,
+                    "assertion_status": assertion.status,
+                    "assertion_summary": assertion.summary,
+                    "assertion_therapies_name": ", ".join([i.name for i in assertion.therapies]),
+                    "assertion_therapies_ncit_id": ", ".join([i.ncit_id for i in assertion.therapies]),
+                    "assertion_therapies_aliases": ", ".join([", ".join(i.aliases) for i in assertion.therapies]),
+                    "assertion_therapies_interaction_type": assertion.therapy_interaction_type,
+                    "assertion_variant_origin": assertion.variant_origin,
+                }
+            except IndexError:
+                new_dict = {
+                    "assertion_name": np.nan,
+                    "assertion_acmg_codes": np.nan,
+                    "assertion_acmg_codes_description": np.nan,
+                    "assertion_amp_level": np.nan,
+                    "assertion_direction": np.nan,
+                    "assertion_type": np.nan,
+                    "assertion_description": np.nan,
+                    "assertion_disease_name": np.nan,
+                    "assertion_disease_doid": np.nan,
+                    "assertion_disease_url": np.nan,
+                    "assertion_disease_aliases": np.nan,
+                    "assertion_phenotypes": np.nan,
+                    "assertion_significance": np.nan,
+                    "assertion_status": np.nan,
+                    "assertion_summary": np.nan,
+                    "assertion_therapies_name": np.nan,
+                    "assertion_therapies_ncit_id": np.nan,
+                    "assertion_therapies_aliases": np.nan,
+                    "assertion_therapies_interaction_type": np.nan,
+                    "assertion_variant_origin": np.nan,
+                }
+            assertion_dict = append_to_dict(assertion_dict, new_dict)
+    return smoothen_dict(assertion_dict, False)
 
 
 def get_evidence_information_from_variant(variant_obj):
@@ -312,40 +388,61 @@ def get_evidence_information_from_variant(variant_obj):
     :return: Evidence information for respective CIViC variant object
     :rtype: dict
     """
-    try:
-        evidence = variant_obj.molecular_profiles[0].assertions[0].evidence[0]
-        evidence_dict = {
-            "evidence_name": evidence.name,
-            "evidence_description": evidence.description,
-            "evidence_disease": evidence.disease,
-            "evidence_level": evidence.evidence_level,
-            "evidence_support": evidence.evidence_direction,
-            "evidence_type": evidence.evidence_type,
-            "evidence_phenotypes": ", ".join([i.name for i in evidence.phenotypes]),
-            "evidence_rating": evidence.rating,
-            "evidence_significance": evidence.significance,
-            "evidence_source": evidence.source,
-            "evidence_status": evidence.status,
-            "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
-            "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
-        }
-    except IndexError:
-        evidence_dict = {
-            "evidence_name": np.nan,
-            "evidence_description": np.nan,
-            "evidence_disease": np.nan,
-            "evidence_level": np.nan,
-            "evidence_support": np.nan,
-            "evidence_type": np.nan,
-            "evidence_phenotypes": np.nan,
-            "evidence_rating": np.nan,
-            "evidence_significance": np.nan,
-            "evidence_source": np.nan,
-            "evidence_status": np.nan,
-            "evidence_therapies": np.nan,
-            "evidence_therapy_interaction_type": np.nan,
-        }
-    return evidence_dict
+
+    evidence_dict = {
+        "evidence_name": "",
+        "evidence_description": "",
+        "evidence_disease": "",
+        "evidence_level": "",
+        "evidence_support": "",
+        "evidence_type": "",
+        "evidence_phenotypes": "",
+        "evidence_rating": "",
+        "evidence_significance": "",
+        "evidence_source": "",
+        "evidence_status": "",
+        "evidence_therapies": "",
+        "evidence_therapy_interaction_type": "",
+    }
+
+    for mol_prof in variant_obj.molecular_profiles:
+        for evidence in mol_prof.evidence:
+            try:
+                # evidence = variant_obj.molecular_profiles[0].evidence[0]
+                new_dict = {
+                    "evidence_name": evidence.name,
+                    "evidence_description": evidence.description,
+                    "evidence_disease": evidence.disease.name if type(evidence.disease) != dict else np.nan,
+                    "evidence_level": evidence.evidence_level,
+                    "evidence_support": evidence.evidence_direction,
+                    "evidence_type": evidence.evidence_type,
+                    "evidence_phenotypes": ", ".join([i.name for i in evidence.phenotypes]),
+                    "evidence_rating": evidence.rating,
+                    "evidence_significance": evidence.significance,
+                    "evidence_source": evidence.source.name,
+                    "evidence_status": evidence.status,
+                    "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
+                    "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
+                }
+            except IndexError:
+                new_dict = {
+                    "evidence_name": np.nan,
+                    "evidence_description": np.nan,
+                    "evidence_disease": np.nan,
+                    "evidence_level": np.nan,
+                    "evidence_support": np.nan,
+                    "evidence_type": np.nan,
+                    "evidence_phenotypes": np.nan,
+                    "evidence_rating": np.nan,
+                    "evidence_significance": np.nan,
+                    "evidence_source": np.nan,
+                    "evidence_status": np.nan,
+                    "evidence_therapies": np.nan,
+                    "evidence_therapy_interaction_type": np.nan,
+                }
+            evidence_dict = append_to_dict(evidence_dict, new_dict)
+
+    return smoothen_dict(evidence_dict, True)
 
 
 def get_positional_information_from_coord_obj(coord_obj):
