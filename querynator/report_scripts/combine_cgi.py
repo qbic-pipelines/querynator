@@ -297,17 +297,16 @@ def get_highest_evidence(row, biomarkers_linked):
     :rtype: str
     """
 
-    x = False
     if not pd.isnull(row["Protein Change_CGI"]):
         # escape special characters seen to be used in the Protein Change column
         if row["Protein Change_CGI"].startswith("*"):
             row["Protein Change_CGI"] = row["Protein Change_CGI"].replace("*", "\*")
-        for evidence in ["A", "B", "C", "D"]:
-            if not biomarkers_linked.loc[
-                (biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))
-                & (biomarkers_linked["Evidence"] == evidence)
-            ].empty:
-                return evidence
+
+        # highest evidence level has lowest char value (A<B<C<D)
+        max_evidence_level = biomarkers_linked.loc[(biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))]["Evidence"].min()
+
+        return max_evidence_level
+
     else:
         return row["Protein Change_CGI"]  # return nan
 
