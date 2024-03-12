@@ -258,12 +258,15 @@ def get_all_alterations(row):
     :return: link of biomarker to all related alterations
     :rtype: list
     """
-    if "wildtype" in row["Alterations"]:
-        # Alterations cell looks like this: PDGFRA wildtype
-        alteration_links = row["Alterations"]
-    else:
+    if "(" in row["Alterations"]:
         # Alterations cell looks like this: EGFR (P546S), EGFR (G598V), EGFR (E690K), EGFR (S768I)
         alteration_links = [j.split(")")[0] for j in [i.split("(")[1] for i in row["Alterations"].split(", ")]]
+    elif "wildtype" in row["Alterations"]:
+        # Alterations cell looks like this: PDGFRA wildtype
+        alteration_links = row["Alterations"].split(" ")[1]
+    else:
+        raise ValueError(f"Unrecognized alteration format in row {row.index}: {row['Alterations']}!")
+
     return alteration_links
 
 
