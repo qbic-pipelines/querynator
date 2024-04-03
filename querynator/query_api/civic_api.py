@@ -20,9 +20,6 @@ from querynator.helper_functions import (
     gzipped,
 )
 
-# load the civic cache (necessary for bulk run)
-civic.load_cache()
-
 
 def check_vcf_input(vcf_path, logger):
     """
@@ -609,6 +606,10 @@ def query_civic(vcf, out_path, logger, input_file, genome, filter_vep):
     :return: None
     :rtype: None
     """
+    # necessary for bulk run
+    logger.info("Updating CIViCpy Cache")
+    civic.load_cache()
+
     logger.info("Querying")
 
     coord_dict = get_coordinates_from_vcf(vcf, genome, logger)
