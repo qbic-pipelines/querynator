@@ -1,6 +1,5 @@
 """Query the cancergenomeinterpreter (CGI) via it's Web API"""
 
-
 import gzip
 import json
 import logging

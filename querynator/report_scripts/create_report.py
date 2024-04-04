@@ -512,9 +512,11 @@ def create_evidence_table(row, width_dict):
             # explode row --> split the individual evidence annotations and create a single col for each
             exploded_row = pd.DataFrame(
                 data=[
-                    pd.Series(row[col].split(","))
-                    if col not in ["Description", "Source"]
-                    else pd.Series(row[col].split("|"))
+                    (
+                        pd.Series(row[col].split(","))
+                        if col not in ["Description", "Source"]
+                        else pd.Series(row[col].split("|"))
+                    )
                     for col in evidence_cols
                 ],
                 index=evidence_cols,
