@@ -263,7 +263,7 @@ def get_all_alterations(row):
         alteration_links = [j.split(")")[0] for j in [i.split("(")[1] for i in row["Alterations"].split(", ")]]
     elif "wildtype" in row["Alterations"]:
         # Alterations cell looks like this: PDGFRA wildtype
-        alteration_links = row["Alterations"].split(" ")[1]
+        alteration_links = row["Alterations"]
     else:
         raise ValueError(f"Unrecognized alteration format in row {row.index}: {row['Alterations']}!")
 
@@ -314,6 +314,27 @@ def get_highest_evidence(row, biomarkers_linked):
         return row["Protein Change_CGI"]  # return nan
 
 
+def check_wildtypes(biomarkers: pd.DataFrame, vcf: pd.DataFrame, logger) -> None:
+    """
+    check if cgi wildtype hits actually have no variants in gene present. Will write warning or info to logs.
+
+    :biomarkers : the dataframe containing the cgi result 'biomarkers.tsv'
+    :vcf        : the vep annotated vcf, parsed as a dataframe
+    :return     : None
+    """
+    wt_biomarkers = biomarkers[biomarkers["Alterations"].str.contains("wildtype")]
+    wt_biomarkers["Gene"] = wt_biomarkers["Alterations"].str.split(" ").str[0]
+    # variants from vcf that map to genes, which CGI has marked as wildtype
+    wt_genes_variant_hits = vcf[vcf["SYMBOL_VEP"].isin(wt_biomarkers["Gene"])]
+
+    if not wt_genes_variant_hits.empty:
+        logger.warning(f"There are variants in genes marked as wildtype by CGI {wt_genes_variant_hits['Gene_VEP'].unique()}")
+    
+    logger.info("CGI marked wildtype hits\n" + str(wt_biomarkers[["Alterations", "Diseases", "Evidence", "BioM"]]))
+
+    return
+    
+
 def combine_cgi(cgi_path, outdir, logger):
     """
     Command to combine the cgi results with the vcf's VEP annotation
@@ -344,6 +365,8 @@ def combine_cgi(cgi_path, outdir, logger):
     # link alterations in biomarkers
     biomarkers_df = link_biomarkers(biomarkers_df)
     biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t", index=False)
+
+    check_wildtypes(biomarkers_df, vep_df, logger)
 
     # add CGI evidence col to merged_df
 
