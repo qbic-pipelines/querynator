@@ -280,10 +280,8 @@ def link_biomarkers(biomarkers_df):
     :rtype: pandas DataFrame
     """
     # only works when biomarkers_df is not an empty df
-    try:
-        biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
-    except ValueError:
-        biomarkers_df["alterations_link"] = ""
+    
+    biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
 
     return biomarkers_df
 
