@@ -274,13 +274,11 @@ def link_biomarkers(biomarkers_df):
     """
     add alteration-link column to "biomarkers.tsv"
 
-    :param biomarkers_df: pd DataFrame of the projects "biomarkers.tsv"
+    :param biomarkers_df: pd DataFrame of the projects "biomarkers.tsv". Must not be empty!
     :type biomarkers_df: pandas DataFrame
     :return: DataFrame of biomarkers with additional alteration-link col
     :rtype: pandas DataFrame
     """
-    # only works when biomarkers_df is not an empty df
-    
     biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
 
     return biomarkers_df
@@ -304,7 +302,9 @@ def get_highest_evidence(row, biomarkers_linked):
             row["Protein Change_CGI"] = row["Protein Change_CGI"].replace("*", "\*")
 
         # highest evidence level has lowest char value (A<B<C<D)
-        max_evidence_level = biomarkers_linked.loc[(biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))]["Evidence"].min()
+        max_evidence_level = biomarkers_linked.loc[
+            (biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))
+        ]["Evidence"].min()
 
         return max_evidence_level
 
@@ -326,12 +326,14 @@ def check_wildtypes(biomarkers: pd.DataFrame, vcf: pd.DataFrame, logger) -> None
     wt_genes_variant_hits = vcf[vcf["SYMBOL_VEP"].isin(wt_biomarkers["Gene"])]
 
     if not wt_genes_variant_hits.empty:
-        logger.warning(f"There are variants in genes marked as wildtype by CGI {wt_genes_variant_hits['Gene_VEP'].unique()}")
-    
+        logger.warning(
+            f"There are variants in genes marked as wildtype by CGI {wt_genes_variant_hits['Gene_VEP'].unique()}"
+        )
+
     logger.info("CGI marked wildtype hits\n" + str(wt_biomarkers[["Alterations", "Diseases", "Evidence", "BioM"]]))
 
     return
-    
+
 
 def combine_cgi(cgi_path, outdir, logger):
     """
