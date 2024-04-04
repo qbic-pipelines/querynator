@@ -1,4 +1,5 @@
 """Command line interface querynator."""
+
 import json
 import logging
 import os
