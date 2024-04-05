@@ -2,7 +2,7 @@
 querynator
 ==========
 
-
+foo
 .. image:: https://img.shields.io/pypi/v/querynator.svg
         :target: https://pypi.python.org/pypi/querynator
 
