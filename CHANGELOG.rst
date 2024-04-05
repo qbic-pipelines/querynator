@@ -1,6 +1,20 @@
 Changelog
 ============
 
+0.4.2 - Stormy Saturn  (2023-04-05)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* Bug fixes to handle new CGI wildtype biomarkers
+
+**Dependencies**
+
+**Deprecated**
+
+
 0.4.1 - Stormy Saturn  (2023-06-13)
 ---------------------------------------------
 
