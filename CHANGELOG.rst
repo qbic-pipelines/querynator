@@ -10,6 +10,7 @@ Changelog
 
 * Bug fixes to handle new CGI wildtype biomarkers
 * civicpy cache will only be updated when civic is queried
+
 **Dependencies**
 
 **Deprecated**
