@@ -197,7 +197,7 @@ def delete_job_cgi(url, headers, output, logger):
         )
 
 
-def add_cgi_metadata(url, output, original_input, genome, filter_vep):
+def add_cgi_metadata(url, output, original_input, genome, filter_vep, logger):
     """
     Attach metadata to cgi query
 
@@ -207,6 +207,8 @@ def add_cgi_metadata(url, output, original_input, genome, filter_vep):
     :type output: str
     :param filter_vep: flag whether VEP based filtering should be performed
     :type filter_vep: bool
+    :param logger: prints info to console
+    :type logger: logging.Logger
     :return: None
     :raises: BadZipfile
 
@@ -267,5 +269,5 @@ def query_cgi(mutations, cnas, translocations, genome, cancer, headers, logger, 
     if done:
         logger.info("Downloading CGI results")
         download_cgi(url, headers, output, logger)
-        add_cgi_metadata(url, output, original_input, genome, filter_vep)
+        add_cgi_metadata(url, output, original_input, genome, filter_vep, logger)
         delete_job_cgi(url, headers, output, logger)

@@ -116,3 +116,7 @@ cgi_results/*
 
 # Development tests
 dev_tests/
+
+# debug files
+example_files/*_debug*
+.gitignore

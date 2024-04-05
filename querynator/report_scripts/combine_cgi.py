@@ -249,33 +249,44 @@ def merge_alterations_vep(vep_df, alterations_df):
     return alterations_vep
 
 
-def get_all_alterations(row):
+def get_all_alterations(row, logger):
     """
     extract only the alteration strings from the "Alterations" col in biomarkers.tsv
 
     :param row: row of a pandas DataFrame
     :type row: pandas Series
+    :param logger: the logger
+    :type logger: logger object
     :return: link of biomarker to all related alterations
     :rtype: list
     """
-    alteration_links = [j.split(")")[0] for j in [i.split("(")[1] for i in row["Alterations"].split(", ")]]
+    if row["Alterations"] is None:
+        return np.nan
+    elif "(" in row["Alterations"]:
+        # Alterations cell looks like this: EGFR (P546S), EGFR (G598V), EGFR (E690K), EGFR (S768I)
+        alteration_links = [j.split(")")[0] for j in [i.split("(")[1] for i in row["Alterations"].split(", ")]]
+    elif "wildtype" in row["Alterations"]:
+        # Alterations cell looks like this: PDGFRA wildtype
+        alteration_links = row["Alterations"]
+    else:
+        logger.warning(f"Unrecognized alteration format in row {row.index}: {row['Alterations']}!")
+        return np.nan
+
     return alteration_links
 
 
-def link_biomarkers(biomarkers_df):
+def link_biomarkers(biomarkers_df, logger):
     """
     add alteration-link column to "biomarkers.tsv"
 
-    :param biomarkers_df: pd DataFrame of the projects "biomarkers.tsv"
+    :param biomarkers_df: pd DataFrame of the projects "biomarkers.tsv".
     :type biomarkers_df: pandas DataFrame
+    :param logger: the logger
+    :type logger: logger object
     :return: DataFrame of biomarkers with additional alteration-link col
     :rtype: pandas DataFrame
     """
-    # only works when biomarkers_df is not an empty df
-    try:
-        biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
-    except ValueError:
-        biomarkers_df["alterations_link"] = ""
+    biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x, logger), axis=1)
 
     return biomarkers_df
 
@@ -292,19 +303,43 @@ def get_highest_evidence(row, biomarkers_linked):
     :rtype: str
     """
 
-    x = False
     if not pd.isnull(row["Protein Change_CGI"]):
         # escape special characters seen to be used in the Protein Change column
         if row["Protein Change_CGI"].startswith("*"):
             row["Protein Change_CGI"] = row["Protein Change_CGI"].replace("*", "\*")
-        for evidence in ["A", "B", "C", "D"]:
-            if not biomarkers_linked.loc[
-                (biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))
-                & (biomarkers_linked["Evidence"] == evidence)
-            ].empty:
-                return evidence
+
+        # highest evidence level has lowest char value (A<B<C<D)
+        max_evidence_level = biomarkers_linked.loc[
+            (biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))
+        ]["Evidence"].min()
+
+        return max_evidence_level
+
     else:
         return row["Protein Change_CGI"]  # return nan
+
+
+def check_wildtypes(biomarkers: pd.DataFrame, vcf: pd.DataFrame, logger) -> None:
+    """
+    check if cgi wildtype hits actually have no variants in gene present. Will write warning or info to logs.
+
+    :biomarkers : the dataframe containing the cgi result 'biomarkers.tsv'
+    :vcf        : the vep annotated vcf, parsed as a dataframe
+    :return     : None
+    """
+    wt_biomarkers = biomarkers[biomarkers["Alterations"].str.contains("wildtype")]
+    wt_biomarkers["Gene"] = wt_biomarkers["Alterations"].str.split(" ").str[0]
+    # variants from vcf that map to genes, which CGI has marked as wildtype
+    wt_genes_variant_hits = vcf[vcf["SYMBOL_VEP"].isin(wt_biomarkers["Gene"])]
+
+    if not wt_genes_variant_hits.empty:
+        logger.warning(
+            f"There are variants in genes marked as wildtype by CGI {wt_genes_variant_hits['Gene_VEP'].unique()}"
+        )
+
+    logger.info("CGI marked wildtype hits\n" + str(wt_biomarkers[["Alterations", "Diseases", "Evidence", "BioM"]]))
+
+    return
 
 
 def combine_cgi(cgi_path, outdir, logger):
@@ -335,8 +370,10 @@ def combine_cgi(cgi_path, outdir, logger):
     merged_df = merge_alterations_vep(vep_df, alterations_df)
 
     # link alterations in biomarkers
-    biomarkers_df = link_biomarkers(biomarkers_df)
+    biomarkers_df = link_biomarkers(biomarkers_df, logger)
     biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t", index=False)
+
+    check_wildtypes(biomarkers_df, vep_df, logger)
 
     # add CGI evidence col to merged_df
 

@@ -722,7 +722,6 @@ def create_report_htmls(outdir, basename, civic_path, logger):
     vep_civic_cgi_merge["evidence_levels_comb"] = vep_civic_cgi_merge.apply(
         lambda x: assign_comb_evidence_labels(x), axis=1
     )
-    vep_civic_cgi_merge["report_name"] = add_variant_name_report(vep_civic_cgi_merge)
 
     # create "pretty_html_tables" for each tier
     tier_list = ["tier_1", "tier_2", "tier_3"]
