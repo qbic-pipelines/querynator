@@ -249,17 +249,19 @@ def merge_alterations_vep(vep_df, alterations_df):
     return alterations_vep
 
 
-def get_all_alterations(row):
+def get_all_alterations(row, logger):
     """
     extract only the alteration strings from the "Alterations" col in biomarkers.tsv
 
     :param row: row of a pandas DataFrame
     :type row: pandas Series
+    :param logger: the logger
+    :type logger: logger object
     :return: link of biomarker to all related alterations
     :rtype: list
     """
     if row["Alterations"] is None:
-        return None
+        return np.nan
     elif "(" in row["Alterations"]:
         # Alterations cell looks like this: EGFR (P546S), EGFR (G598V), EGFR (E690K), EGFR (S768I)
         alteration_links = [j.split(")")[0] for j in [i.split("(")[1] for i in row["Alterations"].split(", ")]]
@@ -267,21 +269,24 @@ def get_all_alterations(row):
         # Alterations cell looks like this: PDGFRA wildtype
         alteration_links = row["Alterations"]
     else:
-        raise ValueError(f"Unrecognized alteration format in row {row.index}: {row['Alterations']}!")
+        logger.warning(f"Unrecognized alteration format in row {row.index}: {row['Alterations']}!")
+        return np.nan
 
     return alteration_links
 
 
-def link_biomarkers(biomarkers_df):
+def link_biomarkers(biomarkers_df, logger):
     """
     add alteration-link column to "biomarkers.tsv"
 
     :param biomarkers_df: pd DataFrame of the projects "biomarkers.tsv".
     :type biomarkers_df: pandas DataFrame
+    :param logger: the logger
+    :type logger: logger object
     :return: DataFrame of biomarkers with additional alteration-link col
     :rtype: pandas DataFrame
     """
-    biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x), axis=1)
+    biomarkers_df["alterations_link"] = biomarkers_df.apply(lambda x: get_all_alterations(x, logger), axis=1)
 
     return biomarkers_df
 
@@ -365,7 +370,7 @@ def combine_cgi(cgi_path, outdir, logger):
     merged_df = merge_alterations_vep(vep_df, alterations_df)
 
     # link alterations in biomarkers
-    biomarkers_df = link_biomarkers(biomarkers_df)
+    biomarkers_df = link_biomarkers(biomarkers_df, logger)
     biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t", index=False)
 
     check_wildtypes(biomarkers_df, vep_df, logger)
