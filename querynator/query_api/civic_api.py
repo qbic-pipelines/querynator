@@ -17,7 +17,7 @@ from civicpy import civic
 from querynator.helper_functions import (
     get_num_from_chr,
     gunzip_compressed_files,
-    gzipped,
+    gzipped
 )
 
 
@@ -376,12 +376,14 @@ def get_assertion_information_from_variant(variant_obj):
     return smoothen_dict(assertion_dict, False)
 
 
-def get_evidence_information_from_variant(variant_obj):
+def get_evidence_information_from_variant(variant_obj, disease):
     """
     Get all evidence from a single CIViC variant object
 
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
+    :param disease: the patients cancer type as Disease Ontology Name
+    :type disease: str
     :return: Evidence information for respective CIViC variant object
     :rtype: dict
     """
@@ -421,6 +423,15 @@ def get_evidence_information_from_variant(variant_obj):
                     "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
                     "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
                 }
+                if evidence.disease.name != disease:
+                    if evidence.evidence_level == "A":
+                        # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
+                        new_dict["evidence_level"] = "C"
+                        new_dict["evidence_disease"] = disease
+                    else:
+                        # evidence item is irrelevant for this tumor
+                        continue
+
             except IndexError:
                 new_dict = {
                     "evidence_name": np.nan,
@@ -466,7 +477,7 @@ def get_querynator_id(querynator_id):
     return {"querynator_id": querynator_id}
 
 
-def concat_dicts(coord_id_dict, variant_obj, filter_vep):
+def concat_dicts(coord_id_dict, variant_obj, disease, filter_vep):
     """
     Create and combine different dictionaries created for single CIViC variant object
 
@@ -474,6 +485,8 @@ def concat_dicts(coord_id_dict, variant_obj, filter_vep):
     :type coord_obj: CIViC CoordinateQuery Object
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
+    :param disease: the patients cancer type as Disease Ontology Name
+    :type disease: str
     :return: All information for respective CIViC variant object
     :rtype: dict
     """
@@ -482,7 +495,7 @@ def concat_dicts(coord_id_dict, variant_obj, filter_vep):
     gene_info = get_gene_information_from_variant(variant_obj[0])
     mol_profile_info = get_molecular_profile_information_from_variant(variant_obj[0])
     assertion_info = get_assertion_information_from_variant(variant_obj[0])
-    evidence_info = get_evidence_information_from_variant(variant_obj[0])
+    evidence_info = get_evidence_information_from_variant(variant_obj[0], disease)
     if filter_vep:
         querynator_id_info = get_querynator_id(coord_id_dict[list(coord_id_dict.keys())[0]])
         return {
@@ -498,7 +511,7 @@ def concat_dicts(coord_id_dict, variant_obj, filter_vep):
         return {**coordinates_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
 
 
-def create_civic_results(variant_list, out_path, logger, filter_vep):
+def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     """
     Combine result dictionaries of all CIViC variant objects
     to a table and write it to user-specified file
@@ -507,6 +520,8 @@ def create_civic_results(variant_list, out_path, logger, filter_vep):
     :type variant_list: list
     :param out_path: Name for directory in which result-table will be stored
     :type out_path: str
+    :param disease: the patients cancer type as Disease Ontology Name
+    :type disease: str
     :param filter_vep: flag whether VEP based filtering should be performed
     :type filter_vep: bool
     :return: None
@@ -514,7 +529,7 @@ def create_civic_results(variant_list, out_path, logger, filter_vep):
     """
     civic_result_df = pd.DataFrame()
     for coord_id_dict, variant in variant_list:
-        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant, filter_vep), ignore_index=True)
+        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant, disease, filter_vep), ignore_index=True)
 
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
@@ -591,7 +606,7 @@ def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
         f.close()
 
 
-def query_civic(vcf, out_path, logger, input_file, genome, filter_vep):
+def query_civic(vcf, out_path, logger, input_file, genome, disease, filter_vep):
     """
     Command to query the CIViC API
 
@@ -601,6 +616,8 @@ def query_civic(vcf, out_path, logger, input_file, genome, filter_vep):
     :type out_path: str
     :param input_file: path of original input file
     :type input_file: str
+    :param disease: the patients cancer type as Disease Ontology Name
+    :type disease: str
     :param filter_vep: flag whether VEP based filtering should be performed
     :type filter_vep: bool
     :return: None
@@ -618,7 +635,7 @@ def query_civic(vcf, out_path, logger, input_file, genome, filter_vep):
     coord_dict = sort_coord_list(coord_dict)
 
     # create result table
-    create_civic_results(access_civic_by_coordinate(coord_dict, logger, genome), out_path, logger, filter_vep)
+    create_civic_results(access_civic_by_coordinate(coord_dict, logger, genome), out_path, disease, logger, filter_vep)
     add_civic_metadata(out_path, input_file, "exact", genome, filter_vep)
 
     logger.info("CIViC Analysis done")
