@@ -10,7 +10,7 @@ from querynator.helper_functions import ontology
 
 
 class testCLI(unittest.TestCase):
-    
+
     def test_commandLineInterface(self):
         """Test the CLI."""
         runner = CliRunner()
@@ -46,6 +46,7 @@ class testCLI(unittest.TestCase):
         result = runner.invoke(querynator.__main__.querynator_cli, ["query-api-cgi", "--baz"])
         assert result.exit_code == 2
         assert "No such option" in result.output
+
 
 class testOntology(unittest.TestCase):
     """Test the ontology classes"""

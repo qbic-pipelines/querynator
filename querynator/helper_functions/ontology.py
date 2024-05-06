@@ -2,9 +2,10 @@ from abc import ABC, abstractmethod
 import re
 from typing import List
 
+
 class Ontology(ABC):
     """Abstract class for ontologies.
-    
+
     Ontologies represent hierarchical relationships between terms.
     """
 
@@ -15,7 +16,7 @@ class Ontology(ABC):
         self.path = path
         self.ids = set()
         self.names = set()
-    
+
     @abstractmethod
     def get_all_ancestors(self, query_term):
         pass
@@ -26,20 +27,19 @@ class Ontology(ABC):
 
     def __contains__(self, item):
         return item in self.terms
-    
+
     def __repr__(self):
         return f"<Ontology.{self.__class__.__name__} {self.path}>"
-
 
     class Term:
         """represents an ontology term"""
 
-        def __init__(self, fields: dict, relationships: List['Ontology.Relationship']=None):
+        def __init__(self, fields: dict, relationships: List["Ontology.Relationship"] = None):
             try:
-                self.id = fields['id']
+                self.id = fields["id"]
             except KeyError:
                 raise ValueError("The 'id' field is required")
-            
+
             self.fields = fields
             self.relationships = relationships
 
@@ -61,11 +61,10 @@ class Ontology(ABC):
 
         def __getattr__(self, attr):
             return self.fields.get(attr)
-        
+
         def get(self, field):
             return self.fields.get(field)
 
-        
     class Relationship:
         """represents a relationship between two ontology terms"""
 
@@ -93,26 +92,26 @@ class Ontology(ABC):
 
 class DO(Ontology):
     """This class represents the Disease Ontology (DO)
-    
+
     www.disease-ontology.org
     """
-    
+
     def __init__(self, path):
         self.terms = {}
         self.ids = set()
         self.names = set()
         self.path = path
 
-        with open(path, 'r') as file:
+        with open(path, "r") as file:
             content = file.read()
-            terms = re.findall(r'\[Term\]\n(.*?)\n\n', content, re.DOTALL)
+            terms = re.findall(r"\[Term\]\n(.*?)\n\n", content, re.DOTALL)
             for term in terms:
                 term_dict = {}
-                lines = term.split('\n')
+                lines = term.split("\n")
                 for line in lines:
                     if line:
                         # parse fields into dict
-                        key, value = line.split(': ', 1)
+                        key, value = line.split(": ", 1)
                         if key in term_dict:
                             if isinstance(term_dict[key], list):
                                 term_dict[key].append(value)
@@ -121,11 +120,13 @@ class DO(Ontology):
                         else:
                             term_dict[key] = value
                 # create term object
-                is_a_values = term_dict.get('is_a')
+                is_a_values = term_dict.get("is_a")
                 if isinstance(is_a_values, list):
-                    relationships = [self.Relationship(term_dict.get("id"), "is_a", other.split(' ! ')[0]) for other in is_a_values]
+                    relationships = [
+                        self.Relationship(term_dict.get("id"), "is_a", other.split(" ! ")[0]) for other in is_a_values
+                    ]
                 elif isinstance(is_a_values, str):
-                    relationships = [self.Relationship(term_dict.get("id"), "is_a", is_a_values.split(' ! ')[0])]
+                    relationships = [self.Relationship(term_dict.get("id"), "is_a", is_a_values.split(" ! ")[0])]
                 else:
                     relationships = []
                 new_term = self.Term(term_dict, relationships)
@@ -136,7 +137,7 @@ class DO(Ontology):
 
     def get(self, query):
         """retrieve a term from the ontology
-        
+
         query can be one of id (str), id (int), or name (str)
         examples: "DOID:4947", 4947, "cholangiocarcinoma"
         """
@@ -152,10 +153,10 @@ class DO(Ontology):
                     return self.get_from_name(query.lower())
         else:
             raise ValueError(f"Invalid query type: {type(query)}")
-    
+
     def get_from_name(self, name) -> Ontology.Term:
         """retrieve a term from the ontology by name
-        
+
         :param name: the name of the term to retrieve
         :type  name: str
         :return: the term object if found, None otherwise
@@ -165,7 +166,7 @@ class DO(Ontology):
                 return term
         else:
             return None
-        
+
     def get_all_ancestors(self, query_term, includeSelf=False) -> list:
         # Get the term corresponding to the query DOID
         term = self.get(query_term)
@@ -178,7 +179,7 @@ class DO(Ontology):
                 current_term = stack.pop()
                 visited.add(current_term.id)
 
-                for parent in [self.get(rel.T2) for rel in term.relationships if rel.rtype == 'is_a']:
+                for parent in [self.get(rel.T2) for rel in term.relationships if rel.rtype == "is_a"]:
                     if parent.id not in visited:
                         ancestors.add(parent)
                         # Add the parent term to the stack for further traversal
@@ -193,7 +194,8 @@ class DO(Ontology):
 
 class OncoTree(Ontology):
     """This class represents the OncoTree ontology
-    
+
     http://oncotree.info/
     """
+
     ...

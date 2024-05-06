@@ -14,12 +14,7 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-from querynator.helper_functions import (
-    get_num_from_chr,
-    gunzip_compressed_files,
-    gzipped,
-    ontology
-)
+from querynator.helper_functions import get_num_from_chr, gunzip_compressed_files, gzipped, ontology
 
 
 def check_vcf_input(vcf_path, logger):
@@ -536,9 +531,11 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     doid = ontology.DO("querynator/helper_functions/doid.obo")
     diseases = doid.get(disease), doid.get_all_ancestors(disease)
     logger.info(f"Mapped specified disease {disease} to Disease Ontology {str(diseases[0])}")
-    
+
     for coord_id_dict, variant in variant_list:
-        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant, diseases, filter_vep), ignore_index=True)
+        civic_result_df = civic_result_df.append(
+            concat_dicts(coord_id_dict, variant, diseases, filter_vep), ignore_index=True
+        )
 
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
