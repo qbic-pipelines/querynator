@@ -74,7 +74,7 @@ class Ontology(ABC):
             self.rtype = rtype
             self.T2 = term2
 
-        def __str__(self):
+        def __repr__(self):
             return f"Relationship: {self.T1} {self.rtype} {self.T2}"
 
         def __eq__(self, other):
