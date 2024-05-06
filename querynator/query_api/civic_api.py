@@ -419,18 +419,6 @@ def get_evidence_information_from_variant(variant_obj, diseases):
                     "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
                     "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
                 }
-
-                # check special rules for evidences and cancer types
-                disease, allowed_diseases = diseases
-                if evidence.disease.name not in allowed_diseases:
-                    if evidence.evidence_level == "A":
-                        # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
-                        new_dict["evidence_level"] = "C"
-                        new_dict["evidence_disease"] = disease.name
-                    else:
-                        # evidence item is irrelevant for this tumor
-                        continue
-
             except IndexError:
                 new_dict = {
                     "evidence_name": np.nan,
@@ -447,6 +435,18 @@ def get_evidence_information_from_variant(variant_obj, diseases):
                     "evidence_therapies": np.nan,
                     "evidence_therapy_interaction_type": np.nan,
                 }
+
+            # check special rules for evidences and cancer types
+            disease, allowed_diseases = diseases
+            if disease and allowed_diseases and evidence.disease.name not in allowed_diseases:
+                if evidence.evidence_level == "A":
+                    # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
+                    new_dict["evidence_level"] = "C"
+                    new_dict["evidence_disease"] = disease.name
+                else:
+                    # evidence item is irrelevant for this tumor
+                    continue
+
             evidence_dict = append_to_dict(evidence_dict, new_dict)
 
     return smoothen_dict(evidence_dict, True)
@@ -528,9 +528,12 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     """
     civic_result_df = pd.DataFrame()
 
-    doid = ontology.DO("querynator/helper_functions/doid.obo")
-    diseases = doid.get(disease), doid.get_all_ancestors(disease)
-    logger.info(f"Mapped specified disease {disease} to Disease Ontology {str(diseases[0])}")
+    if disease:
+        doid = ontology.DO("querynator/helper_functions/doid.obo")
+        diseases = doid.get(disease), doid.get_all_ancestors(disease)
+        logger.info(f"Mapped specified disease {disease} to Disease Ontology {str(diseases[0])}")
+    else:
+        diseases = None, None
 
     for coord_id_dict, variant in variant_list:
         civic_result_df = civic_result_df.append(
