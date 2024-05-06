@@ -17,7 +17,8 @@ from civicpy import civic
 from querynator.helper_functions import (
     get_num_from_chr,
     gunzip_compressed_files,
-    gzipped
+    gzipped,
+    ontology
 )
 
 
@@ -376,14 +377,14 @@ def get_assertion_information_from_variant(variant_obj):
     return smoothen_dict(assertion_dict, False)
 
 
-def get_evidence_information_from_variant(variant_obj, disease):
+def get_evidence_information_from_variant(variant_obj, diseases):
     """
     Get all evidence from a single CIViC variant object
 
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :param disease: the patients cancer type as Disease Ontology Name
-    :type disease: str
+    :param diseases: the patients cancer type as Disease Ontology Name or id and a list of allowed diseases that will count as matches
+    :type diseases: tuple (Ontology.Term, list)
     :return: Evidence information for respective CIViC variant object
     :rtype: dict
     """
@@ -423,11 +424,14 @@ def get_evidence_information_from_variant(variant_obj, disease):
                     "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
                     "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
                 }
-                if evidence.disease.name != disease:
+
+                # check special rules for evidences and cancer types
+                disease, allowed_diseases = diseases
+                if evidence.disease.name not in allowed_diseases:
                     if evidence.evidence_level == "A":
                         # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
                         new_dict["evidence_level"] = "C"
-                        new_dict["evidence_disease"] = disease
+                        new_dict["evidence_disease"] = disease.name
                     else:
                         # evidence item is irrelevant for this tumor
                         continue
@@ -477,7 +481,7 @@ def get_querynator_id(querynator_id):
     return {"querynator_id": querynator_id}
 
 
-def concat_dicts(coord_id_dict, variant_obj, disease, filter_vep):
+def concat_dicts(coord_id_dict, variant_obj, diseases, filter_vep):
     """
     Create and combine different dictionaries created for single CIViC variant object
 
@@ -485,8 +489,8 @@ def concat_dicts(coord_id_dict, variant_obj, disease, filter_vep):
     :type coord_obj: CIViC CoordinateQuery Object
     :param variant_obj: single CIViC variant object
     :type variant_ob: CIViC variant object
-    :param disease: the patients cancer type as Disease Ontology Name
-    :type disease: str
+    :param diseases: the patients cancer type as Disease Ontology Name or id and a list of allowed diseases that will count as matches
+    :type diseases: tuple (Ontology.Term, list)
     :return: All information for respective CIViC variant object
     :rtype: dict
     """
@@ -495,7 +499,7 @@ def concat_dicts(coord_id_dict, variant_obj, disease, filter_vep):
     gene_info = get_gene_information_from_variant(variant_obj[0])
     mol_profile_info = get_molecular_profile_information_from_variant(variant_obj[0])
     assertion_info = get_assertion_information_from_variant(variant_obj[0])
-    evidence_info = get_evidence_information_from_variant(variant_obj[0], disease)
+    evidence_info = get_evidence_information_from_variant(variant_obj[0], diseases)
     if filter_vep:
         querynator_id_info = get_querynator_id(coord_id_dict[list(coord_id_dict.keys())[0]])
         return {
@@ -517,19 +521,24 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     to a table and write it to user-specified file
 
     :param variant_list: List of CIViC variant objects of successfully queried variants
-    :type variant_list: list
+    :type  variant_list: list
     :param out_path: Name for directory in which result-table will be stored
-    :type out_path: str
+    :type  out_path: str
     :param disease: the patients cancer type as Disease Ontology Name
-    :type disease: str
+    :type  disease: str
     :param filter_vep: flag whether VEP based filtering should be performed
-    :type filter_vep: bool
+    :type  filter_vep: bool
     :return: None
     :rtype: None
     """
     civic_result_df = pd.DataFrame()
+
+    doid = ontology.DO("querynator/helper_functions/doid.obo")
+    diseases = doid.get(disease), doid.get_all_ancestors(disease)
+    logger.info(f"Mapped specified disease {disease} to Disease Ontology {str(diseases[0])}")
+    
     for coord_id_dict, variant in variant_list:
-        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant, disease, filter_vep), ignore_index=True)
+        civic_result_df = civic_result_df.append(concat_dicts(coord_id_dict, variant, diseases, filter_vep), ignore_index=True)
 
     logger.info("CIViC Query finished")
     logger.info("Creating Results")
