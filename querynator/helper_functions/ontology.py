@@ -75,7 +75,7 @@ class Ontology(ABC):
             self.T2 = term2
 
         def __repr__(self):
-            return f"Relationship: {self.T1} {self.rtype} {self.T2}"
+            return f"<Ontology.Relationship: {self.T1} {self.rtype} {self.T2}>"
 
         def __eq__(self, other):
             if isinstance(other, Ontology.Term):
