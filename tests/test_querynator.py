@@ -67,7 +67,7 @@ class testOntology(unittest.TestCase):
         self.assertEqual(term, doid.get("cholangiocarcinoma"))
         self.assertEqual(term, doid.get("Cholangiocarcinoma"))
 
-        self.assertIn(doid.get("bile duct adenocarcinoma"), doid.get("cholangiocarcinoma").relationships)
+        self.assertIn(doid.get("bile duct adenocarcinoma"), doid.get("cholangiocarcinoma").get_relationship_terms())
         self.assertIn(doid.get("bile duct adenocarcinoma"), doid.get_all_ancestors("cholangiocarcinoma"))
         self.assertIn(doid.get("cholangiocarcinoma"), doid.get_all_ancestors("cholangiocarcinoma", includeSelf=True))
 

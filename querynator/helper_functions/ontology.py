@@ -65,6 +65,9 @@ class Ontology(ABC):
         def get(self, field):
             return self.fields.get(field)
 
+        def get_relationship_terms(self):
+            return [rel.T2 for rel in self.relationships]
+
     class Relationship:
         """represents a relationship between two ontology terms"""
 
