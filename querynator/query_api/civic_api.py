@@ -534,7 +534,7 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     civic_result_df = pd.DataFrame()
 
     if disease:
-        doid = ontology.DO("querynator/helper_functions/doid.obo")
+        doid = ontology.DiseaseOntology("querynator/helper_functions/doid.obo")
         diseases = doid.get(disease), doid.get_all_ancestors(disease)
         logger.info(f"Mapped specified disease {disease} to Disease Ontology (DO) {str(diseases[0])}")
     else:

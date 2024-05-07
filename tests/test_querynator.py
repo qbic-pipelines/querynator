@@ -54,7 +54,7 @@ class testOntology(unittest.TestCase):
 
     def test_disease_ontology(self):
         """Test the Disease Ontology class"""
-        doid = ontology.DO("querynator/helper_functions/doid.obo")
+        doid = ontology.DiseaseOntology("querynator/helper_functions/doid.obo")
         print(doid)
 
         self.assertIn("DOID:4", doid.ids)

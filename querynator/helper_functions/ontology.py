@@ -93,7 +93,7 @@ class Ontology(ABC):
             return hash(f"{self.T1} {self.rtype} {self.T2}")
 
 
-class DO(Ontology):
+class DiseaseOntology(Ontology):
     """This class represents the Disease Ontology (DO)
 
     www.disease-ontology.org
