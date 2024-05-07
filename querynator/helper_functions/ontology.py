@@ -193,12 +193,3 @@ class DO(Ontology):
 
     def get_all_ancestor_names(self, query_term) -> list:
         return [self.get(ancestor).name for ancestor in self.get_all_ancestors(query_term)]
-
-
-class OncoTree(Ontology):
-    """This class represents the OncoTree ontology
-
-    http://oncotree.info/
-    """
-
-    ...
