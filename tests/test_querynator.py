@@ -3,6 +3,7 @@
 """Tests for `querynator` package."""
 
 import unittest
+
 from click.testing import CliRunner
 
 import querynator.__main__

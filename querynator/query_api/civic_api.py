@@ -14,7 +14,12 @@ import pandas as pd
 import vcf
 from civicpy import civic
 
-from querynator.helper_functions import get_num_from_chr, gunzip_compressed_files, gzipped, ontology
+from querynator.helper_functions import (
+    get_num_from_chr,
+    gunzip_compressed_files,
+    gzipped,
+    ontology,
+)
 
 
 def check_vcf_input(vcf_path, logger):
