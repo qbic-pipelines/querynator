@@ -65,7 +65,8 @@ class Ontology(ABC):
         def get(self, field):
             return self.fields.get(field)
 
-        def get_relationship_terms(self):
+        def get_related_terms(self):
+            """return the terms directly related to this term"""
             return [rel.T2 for rel in self.relationships]
 
     class Relationship:
