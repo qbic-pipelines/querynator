@@ -427,10 +427,9 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     show_default=True,
     default=False,
 )
-# TODO use single cancer name and map to DO / oncotree
 @click.option(
-    "-d",
-    "--cancer-doid",
+    "-c",
+    "--cancer",
     help="the cancer DOID (id or name) to be searched.",
     default=None,
     type=click.STRING,
