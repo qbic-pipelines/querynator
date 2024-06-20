@@ -194,7 +194,7 @@ The querynator performs an ``exact`` search, meaning that variants in the KB mus
 
 Using the ``filter_vep`` `flag <https://querynator.readthedocs.io/en/latest/usage.html#filtering-benign-variants>`_, the querynator can filter out benign variants in ``vcf`` files before querying the KB.
 
-Use `-d` or `--cancer-doid` to specify the cancer type. The cancer type must be a valid `Disease Ontology <https://disease-ontology.org/>`_ ID (DOID) or name.
+The cancer type must be a valid `Disease Ontology <https://disease-ontology.org/>`_ ID (DOID) or name.
 
 Input file format
 ==================
