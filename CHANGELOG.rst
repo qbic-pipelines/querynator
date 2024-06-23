@@ -1,7 +1,23 @@
 Changelog
 ============
 
-0.4.2 - Stormy Saturn  (2023-04-05)
+0.5.0 - Nickel Neptune  (2024-06-23)
+---------------------------------------------
+
+**Added**
+
+* CL option to specify cancer type when querying CIViC (`-c` `--cancer`). 
+
+**Fixed**
+
+**Dependencies**
+
+* pinned numpy to version 1.24.4 to fix pandas bug with numpy-v2
+
+**Deprecated**
+
+
+0.4.2 - Stormy Saturn  (2024-04-05)
 ---------------------------------------------
 
 **Added**
@@ -10,6 +26,7 @@ Changelog
 
 * Bug fixes to handle new CGI wildtype biomarkers
 * civicpy cache will only be updated when civic is queried
+
 **Dependencies**
 
 **Deprecated**
