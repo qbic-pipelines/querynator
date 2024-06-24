@@ -180,6 +180,7 @@ A typical command to query the `Clinical Interpretations of Variants in Cancer -
         -v input_file.vcf \
         -o outdir \
         -g ref_genome [GRCh37, GRCh38, NCBI36]
+        -c 'breast adenocarcinoma'
 
 The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
 
@@ -192,6 +193,8 @@ The command above generates the following result files using `CIViCpy <https://d
 The querynator performs an ``exact`` search, meaning that variants in the KB must match the given coordinates, reference allele(s) and alternate allele(s) precisely.
 
 Using the ``filter_vep`` `flag <https://querynator.readthedocs.io/en/latest/usage.html#filtering-benign-variants>`_, the querynator can filter out benign variants in ``vcf`` files before querying the KB.
+
+The cancer type must be a valid `Disease Ontology <https://disease-ontology.org/>`_ ID (DOID) or name.
 
 Input file format
 ==================
