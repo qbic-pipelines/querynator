@@ -6,7 +6,7 @@ Changelog
 
 **Added**
 
-* CL option to specify cancer type when querying CIViC (`-c` `--cancer`). 
+* CL option to specify cancer type when querying CIViC (`-c` `--cancer`)
 
 **Fixed**
 
