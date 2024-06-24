@@ -180,7 +180,7 @@ A typical command to query the `Clinical Interpretations of Variants in Cancer -
         -v input_file.vcf \
         -o outdir \
         -g ref_genome [GRCh37, GRCh38, NCBI36]
-        -d 'breast adenocarcinoma'
+        -c 'breast adenocarcinoma'
 
 The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
 
