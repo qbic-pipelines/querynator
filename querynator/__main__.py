@@ -420,6 +420,13 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     default="GRCh38",
 )
 @click.option(
+    "-c",
+    "--cancer",
+    help="the cancer DOID (id or name) to be searched.",
+    default=None,
+    type=click.STRING,
+)
+@click.option(
     "-f",
     "--filter_vep",
     help="if set, filters out synoymous and low impact variants based on VEP annotation",
@@ -427,14 +434,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     show_default=True,
     default=False,
 )
-@click.option(
-    "-c",
-    "--cancer",
-    help="the cancer DOID (id or name) to be searched.",
-    default=None,
-    type=click.STRING,
-)
-def query_api_civic(vcf, outdir, genome, cancer_doid, filter_vep):
+def query_api_civic(vcf, outdir, genome, cancer, filter_vep):
     try:
         result_dir = get_unique_querynator_dir(f"{outdir}")
         dirname, basename = os.path.split(result_dir)
@@ -447,7 +447,7 @@ def query_api_civic(vcf, outdir, genome, cancer_doid, filter_vep):
 
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
             # run analysis
-            query_civic(candidate_variants, result_dir, logger, vcf, genome, cancer_doid, filter_vep)
+            query_civic(candidate_variants, result_dir, logger, vcf, genome, cancer, filter_vep)
 
         else:
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
