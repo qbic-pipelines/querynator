@@ -10,7 +10,7 @@ requests-cache==0.9.6
 urllib3<2
 prettier
 pandas==1.5.1
-numpy==1.24.4
+numpy
 civicpy==3.0.0
 pyvcf3==1.0.3
 pretty_html_table==0.9.16
