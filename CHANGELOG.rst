@@ -1,6 +1,20 @@
 Changelog
 ============
 
+0.5.1 - Sulfur Io  (2024-07-03)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* fixed a severe bug in `query-api-civic` that made the tool unusable, the bug was introduced in v0.5.0.
+
+**Dependencies**
+
+**Deprecated**
+
+
 0.5.0 - Sulfur Io  (2024-06-23)
 ---------------------------------------------
 
