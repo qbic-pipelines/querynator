@@ -11,7 +11,7 @@ from click.testing import CliRunner
 from querynator.__main__ import querynator_cli
 
 
-class testCLIHelp(unittest.TestCase):
+class testCliHelp(unittest.TestCase):
 
     def setUp(self):
         self.runner = CliRunner()
@@ -102,7 +102,7 @@ class testCliRun(unittest.TestCase):
         self.assertEqual(result.exit_code, 0, "non-zero exit code")
         self.assertIsFile(f"{outdir}/{outdir.split('/')[-1]}.civic_results.tsv", "civic_results.tsv not created")
 
-    def test_queryApiCivicCancer(self):
+    def test_queryApiCivic_Cancer(self):
         """Test query-api-civic"""
         outdir = self.get_testdir()
 
@@ -137,6 +137,28 @@ class testCliRun(unittest.TestCase):
                 "GRCh37",
                 "--outdir",
                 outdir,
+                "--email",
+                "dummy@internet.by",
+                "--token",
+                "thisisadummytoken",
+                "--filter_vep",
+            ],
+        )
+        self.assertEqual(result.exit_code, 1)
+
+    def test_queryApiCgi_Cancer(self):
+        """test querynator query-api-cgi with dummy credentials"""
+        outdir = self.get_testdir()
+        result = self.runner.invoke(
+            querynator_cli,
+            [
+                "query-api-cgi",
+                "--mutations",
+                f"{os.getcwd()}/example_files/example.vcf",
+                "--genome",
+                "GRCh37",
+                "--outdir",
+                outdir,
                 "--cancer",
                 "Breast adenocarcinoma",
                 "--email",
@@ -147,6 +169,30 @@ class testCliRun(unittest.TestCase):
             ],
         )
         self.assertEqual(result.exit_code, 1)
+
+    def test_queryApiCgi_invalidCancer(self):
+        """test querynator query-api-cgi with dummy credentials"""
+        outdir = self.get_testdir()
+        result = self.runner.invoke(
+            querynator_cli,
+            [
+                "query-api-cgi",
+                "--mutations",
+                f"{os.getcwd()}/example_files/example.vcf",
+                "--genome",
+                "GRCh37",
+                "--outdir",
+                outdir,
+                "--cancer",
+                "this is not cancer, 'tis but a flesh wound",
+                "--email",
+                "dummy@internet.by",
+                "--token",
+                "thisisadummytoken",
+                "--filter_vep",
+            ],
+        )
+        self.assertEqual(result.exit_code, 2)
 
     def test_createReport(self):
         """test querynator create-report on example files"""
