@@ -107,6 +107,7 @@ ENV/
 .idea/
 
 # Test results
+**/*.tsv
 *.csv
 *.vcf
 *.zip
