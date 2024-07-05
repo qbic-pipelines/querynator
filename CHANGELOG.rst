@@ -1,6 +1,22 @@
 Changelog
 ============
 
+0.5.2dev
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* [#37](https://github.com/qbic-pipelines/querynator/issues/37): fixed bug in `query-api-civic` that caused the containerized tool to fail when querying CIViC.
+
+**Dependencies**
+
+* pinned `pandas` to version 1.5.3 to fix deprecation issues with `pandas 2.x` in `querynator` and `civicpy`.
+
+**Deprecated**
+
+
 0.5.1 - Sulfur Io  (2024-07-03)
 ---------------------------------------------
 
