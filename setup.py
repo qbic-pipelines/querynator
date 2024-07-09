@@ -4,6 +4,8 @@
 
 from setuptools import find_packages, setup
 
+VERSION = "0.5.2"
+
 with open("README.rst") as readme_file:
     readme = readme_file.read()
 
@@ -46,6 +48,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/qbic-pipelines/querynator",
-    version="0.5.2",
+    version=VERSION,
     zip_safe=False,
 )
