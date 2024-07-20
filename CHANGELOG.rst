@@ -8,6 +8,8 @@ Changelog
 
 **Fixed**
 
+* [#43](https://github.com/qbic-pipelines/querynator/issues/43): added disease ontology file to the package
+
 **Dependencies**
 
 **Deprecated**
