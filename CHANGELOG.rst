@@ -1,6 +1,21 @@
 Changelog
 ============
 
+0.5.4 - Sulfur Io  (2024-07-24)
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* [#43](https://github.com/qbic-pipelines/querynator/issues/43): issue with disease ontology file path, which resurfaced in docker container
+* evidences without specified disease are now excluded if `--cancer` is specified
+
+**Dependencies**
+
+**Deprecated**
+
+
 0.5.3 - Sulfur Io  (2024-07-20)
 ---------------------------------------------
 
