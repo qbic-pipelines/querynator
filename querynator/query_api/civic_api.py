@@ -444,7 +444,7 @@ def get_evidence_information_from_variant(variant_obj, diseases):
 
             # check special rules for evidences and cancer types
             disease, allowed_diseases = diseases
-            if disease and allowed_diseases and evidence.disease.name not in allowed_diseases:
+            if disease and allowed_diseases and evidence.disease and evidence.disease.name not in allowed_diseases:
                 if evidence.evidence_level == "A":
                     # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
                     new_dict["evidence_level"] = "C"
