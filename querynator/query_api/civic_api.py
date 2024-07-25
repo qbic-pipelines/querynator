@@ -7,6 +7,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 import os
 import random
 from datetime import date
+from os.path import abspath, dirname
 
 import civicpy
 import numpy as np
@@ -443,7 +444,7 @@ def get_evidence_information_from_variant(variant_obj, diseases):
 
             # check special rules for evidences and cancer types
             disease, allowed_diseases = diseases
-            if disease and allowed_diseases and evidence.disease.name not in allowed_diseases:
+            if disease and allowed_diseases and evidence.disease and evidence.disease.name not in allowed_diseases:
                 if evidence.evidence_level == "A":
                     # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
                     new_dict["evidence_level"] = "C"
@@ -534,7 +535,9 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     civic_result_df = pd.DataFrame()
 
     if disease:
-        doid = ontology.DiseaseOntology("querynator/helper_functions/doid.obo")
+        proj_root = dirname(dirname(abspath(__file__)))
+        doid_file = os.path.join(proj_root, "helper_functions/doid.obo")
+        doid = ontology.DiseaseOntology(doid_file)
         diseases = doid.get(disease), doid.get_all_ancestors(disease)
         logger.info(f"Mapped specified disease {disease} to Disease Ontology (DO) {str(diseases[0])}")
     else:
