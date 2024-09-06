@@ -159,7 +159,7 @@ def append_to_dict(dict1, dict2):
                 dict1[key].append(value)
             else:
                 if dict1[key] == "":
-                    dict1[key] = dict2[key]
+                    dict1[key] = [dict2[key]]
                 else:
                     dict1[key] = [dict1[key], dict2[key]]
 
@@ -417,12 +417,12 @@ def get_evidence_information_from_variant(variant_obj, diseases):
                     "evidence_level": evidence.evidence_level,
                     "evidence_support": evidence.evidence_direction,
                     "evidence_type": evidence.evidence_type,
-                    "evidence_phenotypes": ", ".join([i.name for i in evidence.phenotypes]),
+                    "evidence_phenotypes": "+".join([i.name for i in evidence.phenotypes]),
                     "evidence_rating": evidence.rating,
                     "evidence_significance": evidence.significance,
                     "evidence_source": evidence.source.name,
                     "evidence_status": evidence.status,
-                    "evidence_therapies": ", ".join([i.name for i in evidence.therapies]),
+                    "evidence_therapies": "+".join([i.name for i in evidence.therapies]),
                     "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
                 }
             except IndexError:

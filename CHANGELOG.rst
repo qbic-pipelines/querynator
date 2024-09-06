@@ -1,6 +1,19 @@
 Changelog
 ============
 
+0.5.4 - dev
+---------------------------------------------
+
+**Added**
+
+**Fixed**
+
+* [\#52](https://github.com/qbic-pipelines/querynator/issues/52): issue that lead to an inconsitent number of fields for the CIViC evidences
+
+**Dependencies**
+
+**Deprecated**
+
 0.5.4 - Sulfur Io  (2024-07-24)
 ---------------------------------------------
 
