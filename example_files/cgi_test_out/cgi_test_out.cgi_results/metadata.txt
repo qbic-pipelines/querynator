@@ -1,5 +1,5 @@
-CGI query date: 2023-05-30
+CGI query date: 2024-09-09
 API version: https://www.cancergenomeinterpreter.org/api/v1/
-Input mutations: /Users/students/Documents/work_dir/querynator/example_files/example.vcf
+Input mutations: /home-link/zxmgc83/querynator/example_files/example.vcf
 Reference genome: GRCh37
 Filtered out synonymous & low impact variants based on VEP annotation
