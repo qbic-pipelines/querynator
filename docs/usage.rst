@@ -277,7 +277,7 @@ The command above generates the following result directory:
     outdir
     ├── combined_files
     |   ├── alterations_vep.tsv
-    |   ├── biomarkers_linked.tsv
+    |   ├── biomarkers_linked_filtered.tsv
     |   ├── civic_cgi_vep.tsv
     |   └── civic_vep.tsv
     ├── report

@@ -396,7 +396,7 @@ def combine_cgi(cgi_path, outdir, logger):
     # link alterations in biomarkers & filter
     biomarkers_df = link_biomarkers(biomarkers_df, logger)
     biomarkers_df = filter_biomarkers(biomarkers_df, logger)
-    biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t", index=False)
+    biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked_filtered.tsv", sep="\t", index=False)
 
     check_wildtypes(biomarkers_df, vep_df, logger)
 

@@ -705,7 +705,7 @@ def create_report_htmls(outdir, basename, civic_path, logger):
 
     # read in files
     vep_civic_cgi_merge = pd.read_csv(f"{outdir}/combined_files/civic_cgi_vep.tsv", sep="\t")
-    biomarkers_df = pd.read_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t")
+    biomarkers_df = pd.read_csv(f"{outdir}/combined_files/biomarkers_linked_filtered.tsv", sep="\t")
     metadata_civic = f"{civic_path}/metadata.txt"  # read reference genome from metadata file
     # get path to save individual reports
     report_path = f"{os.path.abspath(outdir)}/report/variant_reports"
