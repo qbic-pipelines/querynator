@@ -1,4 +1,0 @@
-internal_id	sample	gene	cna	cancer	predicted_in_tumors	gene_role	known_in_tumors	driver	driver_statement	predicted_match	known_match
-input01_1	test_1	ERBB2	AMP	CANCER	CESC;ESCA;HNSC;LUAD;PAAD;STAD;UCEC	Act	BRCA;OV;CANCER;NSCLC;ST;BT;COREAD;BLCA;GEJA;HNC;ED	known	known in: BRCA;OV;CANCER;NSCLC;ST;BT;COREAD;BLCA;GEJA;HNC;ED	known_match	known_match
-input01_2	test_1	TP53	DEL	CANCER	S	LoF	THYM;BCL	known	known in: THYM;BCL	known_match	known_match
-input01_3	test_1	EGFR	AMP	CANCER	BLCA;CESC;ESCA;LGG;LUAD;LUSC;STAD	Act	G;NSCLC;ED;HNSC;COREAD	known	known in: G;NSCLC;ED;HNSC;COREAD	known_match	known_match
