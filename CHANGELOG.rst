@@ -8,7 +8,8 @@ Changelog
 
 **Fixed**
 
-* [\#52](https://github.com/qbic-pipelines/querynator/issues/52): issue that lead to an inconsitent number of fields for the CIViC evidences
+* [#52](https://github.com/qbic-pipelines/querynator/issues/52): issue that lead to an inconsitent number of fields for the CIViC evidences
+* [#51](https://github.com/qbic-pipelines/querynator/issues/51): CGI evidences are now filtered by the specified cancer type
 
 **Dependencies**
 

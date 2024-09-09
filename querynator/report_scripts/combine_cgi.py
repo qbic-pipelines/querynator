@@ -293,7 +293,9 @@ def link_biomarkers(biomarkers_df, logger):
 
 def get_highest_evidence(row, biomarkers_linked):
     """
-    get highest associated CGI evidence of the current alteration (A-D) from the biomarkers datafrane
+    get highest associated CGI evidence of the current alteration (A-D) from the biomarkers dataframe.
+
+    consider evidence matched on gene, alteration and cancer type, as well as off-label use (level A evidence for different cancer is level C evidence for this cancer).
 
     :param row: row of a pandas DataFrame
     :type row: pandas Series
@@ -308,10 +310,8 @@ def get_highest_evidence(row, biomarkers_linked):
         if row["Protein Change_CGI"].startswith("*"):
             row["Protein Change_CGI"] = row["Protein Change_CGI"].replace("*", "\*")
 
-        # highest evidence level has lowest char value (A<B<C<D)
-        max_evidence_level = biomarkers_linked.loc[
-            (biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"]))
-        ]["Evidence"].min()
+        curr_alteration_msk = biomarkers_linked["alterations_link"].str.contains(row["Protein Change_CGI"])
+        max_evidence_level = biomarkers_linked.loc[curr_alteration_msk, "Evidence"].min()
 
         return max_evidence_level
 
@@ -342,6 +342,30 @@ def check_wildtypes(biomarkers: pd.DataFrame, vcf: pd.DataFrame, logger) -> None
     return
 
 
+def filter_biomarkers(biomarkers_df: pd.DataFrame, logger) -> pd.DataFrame:
+    """
+    adapt biomarkers to only consider
+    - "complete" biomarkers (gene, alteration)
+    - matches between alteration & biomarker (gene, alteration, cancer type)
+    - off-label use (level A evidence for different cancer is level C evidence for this cancer)
+
+    :biomarkers_df : the dataframe containing the cgi result 'biomarkers.tsv'
+    :logger        : the logger
+    :return        : the adapted biomarkers dataframe
+    """
+    complete_biom_msk = biomarkers_df.BioM == "complete"
+    match_msk = biomarkers_df["Match"] == "YES"
+    off_label_msk = ~match_msk & (biomarkers_df["Evidence"] == "A")
+    filter = complete_biom_msk & (match_msk | off_label_msk)
+
+    biomarkers_df.loc[off_label_msk, "Evidence"] = "C"
+    biomarkers_df["alterations_link"] = biomarkers_df["alterations_link"].astype(str)
+
+    logger.info(f"CGI: filtered {(~filter).sum()} irrelevant biomarkers, {filter.sum()} remaining")
+
+    return biomarkers_df.loc[filter]
+
+
 def combine_cgi(cgi_path, outdir, logger):
     """
     Command to combine the cgi results with the vcf's VEP annotation
@@ -369,19 +393,14 @@ def combine_cgi(cgi_path, outdir, logger):
     alterations_df = read_modify_alterations(alterations_path)
     merged_df = merge_alterations_vep(vep_df, alterations_df)
 
-    # link alterations in biomarkers
+    # link alterations in biomarkers & filter
     biomarkers_df = link_biomarkers(biomarkers_df, logger)
+    biomarkers_df = filter_biomarkers(biomarkers_df, logger)
     biomarkers_df.to_csv(f"{outdir}/combined_files/biomarkers_linked.tsv", sep="\t", index=False)
 
     check_wildtypes(biomarkers_df, vep_df, logger)
 
     # add CGI evidence col to merged_df
-
-    # adapt biomarkers to only consider "complete" matches between alteration & biomarker
-    biomarkers_df = biomarkers_df[biomarkers_df.BioM == "complete"]
-    # biomarkers_linked["alterations_link"] = biomarkers_linked["alterations_link"].astype(str)
-    biomarkers_df["alterations_link"] = biomarkers_df["alterations_link"].apply(str)
-    # add CGI evidence col
     merged_df["evidence_CGI"] = merged_df.apply(lambda x: get_highest_evidence(x, biomarkers_df), axis=1)
     # write merged to report dir
     merged_df.to_csv(f"{outdir}/combined_files/alterations_vep.tsv", sep="\t", index=False)
