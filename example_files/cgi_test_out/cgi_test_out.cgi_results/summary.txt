@@ -1,0 +1,29 @@
+===============================
+=== Summary of the analysis ===
+===============================
+
+=== CGI-ANALYSIS ===
+Analysis Code: CGI_query
+Analysis ID: 45474d2bd5ff2e2a81e3
+CGI version: v23.12.2
+Date: 2024-09-09 12:17:40
+
+=== INPUT ===
+Analysed mutations: 88
+Analysed cnas: 0
+Analysed fusions: 0
+Total samples: 1
+Cancer type: BRCA
+Reference genome: hg19
+
+=== ALTERATIONS ===
+Driver mutations: 84
+Predicted and annotated drivers: 47
+Predicted drivers: 4
+Annotated drivers: 33
+
+=== BIOMARKERS ===
+Biomarkers in cancer type: 33
+Biomarkers in cancer type - Level A: 1
+Biomarkers in other cancer type: 441
+

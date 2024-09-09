@@ -1,26 +1,57 @@
 Sample ID	Alterations	Biomarker	Drugs	Diseases	Response	Evidence	Match	Source	BioM	Resist.	Tumor type
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Pralsetinib (Tyrosine kinase inhibitor)	Thyroid medullary	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-pralsetinib-ret-altered-thyroid-cancers;ASCO 2020 (abstr 109)	only gene		THM
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Selpercatinib (RET kinase inhibitor)	Thyroid medullary	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-selpercatinib-lung-and-thyroid-cancers-ret-gene-mutations-or-fusions;ASCO 2020 (abstr 3594)	only gene		THM
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Cabozantinib (Kinase inhibitor )	Non-small cell lung	Responsive	C	NO	PMID:27825636	only gene		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (S786I,G719., L861Q)	Osimertinib (EGFR inhibitor 3d gen)	Non-small cell lung	Responsive	A	NO	NCCN Non-Small Cell Lung Cancer guidlines 2022	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,S768I,L861Q,G719.)	Dacomitinib (EGFR inhibitor)	Non-small cell lung	Responsive	A	NO	NCCN Non-Small Cell Lung Cancer guidlines 2022;FDA:https://www.fda.gov/drugs/drug-approvals-and-databases/fda-approves-dacomitinib-metastatic-non-small-cell-lung-cancer-0	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Gefitinib (EGFR inhibitor 1st gen)	Non-small cell lung	Resistant	A	NO	PMID:26980062	only alteration type		NSCLC
-input01	ATM (N2875H)	ATM oncogenic mutation	Olaparib (PARP inhibitor)	Prostate adenocarcinoma	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-olaparib-hrr-gene-mutated-metastatic-castration-resistant-prostate-cancer;PMID:32343890	complete		PRAD
-input01	KRAS wildtype	KRAS wildtype	Panitumumab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	A	NO	PMID: 31268481	complete	621.0	COREAD
-input01	KRAS wildtype	KRAS wildtype	Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	A	NO	PMID: 19339720	complete	246.0	COREAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 insertions	Mobocertinib (EGFR inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-grants-accelerated-approval-mobocertinib-metastatic-non-small-cell-lung-cancer-egfr-exon-20	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 insertions	Amivantamab (EGFR mAb inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-grants-accelerated-approval-amivantamab-vmjw-metastatic-non-small-cell-lung-cancer	only alteration type		NSCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Pralsetinib (Tyrosine kinase inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-pralsetinib-lung-cancer-ret-gene-fusions	only gene		NSCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Selpercatinib (RET kinase inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-selpercatinib-lung-and-thyroid-cancers-ret-gene-mutations-or-fusions	only gene		NSCLC
+input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS (12,13,59,61,117,146)	Cetuximab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	A	NO	PMID:24024839;PMID:20619739;PMID:23325582	complete		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 inframe deletions	Afatinib(ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/201292s017lbl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Afatinib(ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/201292s017lbl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L861Q,G719,S768I)	Afatinib(ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/201292s017lbl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 inframe deletions	Erlotinib(EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Erlotinib(EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L861Q,G719,S768I)	Erlotinib(EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 inframe deletions	Gefitinib(EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2021/206995s004lbl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Gefitinib(EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2021/206995s004lbl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L861Q,G719,S768I)	Gefitinib(EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Osimertinib(EGFR inhibitor 3rd gen)	Non-small cell lung	Responsive	A	NO	FDA  https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/208065s021lbl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Osimertinib(EGFR inhibitor 3rd gen)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/208065s021lbl.pdf	only alteration type		NSCLC
+input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS (12,13,59,61,117,146)	Panitumumab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	A	NO	FDA guidelines	complete		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Afatinib(ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Resistant	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Erlotinib(EGFR inhibitor 1st gen)	Non-small cell lung	Resistant	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET (618,620,634,768,791,891,918,C634W,M918T)	Vandetanib(Pan-TK inhibitor)	Thyroid carcinoma	Responsive	A	NO	PMID:20065189;PMID:22025146	only alteration type		THCA
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Pralsetinib(Tyrosine kinase inhibitor)	Thyroid	Responsive	A	NO	FDA https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-pralsetinib-ret-altered-thyroid-cancers;ASCO 2020 (abstr 109)	only gene		TH
+input01	RET MUT* (FPEEEKCFC612-620-)	RET oncogenic mutation	Selpercatinib(RET kinase inhibitor)	Thyroid medullary	Responsive	A	NO	FDA https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-selpercatinib-lung-and-thyroid-cancers-ret-gene-mutations-or-fusions;ASCO 2020 (abstr 3594)	only alteration type		THM
+input01	EGFR (A289N), EGFR (A289D)	EGFR (S786I,G719, L861Q)	Osimertinib(EGFR inhibitor 3rd gen)	Non-small cell lung	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Dacomitinib(EGFR inhibitor)	Non-small cell lung	Responsive	A	NO	NCCN Non-Small Cell Lung Cancer guidlines 2022;FDA:https://www.fda.gov/drugs/drug-approvals-and-databases/fda-approves-dacomitinib-metastatic-non-small-cell-lung-cancer-0	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Gefitinib(EGFR inhibitor 1st gen)	Non-small cell lung	Resistant	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	ATM (N2875H)	ATM oncogenic mutation	Olaparib(PARP inhibitor)	Prostate adenocarcinoma	Responsive	A	NO	FDA https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-olaparib-hrr-gene-mutated-metastatic-castration-resistant-prostate-cancer;PMID:32343890	complete		PRAD
+input01	KRAS wildtype	KRAS wildtype	Panitumumab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	A	NO	FDA  https://www.accessdata.fda.gov/drugsatfda_docs/label/2021/125147s210lbl.pdf	complete	65.0	COREAD
+input01	KRAS wildtype	KRAS wildtype	Cetuximab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	A	NO	PMID: 19339720	complete	22.0	COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 inframe insertions	Mobocertinib(EGFR inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-grants-accelerated-approval-mobocertinib-metastatic-non-small-cell-lung-cancer-egfr-exon-20	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 inframe insertions	Amivantamab(EGFR mAb inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-grants-accelerated-approval-amivantamab-vmjw-metastatic-non-small-cell-lung-cancer	only alteration type		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Pralsetinib(Tyrosine kinase inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-pralsetinib-lung-cancer-ret-gene-fusions	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Selpercatinib(RET kinase inhibitor)	Non-small cell lung	Responsive	A	NO	FDA:https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-selpercatinib-locally-advanced-or-metastatic-ret-fusion-positive-non-small-cell-lung	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Selpercatinib(RET kinase inhibitor)	Thyroid	Responsive	A	NO	FDA https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-selpercatinib-lung-and-thyroid-cancers-ret-gene-mutations-or-fusions;ASCO 2020 (abstr 3594)	only gene		TH
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Selpercatinib(RET kinase inhibitor)	Solid tumors	Responsive	A	YES	FDA  https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-selpercatinib-locally-advanced-or-metastatic-ret-fusion-positive-solid-tumors	only gene		SOLID
+input01	ATM (N2875H)	ATM oncogenic mutation	Talazoparib(PARP inhibitor);Enzalutamide(AR inhibitor)	Prostate adenocarcinoma	Responsive	A	NO	FDA https://www.fda.gov/drugs/drug-approvals-and-databases/fda-approves-talazoparib-enzalutamide-hrr-gene-mutated-metastatic-castration-resistant-prostate	complete		PRAD
+input01	BTK (C515S)	BTK (C481S)	Ibrutinib(BTK inhibitor)	Chronic lymphocytic leukemia	Resistant	A	NO	PMID: 28418267	only alteration type		CLL
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Trametinib(MEK inhibitor)	Erdheim-Chester histiocytosis	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/histiocytic_neoplasms.pdf	complete		HISEC
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Cobimetinib(MEK inhibitor)	Erdheim-Chester histiocytosis	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/histiocytic_neoplasms.pdf	complete		HISEC
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Trametinib(MEK inhibitor)	Langerhans cell histiocytosis	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/histiocytic_neoplasms.pdf	complete		HISLC
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Cobimetinib(MEK inhibitor)	Langerhans cell histiocytosis	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/histiocytic_neoplasms.pdf	complete		HISLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 inframe deletions	Erlotinib(EGFR inhibitor 1st gen);Ramucirumab(VEGFR2 antagonist)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/125477s042lbl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Erlotinib(EGFR inhibitor 1st gen);Ramucirumab(VEGFR2 antagonist)	Non-small cell lung	Responsive	A	NO	FDA https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/125477s042lbl.pdf	only alteration type		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Cabozantinib(Kinase inhibitor )	Non-small cell lung	Responsive	A	NO	NCCN  https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only gene		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 inframe insertions	Afatinib(ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Resistant	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 inframe insertions	Gefitinib(EGFR inhibitor 1st gen)	Non-small cell lung	Resistant	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 inframe insertions	Erlotinib(EGFR inhibitor 1st gen)	Non-small cell lung	Resistant	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (S768I,L861Q,G719)	Dacomitinib(EGFR inhibitor)	Non-small cell lung	Responsive	A	NO	NCCN https://www.nccn.org/professionals/physician_gls/pdf/nscl.pdf	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 inframe deletions	Dacomitinib(EGFR inhibitor)	Non-small cell lung	Responsive	A	NO	FDA: https://www.fda.gov/drugs/drug-approvals-and-databases/fda-approves-dacomitinib-metastatic-non-small-cell-lung-cancer-0	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 inframe deletions	Osimertinib(EGFR inhibitor 3rd gen)	Non-small cell lung	Responsive	A	NO	FDA  https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/208065s021lbl.pdf	only alteration type		NSCLC
 input01	AKT1 (Q79K), AKT1 (E17K)	AKT1 (Q79K,E17K)	BRAF inhibitors	Cutaneous melanoma	Resistant	C	NO	PMID:24265152	complete		CM
 input01	AKT1 (E17K)	AKT1 (E17K)	AKT inhibitors	Any cancer type	Responsive	D	YES	PMID:21464312;PMID:17611497;PMID:23134728; ENA 2015 (abstr B109)	complete		CANCER
 input01	AKT1 (E17K)	AKT1 (E17K)	allosteric AKT inhibitors	Any cancer type	Responsive	C	YES	ENA 2015 (abstract B109);PMID:28489509	complete		CANCER
 input01	AKT1 (E17K)	AKT1 (E17K)	non-allosteric AKT inhibitors	Any cancer type	Responsive	C	YES	ENA 2015 (abstract B109);PMID:28489509	complete		CANCER
 input01	AKT1 (E17K)	AKT1 (E17K)	PI3K pathway inhibitors	Head an neck squamous	Responsive	C	NO	PMID:26763254	complete		HNSC
-input01	AKT1 (Q79K), AKT1 (E17K)	AKT1 (H238Y)	Everolimus (MTOR inhibitor)	Fibrous histiocytoma	Responsive	C	NO	ASCO 2015 (abstr 11010)	only alteration type		FH
-input01	AKT1 (E17K)	AKT1 (E17K)	Tensirolimus (MTOR inhibitor)	Endometrium	Responsive	C	NO	PMID:27016228	complete		ED
+input01	AKT1 (Q79K), AKT1 (E17K)	AKT1 (H238Y)	Everolimus(MTOR inhibitor)	Fibrous histiocytoma	Responsive	C	NO	ASCO 2015 (abstr 11010)	only alteration type		FH
+input01	AKT1 (E17K)	AKT1 (E17K)	Tensirolimus(MTOR inhibitor)	Endometrium	Responsive	C	NO	PMID:27016228	complete		ED
 input01	EGFR (A289N), EGFR (A289D)	EGFR inframe deletion (30-336)	EGFR inhibitor 1st gens	Glioma	No Responsive	C	NO	PMID:19204207	only alteration type		G
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 insertions	EGFR inhibitor 1st gens	Lung	Resistant	B	NO	PMID:21764376;PMID:26773740;PMID:26051236	only alteration type		L
 input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	EGFR inhibitor 1st gens	Glioma	No Responsive	C	NO	PMID:16282176;PMID:16278407	only gene		G
 input01	EGFR (A289N), EGFR (A289D)	EGFR (D761Y)	EGFR inhibitor 1st gens	Non-small cell lung	Resistant	C	NO	PMID:19680293	only alteration type		NSCLC
 input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	EGFR inhibitor 1st gens	Non-small cell lung	Resistant	B	NO	PMID:19680293	only alteration type		NSCLC
@@ -35,15 +66,14 @@ input01	ATM (N2875H)	ATM oncogenic mutation	DNA-PKc inhibitors	Lymphoma	Responsi
 input01	ATM (N2875H)	ATM deletion	DNA-PKc inhibitors	Lymphoma	Responsive	D	NO	PMID:23761041	only gene		LY
 input01	ATM (N2875H)	ATM oncogenic mutation	PARP inhibitors	Stomach	Responsive	C	NO	ENA 2014 (abstr 8LBA)	complete		ST
 input01	ATM (N2875H)	ATM deletion	PARP inhibitors	Stomach	Responsive	C	NO	ENA 2014 (abstr 8LBA)	only gene		ST
-input01	ATM (N2875H)	ATM biallelic inactivation	AZD6738 (ATR inhibitor)	B cell lymphoma	Responsive	C	NO	NCT01955668;https://ash.confex.com/ash/2014/webprogram/Paper71027.html	only alteration type		BCL
-input01	ATM (N2875H)	ATM oncogenic mutation	Cisplatin (Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	complete		BLCA
-input01	ATM (N2875H)	ATM deletion	Cisplatin (Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	only gene		BLCA
-input01	ATM (N2875H)	ATM oncogenic mutation	Olaparib (PARP inhibitor)	Stomach	Responsive	C	NO	ENA 2014 (abstr 8LBA)	complete		ST
-input01	ATM (N2875H)	ATM oncogenic mutation	Temozolomide (Chemotherapy)	Glioma	Responsive	D	NO	PMID:23960094	complete		G
+input01	ATM (N2875H)	ATM biallelic inactivation	AZD6738(ATR inhibitor)	B cell lymphoma	Responsive	C	NO	NCT01955668;https://ash.confex.com/ash/2014/webprogram/Paper71027.html	only alteration type		BCL
+input01	ATM (N2875H)	ATM oncogenic mutation	Cisplatin(Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	complete		BLCA
+input01	ATM (N2875H)	ATM deletion	Cisplatin(Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	only gene		BLCA
+input01	ATM (N2875H)	ATM oncogenic mutation	Olaparib(PARP inhibitor)	Stomach	Responsive	C	NO	ENA 2014 (abstr 8LBA)	complete		ST
+input01	ATM (N2875H)	ATM oncogenic mutation	Temozolomide(Chemotherapy)	Glioma	Responsive	D	NO	PMID:23960094	complete		G
 input01	JAK1 (V658F), JAK1 (S646F), JAK1 (A634D)	JAK1 oncogenic mutation	PD1 inhibitors	Colorectal adenocarcinoma	Resistant	C	NO	PMID:27903500	complete		COREAD
 input01	JAK1 (V658F), JAK1 (S646F), JAK1 (A634D)	JAK1 oncogenic mutation	PD1 inhibitors	Cutaneous melanoma	Resistant	C	NO	PMID:27433843	complete		CM
-input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS (12,13,59,61,117,146)	Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	A	NO	PMID:24024839;PMID:20619739;PMID:23325582	complete		COREAD
-input01	CSF3R (T618I), CSF3R (T615A)	CSF3R frameshift variant (D771),frameshift variant (S783)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Atypical chronic myeloid leukemia	Responsive	D	NO	PMID:23656643	only alteration type		ACML
+input01	CSF3R (T618I), CSF3R (T615A)	CSF3R frameshift variant (D771),frameshift variant (S783)	Dasatinib(BCR-ABL inhibitor 2nd gen)	Atypical chronic myeloid leukemia	Responsive	D	NO	PMID:23656643	only alteration type		ACML
 input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	EGFR inhibitor 3rd gens	Lung	Responsive	C	NO	ASCO 2014 (abstr 8009);ENA 2014 (abstr 10LBA);ENA 2014 (abstr 9LBA);ASCO 2015 (abstr 8001)	only alteration type		L
 input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	EGFR inhibitors	Head an neck squamous	Responsive	C	NO	PMID:26763254	only gene		HNSC
 input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	EGFR mAb inhibitors	Colorectal adenocarcinoma	Responsive	B	NO	PMID:18794099;PMID:17664472	only gene		COREAD
@@ -53,94 +83,77 @@ input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	HSP90 inhibitors	Lung
 input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 insertions	HSP90 inhibitors	Lung	Responsive	C	NO	ASCO 2014 (abstr 8015)	only alteration type		L
 input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861R)	HSP90 inhibitors	Lung	Responsive	C	NO	ESMO 2012 (abstr 4380)	only alteration type		L
 input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	HSP90 inhibitors	Lung	Responsive	C	NO	ESMO 2012 (abstr 4380)	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	MEK inhibitor (alone or in combination)s	Lung	Responsive	D	NO	PMID:23102728	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861R,T790M)	MEK inhibitor (alone or in combination)s	Lung	Responsive	D	NO	PMID:23102728	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	MEK inhibitor(alone or in combination)s	Lung	Responsive	D	NO	PMID:23102728	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861R,T790M)	MEK inhibitor(alone or in combination)s	Lung	Responsive	D	NO	PMID:23102728	only alteration type		L
 input01	EGFR (A289N), EGFR (A289D)	EGFR (S492R)	novel EGFR mAb inhibitors	Colorectal adenocarcinoma	Responsive	C	NO	PMID:25962717	only alteration type		COREAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	EGFR inhibitor 3rd gens (Rociletinib,HM61713,etc)	Non-small cell lung	Responsive	B	NO	NCT02322281	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 deletions	Afatinib (ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	Afatinib (ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Lung	Responsive	B	NO	PMID:22753918;PMID:25589191	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861Q,L861R)	Afatinib (ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861Q,L861R)	Afatinib (ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	Afatinib + Cetuximab (ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	ESMO 2012 (abstr 1289)	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861R)	Afatinib + Cetuximab (ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	ESMO 2012 (abstr 1289)	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Afatinib + Cetuximab (ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	PMID:25074459	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Afatinib + Nimotuzumab (ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	PMID:26667485	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR overexpression	Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	A	NO	FDA	only gene	246.0	COREAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR (P546S)	Cetuximab (EGFR mAb inhibitor)	Head an neck	Responsive	C	NO	PMID:23578570	only alteration type		HNC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (P753S)	Cetuximab + Sirolimus (EGFR mAb inhibitor + MTOR inhibitor)	Head an neck	Responsive	C	NO	PMID:24934779	only alteration type		HNC
-input01	EGFR (A289N), EGFR (A289D)	EGFR-RAD51 fusion	Erlotinib (EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	C	NO	PMID:27102076	only gene		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR-RAD51 fusion	Erlotinib (EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:27102076	only gene		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 deletions	Erlotinib (EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	Erlotinib (EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:22190593	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR inframe insertion (769-770)	Erlotinib (EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:26773740;PMID:23328547	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (A289V,R108K,G598V,T263P)	Erlotinib (EGFR inhibitor 1st gen)	Glioma	Responsive	D	NO	PMID:17177598	only alteration type		G
+input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	EGFR inhibitor 3rd gens(Rociletinib,HM61713,etc)	Non-small cell lung	Responsive	B	NO	NCT02322281	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	Afatinib(ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Lung	Responsive	B	NO	PMID:22753918;PMID:25589191	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	Afatinib + Cetuximab(ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	ESMO 2012 (abstr 1289)	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861R)	Afatinib + Cetuximab(ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	ESMO 2012 (abstr 1289)	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Afatinib + Cetuximab(ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	PMID:25074459	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Afatinib + Nimotuzumab(ERBB2 inhibitor&EGFR inhibitor 2nd gen + EGFR mAb inhibitor)	Lung	Responsive	C	NO	PMID:26667485	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (P546S)	Cetuximab(EGFR mAb inhibitor)	Head an neck	Responsive	C	NO	PMID:23578570	only alteration type		HNC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (P753S)	Cetuximab + Sirolimus(EGFR mAb inhibitor + MTOR inhibitor)	Head an neck	Responsive	C	NO	PMID:24934779	only alteration type		HNC
+input01	EGFR (A289N), EGFR (A289D)	EGFR-RAD51 fusion	Erlotinib(EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	C	NO	PMID:27102076	only gene		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR-RAD51 fusion	Erlotinib(EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:27102076	only gene		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 insertions	Erlotinib(EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:22190593	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR inframe insertion (769-770)	Erlotinib(EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:26773740;PMID:23328547	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (A289V,R108K,G598V,T263P)	Erlotinib(EGFR inhibitor 1st gen)	Glioma	Responsive	D	NO	PMID:17177598	only alteration type		G
 input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K)	NRAS (Q61)	BRAF inhibitors	Cutaneous melanoma	Resistant	C	NO	PMID:23569304;PMID:24265153	complete		CM
-input01	EGFR (A289N), EGFR (A289D)	EGFR (K757R,E746G)	Erlotinib (EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:26773740	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Erlotinib (EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861,G719,S768I)	Erlotinib (EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	NCCN	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 deletions	Gefitinib (EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	Gefitinib (EGFR inhibitor 1st gen)	Endometrium	Responsive	B	NO	PMID:24950987	only gene		ED
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R,L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861Q,L861R)	Gefitinib (EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L861Q,G719A,G719S,G719C,G719D,L747S,S768I,L861P,L861Q,L861R)	Gefitinib (EGFR inhibitor 1st gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (E690K)	Lapatinib (ERBB2 inhibitor)	Endometrium	Responsive	C	NO	PMID:22885469	only alteration type		ED
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 deletions	Osimertinib (EGFR inhibitor 3rd gen)	Lung	Responsive	C	NO	NCT02465060	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR exon 20 insertions	Osimertinib (EGFR inhibitor 3rd gen)	Lung	Responsive	A	NO	PMID:26515464	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L858R)	Osimertinib (EGFR inhibitor 3rd gen)	Non-small cell lung	Responsive	A	NO	NCCN Non-Small Cell Lung Cancer 2022;PMID:30659024	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Osimertinib (EGFR inhibitor 3rd gen)	Non-small cell lung	Responsive	A	NO	FDA	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (S492R)	Panitumumab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	C	NO	PMID:22270724	only alteration type	621.0	COREAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR inframe deletion (6-273)	Rindopepimut (Vaccine)	Glioblastoma	Responsive	B	NO	NCT01480479	only alteration type		GB
+input01	EGFR (A289N), EGFR (A289D)	EGFR (K757R,E746G)	Erlotinib(EGFR inhibitor 1st gen)	Lung	Responsive	C	NO	PMID:26773740	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	Gefitinib(EGFR inhibitor 1st gen)	Endometrium	Responsive	B	NO	PMID:24950987	only gene		ED
+input01	EGFR (A289N), EGFR (A289D)	EGFR (E690K)	Lapatinib(ERBB2 inhibitor)	Endometrium	Responsive	C	NO	PMID:22885469	only alteration type		ED
+input01	EGFR (A289N), EGFR (A289D)	EGFR exon 19 deletions	Osimertinib(EGFR inhibitor 3rd gen)	Lung	Responsive	C	NO	NCT02465060	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (S492R)	Panitumumab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Responsive	C	NO	PMID:22270724	only alteration type	65.0	COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR inframe deletion (6-273)	Rindopepimut(Vaccine)	Glioblastoma	Responsive	B	NO	NCT01480479	only alteration type		GB
 input01	EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 (G391R)	MTOR inhibitors	Lung squamous cell	Responsive	D	NO	PMID:20360610	complete		LUSC
 input01	EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 (G391R)	MTOR inhibitors	Lung squamous cell	Responsive	D	NO	PMID:20360610	complete		LUSC
-input01	EPHA2 (R721Q), EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 amplification	Dasatinib (BCR-ABL inhibitor 2nd gen)	Any cancer type	Responsive	D	YES	PMID:18047674;PMID:19010823;PMID:19861960	only gene		CANCER
-input01	EPHA2 (R721Q), EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 amplification	Dasatinib (BCR-ABL inhibitor 2nd gen)	Any cancer type	Responsive	D	YES	PMID:18047674;PMID:19010823;PMID:19861960	only gene		CANCER
-input01	EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 (G391R)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Lung squamous cell	Responsive	D	NO	PMID:20360610	complete		LUSC
-input01	EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 (G391R)	Dasatinib (BCR-ABL inhibitor 2nd gen)	Lung squamous cell	Responsive	D	NO	PMID:20360610	complete		LUSC
+input01	EPHA2 (R721Q), EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 amplification	Dasatinib(BCR-ABL inhibitor 2nd gen)	Any cancer type	Responsive	D	YES	PMID:18047674;PMID:19010823;PMID:19861960	only gene		CANCER
+input01	EPHA2 (R721Q), EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 amplification	Dasatinib(BCR-ABL inhibitor 2nd gen)	Any cancer type	Responsive	D	YES	PMID:18047674;PMID:19010823;PMID:19861960	only gene		CANCER
+input01	EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 (G391R)	Dasatinib(BCR-ABL inhibitor 2nd gen)	Lung squamous cell	Responsive	D	NO	PMID:20360610	complete		LUSC
+input01	EPHA2 (G391R), EPHA2 MUT* (G391R)	EPHA2 (G391R)	Dasatinib(BCR-ABL inhibitor 2nd gen)	Lung squamous cell	Responsive	D	NO	PMID:20360610	complete		LUSC
 input01	STK11 (Q37*)	STK11 oncogenic mutation	BET inhibitors	Lung	Resistant	D	NO	PMID:23129625;PMID:24045185	complete		L
 input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	MDM2 inhibitors	Liposarcoma	Resistant	C	NO	PMID:23084521;ASCO 2015 (abstr 10564)	complete		LIP
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Abemaciclib (CDK4/CDK6 inhibitor)	Breast adenocarcinoma	Resistant	C	YES	PMID:27217383	complete		BRCA
-input01	EGFR (A289N), EGFR (A289D)	EGFR overexpression	Panitumumab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	A	NO	FDA guidelines	only gene		COREAD
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Abemaciclib(CDK4/CDK6 inhibitor)	Breast adenocarcinoma	Resistant	C	YES	PMID:27217383	complete		BRCA
 input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ (Q209)	HDAC inhibitors	Cutaneous melanoma	Responsive	D	NO	NCT01587352	complete		CM
 input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ (Q209)	PI3K pathway inhibitor + MEK inhibitors	Cutaneous melanoma	Responsive	D	NO	PMID:22733540;PMID:22808163	complete		CM
 input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ (Q209)	PKC inhibitors	Cutaneous melanoma	Responsive	D	NO	PMID:22653968;PMID:22253748	complete		CM
-input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ (Q209)	Selumetinib (MEK inhibitor)	Cutaneous melanoma	Responsive	C	NO	ASCO 2013 (abstr CRA9003)	complete		CM
+input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ (Q209)	Selumetinib(MEK inhibitor)	Cutaneous melanoma	Responsive	C	NO	ASCO 2013 (abstr CRA9003)	complete		CM
 input01	GNAS (R844L), GNAS (Q870L)	GNAS (R201)	JAK inhibitors	Any cancer type	Responsive	D	YES	PMID:21835143	only alteration type		CANCER
 input01	HRAS (G12S)	HRAS oncogenic mutation	MEK inhibitor +/- MTOR inhibitors	Acute myeloid leukemia	Responsive	D	NO	PMID:22399013;PMID:22507781	complete		AML
 input01	HRAS (G12S)	HRAS oncogenic mutation	MTOR inhibitors	Cervix squamous cell	Responsive	D	NO	PMID:22345164	complete		CESC
 input01	HRAS (G12S)	HRAS oncogenic mutation	PI3K pathway inhibitor + MEK inhibitors	Cervix	Responsive	D	NO	PMID:15950068	complete		CER
-input01	HRAS (G12S)	HRAS oncogenic mutation	Tipifarnib (Farnesyltransferase inhibitor)	Any cancer type	Responsive	C	YES	NCT02383927	complete		CANCER
-input01	HRAS (G12S)	HRAS oncogenic mutation	Tipifarnib (Farnesyltransferase inhibitor)	Any cancer type	Responsive	C	YES	NCT02383927	complete		CANCER
-input01	EGFR (A289N), EGFR (A289D)	EGFR (S464L,G465R,I491M)	Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	D	NO	PMID:25623215	only alteration type		COREAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR (S492R,G465R,R451C,K467T)	Cetuximab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	C	NO	PMID:22270724;PMID:26059438;PMID:25623215;PMID:22270724;PMID:26888827	only alteration type		COREAD
-input01	JAK1 (S646F)	JAK1 (S646F;R683)	Ruxolitinib (JAK inhibitor)	Acute lymphoblastic leukemia	Responsive	D	NO	PMID:22955920;PMID:18805579	complete		ALL
-input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS (12,13,59,61,117,146)	Panitumumab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	A	NO	FDA guidelines	complete		COREAD
-input01	KIT wildtype	KIT wildtype	Dasatinib (BCR-ABL inhibitor 2nd gen)	Gastrointestinal stromal	Responsive	D	NO	PMID:16397263	complete		GIST
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Cisplatin (Chemotherapy)	Female germ cell tumor, Male germ cell tumor	Resistant	C	NO	PMID:27646943	complete		FGCT, MGCT
-input01	KIT wildtype	KIT wildtype	Sorafenib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	C	NO	ASCO 2011 (abstr 10009)	complete		GIST
-input01	KIT wildtype	KIT wildtype	Sunitinib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	B	NO	PMID:18955458	complete		GIST
-input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	Erlotinib (EGFR inhibitor 1st gen)	Lung	No Responsive	C	NO	ASCO2015(abstre19028)	only gene		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (S720)	Erlotinib (EGFR inhibitor 1st gen)	Lung	No Responsive	C	NO	PMID:26773740	only alteration type		L
-input01	MTOR (F2108L)	MTOR (F2108L)	Everolimus (MTOR inhibitor)	Thyroid carcinoma	Resistant	C	NO	PMID:25295501	complete		THCA
-input01	EGFR (A289N), EGFR (A289D)	EGFR inframe deletion (L747),inframe insertion (P753PS)	Gefitinib (EGFR inhibitor 1st gen)	Head an neck	No Responsive	C	NO	PMID:21274259	only alteration type		HNC
-input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	Gefitinib (EGFR inhibitor 1st gen)	Head an neck	No Responsive	C	NO	PMID:21274259;PMID:22261807	only gene		HNC
-input01	EGFR (A289N), EGFR (A289D)	EGFR (V843I)	Gefitinib (EGFR inhibitor 1st gen)	Head an neck	No Responsive	C	NO	PMID:21274259	only alteration type		HNC
-input01	BTK MUT* (C515S)	BTK (C481)	Ibrutinib (BTK inhibitor)	Mantle cell lymphoma	Resistant	C	NO	PMID:25082755	only alteration type		MCL
-input01	BTK MUT* (C515S)	BTK (C481S)	Ibrutinib (BTK inhibitor)	Chronic lymphocytic leukemia	Resistant	C	NO	PMID:24869598;PMID:27199251	only alteration type		CLL
-input01	PLCG2 (R665W), PLCG2 (L845F), PLCG2 (L845F)	PLCG2 (R665W,L845F)	Ibrutinib (BTK inhibitor)	Chronic lymphocytic leukemia	Resistant	C	NO	PMID:24869598	complete		CLL
-input01	KIT wildtype	KIT wildtype	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	B	NO	PMID:18955458	complete		GIST
+input01	HRAS (G12S)	HRAS oncogenic mutation	Tipifarnib(Farnesyltransferase inhibitor)	Any cancer type	Responsive	C	YES	NCT02383927	complete		CANCER
+input01	HRAS (G12S)	HRAS oncogenic mutation	Tipifarnib(Farnesyltransferase inhibitor)	Any cancer type	Responsive	C	YES	NCT02383927	complete		CANCER
+input01	EGFR (A289N), EGFR (A289D)	EGFR (S464L,G465R,I491M)	Cetuximab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	D	NO	PMID:25623215	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR (S492R,G465R,R451C,K467T)	Cetuximab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	C	NO	PMID:22270724;PMID:26059438;PMID:25623215;PMID:22270724;PMID:26888827	only alteration type		COREAD
+input01	JAK1 (S646F)	JAK1 (S646F;R683)	Ruxolitinib(JAK inhibitor)	Acute lymphoblastic leukemia	Responsive	D	NO	PMID:22955920;PMID:18805579	complete		ALL
+input01	KIT wildtype	KIT wildtype	Dasatinib(BCR-ABL inhibitor 2nd gen)	Gastrointestinal stromal	Responsive	D	NO	PMID:16397263	complete		GIST
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Cisplatin(Chemotherapy)	Female germ cell tumor, Male germ cell tumor	Resistant	C	NO	PMID:27646943	complete		FGCT, MGCT
+input01	KIT wildtype	KIT wildtype	Sorafenib(Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	C	NO	ASCO 2011 (abstr 10009)	complete		GIST
+input01	KIT wildtype	KIT wildtype	Sunitinib(Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	B	NO	PMID:18955458	complete		GIST
+input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	Erlotinib(EGFR inhibitor 1st gen)	Lung	No Responsive	C	NO	ASCO2015(abstre19028)	only gene		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (S720)	Erlotinib(EGFR inhibitor 1st gen)	Lung	No Responsive	C	NO	PMID:26773740	only alteration type		L
+input01	MTOR (F2108L)	MTOR (F2108L)	Everolimus(MTOR inhibitor)	Thyroid carcinoma	Resistant	C	NO	PMID:25295501	complete		THCA
+input01	EGFR (A289N), EGFR (A289D)	EGFR inframe deletion (L747),inframe insertion (P753PS)	Gefitinib(EGFR inhibitor 1st gen)	Head an neck	No Responsive	C	NO	PMID:21274259	only alteration type		HNC
+input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	Gefitinib(EGFR inhibitor 1st gen)	Head an neck	No Responsive	C	NO	PMID:21274259;PMID:22261807	only gene		HNC
+input01	EGFR (A289N), EGFR (A289D)	EGFR (V843I)	Gefitinib(EGFR inhibitor 1st gen)	Head an neck	No Responsive	C	NO	PMID:21274259	only alteration type		HNC
+input01	BTK (C515S)	BTK (C481)	Ibrutinib(BTK inhibitor)	Mantle cell lymphoma	Resistant	C	NO	PMID:25082755	only alteration type		MCL
+input01	PLCG2 (R665W), PLCG2 (L845F), PLCG2 (L845F)	PLCG2 (R665W,L845F)	Ibrutinib(BTK inhibitor)	Chronic lymphocytic leukemia	Resistant	C	NO	PMID:24869598	complete		CLL
+input01	KIT wildtype	KIT wildtype	Imatinib(BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	B	NO	PMID:18955458	complete		GIST
 input01	MPL (S505C), MPL (S505N), MPL (W515L)	MPL (W515F)	JAK inhibitors	Myelodisplasic proliferative syndrome	Responsive	D	NO	PMID:16834459	only alteration type		MDPS
 input01	MTOR (F2108L)	MTOR (F2108L)	MTOR kinase inhibitors	Any cancer type	Responsive	D	YES	PMID:25295501	complete		CANCER
-input01	MTOR (E2419K), MTOR (E2014K)	MTOR (E2014K,E2419K,N1421D)	Everolimus (MTOR inhibitor)	Bladder	Responsive	C	NO	PMID:24625776	complete		BLCA
-input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR (I1973F)	Everolimus (MTOR inhibitor)	Angiosarcoma, Renal	Responsive	C	NO	ASCO 2015 (abstr 11010);PMID:26859683	only alteration type		AS, R
-input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR (K1771R)	Everolimus (MTOR inhibitor)	Stomach, Adrenal gland	Responsive	C	NO	ASCO 2015 (abstr 11010);PMID:26859683	only alteration type		ST, AG
-input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR (N1421D)	Everolimus (MTOR inhibitor)	Stomach	Responsive	C	NO	PMID:26859683	only alteration type		ST
-input01	MTOR (Q2223K)	MTOR (Q2223K)	Everolimus (MTOR inhibitor)	Renal	Responsive	C	NO	PMID:24622468	complete		R
-input01	MTOR (R2505P), MTOR (S2215Y), MTOR (L1460P)	MTOR (L1460P,S2215Y,R2505P)	Sirolimus (MTOR inhibitor)	Any cancer type	Responsive	D	YES	PMID:24631838	complete		CANCER
-input01	PDGFRA wildtype	PDGFRA wildtype	Imatinib (BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	B	NO	PMID:14645423;PMID:18955458	complete		GIST
-input01	EGFR (A289N), EGFR (A289D)	EGFR (C797S)	Osimertinib (EGFR inhibitor 3rd gen)	Lung	Resistant	C	NO	PMID:25939061	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L718)	Osimertinib (EGFR inhibitor 3rd gen)	Lung	Resistant	C	NO	ASCO 2017 (abstr 2572)	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L792)	Osimertinib (EGFR inhibitor 3rd gen)	Lung	Resistant	C	NO	ASCO 2017 (abstr 2572)	only alteration type		L
-input01	EGFR (A289N), EGFR (A289D)	EGFR (G465R)	Panitumumab (EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	C	NO	PMID:26059438	only alteration type		COREAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Afatinib (ERBB2 inhibitor&EGFR inhibitor 2nd gen)	Lung	Resistant	A	NO	NCCN	only alteration type		L
+input01	MTOR (E2419K), MTOR (E2014K)	MTOR (E2014K,E2419K,N1421D)	Everolimus(MTOR inhibitor)	Bladder	Responsive	C	NO	PMID:24625776	complete		BLCA
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR (I1973F)	Everolimus(MTOR inhibitor)	Angiosarcoma, Renal	Responsive	C	NO	ASCO 2015 (abstr 11010);PMID:26859683	only alteration type		AS, R
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR (K1771R)	Everolimus(MTOR inhibitor)	Stomach, Adrenal gland	Responsive	C	NO	ASCO 2015 (abstr 11010);PMID:26859683	only alteration type		ST, AG
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR (N1421D)	Everolimus(MTOR inhibitor)	Stomach	Responsive	C	NO	PMID:26859683	only alteration type		ST
+input01	MTOR (Q2223K)	MTOR (Q2223K)	Everolimus(MTOR inhibitor)	Renal	Responsive	C	NO	PMID:24622468	complete		R
+input01	MTOR (R2505P), MTOR (S2215Y), MTOR (L1460P)	MTOR (L1460P,S2215Y,R2505P)	Sirolimus(MTOR inhibitor)	Any cancer type	Responsive	D	YES	PMID:24631838	complete	805.0	CANCER
+input01	PDGFRA wildtype	PDGFRA wildtype	Imatinib(BCR-ABL inhibitor 1st gen&KIT inhibitor)	Gastrointestinal stromal	Resistant	B	NO	PMID:14645423;PMID:18955458	complete		GIST
+input01	EGFR (A289N), EGFR (A289D)	EGFR (C797S)	Osimertinib(EGFR inhibitor 3rd gen)	Lung	Resistant	C	NO	PMID:25939061	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L718)	Osimertinib(EGFR inhibitor 3rd gen)	Lung	Resistant	C	NO	ASCO 2017 (abstr 2572)	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L792)	Osimertinib(EGFR inhibitor 3rd gen)	Lung	Resistant	C	NO	ASCO 2017 (abstr 2572)	only alteration type		L
+input01	EGFR (A289N), EGFR (A289D)	EGFR (G465R)	Panitumumab(EGFR mAb inhibitor)	Colorectal adenocarcinoma	Resistant	C	NO	PMID:26059438	only alteration type		COREAD
 input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	CDK4/6 inhibitor + MEK inhibitors	Cutaneous melanoma	Responsive	C	NO	PMID:26658964;NCT01781572;NCT02065063;NCT02022982;ASCO 2014 (abstr 9009)	complete		CM
 input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS (G12C)	ERK inhibitors	Any cancer type	Responsive	D	YES	PMID:23614898	only alteration type		CANCER
 input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	ERK inhibitors	Cutaneous melanoma	Responsive	C	NO	ASCO 2017 (abstr 2508)	complete		CM
@@ -150,55 +163,52 @@ input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q
 input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K)	NRAS (Q61)	MEK inhibitors	Cutaneous melanoma	Responsive	B	NO	PMID:23414587,ASCO 2016 (abstr 9500)	complete		CM
 input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Pan-RAF inhibitors	Cutaneous melanoma	Responsive	C	NO	ESMO 2015 (abstract 300);AACR 2017 (abstr CT002)	complete		CM
 input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	PI3K pathway inhibitor + MEK inhibitors	Myeloma	Responsive	D	NO	PMID:22985491	complete		MYMA
-input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Sorafenib + MEK inhibitor (Pan-TK inhibitor + MEK inhibitor)	Hepatic carcinoma	Responsive	C	NO	PMID:25294897	complete		HC
-input01	PDGFRA wildtype	PDGFRA wildtype	Dasatinib (BCR-ABL inhibitor 2nd gen)	Gastrointestinal stromal	Responsive	D	NO	PMID:16397263	complete		GIST
-input01	RET MUT* (FPEEEKCFC612-620-)	RET (I788N)	Ponatinib (BCR-ABL inhibitor 3rd gen&Pan-TK inhibitor)	Lung adenocarcinoma	Resistant	D	NO	PMID:28615362	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Erlotinib (EGFR inhibitor 1st gen)	Lung	Resistant	A	NO	NCCN	only alteration type		L
-input01	PDGFRA wildtype	PDGFRA wildtype	Sorafenib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	C	NO	ASCO 2011 (abstr 10009)	complete		GIST
-input01	PDGFRA wildtype	PDGFRA wildtype	Sunitinib (Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	B	NO	PMID:18955458	complete		GIST
-input01	EGFR (A289N), EGFR (A289D)	EGFR (L798I)	Rociletinib (EGFR inhibitor)	Lung adenocarcinoma	Resistant	C	NO	PMID:27283993	only alteration type		LUAD
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Sorafenib + MEK inhibitor(Pan-TK inhibitor + MEK inhibitor)	Hepatic carcinoma	Responsive	C	NO	PMID:25294897	complete		HC
+input01	PDGFRA wildtype	PDGFRA wildtype	Dasatinib(BCR-ABL inhibitor 2nd gen)	Gastrointestinal stromal	Responsive	D	NO	PMID:16397263	complete		GIST
+input01	RET MUT* (FPEEEKCFC612-620-)	RET (I788N)	Ponatinib(BCR-ABL inhibitor 3rd gen&Pan-TK inhibitor)	Lung adenocarcinoma	Resistant	D	NO	PMID:28615362	only alteration type		LUAD
+input01	PDGFRA wildtype	PDGFRA wildtype	Sorafenib(Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	C	NO	ASCO 2011 (abstr 10009)	complete		GIST
+input01	PDGFRA wildtype	PDGFRA wildtype	Sunitinib(Pan-TK inhibitor)	Gastrointestinal stromal	Responsive	B	NO	PMID:18955458	complete		GIST
+input01	EGFR (A289N), EGFR (A289D)	EGFR (L798I)	Rociletinib(EGFR inhibitor)	Lung adenocarcinoma	Resistant	C	NO	PMID:27283993	only alteration type		LUAD
 input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 oncogenic mutation	HDAC inhibitors	Retinoblastoma	Responsive	D	NO	PMID:18483379	complete		RB
 input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 deletion	HDAC inhibitors	Retinoblastoma	Responsive	D	NO	PMID:18483379	only gene		RB
 input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 oncogenic mutation	MDM2/MDMX inhibitors	Retinoblastoma	Responsive	D	NO	PMID:17080083;PMID:21515735	complete		RB
 input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 deletion	MDM2/MDMX inhibitors	Retinoblastoma	Responsive	D	NO	PMID:17080083;PMID:21515735	only gene		RB
-input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 oncogenic mutation	Cisplatin (Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	complete		BLCA
-input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 deletion	Cisplatin (Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	only gene		BLCA
-input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 overexpression	Palbociclib (CDK4/6 inhibitor)	Prostate adenocarcinoma	Responsive	D	NO	PMID:23708653	only gene		PRAD
+input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 oncogenic mutation	Cisplatin(Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	complete		BLCA
+input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 deletion	Cisplatin(Chemotherapy)	Bladder	Responsive	C	NO	PMID:26238431	only gene		BLCA
 input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	RET inhibitors	Lung adenocarcinoma	Responsive	D	NO	PMID:22327624;PMID:22327622	only gene		LUAD
 input01	RET MUT* (FPEEEKCFC612-620-)	RET-TPCN1 fusion	RET inhibitors	Thyroid	Responsive	D	NO	PMID:23056499	only gene		TH
 input01	RET MUT* (FPEEEKCFC612-620-)	RET (C634W,M918T)	RET inhibitors	Thyroid	Responsive	D	NO	PMID:23056499	only alteration type		TH
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Cabozantinib (Pan-kinase inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:28447912	only gene		LUAD
-input01	RET MUT* (FPEEEKCFC612-620-)	RET-TPCN1 fusion	Cabozantinib (Pan-kinase inhibitor)	Thyroid carcinoma	Responsive	D	NO	PMID:21470995	only gene		THCA
-input01	RET MUT* (FPEEEKCFC612-620-)	RET (C634W,M918T)	Cabozantinib (Pan-kinase inhibitor)	Thyroid	Responsive	D	NO	PMID:21470995	only alteration type		TH
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Nintedanib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:26787234	only gene		LUAD
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Sunitinib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:28447912	only gene		LUAD
-input01	RET MUT* (FPEEEKCFC612-620-)	RET-TPCN1 fusion	Sunitinib (Pan-TK inhibitor)	Thyroid carcinoma	Responsive	D	NO	PMID:21470995	only gene		THCA
-input01	RET MUT* (FPEEEKCFC612-620-)	RET (C634W,M918T)	Sunitinib (Pan-TK inhibitor)	Thyroid	Responsive	D	NO	PMID:21470995	only alteration type		TH
-input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Vandetanib (Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:28447912	only gene		LUAD
-input01	RET MUT* (FPEEEKCFC612-620-)	RET-TPCN1 fusion	Vandetanib (Pan-TK inhibitor)	Thyroid carcinoma	Responsive	D	NO	PMID:21470995	only gene		THCA
-input01	RET MUT* (FPEEEKCFC612-620-)	RET (618,620,634,768,791,891,918,C634W,M918T)	Vandetanib (Pan-TK inhibitor)	Thyroid carcinoma	Responsive	A	NO	PMID:20065189;PMID:22025146	only alteration type		THCA
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Cabozantinib(Pan-kinase inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:28447912	only gene		LUAD
+input01	RET MUT* (FPEEEKCFC612-620-)	RET-TPCN1 fusion	Cabozantinib(Pan-kinase inhibitor)	Thyroid carcinoma	Responsive	D	NO	PMID:21470995	only gene		THCA
+input01	RET MUT* (FPEEEKCFC612-620-)	RET (C634W,M918T)	Cabozantinib(Pan-kinase inhibitor)	Thyroid	Responsive	D	NO	PMID:21470995	only alteration type		TH
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Nintedanib(Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:26787234	only gene		LUAD
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Sunitinib(Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:28447912	only gene		LUAD
+input01	RET MUT* (FPEEEKCFC612-620-)	RET-TPCN1 fusion	Sunitinib(Pan-TK inhibitor)	Thyroid carcinoma	Responsive	D	NO	PMID:21470995	only gene		THCA
+input01	RET MUT* (FPEEEKCFC612-620-)	RET (C634W,M918T)	Sunitinib(Pan-TK inhibitor)	Thyroid	Responsive	D	NO	PMID:21470995	only alteration type		TH
+input01	RET MUT* (FPEEEKCFC612-620-)	RET fusion	Vandetanib(Pan-TK inhibitor)	Lung adenocarcinoma	Responsive	C	NO	PMID:28447912	only gene		LUAD
+input01	RET MUT* (FPEEEKCFC612-620-)	RET-TPCN1 fusion	Vandetanib(Pan-TK inhibitor)	Thyroid carcinoma	Responsive	D	NO	PMID:21470995	only gene		THCA
 input01	STK11 (Q37*)	STK11 oncogenic mutation	MEK inhibitors	Lung adenocarcinoma	Responsive	D	NO	PMID:19165201	complete		LUAD
 input01	STK11 (Q37*)	STK11 deletion	MEK inhibitors	Lung adenocarcinoma	Responsive	D	NO	PMID:19165201	only gene		LUAD
 input01	STK11 (Q37*)	STK11 oncogenic mutation	MTOR inhibitors	Any cancer type	Responsive	D	YES	PMID:19541609	complete		CANCER
 input01	STK11 (Q37*)	STK11 deletion	MTOR inhibitors	Any cancer type	Responsive	D	YES	PMID:19541609	only gene		CANCER
 input01	STK11 (Q37*)	STK11 oncogenic mutation	SRC inhibitor + PI3K/MEK inhibitors	Lung adenocarcinoma	Responsive	D	NO	PMID:20541700	complete		LUAD
 input01	STK11 (Q37*)	STK11 deletion	SRC inhibitor + PI3K/MEK inhibitors	Lung adenocarcinoma	Responsive	D	NO	PMID:20541700	only gene		LUAD
-input01	STK11 (Q37*)	STK11 (D194E)	Everolimus (MTOR inhibitor)	Pancreas	Responsive	C	NO	PMID:21189378	only alteration type		PA
-input01	STK11 (Q37*)	STK11 oncogenic mutation	Phenformin (Anti-diabetic)	Lung adenocarcinoma	Responsive	D	NO	PMID:23352126	complete		LUAD
-input01	STK11 (Q37*)	STK11 deletion	Phenformin (Anti-diabetic)	Lung adenocarcinoma	Responsive	D	NO	PMID:23352126	only gene		LUAD
+input01	STK11 (Q37*)	STK11 (D194E)	Everolimus(MTOR inhibitor)	Pancreas	Responsive	C	NO	PMID:21189378	only alteration type		PA
+input01	STK11 (Q37*)	STK11 oncogenic mutation	Phenformin(Anti-diabetic)	Lung adenocarcinoma	Responsive	D	NO	PMID:23352126	complete		LUAD
+input01	STK11 (Q37*)	STK11 deletion	Phenformin(Anti-diabetic)	Lung adenocarcinoma	Responsive	D	NO	PMID:23352126	only gene		LUAD
 input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 (R248Q,R175H)	HSP90 inhibitors	Any cancer type	Responsive	D	YES	PMID:26009011	only alteration type		CANCER
 input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 (R248Q,R175H)	HSP90 inhibitors	Any cancer type	Responsive	D	YES	PMID:26009011	only alteration type		CANCER
 input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	WEE1 inhibitors	Head an neck	Responsive	D	NO	PMID:25125259	complete		HNC
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	AZD6738 (ATR inhibitor)	B cell lymphoma	Responsive	C	NO	NCT01955668;https://ash.confex.com/ash/2014/webprogram/Paper71027.html	complete		BCL
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 deletion	AZD6738 (ATR inhibitor)	B cell lymphoma	Responsive	C	NO	NCT01955668;https://ash.confex.com/ash/2014/webprogram/Paper71027.html	only gene		BCL
-input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Vemurafenib (BRAF inhibitor)	Cutaneous melanoma	Resistant	D	NO	PMID:20179705	complete		CM
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Decitabine (Chemotherapy)	Acute myeloid leukemia, Myelodisplasic proliferative syndrome	Responsive	C	NO	PMID:27959731	complete		AML, MDPS
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Doxorubicin (Anthracycline antitumor antibiotic)	Bladder	Responsive	D	NO	PMID:27397505	complete		BLCA
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Gemcitabine (Chemotherapy)	Bladder	Responsive	D	NO	PMID:27397505	complete		BLCA
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Mitomycin C (Chemotherapy)	Bladder	Responsive	D	NO	PMID:27397505	complete		BLCA
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	AZD6738(ATR inhibitor)	B cell lymphoma	Responsive	C	NO	NCT01955668;https://ash.confex.com/ash/2014/webprogram/Paper71027.html	complete		BCL
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 deletion	AZD6738(ATR inhibitor)	B cell lymphoma	Responsive	C	NO	NCT01955668;https://ash.confex.com/ash/2014/webprogram/Paper71027.html	only gene		BCL
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS oncogenic mutation	Vemurafenib(BRAF inhibitor)	Cutaneous melanoma	Resistant	D	NO	PMID:20179705	complete		CM
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Decitabine(Chemotherapy)	Acute myeloid leukemia, Myelodisplasic proliferative syndrome	Responsive	C	NO	PMID:27959731	complete		AML, MDPS
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Doxorubicin(Anthracycline antitumor antibiotic)	Bladder	Responsive	D	NO	PMID:27397505	complete		BLCA
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Gemcitabine(Chemotherapy)	Bladder	Responsive	D	NO	PMID:27397505	complete		BLCA
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Mitomycin C(Chemotherapy)	Bladder	Responsive	D	NO	PMID:27397505	complete		BLCA
 input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	WEE1 inhibitors	Ovary	Responsive	C	NO	PMID:27998224	complete		OV
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Pramlintide (Amylin analogue)	Thymic	Responsive	D	NO	PMID:25409149	complete		THYM
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 deletion	Pramlintide (Amylin analogue)	Thymic	Responsive	D	NO	PMID:25409149	only gene		THYM
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 oncogenic mutation	Pramlintide(Amylin analogue)	Thymic	Responsive	D	NO	PMID:25409149	complete		THYM
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 deletion	Pramlintide(Amylin analogue)	Thymic	Responsive	D	NO	PMID:25409149	only gene		THYM
 input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M)	Afatinib + Erlotinib + Gefitinib	Non-small cell lung	Resistant	A	NO	oncokb: oncokb=https://www.oncokb.org/gene/EGFR	only alteration type		NSCLC
 input01	EGFR (A289N), EGFR (A289D)	EGFR (T790M,D761Y)	Gefitinib	Non-small cell lung	Resistant	B	NO	CIVIC,oncokb: CIVIC=https://civicdb.org/genes/19/summary|oncokb=https://www.oncokb.org/gene/EGFR	only alteration type		NSCLC
 input01	MTOR (L1460P)	MTOR (L2209V,L1460P,L2427Q)	Temsirolimus	Renal clear cell	Responsive	C	NO	oncokb: oncokb=https://www.oncokb.org/gene/MTOR	complete		RCCC
@@ -224,163 +234,242 @@ input01	RET MUT* (FPEEEKCFC612-620-)	RET-KIF5B fusion	Larotrectinib + 292 + 667	
 input01	RET MUT* (FPEEEKCFC612-620-)	RET-CCDC6 fusion	Larotrectinib + 292 + 667	Thyroid medullary	Responsive	C	NO	oncokb: oncokb=https://www.oncokb.org/gene/RET	only gene		THM
 input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS (Q61K,T50I,G13D,G60E,G12C,G12V,T58I,.,Q61H,G12R,G12D,Q61L,G13V,Q61R)	Selumetinib	Thyroid carcinoma	Responsive	C	NO	oncokb: oncokb=https://www.oncokb.org/gene/NRAS	complete		THCA
 input01	EGFR (A289N), EGFR (A289D)	EGFR amplification	Lapatinib	Glioma	Responsive	D	NO	oncokb: oncokb=https://www.oncokb.org/gene/EGFR	only gene		G
-input01	AKT1 (E17K)	AKT1 E17K	Vemurafenib	Cutaneous melanoma	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/4	complete		CM
-input01	AKT1 (E17K)	AKT1 E17K	Uprosertib	Cutaneous melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/4	complete		CM
-input01	AKT1 (Q79K)	AKT1 Q79K	Vemurafenib	Cutaneous melanoma	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/169	complete		CM
-input01	AKT1 (Q79K)	AKT1 Q79K	Dabrafenib	Cutaneous melanoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/169	complete		CM
-input01	ATM (N2875H)	ATM Mutation	Temozolomide	Cutaneous melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/178	complete		CM
-input01	BRAF wildtype	BRAF WILD TYPE	MEK Inhibitor RO4987655	Cutaneous melanoma	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/422	complete		CM
-input01	EGFR (A289N), EGFR (A289D)	EGFR A763_Y764insFQEA	Erlotinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/1423	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR A763_Y764insFQEA	Osimertinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1423	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR A767_V769dupASV	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/1487	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR A767_V769dupASV	Osimertinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1487	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR A864T	Erlotinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/1161	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR C797S	Osimertinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/411	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR C797S	Osimertinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/411	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR D761Y	Erlotinib,Gefitinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/693	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insG	Osimertinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1420	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insGL	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/1422	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insGT	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/1474	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insNPG	Afatinib,Gefitinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/1477	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR D770delinsGY	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/2090	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR E746G	Erlotinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/705	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR E746_A750del	Gefitinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/976	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR E746_A750del	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/976	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR EGFR::RAD51	Erlotinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/2079	only gene		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR EGFR::RAD51	Icotinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/2079	only gene		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR EGFR::RAD51	Osimertinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/2079	only gene		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719	Erlotinib	Lung adenocarcinoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/699	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719	Gefitinib,Erlotinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/699	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719A	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/973	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719A	Gefitinib,Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/973	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719D	Gefitinib,Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1328	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719S	Gefitinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/134	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719S	Gefitinib,Erlotinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/134	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR G719S	Erlotinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/134	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR H773_V774insNPH	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/1421	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR K757R	Erlotinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/704	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR K806E	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1771	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR KIF5B::EGFR	Afatinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/4169	only gene		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L747P	Gefitinib,Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1767	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L747_P753delinsS	Erlotinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/986	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L747_P753delinsS	Erlotinib	Pancreas adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/986	only alteration type		PAAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L747_S752delinsQ	Erlotinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/1488	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L838P	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1365	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Lung adenocarcinoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Lung adenocarcinoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Lung adenocarcinoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Lung adenocarcinoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Cetuximab	Lung adenocarcinoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Crizotinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib,Erlotinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Lapatinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Dacomitinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Neratinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Canertinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Response	A	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Non-small cell lung	Response	A	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Osimertinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Dacomitinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/33	only alteration type		SCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L861	Erlotinib,Gefitinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/1742	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L861Q	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/994	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR L861R	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1385	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR M766_A767insAI	Erlotinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/1572	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Afatinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/438	complete		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Gefitinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/438	complete		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Erlotinib,Gefitinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/438	complete		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Erlotinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/438	complete		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/438	complete		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR N826S	Erlotinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/1162	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR N826Y	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1772	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR N842S	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1775	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR P772_H773insYNP	Erlotinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/1575	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR R705K	Erlotinib,Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/2206	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR R776C	Erlotinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/1155	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR S720	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/701	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/558	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Erlotinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/558	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Gefitinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/558	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/558	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Gefitinib,Erlotinib	Lung adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Erlotinib	Non-small cell lung	Resistant	A	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Gefitinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Dacomitinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Erlotinib,Gefitinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Afatinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Gefitinib,Erlotinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Lapatinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Pemetrexed,Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Rociletinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Rociletinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib,Rociletinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Response	A	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Dacomitinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Neratinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Afatinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Canertinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Pancreas adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/34	only alteration type		PAAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR T847I	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1371	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR V742A	Erlotinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/975	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR V769_D770insASV	Erlotinib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/717	only alteration type		LUAD
-input01	EGFR (A289N), EGFR (A289D)	EGFR V774A	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1768	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR V774M	Erlotinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1770	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR V834I	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1773	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR V851I	Gefitinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1374	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Y764_V765insHH	Erlotinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/1573	only alteration type		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Platinum Compound,Cetuximab,Fluorouracil	Head an neck squamous	Response	B	NO	https://civicdb.org/links/molecular_profiles/190	only gene		HNSC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Osimertinib,Rociletinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/190	only gene		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/190	only gene		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Erlotinib,Gefitinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/190	only gene		NSCLC
-input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Gefitinib,Erlotinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/190	only gene		NSCLC
-input01	GNAQ (Q209R)	GNAQ Mutation	JQ1	Uveal melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/501	complete		UVM
-input01	GNAQ (Q209R)	GNAQ Mutation	Trametinib	Uveal melanoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/501	complete		UVM
-input01	GNAQ (Q209R)	GNAQ Mutation	Sotrastaurin Acetate,Mirdametinib	Uveal melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/501	complete		UVM
-input01	GNAQ (Q209R)	GNAQ Mutation	Cabozantinib	Uveal melanoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/501	complete		UVM
-input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ Q209	Selumetinib	Uveal melanoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/503	complete		UVM
-input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ Q209	Refametinib	Uveal melanoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/503	complete		UVM
-input01	HRAS (G12S)	HRAS Mutation	Tipifarnib	Bladder	Response	B	NO	https://civicdb.org/links/molecular_profiles/271	complete		BLCA
-input01	HRAS (G12S)	HRAS Mutation	Tipifarnib	Head an neck squamous	Response	B	NO	https://civicdb.org/links/molecular_profiles/271	complete		HNSC
-input01	JAK1 (V658F), JAK1 (S646F), JAK1 (A634D)	JAK1 S703I	Ruxolitinib	Hepatic carcinoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/800	only alteration type		HC
-input01	KIT wildtype	KIT WILDTYPE	Regorafenib	Gastrointestinal stromal	Response	B	NO	https://civicdb.org/links/molecular_profiles/2520	complete		GIST
-input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR E1799K	Sirolimus	Renal clear cell	Response	D	NO	https://civicdb.org/links/molecular_profiles/540	only alteration type		RCCC
-input01	MTOR (H1968Y)	MTOR H1968Y	PI3K/BET Inhibitor LY294002,Capivasertib	Cutaneous melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/279	complete		CM
-input01	MTOR (P2213S)	MTOR P2213S	PI3K/BET Inhibitor LY294002,Capivasertib	Cutaneous melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/280	complete		CM
-input01	NRAS (G13D)	NRAS G13D	Tanespimycin	Cutaneous melanoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/93	complete		CM
-input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	MEK Inhibitor RO4987655	Cutaneous melanoma	Resistant	C	NO	https://civicdb.org/links/molecular_profiles/208	complete		CM
-input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Dabrafenib,Vemurafenib	Cutaneous melanoma	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/208	complete		CM
-input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Trametinib	Cutaneous melanoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/208	complete		CM
-input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Trametinib,Omipalisib	Cutaneous melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/208	complete		CM
-input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Binimetinib	Cutaneous melanoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/208	complete		CM
-input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K)	NRAS Q61	Vemurafenib	Cutaneous melanoma	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/94	complete		CM
-input01	NRAS (Q61K)	NRAS Q61K	Binimetinib,Everolimus	Neuroblastoma	Response	D	NO	https://civicdb.org/links/molecular_profiles/423	complete		NB
-input01	NRAS (Q61K)	NRAS Q61K	Trametinib,Selumetinib	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/423	complete		NSCLC
-input01	NRAS (Q61L)	NRAS Q61L	Temozolomide	Cutaneous melanoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/95	complete		CM
-input01	NRAS (Q61R)	NRAS Q61R	Temozolomide	Cutaneous melanoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/96	complete		CM
-input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 Mutation	Chemotherapy	Small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/777	complete		SCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET CCDC6::RET	Nintedanib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/622	only gene		NSCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Cabozantinib	Lung adenocarcinoma	Response	B	NO	https://civicdb.org/links/molecular_profiles/1595	only gene		LUAD
-input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Vandetanib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/1595	only gene		NSCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Alectinib	Non-small cell lung	Response	C	NO	https://civicdb.org/links/molecular_profiles/1595	only gene		NSCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Selpercatinib	Non-small cell lung	Response	B	NO	https://civicdb.org/links/molecular_profiles/1595	only gene		NSCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Pralsetinib	Non-small cell lung	Response	A	NO	https://civicdb.org/links/molecular_profiles/1595	only gene		NSCLC
-input01	RET MUT* (FPEEEKCFC612-620-)	RET KIF5B::RET	Vandetanib	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/269	only gene		LUAD
-input01	RET MUT* (FPEEEKCFC612-620-)	RET KIF5B::RET	Vandetanib,Everolimus	Lung adenocarcinoma	Response	C	NO	https://civicdb.org/links/molecular_profiles/269	only gene		LUAD
-input01	RUNX1 (R201*)	RUNX1 Mutation	Cytarabine	Acute myeloid leukemia	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/155	complete		AML
-input01	STK11 (Q37*)	STK11 Mutation	Atezolizumab,Pembrolizumab,Nivolumab	Lung adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/molecular_profiles/696	complete		LUAD
-input01	STK11 (Q37*)	STK11 Loss	Docetaxel,Selumetinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/481	only gene		NSCLC
-input01	STK11 (Q37*)	STK11 Loss	Everolimus,Sirolimus	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/481	only gene		NSCLC
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Mutation	Selumetinib,Docetaxel	Non-small cell lung	Response	D	NO	https://civicdb.org/links/molecular_profiles/222	complete		NSCLC
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Mutation	Chemotherapy	Stomach	Response	B	NO	https://civicdb.org/links/molecular_profiles/222	complete		ST
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 R273H	Doxorubicin,Methotrexate	Osteosarcoma	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/122	only alteration type		OS
-input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Loss	Docetaxel	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/molecular_profiles/4407	only gene		NSCLC
+input01	AKT1 (E17K)	AKT1 E17K	Akt Inhibitor MK2206	Breast adenocarcinoma	Responsive	D	YES	https://civicdb.org/links/evidence_items/231	complete		BRCA
+input01	AKT1 (E17K)	AKT1 E17K	Capivasertib	Breast adenocarcinoma	Responsive	C	YES	https://civicdb.org/links/evidence_items/709	complete		BRCA
+input01	AKT1 (E17K)	AKT1 E17K	Vemurafenib	Cutaneous melanoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/4029	complete		CM
+input01	AKT1 (E17K)	AKT1 E17K	Uprosertib	Cutaneous melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/707	complete		CM
+input01	AKT1 (Q79K)	AKT1 Q79K	Vemurafenib	Cutaneous melanoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/439	complete		CM
+input01	AKT1 (Q79K)	AKT1 Q79K	Vemurafenib	Cutaneous melanoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/4498	complete		CM
+input01	AKT1 (Q79K)	AKT1 Q79K	Dabrafenib	Cutaneous melanoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/6260	complete		CM
+input01	ATM (N2875H)	ATM Mutation	Temozolomide	Cutaneous melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/453	complete		CM
+input01	ATM (N2875H)	ATM Mutation	Temozolomide	Glioblastoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/452	complete		GB
+input01	ATM (N2875H)	ATM Mutation	Olaparib	Prostate adenocarcinoma	Responsive	A	NO	https://civicdb.org/links/evidence_items/8505	complete		PRAD
+input01	BRAF wildtype	BRAF WILD TYPE	MEK Inhibitor RO4987655	Cutaneous melanoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/995	complete		CM
+input01	EGFR (A289N), EGFR (A289D)	EGFR A763_Y764insFQEA	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4497	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR A763_Y764insFQEA	Osimertinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/9225	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR A767_V769dupASV	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/4665	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR A767_V769dupASV	Osimertinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/9220	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR A864T	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4495	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR C797S	Osimertinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/1396	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR C797S	Osimertinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/evidence_items/964	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR D761Y	Erlotinib,Gefitinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/evidence_items/1763	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insG	Osimertinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/9223	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insGL	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/4494	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insGT	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/4643	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR D770_N771insNPG	Gefitinib,Afatinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/5947	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR D770delinsGY	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/4801	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR E746G	Erlotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1787	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR E746_A750del	Gefitinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2625	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR E746_A750del	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4198	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR EGFR::RAD51	Erlotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/5909	only gene		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR EGFR::RAD51	Icotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/7314	only gene		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR EGFR::RAD51	Erlotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/11015	only gene		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR EGFR::RAD51	Osimertinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/11021	only gene		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR G465R	Cetuximab,Panitumumab	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/1058	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR G465R	Futuximab/Modotuximab Mixture	Colorectal adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1057	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719	Erlotinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/1780	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719	Erlotinib,Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/4189	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719A	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/2508	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719A	Erlotinib,Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/6181	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719D	Gefitinib,Erlotinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4210	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719S	Cetuximab	Colorectal adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/787	only alteration type	823.0	COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719S	Gefitinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/274	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719S	Erlotinib,Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/1736	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR G719S	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4190	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR G724S	Cetuximab	Colorectal adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/786	only alteration type	823.0	COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR H773_V774insNPH	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/4493	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR K467T	Cetuximab	Colorectal adenocarcinoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/1083	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR K467T	Panitumumab,Futuximab/Modotuximab Mixture	Colorectal adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1082	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR K757R	Erlotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1786	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR K806E	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4239	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR KIF5B::EGFR	Afatinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/11026	only gene		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L747P	Gefitinib,Erlotinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4220	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L747_P753delinsS	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4266	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L747_P753delinsS	Erlotinib	Pancreas adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/6005	only alteration type		PAAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L747_S752delinsQ	Erlotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/4667	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L838P	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4252	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/879	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/883	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/982	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/2624	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/2634	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/4290	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Lung adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/4291	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Cetuximab	Lung adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/4292	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/6183	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Crizotinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/evidence_items/4288	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib,Erlotinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/229	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib,Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/275	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/276	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/885	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/968	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/1665	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/2621	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Lapatinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2626	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Dacomitinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2627	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Neratinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2628	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2629	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Canertinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2631	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/2632	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Responsive	A	NO	https://civicdb.org/links/evidence_items/2994	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Afatinib	Non-small cell lung	Responsive	A	NO	https://civicdb.org/links/evidence_items/2997	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4284	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4286	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4287	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Osimertinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4294	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Dacomitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/4860	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L858R	Erlotinib	Small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4293	only alteration type		SCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L861	Gefitinib,Erlotinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/4298	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L861Q	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/3802	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR L861R	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4669	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR M766_A767insAI	Erlotinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/evidence_items/4799	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Afatinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/1728	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/1937	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Erlotinib,Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/2053	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/2148	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Afatinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/2153	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/2559	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/3016	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Erlotinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/3794	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Erlotinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4201	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Mutation	Erlotinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/7024	complete		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR N826S	Erlotinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/evidence_items/4496	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR N826Y	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4244	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR N842S	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4256	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR P772_H773insYNP	Erlotinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/evidence_items/4802	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR R451C	Futuximab/Modotuximab Mixture,Cetuximab,Panitumumab	Colorectal adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1081	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR R705K	Erlotinib,Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/6182	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR R776C	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4468	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR S492R	Cetuximab	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/717	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S492R	Cetuximab	Colorectal adenocarcinoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/1080	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S492R	Panitumumab	Colorectal adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1078	only alteration type	826.0	COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S492R	Panitumumab,Futuximab/Modotuximab Mixture	Colorectal adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1079	only alteration type		COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S720	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/1782	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Erlotinib	Lung adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/4273	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Erlotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1394	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Gefitinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1395	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR S768I	Erlotinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/2906	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Gefitinib,Erlotinib	Lung adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/1391	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1397	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/2157	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Erlotinib	Non-small cell lung	Resistant	A	NO	https://civicdb.org/links/evidence_items/238	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Gefitinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/evidence_items/239	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Dacomitinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/evidence_items/240	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Erlotinib,Gefitinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/evidence_items/1667	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Afatinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/evidence_items/1863	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Gefitinib,Erlotinib	Non-small cell lung	Resistant	C	NO	https://civicdb.org/links/evidence_items/2158	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Gefitinib	Non-small cell lung	Resistant	B	NO	https://civicdb.org/links/evidence_items/2159	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Lapatinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/evidence_items/2160	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Pemetrexed,Erlotinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/277	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Rociletinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/646	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Rociletinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/762	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/963	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/965	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/966	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Rociletinib,Osimertinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/967	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Responsive	A	NO	https://civicdb.org/links/evidence_items/1592	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Non-small cell lung	Responsive	A	NO	https://civicdb.org/links/evidence_items/1867	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Dacomitinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2161	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Neratinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2162	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Afatinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2163	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Afatinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2164	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Canertinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2165	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR T790M	Osimertinib	Pancreas adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/6006	only alteration type		PAAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR T847I	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4260	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR V742A	Erlotinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/4197	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR V769_D770insASV	Erlotinib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1799	only alteration type		LUAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR V774A	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4226	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR V774M	Erlotinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4231	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR V834I	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4248	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR V851I	Gefitinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4264	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Y764_V765insHH	Erlotinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/evidence_items/4800	only alteration type		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Cetuximab,Panitumumab	Colorectal adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/854	only gene	834.0	COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Cetuximab	Colorectal adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/911	only gene	823.0	COREAD
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Platinum Compound,Cetuximab,Fluorouracil	Head an neck squamous	Responsive	B	NO	https://civicdb.org/links/evidence_items/691	only gene		HNSC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Rociletinib,Osimertinib	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/evidence_items/3015	only gene		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/948	only gene		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Erlotinib,Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/977	only gene		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Erlotinib,Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/5924	only gene		NSCLC
+input01	EGFR (A289N), EGFR (A289D)	EGFR Amplification	Erlotinib,Gefitinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/5925	only gene		NSCLC
+input01	GNAQ (Q209R)	GNAQ Mutation	JQ1	Uveal melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1210	complete		UVM
+input01	GNAQ (Q209R)	GNAQ Mutation	Trametinib	Uveal melanoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/1229	complete		UVM
+input01	GNAQ (Q209R)	GNAQ Mutation	Mirdametinib,Sotrastaurin Acetate	Uveal melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1953	complete		UVM
+input01	GNAQ (Q209R)	GNAQ Mutation	Cabozantinib	Uveal melanoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/5068	complete		UVM
+input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ Q209	Selumetinib	Uveal melanoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/1213	complete		UVM
+input01	GNAQ (Q209R), GNAQ MUT* (Q209L)	GNAQ Q209	Refametinib	Uveal melanoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1233	complete		UVM
+input01	GNAS (R844L), GNAS (Q870L)	GNAS R201C	Cetuximab,Vemurafenib,Irinotecan	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/1906	only alteration type		COREAD
+input01	HRAS (G12S)	HRAS G13D	Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/699	only alteration type		COREAD
+input01	HRAS (G12S)	HRAS G13D	Cetuximab	Colorectal adenocarcinoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/3852	only alteration type		COREAD
+input01	HRAS (G12S)	HRAS Mutation	Tipifarnib	Bladder	Responsive	B	NO	https://civicdb.org/links/evidence_items/9632	complete		BLCA
+input01	HRAS (G12S)	HRAS Mutation	Tipifarnib	Head an neck squamous	Responsive	B	NO	https://civicdb.org/links/evidence_items/9633	complete		HNSC
+input01	JAK1 (V658F), JAK1 (S646F), JAK1 (A634D)	JAK1 S703I	Ruxolitinib	Hepatic carcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1900	only alteration type		HC
+input01	KIT wildtype	KIT WILDTYPE	Regorafenib	Gastrointestinal stromal	Responsive	B	NO	https://civicdb.org/links/evidence_items/4144	complete		GIST
+input01	KRAS wildtype	KRAS Wildtype	Regorafenib	Colorectal adenocarcinoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/8840	complete		COREAD
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR A2034V	Sirolimus	Breast adenocarcinoma	Resistant	D	YES	https://civicdb.org/links/evidence_items/1547	only alteration type		BRCA
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR A2034V	RapaLink-1,MTOR Kinase Inhibitor AZD8055	Breast adenocarcinoma	Resistant	D	YES	https://civicdb.org/links/evidence_items/1548	only alteration type		BRCA
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR E1799K	Sirolimus	Renal clear cell	Responsive	D	NO	https://civicdb.org/links/evidence_items/1321	only alteration type	805.0	RCCC
+input01	MTOR (F2108L)	MTOR F2108L	Sirolimus	Breast adenocarcinoma	Resistant	D	YES	https://civicdb.org/links/evidence_items/1543	complete		BRCA
+input01	MTOR (F2108L)	MTOR F2108L	Everolimus	Thyroid carcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/1110	complete		THCA
+input01	MTOR (H1968Y)	MTOR H1968Y	PI3K/BET Inhibitor LY294002,Capivasertib	Cutaneous melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/713	complete		CM
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR M2327I	MTOR Kinase Inhibitor AZD8055	Breast adenocarcinoma	Resistant	D	YES	https://civicdb.org/links/evidence_items/1544	only alteration type		BRCA
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR M2327I	Sirolimus,RapaLink-1	Breast adenocarcinoma	Resistant	D	YES	https://civicdb.org/links/evidence_items/1545	only alteration type		BRCA
+input01	MTOR (R2505P), MTOR (I2500M), MTOR (I2500F), MTOR (E2419K), MTOR (Q2223K), MTOR (S2215F), MTOR (S2215Y), MTOR (S2215T), MTOR (P2213S), MTOR (F2108L), MTOR (E2014K), MTOR (H1968Y), MTOR (C1483W), MTOR (C1483F), MTOR (C1483Y), MTOR (C1483R), MTOR (L1460P)	MTOR Mutation	Everolimus,Pazopanib	Bladder	Responsive	C	NO	https://civicdb.org/links/evidence_items/705	complete		BLCA
+input01	MTOR (P2213S)	MTOR P2213S	PI3K/BET Inhibitor LY294002,Capivasertib	Cutaneous melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/722	complete		CM
+input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS G12C	Cetuximab,Chemotherapy	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/3845	only alteration type		COREAD
+input01	NRAS (G12D)	NRAS G12D	Irinotecan,Cetuximab	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/2002	complete		COREAD
+input01	NRAS (G12D)	NRAS G12D	Cetuximab	Colorectal adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/3693	complete		COREAD
+input01	NRAS (G13D)	NRAS G13D	Tanespimycin	Cutaneous melanoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/21	complete		CM
+input01	NRAS (G13R)	NRAS G13R	Cetuximab,Irinotecan	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/2204	complete		COREAD
+input01	NRAS (G13R)	NRAS G13R	Panitumumab	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/3842	complete		COREAD
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	MEK Inhibitor RO4987655	Cutaneous melanoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/996	complete		CM
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Dabrafenib,Vemurafenib	Cutaneous melanoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/6263	complete		CM
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Trametinib	Cutaneous melanoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/1227	complete		CM
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Trametinib,Omipalisib	Cutaneous melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1429	complete		CM
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Binimetinib	Cutaneous melanoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1509	complete		CM
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Cetuximab	Colorectal adenocarcinoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/1703	complete		COREAD
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Cetuximab,Chemotherapy	Colorectal adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/2210	complete		COREAD
+input01	NRAS (Q61H), NRAS (Q61H), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Mutation	Cetuximab,Panitumumab	Colorectal adenocarcinoma	Resistant	A	NO	https://civicdb.org/links/evidence_items/5344	complete		COREAD
+input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K), NRAS (A18T), NRAS (G13V), NRAS (G13A), NRAS (G13D), NRAS (G13C), NRAS (G13R), NRAS (G13S), NRAS (G12V), NRAS (G12A), NRAS (G12D)	NRAS Q179X	Cetuximab	Colorectal adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/4785	only alteration type		COREAD
+input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K)	NRAS Q61	Vemurafenib	Cutaneous melanoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/14	complete		CM
+input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K)	NRAS Q61	Cetuximab,Chemotherapy	Colorectal adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/36	complete		COREAD
+input01	NRAS (Q61H), NRAS (Q61H), NRAS MUT* (Q61L), NRAS MUT* (Q61R), NRAS (Q61L), NRAS (Q61R), NRAS (Q61P), NRAS MUT* (Q61R), NRAS (Q61*), NRAS (Q61E), NRAS (Q61K)	NRAS Q61	Cetuximab	Colorectal adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/124	complete		COREAD
+input01	NRAS (Q61H)	NRAS Q61H	Irinotecan,Cetuximab	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/3690	complete		COREAD
+input01	NRAS (Q61K)	NRAS Q61K	Cetuximab,Chemotherapy	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/2189	complete		COREAD
+input01	NRAS (Q61K)	NRAS Q61K	Selumetinib,Dactolisib	Colorectal adenocarcinoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/2192	complete		COREAD
+input01	NRAS (Q61K)	NRAS Q61K	Everolimus,Binimetinib	Neuroblastoma	Responsive	D	NO	https://civicdb.org/links/evidence_items/1002	complete		NB
+input01	NRAS (Q61K)	NRAS Q61K	Selumetinib,Trametinib	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/2907	complete		NSCLC
+input01	NRAS (Q61L)	NRAS Q61L	Temozolomide	Cutaneous melanoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/22	complete		CM
+input01	NRAS (Q61L)	NRAS Q61L	Cetuximab,Irinotecan	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/2181	complete		COREAD
+input01	NRAS (Q61R)	NRAS Q61R	Temozolomide	Cutaneous melanoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/23	complete		CM
+input01	NRAS (Q61R)	NRAS Q61R	Cetuximab	Colorectal adenocarcinoma	Resistant	C	NO	https://civicdb.org/links/evidence_items/2184	complete		COREAD
+input01	PIK3CA wildtype	PIK3CA Wildtype	Aspirin	Colorectal adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/2038	complete		COREAD
+input01	RB1 (R556*), RB1 (R579*), RB1 (C706F), RB1 (E748*)	RB1 Mutation	Chemotherapy	Small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/1866	complete		SCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET CCDC6::RET	Agerafenib	Colorectal adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/7480	only gene		COREAD
+input01	RET MUT* (FPEEEKCFC612-620-)	RET CCDC6::RET	Nintedanib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/1601	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Cabozantinib	Lung adenocarcinoma	Responsive	B	NO	https://civicdb.org/links/evidence_items/4847	only gene		LUAD
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Vandetanib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/4848	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Vandetanib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/4849	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Alectinib	Non-small cell lung	Responsive	C	NO	https://civicdb.org/links/evidence_items/4850	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Selpercatinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/7066	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Selpercatinib	Non-small cell lung	Responsive	B	NO	https://civicdb.org/links/evidence_items/8850	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Pralsetinib	Non-small cell lung	Responsive	A	NO	https://civicdb.org/links/evidence_items/11233	only gene		NSCLC
+input01	RET MUT* (FPEEEKCFC612-620-)	RET Fusion	Selpercatinib	Thyroid carcinoma	Responsive	A	NO	https://civicdb.org/links/evidence_items/8852	only gene		THCA
+input01	RET MUT* (FPEEEKCFC612-620-)	RET KIF5B::RET	Vandetanib	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/698	only gene		LUAD
+input01	RET MUT* (FPEEEKCFC612-620-)	RET KIF5B::RET	Vandetanib,Everolimus	Lung adenocarcinoma	Responsive	C	NO	https://civicdb.org/links/evidence_items/1622	only gene		LUAD
+input01	RUNX1 (R201*)	RUNX1 Mutation	Cytarabine	Acute myeloid leukemia	Resistant	B	NO	https://civicdb.org/links/evidence_items/411	complete		AML
+input01	SMAD4 (D537Y)	SMAD4 Mutation	Cetuximab,Panitumumab	Colorectal adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/719	complete		COREAD
+input01	STK11 (Q37*)	STK11 Mutation	Pembrolizumab,Nivolumab,Atezolizumab	Lung adenocarcinoma	Resistant	B	NO	https://civicdb.org/links/evidence_items/6441	complete		LUAD
+input01	STK11 (Q37*)	STK11 Loss	Selumetinib,Docetaxel	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/evidence_items/1144	only gene		NSCLC
+input01	STK11 (Q37*)	STK11 Loss	Everolimus,Sirolimus	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/1620	only gene		NSCLC
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 M237I	MDM2 Inhibitor AMGMDS3	Glioblastoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/4885	only alteration type		GB
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Mutation	Tamoxifen	Breast adenocarcinoma	Resistant	C	YES	https://civicdb.org/links/evidence_items/2784	complete		BRCA
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Mutation	Doxorubicin	Breast adenocarcinoma	Responsive	D	YES	https://civicdb.org/links/evidence_items/851	complete		BRCA
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Mutation	Selumetinib,Docetaxel	Non-small cell lung	Responsive	D	NO	https://civicdb.org/links/evidence_items/1145	complete		NSCLC
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Mutation	Pazopanib,Vorinostat	Solid tumors	Responsive	B	YES	https://civicdb.org/links/evidence_items/7540	complete		SOLID
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Mutation	Chemotherapy	Stomach	Responsive	B	NO	https://civicdb.org/links/evidence_items/850	complete		ST
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 R175H	Doxorubicin	Breast adenocarcinoma	Responsive	D	YES	https://civicdb.org/links/evidence_items/319	only alteration type		BRCA
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 R249	Doxorubicin	Breast adenocarcinoma	Responsive	B	YES	https://civicdb.org/links/evidence_items/399	only alteration type		BRCA
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 R273H	Methotrexate,Doxorubicin	Osteosarcoma	Resistant	D	NO	https://civicdb.org/links/evidence_items/7430	only alteration type		OS
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 R273L	Cisplatin,Carboplatin	Ovary	Resistant	C	NO	https://civicdb.org/links/evidence_items/2286	only alteration type		OV
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Y234C	Cisplatin,Carboplatin	Ovary	Resistant	C	NO	https://civicdb.org/links/evidence_items/2745	only alteration type		OV
+input01	TP53 (R306*), TP53 (E286V), TP53 (E286G), TP53 (E286A), TP53 (E286Q)	TP53 Loss	Docetaxel	Non-small cell lung	Resistant	D	NO	https://civicdb.org/links/evidence_items/1146	only gene		NSCLC
