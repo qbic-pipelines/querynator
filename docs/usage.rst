@@ -221,6 +221,8 @@ To filter, the following fields are required in the VEP info column:
 
 If ``filter_vep`` is set, the filtered and removed variants are given out as results in the ``vcf_files`` directory.
 
+Using ``filter_evidence`` allows to filter the CIViC evidences based on type, direction, status, level and significance.
+
 A typical command for a CIViC query:
 
 .. code-block:: bash
@@ -229,7 +231,9 @@ A typical command for a CIViC query:
         -v input_file.vcf,tsv,gtf \
         -o outdir \
         -g ref_genome [GRCh37, GRCh38, NCBI36] \
-        --filter_vep
+        --filter_vep \
+        --filter_evidence type=Predictive \
+        --filter_evidence status=accepted
 
 The command above generates the following result files using `CIViCpy <https://docs.civicpy.org/>`_.
 

@@ -6,6 +6,8 @@ Changelog
 
 **Added**
 
+* option `--filter_evidence` to filter CIViC evidences based on type, direction, status, level and significance
+
 **Fixed**
 
 **Dependencies**

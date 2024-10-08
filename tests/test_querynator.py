@@ -218,5 +218,45 @@ class testCliRun(unittest.TestCase):
         self.clean_testdir()
 
 
+class testEvidenceFilter(unittest.TestCase):
+    """Test evidence filter function"""
+    def setUp(self):
+        self.runner = CliRunner()
+    
+    valid_civic_query = ["query-api-civic", "--vcf", f"{os.getcwd()}/example_files/example.vcf", "--genome", "GRCh37", "--outdir", "test_out"]
+
+    def test_invalidEvidenceFilter(self):
+        """Test invalid evidence filter"""
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "this is not a valid evidence filter"])
+        self.assertEqual(result.exit_code, 2)
+        self.assertIn("Invalid evidence filter", result.output)
+
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "foo=bar"])
+        self.assertEqual(result.exit_code, 2)
+        self.assertIn("Unsupported or invalid evidence filter", result.output)
+    
+    def test_multipleinvalidEvidenceFilters(self):
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "foo=bar", "--filter_evidence", "baz=qux"])
+        self.assertEqual(result.exit_code, 2)
+        self.assertIn("Unsupported or invalid evidence filter", result.output)
+    
+    def test_validEvidenceFilter(self):
+        """Test valid evidence filter"""
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=Predictive"])
+        self.assertEqual(result.exit_code, 0)
+
+    def test_validEvidenceFilterCaseInsensitive(self):
+        """Test case-insensitive evidence filter"""
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "tYpe=prEdicTiVE"])
+        self.assertEqual(result.exit_code, 0)
+    
+    def test_multipleValidEvidenceFilters(self):
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=Predictive",
+                                                              "--filter_evidence", "type=Diagnostic"
+                                                              "--filter_evidence", "level=B", 
+                                                              "--filter_evidence", "status=accepted", 
+                                                              "--filter_evidence", "direction=Supports"])
+        self.assertEqual(result.exit_code, 0)
+
 if __name__ == "__main__":
     unittest.main()
