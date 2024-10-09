@@ -471,21 +471,21 @@ def filter_evidence(evidence, filters) -> bool:
     :rtype: bool
     """
     for prop, values in filters.items():
-        if prop.lower() == "level":
-            if evidence.evidence_level.lower() > values:
+        if prop == "level".casefold():
+            if evidence.evidence_level.casefold() > min(values):
                 # lower level has higher char value A < B < C
                 return False
-        elif prop.lower() == "type":
-            if evidence.evidence_type.lower() not in values:
+        elif prop == "type".casefold():
+            if evidence.evidence_type.casefold() not in values:
                 return False
-        elif prop.lower() == "significance":
-            if evidence.significance.lower() not in values:
+        elif prop == "significance".casefold():
+            if evidence.significance.casefold() not in values:
                 return False
-        elif prop.lower() == "rating":
-            if evidence.rating not in values:
+        elif prop == "rating".casefold():
+            if evidence.rating.casefold() not in values:
                 return False
-        elif prop.lower() == "status":
-            if evidence.status.lower() not in values:
+        elif prop == "status".casefold():
+            if evidence.status.casefold() not in values:
                 return False
     return True
 

@@ -247,16 +247,22 @@ class testEvidenceFilter(unittest.TestCase):
 
     def test_validEvidenceFilterCaseInsensitive(self):
         """Test case-insensitive evidence filter"""
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "tYpe=prEdicTiVE"])
-        self.assertEqual(result.exit_code, 0)
-    
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=prEdicTiVE"])
+        self.assertEqual(result.exit_code, 0, result.output)
+
+    def test_validEvidenceFilterWithSpace(self):
+        """Test case-insensitive evidence filter"""
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "significance=Reduced Sensitivity"])
+        self.assertEqual(result.exit_code, 0, result.output)
+
     def test_multipleValidEvidenceFilters(self):
         result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=Predictive",
-                                                              "--filter_evidence", "type=Diagnostic"
-                                                              "--filter_evidence", "level=B", 
-                                                              "--filter_evidence", "status=accepted", 
+                                                              "--filter_evidence", "type=Diagnostic",
+                                                              "--filter_evidence", "level=B",
+                                                              "--filter_evidence", "significance=Reduced Sensitivity",
+                                                              "--filter_evidence", "status=Accepted", 
                                                               "--filter_evidence", "direction=Supports"])
-        self.assertEqual(result.exit_code, 0)
+        self.assertEqual(result.exit_code, 0, result.output)
 
 if __name__ == "__main__":
     unittest.main()

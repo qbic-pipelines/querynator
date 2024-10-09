@@ -273,15 +273,16 @@ def validate_evidence_filters(evidence_filters):
     :rtype: None
     :raises click.UsageError: if the evidence filter is not in the list of valid filters"""
 
-    VALID_FILTERS = {"type"         : ["Predictive", "Diagnostic", "Prognostic", "Predisposing", "Oncogenic", "Functional"],
-                     "significance" : ["Sensitivity/Response", "Adverse Response", "Reduced Sensitivity", "N/A",],
-                     "direction"    : ["Supports", "Does Not Support"],
-                     "level"        : ["A", "B", "C", "D", "E", "F"],
-                     "rating"       : [1, 2, 3, 4, 5]}
+    VALID_FILTERS = {"type"         : map(str.casefold, ["Predictive", "Diagnostic", "Prognostic", "Predisposing", "Oncogenic", "Functional"]),
+                     "significance" : map(str.casefold, ["Sensitivity/Response", "Adverse Response", "Reduced Sensitivity", "N/A",]),
+                     "direction"    : map(str.casefold, ["Supports", "Does Not Support"]),
+                     "level"        : map(str.casefold, ["A", "B", "C", "D", "E", "F"]),
+                     "rating"       : map(str.casefold, [1, 2, 3, 4, 5]),
+                     "status"       : map(str.casefold, ["Accepted", "Rejected", "Submitted"])}
 
     if not isinstance(evidence_filters, list) and not isinstance(evidence_filters, tuple):
         evidence_filters = [evidence_filters]
-    non_empty_filters = [f for f in evidence_filters if f]
+    non_empty_filters = [f.casefold() for f in evidence_filters if f]
     
     for evidence_filter in non_empty_filters:
         if "=" not in evidence_filter:
@@ -511,7 +512,7 @@ def query_api_civic(vcf, outdir, genome, cancer, filter_vep, filter_evidence):
 
         else:
             logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            query_civic(vcf, result_dir, logger, vcf, genome, filter_vep, evidence_filters)
+            query_civic(vcf, result_dir, logger, vcf, genome, cancer, filter_vep, evidence_filters)
 
     except FileNotFoundError:
         print("The provided file cannot be found. Please try another path.")
