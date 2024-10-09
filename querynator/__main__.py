@@ -506,28 +506,24 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     multiple=True,
 )
 def query_api_civic(vcf, outdir, genome, cancer, filter_vep, filter_evidence):
-    try:
-        validate_evidence_filters(filter_evidence)
-        evidence_filters = parse_filters(filter_evidence)
-        result_dir = get_unique_querynator_dir(f"{outdir}")
-        dirname, basename = os.path.split(result_dir)
-        if filter_vep:
-            in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
-            # create result directories
-            os.makedirs(f"{result_dir}/vcf_files")
-            write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
-            write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
+    validate_evidence_filters(filter_evidence)
+    evidence_filters = parse_filters(filter_evidence)
+    result_dir = get_unique_querynator_dir(f"{outdir}")
+    dirname, basename = os.path.split(result_dir)
+    if filter_vep:
+        in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
+        # create result directories
+        os.makedirs(f"{result_dir}/vcf_files")
+        write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
+        write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
 
-            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            # run analysis
-            query_civic(candidate_variants, result_dir, logger, vcf, genome, cancer, filter_vep, evidence_filters)
+        logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
+        # run analysis
+        query_civic(candidate_variants, result_dir, logger, vcf, genome, cancer, filter_vep, evidence_filters)
 
-        else:
-            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            query_civic(vcf, result_dir, logger, vcf, genome, cancer, filter_vep, evidence_filters)
-
-    except FileNotFoundError:
-        print("The provided file cannot be found. Please try another path.")
+    else:
+        logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
+        query_civic(vcf, result_dir, logger, vcf, genome, cancer, filter_vep, evidence_filters)
 
 
 # querynator create report
