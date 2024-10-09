@@ -488,6 +488,9 @@ def filter_evidence(evidence, filters) -> bool:
         elif prop == "status".casefold():
             if evidence.status.casefold() not in values:
                 return False
+        elif prop == "direction".casefold():
+            if evidence.evidence_direction.casefold() not in values:
+                return False
     return True
 
 

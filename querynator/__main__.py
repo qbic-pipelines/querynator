@@ -274,23 +274,15 @@ def validate_evidence_filters(evidence_filters):
     :raises click.UsageError: if the evidence filter is not in the list of valid filters"""
 
     VALID_FILTERS = {
-        "type": map(
-            str.casefold, ["Predictive", "Diagnostic", "Prognostic", "Predisposing", "Oncogenic", "Functional"]
-        ),
-        "significance": map(
-            str.casefold,
-            [
-                "Sensitivity/Response",
-                "Adverse Response",
-                "Reduced Sensitivity",
-                "N/A",
-            ],
-        ),
-        "direction": map(str.casefold, ["Supports", "Does Not Support"]),
-        "level": map(str.casefold, ["A", "B", "C", "D", "E", "F"]),
-        "rating": map(str.casefold, [1, 2, 3, 4, 5]),
-        "status": map(str.casefold, ["Accepted", "Rejected", "Submitted"]),
+        "type": ["Predictive", "Diagnostic", "Prognostic", "Predisposing", "Oncogenic", "Functional"],
+        "significance": ["SensitivityResponse", "Adverse Response", "Reduced Sensitivity", "N/A"],
+        "direction": ["Supports", "Does Not Support"],
+        "level": ["A", "B", "C", "D", "E", "F"],
+        "rating": [1, 2, 3, 4, 5],
+        "status": ["Accepted", "Rejected", "Submitted"],
     }
+    # apply casefold to all keys and values to be case insensitive
+    VALID_FILTERS = {k.casefold(): [str(v).casefold() for v in values] for k, values in VALID_FILTERS.items()}
 
     if not isinstance(evidence_filters, list) and not isinstance(evidence_filters, tuple):
         evidence_filters = [evidence_filters]
