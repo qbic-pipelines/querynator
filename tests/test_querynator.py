@@ -10,6 +10,45 @@ from click.testing import CliRunner
 
 from querynator.__main__ import querynator_cli
 
+class CliTestCase(unittest.TestCase):
+    """test case class for CLI tests. Provides helper functions and automated setup/teardown"""
+
+    unittest_dir = f"{os.getcwd()}/tests/unittest_out"
+
+    # helper functions
+    def assertIsFile(self, path, msg=None):
+        msg = f"{path} is not a file" if msg is None else msg
+        self.assertTrue(os.path.isfile(path), msg)
+
+    def get_testdir(self):
+        """Get the test directory for the current test method."""
+        method_name = str(self).split()[0]
+        class_name = self.__class__.__name__
+        return f"{self.unittest_dir}/{class_name}/{method_name}"
+
+    def clean_testdir(self):
+        try:
+            shutil.rmtree(self.get_testdir())
+        except FileNotFoundError:
+            pass
+        # if unittest_dir is empty, remove it
+        try:
+            os.rmdir(f"{self.unittest_dir}/{self.__class__.__name__}")
+        except OSError:
+            pass
+        try:
+            os.rmdir(f"{self.unittest_dir}")
+        except OSError:
+            pass
+    
+    def setUp(self):
+        self.runner = CliRunner()
+        self.clean_testdir()
+    
+    def tearDown(self):
+        """Clean up output directories after tests are run."""
+        self.clean_testdir()
+
 
 class testCliHelp(unittest.TestCase):
 
@@ -59,29 +98,8 @@ class testCliHelp(unittest.TestCase):
         self.assertIn("No such option", result.output)
 
 
-class testCliRun(unittest.TestCase):
-    unittest_dir = f"{os.getcwd()}/example_files/unittest_out"
-
-    # helper functions
-    def assertIsFile(self, path, msg=None):
-        msg = f"{path} is not a file" if msg is None else msg
-        self.assertTrue(os.path.isfile(path), msg)
-
-    def get_testdir(self):
-        """Get the test directory for the current test method."""
-        method_name = str(self).split()[0]
-        return f"{self.unittest_dir}/{method_name}"
-
-    def clean_testdir(self):
-        try:
-            shutil.rmtree(self.get_testdir())
-        except FileNotFoundError:
-            pass
-
-    # tests
-    def setUp(self):
-        self.runner = CliRunner()
-        self.clean_testdir()
+class testCliRun(CliTestCase):
+    """Test the CLI with example files"""
 
     def test_queryApiCivic(self):
         """Test query-api-civic"""
@@ -213,67 +231,63 @@ class testCliRun(unittest.TestCase):
         self.assertIsFile(f"{outdir}/combined_files/civic_cgi_vep.tsv", "combined file not created")
         self.assertIsFile(f"{outdir}/report/{outdir.split('/')[-1]}_overall_report.html", "report not created")
 
-    def tearDown(self):
-        """Clean up output directories after tests are run."""
-        self.clean_testdir()
 
-
-class testEvidenceFilter(unittest.TestCase):
+class testEvidenceFilter(CliTestCase):
     """Test evidence filter function"""
-
-    def setUp(self):
-        self.runner = CliRunner()
-
-    valid_civic_query = [
+    # helper functions
+    def valid_civic_query(self) -> list:
+     """return a valid civic query as list with the methods outdir"""
+     return [
         "query-api-civic",
         "--vcf",
         f"{os.getcwd()}/example_files/example.vcf",
         "--genome",
         "GRCh37",
         "--outdir",
-        "test_out",
+        self.get_testdir(),
     ]
 
+    # tests
     def test_invalidEvidenceFilter(self):
         """Test invalid evidence filter"""
         result = self.runner.invoke(
-            querynator_cli, self.valid_civic_query + ["--filter_evidence", "this is not a valid evidence filter"]
+            querynator_cli, self.valid_civic_query() + ["--filter_evidence", "this is not a valid evidence filter"]
         )
         self.assertEqual(result.exit_code, 2)
         self.assertIn("Invalid evidence filter", result.output)
 
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "foo=bar"])
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query() + ["--filter_evidence", "foo=bar"])
         self.assertEqual(result.exit_code, 2)
         self.assertIn("Unsupported or invalid evidence filter", result.output)
 
     def test_multipleinvalidEvidenceFilters(self):
         result = self.runner.invoke(
-            querynator_cli, self.valid_civic_query + ["--filter_evidence", "foo=bar", "--filter_evidence", "baz=qux"]
+            querynator_cli, self.valid_civic_query() + ["--filter_evidence", "foo=bar", "--filter_evidence", "baz=qux"]
         )
         self.assertEqual(result.exit_code, 2)
         self.assertIn("Unsupported or invalid evidence filter", result.output)
 
     def test_validEvidenceFilter(self):
         """Test valid evidence filter"""
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=Predictive"])
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query() + ["--filter_evidence", "type=Predictive"])
         self.assertEqual(result.exit_code, 0)
 
     def test_validEvidenceFilterCaseInsensitive(self):
         """Test case-insensitive evidence filter"""
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=prEdicTiVE"])
+        result = self.runner.invoke(querynator_cli, self.valid_civic_query() + ["--filter_evidence", "type=prEdicTiVE"])
         self.assertEqual(result.exit_code, 0, result.output)
 
     def test_validEvidenceFilterWithSpace(self):
         """Test case-insensitive evidence filter"""
         result = self.runner.invoke(
-            querynator_cli, self.valid_civic_query + ["--filter_evidence", "significance=Reduced Sensitivity"]
+            querynator_cli, self.valid_civic_query() + ["--filter_evidence", "significance=Reduced Sensitivity"]
         )
         self.assertEqual(result.exit_code, 0, result.output)
 
     def test_multipleValidEvidenceFilters(self):
         result = self.runner.invoke(
             querynator_cli,
-            self.valid_civic_query
+            self.valid_civic_query()
             + [
                 "--filter_evidence",
                 "type=Predictive",
