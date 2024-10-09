@@ -592,7 +592,7 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep, ev
     try:
         civic_result_df.to_csv(f"{out_path}/{os.path.basename(out_path)}.civic_results.tsv", sep="\t", index=False)
     except OSError:
-        os.mkdir(out_path)
+        os.makedirs(out_path)
         civic_result_df.to_csv(f"{out_path}/{os.path.basename(out_path)}.civic_results.tsv", sep="\t", index=False)
 
 
