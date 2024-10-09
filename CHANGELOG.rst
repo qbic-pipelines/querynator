@@ -12,6 +12,9 @@ Changelog
 
 **Dependencies**
 
+* updated `black` to version 24.3.0 due to moderate vulnerability CVE-2024-21503
+* updated `requests` to version 2.31.0 due to moderate vulnerabilities CVE-2023-32681 and CVE-2024-35195
+
 **Deprecated**
 
 0.5.5 - Sulfur Io  (2024-09-09)
