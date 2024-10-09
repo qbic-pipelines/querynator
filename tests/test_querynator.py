@@ -10,6 +10,7 @@ from click.testing import CliRunner
 
 from querynator.__main__ import querynator_cli
 
+
 class CliTestCase(unittest.TestCase):
     """test case class for CLI tests. Provides helper functions and automated setup/teardown"""
 
@@ -40,11 +41,11 @@ class CliTestCase(unittest.TestCase):
             os.rmdir(f"{self.unittest_dir}")
         except OSError:
             pass
-    
+
     def setUp(self):
         self.runner = CliRunner()
         self.clean_testdir()
-    
+
     def tearDown(self):
         """Clean up output directories after tests are run."""
         self.clean_testdir()
@@ -234,18 +235,19 @@ class testCliRun(CliTestCase):
 
 class testEvidenceFilter(CliTestCase):
     """Test evidence filter function"""
+
     # helper functions
     def valid_civic_query(self) -> list:
-     """return a valid civic query as list with the methods outdir"""
-     return [
-        "query-api-civic",
-        "--vcf",
-        f"{os.getcwd()}/example_files/example.vcf",
-        "--genome",
-        "GRCh37",
-        "--outdir",
-        self.get_testdir(),
-    ]
+        """return a valid civic query as list with the methods outdir"""
+        return [
+            "query-api-civic",
+            "--vcf",
+            f"{os.getcwd()}/example_files/example.vcf",
+            "--genome",
+            "GRCh37",
+            "--outdir",
+            self.get_testdir(),
+        ]
 
     # tests
     def test_invalidEvidenceFilter(self):
