@@ -5,8 +5,8 @@ import logging
 import os
 import random
 import shutil
-from enum import Enum
 from collections import defaultdict
+from enum import Enum
 
 import click
 import vcf
@@ -273,23 +273,35 @@ def validate_evidence_filters(evidence_filters):
     :rtype: None
     :raises click.UsageError: if the evidence filter is not in the list of valid filters"""
 
-    VALID_FILTERS = {"type"         : map(str.casefold, ["Predictive", "Diagnostic", "Prognostic", "Predisposing", "Oncogenic", "Functional"]),
-                     "significance" : map(str.casefold, ["Sensitivity/Response", "Adverse Response", "Reduced Sensitivity", "N/A",]),
-                     "direction"    : map(str.casefold, ["Supports", "Does Not Support"]),
-                     "level"        : map(str.casefold, ["A", "B", "C", "D", "E", "F"]),
-                     "rating"       : map(str.casefold, [1, 2, 3, 4, 5]),
-                     "status"       : map(str.casefold, ["Accepted", "Rejected", "Submitted"])}
+    VALID_FILTERS = {
+        "type": map(
+            str.casefold, ["Predictive", "Diagnostic", "Prognostic", "Predisposing", "Oncogenic", "Functional"]
+        ),
+        "significance": map(
+            str.casefold,
+            [
+                "Sensitivity/Response",
+                "Adverse Response",
+                "Reduced Sensitivity",
+                "N/A",
+            ],
+        ),
+        "direction": map(str.casefold, ["Supports", "Does Not Support"]),
+        "level": map(str.casefold, ["A", "B", "C", "D", "E", "F"]),
+        "rating": map(str.casefold, [1, 2, 3, 4, 5]),
+        "status": map(str.casefold, ["Accepted", "Rejected", "Submitted"]),
+    }
 
     if not isinstance(evidence_filters, list) and not isinstance(evidence_filters, tuple):
         evidence_filters = [evidence_filters]
     non_empty_filters = [f.casefold() for f in evidence_filters if f]
-    
+
     for evidence_filter in non_empty_filters:
         if "=" not in evidence_filter:
             raise click.UsageError(
                 f"Invalid evidence filter '{evidence_filter}'. Please provide a key-value pair separated by '='"
             )
-        
+
         key, value = evidence_filter.split("=")
         if key not in VALID_FILTERS.keys():
             raise click.UsageError(
@@ -310,12 +322,12 @@ def parse_filters(filters) -> dict:
     """
     if not isinstance(filters, list) and not isinstance(filters, tuple):
         filters = [filters]
-    
+
     parsed_filters = defaultdict(list)
     for filter in filters:
         key, value = filter.split("=")
         parsed_filters[key.lower()].append(value.lower())
-    
+
     return parsed_filters
 
 
@@ -491,7 +503,7 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     "-e",
     "--filter_evidence",
     help="Key-Value pairs to filter the evidence items. Example: 'type=Predictive'",
-    multiple=True
+    multiple=True,
 )
 def query_api_civic(vcf, outdir, genome, cancer, filter_vep, filter_evidence):
     try:

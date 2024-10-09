@@ -220,26 +220,39 @@ class testCliRun(unittest.TestCase):
 
 class testEvidenceFilter(unittest.TestCase):
     """Test evidence filter function"""
+
     def setUp(self):
         self.runner = CliRunner()
-    
-    valid_civic_query = ["query-api-civic", "--vcf", f"{os.getcwd()}/example_files/example.vcf", "--genome", "GRCh37", "--outdir", "test_out"]
+
+    valid_civic_query = [
+        "query-api-civic",
+        "--vcf",
+        f"{os.getcwd()}/example_files/example.vcf",
+        "--genome",
+        "GRCh37",
+        "--outdir",
+        "test_out",
+    ]
 
     def test_invalidEvidenceFilter(self):
         """Test invalid evidence filter"""
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "this is not a valid evidence filter"])
+        result = self.runner.invoke(
+            querynator_cli, self.valid_civic_query + ["--filter_evidence", "this is not a valid evidence filter"]
+        )
         self.assertEqual(result.exit_code, 2)
         self.assertIn("Invalid evidence filter", result.output)
 
         result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "foo=bar"])
         self.assertEqual(result.exit_code, 2)
         self.assertIn("Unsupported or invalid evidence filter", result.output)
-    
+
     def test_multipleinvalidEvidenceFilters(self):
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "foo=bar", "--filter_evidence", "baz=qux"])
+        result = self.runner.invoke(
+            querynator_cli, self.valid_civic_query + ["--filter_evidence", "foo=bar", "--filter_evidence", "baz=qux"]
+        )
         self.assertEqual(result.exit_code, 2)
         self.assertIn("Unsupported or invalid evidence filter", result.output)
-    
+
     def test_validEvidenceFilter(self):
         """Test valid evidence filter"""
         result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=Predictive"])
@@ -252,17 +265,32 @@ class testEvidenceFilter(unittest.TestCase):
 
     def test_validEvidenceFilterWithSpace(self):
         """Test case-insensitive evidence filter"""
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "significance=Reduced Sensitivity"])
+        result = self.runner.invoke(
+            querynator_cli, self.valid_civic_query + ["--filter_evidence", "significance=Reduced Sensitivity"]
+        )
         self.assertEqual(result.exit_code, 0, result.output)
 
     def test_multipleValidEvidenceFilters(self):
-        result = self.runner.invoke(querynator_cli, self.valid_civic_query + ["--filter_evidence", "type=Predictive",
-                                                              "--filter_evidence", "type=Diagnostic",
-                                                              "--filter_evidence", "level=B",
-                                                              "--filter_evidence", "significance=Reduced Sensitivity",
-                                                              "--filter_evidence", "status=Accepted", 
-                                                              "--filter_evidence", "direction=Supports"])
+        result = self.runner.invoke(
+            querynator_cli,
+            self.valid_civic_query
+            + [
+                "--filter_evidence",
+                "type=Predictive",
+                "--filter_evidence",
+                "type=Diagnostic",
+                "--filter_evidence",
+                "level=B",
+                "--filter_evidence",
+                "significance=Reduced Sensitivity",
+                "--filter_evidence",
+                "status=Accepted",
+                "--filter_evidence",
+                "direction=Supports",
+            ],
+        )
         self.assertEqual(result.exit_code, 0, result.output)
+
 
 if __name__ == "__main__":
     unittest.main()

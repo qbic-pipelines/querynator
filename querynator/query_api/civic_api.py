@@ -410,7 +410,7 @@ def get_evidence_information_from_variant(variant_obj, diseases, evidence_filter
 
     for mol_prof in variant_obj.molecular_profiles:
         for evidence in mol_prof.evidence:
-            if filter_evidence(evidence, evidence_filters):    
+            if filter_evidence(evidence, evidence_filters):
                 try:
                     # evidence = variant_obj.molecular_profiles[0].evidence[0]
                     new_dict = {
@@ -460,9 +460,10 @@ def get_evidence_information_from_variant(variant_obj, diseases, evidence_filter
 
     return smoothen_dict(evidence_dict, True)
 
+
 def filter_evidence(evidence, filters) -> bool:
     """Check if the evidence item is relevant and passes the filters
-    
+
     :param evidence: CIViC evidence object
     :type evidence: civicpy.evidence.Evidence
     :param filters: dict of property:[accepted-values] pairs to filter the evidence items
@@ -692,7 +693,9 @@ def query_civic(vcf, out_path, logger, input_file, genome, disease, filter_vep, 
     coord_dict = sort_coord_list(coord_dict)
 
     # create result table
-    create_civic_results(access_civic_by_coordinate(coord_dict, logger, genome), out_path, disease, logger, filter_vep, evidence_filters)
+    create_civic_results(
+        access_civic_by_coordinate(coord_dict, logger, genome), out_path, disease, logger, filter_vep, evidence_filters
+    )
     add_civic_metadata(out_path, input_file, "exact", genome, filter_vep)
 
     logger.info("CIViC Analysis done")
