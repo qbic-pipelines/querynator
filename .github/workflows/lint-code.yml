@@ -12,14 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
 
       - name: Install editorconfig-checker
         run: npm install -g editorconfig-checker
 
       # Run editor config check only on files not covered by a linter
       - name: Run ECLint check
-        run: editorconfig-checker -exclude README.md $(git ls-files | grep -v 'test\|.py\|md\|json\|yml\|yaml\|html\|css\|Makefile\|.obo')
+        run: editorconfig-checker -exclude $(git ls-files | grep -v 'test\|.py\|md\|json\|yml\|yaml\|html\|css\|Makefile\|.obo')
 
   Prettier:
     runs-on: ubuntu-latest
