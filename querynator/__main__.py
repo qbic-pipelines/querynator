@@ -5,6 +5,7 @@ import logging
 import os
 import random
 import shutil
+from collections import defaultdict
 from enum import Enum
 
 import click
@@ -266,6 +267,62 @@ def get_unique_querynator_dir(querynator_output):
     return querynator_output
 
 
+def validate_evidence_filters(evidence_filters):
+    """validate the evidence filters, given as key-value pairs
+    :return: None
+    :rtype: None
+    :raises click.UsageError: if the evidence filter is not in the list of valid filters"""
+
+    VALID_FILTERS = {
+        "type": ["Predictive", "Diagnostic", "Prognostic", "Predisposing", "Oncogenic", "Functional"],
+        "significance": ["SensitivityResponse", "Adverse Response", "Reduced Sensitivity", "N/A"],
+        "direction": ["Supports", "Does Not Support"],
+        "level": ["A", "B", "C", "D", "E", "F"],
+        "rating": [1, 2, 3, 4, 5],
+        "status": ["Accepted", "Rejected", "Submitted"],
+    }
+    # apply casefold to all keys and values to be case insensitive
+    VALID_FILTERS = {k.casefold(): [str(v).casefold() for v in values] for k, values in VALID_FILTERS.items()}
+
+    if not isinstance(evidence_filters, list) and not isinstance(evidence_filters, tuple):
+        evidence_filters = [evidence_filters]
+    non_empty_filters = [f.casefold() for f in evidence_filters if f]
+
+    for evidence_filter in non_empty_filters:
+        if "=" not in evidence_filter:
+            raise click.UsageError(
+                f"Invalid evidence filter '{evidence_filter}'. Please provide a key-value pair separated by '='"
+            )
+
+        key, value = evidence_filter.split("=")
+        if key not in VALID_FILTERS.keys():
+            raise click.UsageError(
+                f"Unsupported or invalid evidence filter '{key}'. Please provide one of {VALID_FILTERS.keys()}"
+            )
+        if value not in VALID_FILTERS[key]:
+            raise click.UsageError(
+                f"Unsupported or invalid value '{value}' for evidence filter '{key}'. Please provide one of {VALID_FILTERS[key]}"
+            )
+
+
+def parse_filters(filters) -> dict:
+    """parse key-value pairs into a dict of key:[list of grouped values]
+    :param filters: key-value pairs as strings
+    :type filters: str, list, tuple
+    :return: dict of key:[list of grouped values]
+    :rtype: dict
+    """
+    if not isinstance(filters, list) and not isinstance(filters, tuple):
+        filters = [filters]
+
+    parsed_filters = defaultdict(list)
+    for filter in filters:
+        key, value = filter.split("=")
+        parsed_filters[key.lower()].append(value.lower())
+
+    return parsed_filters
+
+
 def run_querynator():
     print("\n                                           __ ")
     print("  ____ ___  _____  _______  ______  ____ _/ /_____  _____")
@@ -434,27 +491,31 @@ def query_api_cgi(mutations, cnas, translocations, cancer, genome, token, email,
     show_default=True,
     default=False,
 )
-def query_api_civic(vcf, outdir, genome, cancer, filter_vep):
-    try:
-        result_dir = get_unique_querynator_dir(f"{outdir}")
-        dirname, basename = os.path.split(result_dir)
-        if filter_vep:
-            in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
-            # create result directories
-            os.makedirs(f"{result_dir}/vcf_files")
-            write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
-            write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
+@click.option(
+    "-e",
+    "--filter_evidence",
+    help="Key-Value pairs to filter the evidence items. Example: 'type=Predictive'",
+    multiple=True,
+)
+def query_api_civic(vcf, outdir, genome, cancer, filter_vep, filter_evidence):
+    validate_evidence_filters(filter_evidence)
+    evidence_filters = parse_filters(filter_evidence)
+    result_dir = get_unique_querynator_dir(f"{outdir}")
+    dirname, basename = os.path.split(result_dir)
+    if filter_vep:
+        in_vcf_header, candidate_variants, removed_variants = filter_vcf_by_vep(vcf, logger)
+        # create result directories
+        os.makedirs(f"{result_dir}/vcf_files")
+        write_vcf(in_vcf_header, removed_variants, f"{result_dir}/vcf_files/{basename}.removed_variants.vcf")
+        write_vcf(in_vcf_header, candidate_variants, f"{result_dir}/vcf_files/{basename}.filtered_variants.vcf")
 
-            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            # run analysis
-            query_civic(candidate_variants, result_dir, logger, vcf, genome, cancer, filter_vep)
+        logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
+        # run analysis
+        query_civic(candidate_variants, result_dir, logger, vcf, genome, cancer, filter_vep, evidence_filters)
 
-        else:
-            logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
-            query_civic(vcf, result_dir, logger, vcf, genome, filter_vep)
-
-    except FileNotFoundError:
-        print("The provided file cannot be found. Please try another path.")
+    else:
+        logger.info("Query the Clinical Interpretations of Variants In Cancer (CIViC)")
+        query_civic(vcf, result_dir, logger, vcf, genome, cancer, filter_vep, evidence_filters)
 
 
 # querynator create report

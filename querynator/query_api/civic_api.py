@@ -378,7 +378,7 @@ def get_assertion_information_from_variant(variant_obj):
     return smoothen_dict(assertion_dict, False)
 
 
-def get_evidence_information_from_variant(variant_obj, diseases):
+def get_evidence_information_from_variant(variant_obj, diseases, evidence_filters):
     """
     Get all evidence from a single CIViC variant object
 
@@ -386,6 +386,8 @@ def get_evidence_information_from_variant(variant_obj, diseases):
     :type variant_ob: CIViC variant object
     :param diseases: the patients cancer type as Disease Ontology Name or id and a list of allowed diseases that will count as matches
     :type diseases: tuple (Ontology.Term, list)
+    :param evidence_filters: evidence filters
+    :type evidence_filters: dict
     :return: Evidence information for respective CIViC variant object
     :rtype: dict
     """
@@ -408,54 +410,88 @@ def get_evidence_information_from_variant(variant_obj, diseases):
 
     for mol_prof in variant_obj.molecular_profiles:
         for evidence in mol_prof.evidence:
-            try:
-                # evidence = variant_obj.molecular_profiles[0].evidence[0]
-                new_dict = {
-                    "evidence_name": evidence.name,
-                    "evidence_description": evidence.description,
-                    "evidence_disease": evidence.disease.name if type(evidence.disease) != dict else np.nan,
-                    "evidence_level": evidence.evidence_level,
-                    "evidence_support": evidence.evidence_direction,
-                    "evidence_type": evidence.evidence_type,
-                    "evidence_phenotypes": "+".join([i.name for i in evidence.phenotypes]),
-                    "evidence_rating": evidence.rating,
-                    "evidence_significance": evidence.significance,
-                    "evidence_source": evidence.source.name,
-                    "evidence_status": evidence.status,
-                    "evidence_therapies": "+".join([i.name for i in evidence.therapies]),
-                    "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
-                }
-            except IndexError:
-                new_dict = {
-                    "evidence_name": np.nan,
-                    "evidence_description": np.nan,
-                    "evidence_disease": np.nan,
-                    "evidence_level": np.nan,
-                    "evidence_support": np.nan,
-                    "evidence_type": np.nan,
-                    "evidence_phenotypes": np.nan,
-                    "evidence_rating": np.nan,
-                    "evidence_significance": np.nan,
-                    "evidence_source": np.nan,
-                    "evidence_status": np.nan,
-                    "evidence_therapies": np.nan,
-                    "evidence_therapy_interaction_type": np.nan,
-                }
+            if filter_evidence(evidence, evidence_filters):
+                try:
+                    # evidence = variant_obj.molecular_profiles[0].evidence[0]
+                    new_dict = {
+                        "evidence_name": evidence.name,
+                        "evidence_description": evidence.description,
+                        "evidence_disease": evidence.disease.name if type(evidence.disease) != dict else np.nan,
+                        "evidence_level": evidence.evidence_level,
+                        "evidence_support": evidence.evidence_direction,
+                        "evidence_type": evidence.evidence_type,
+                        "evidence_phenotypes": "+".join([i.name for i in evidence.phenotypes]),
+                        "evidence_rating": evidence.rating,
+                        "evidence_significance": evidence.significance,
+                        "evidence_source": evidence.source.name,
+                        "evidence_status": evidence.status,
+                        "evidence_therapies": "+".join([i.name for i in evidence.therapies]),
+                        "evidence_therapy_interaction_type": evidence.therapy_interaction_type,
+                    }
+                except IndexError:
+                    new_dict = {
+                        "evidence_name": np.nan,
+                        "evidence_description": np.nan,
+                        "evidence_disease": np.nan,
+                        "evidence_level": np.nan,
+                        "evidence_support": np.nan,
+                        "evidence_type": np.nan,
+                        "evidence_phenotypes": np.nan,
+                        "evidence_rating": np.nan,
+                        "evidence_significance": np.nan,
+                        "evidence_source": np.nan,
+                        "evidence_status": np.nan,
+                        "evidence_therapies": np.nan,
+                        "evidence_therapy_interaction_type": np.nan,
+                    }
 
-            # check special rules for evidences and cancer types
-            disease, allowed_diseases = diseases
-            if disease and allowed_diseases and evidence.disease and evidence.disease.name not in allowed_diseases:
-                if evidence.evidence_level == "A":
-                    # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
-                    new_dict["evidence_level"] = "C"
-                    new_dict["evidence_disease"] = disease.name
-                else:
-                    # evidence item is irrelevant for this tumor
-                    continue
+                # check special rules for evidences and cancer types
+                disease, allowed_diseases = diseases
+                if disease and allowed_diseases and evidence.disease and evidence.disease.name not in allowed_diseases:
+                    if evidence.evidence_level == "A":
+                        # AMP/ASCO/CAT: level A evidence for other tumor is level C for this tumor
+                        new_dict["evidence_level"] = "C"
+                        new_dict["evidence_disease"] = disease.name
+                    else:
+                        # evidence item is irrelevant for this tumor
+                        continue
 
-            evidence_dict = append_to_dict(evidence_dict, new_dict)
+                evidence_dict = append_to_dict(evidence_dict, new_dict)
 
     return smoothen_dict(evidence_dict, True)
+
+
+def filter_evidence(evidence, filters) -> bool:
+    """Check if the evidence item is relevant and passes the filters
+
+    :param evidence: CIViC evidence object
+    :type evidence: civicpy.evidence.Evidence
+    :param filters: dict of property:[accepted-values] pairs to filter the evidence items
+    :type filters: dict
+    :return: True if the evidence item passes the filters, False otherwise
+    :rtype: bool
+    """
+    for prop, values in filters.items():
+        if prop == "level".casefold():
+            if evidence.evidence_level.casefold() > min(values):
+                # lower level has higher char value A < B < C
+                return False
+        elif prop == "type".casefold():
+            if evidence.evidence_type.casefold() not in values:
+                return False
+        elif prop == "significance".casefold():
+            if evidence.significance.casefold() not in values:
+                return False
+        elif prop == "rating".casefold():
+            if evidence.rating.casefold() not in values:
+                return False
+        elif prop == "status".casefold():
+            if evidence.status.casefold() not in values:
+                return False
+        elif prop == "direction".casefold():
+            if evidence.evidence_direction.casefold() not in values:
+                return False
+    return True
 
 
 def get_positional_information_from_coord_obj(coord_obj):
@@ -482,7 +518,7 @@ def get_querynator_id(querynator_id):
     return {"querynator_id": querynator_id}
 
 
-def concat_dicts(coord_id_dict, variant_obj, diseases, filter_vep):
+def concat_dicts(coord_id_dict, variant_obj, diseases, filter_vep, evidence_filters):
     """
     Create and combine different dictionaries created for single CIViC variant object
 
@@ -492,6 +528,10 @@ def concat_dicts(coord_id_dict, variant_obj, diseases, filter_vep):
     :type variant_ob: CIViC variant object
     :param diseases: the patients cancer type as Disease Ontology Name or id and a list of allowed diseases that will count as matches
     :type diseases: tuple (Ontology.Term, list)
+    :param filter_vep: flag whether VEP based filtering should be performed
+    :type filter_vep: bool
+    :param evidence_filters: evidence filters
+    :type evidence_filters: dict
     :return: All information for respective CIViC variant object
     :rtype: dict
     """
@@ -500,7 +540,7 @@ def concat_dicts(coord_id_dict, variant_obj, diseases, filter_vep):
     gene_info = get_gene_information_from_variant(variant_obj[0])
     mol_profile_info = get_molecular_profile_information_from_variant(variant_obj[0])
     assertion_info = get_assertion_information_from_variant(variant_obj[0])
-    evidence_info = get_evidence_information_from_variant(variant_obj[0], diseases)
+    evidence_info = get_evidence_information_from_variant(variant_obj[0], diseases, evidence_filters)
     if filter_vep:
         querynator_id_info = get_querynator_id(coord_id_dict[list(coord_id_dict.keys())[0]])
         return {
@@ -516,7 +556,7 @@ def concat_dicts(coord_id_dict, variant_obj, diseases, filter_vep):
         return {**coordinates_info, **variant_info, **gene_info, **mol_profile_info, **assertion_info, **evidence_info}
 
 
-def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
+def create_civic_results(variant_list, out_path, disease, logger, filter_vep, evidence_filters):
     """
     Combine result dictionaries of all CIViC variant objects
     to a table and write it to user-specified file
@@ -529,6 +569,8 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     :type  disease: str
     :param filter_vep: flag whether VEP based filtering should be performed
     :type  filter_vep: bool
+    :param evidence_filters: evidence filters
+    :type  evidence_filters: dict
     :return: None
     :rtype: None
     """
@@ -545,7 +587,7 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
 
     for coord_id_dict, variant in variant_list:
         civic_result_df = civic_result_df.append(
-            concat_dicts(coord_id_dict, variant, diseases, filter_vep), ignore_index=True
+            concat_dicts(coord_id_dict, variant, diseases, filter_vep, evidence_filters), ignore_index=True
         )
 
     logger.info("CIViC Query finished")
@@ -553,7 +595,7 @@ def create_civic_results(variant_list, out_path, disease, logger, filter_vep):
     try:
         civic_result_df.to_csv(f"{out_path}/{os.path.basename(out_path)}.civic_results.tsv", sep="\t", index=False)
     except OSError:
-        os.mkdir(out_path)
+        os.makedirs(out_path)
         civic_result_df.to_csv(f"{out_path}/{os.path.basename(out_path)}.civic_results.tsv", sep="\t", index=False)
 
 
@@ -623,7 +665,7 @@ def add_civic_metadata(out_path, input_file, search_mode, genome, filter_vep):
         f.close()
 
 
-def query_civic(vcf, out_path, logger, input_file, genome, disease, filter_vep):
+def query_civic(vcf, out_path, logger, input_file, genome, disease, filter_vep, evidence_filters):
     """
     Command to query the CIViC API
 
@@ -637,6 +679,8 @@ def query_civic(vcf, out_path, logger, input_file, genome, disease, filter_vep):
     :type disease: str
     :param filter_vep: flag whether VEP based filtering should be performed
     :type filter_vep: bool
+    :param evidence_filters: evidence filters
+    :type evidence_filters: dict
     :return: None
     :rtype: None
     """
@@ -652,7 +696,9 @@ def query_civic(vcf, out_path, logger, input_file, genome, disease, filter_vep):
     coord_dict = sort_coord_list(coord_dict)
 
     # create result table
-    create_civic_results(access_civic_by_coordinate(coord_dict, logger, genome), out_path, disease, logger, filter_vep)
+    create_civic_results(
+        access_civic_by_coordinate(coord_dict, logger, genome), out_path, disease, logger, filter_vep, evidence_filters
+    )
     add_civic_metadata(out_path, input_file, "exact", genome, filter_vep)
 
     logger.info("CIViC Analysis done")
